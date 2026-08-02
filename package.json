@@ -1,0 +1,20 @@
+{
+  "name": "healthians-landingpage",
+  "version": "1.0.0",
+  "description": "Official Healthians® Premium Apple-Style Landing Page for Google Ads & Meta Ads",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y serve@latest . -l 3000",
+    "start": "npx -y serve@latest . -l 3000"
+  },
+  "keywords": [
+    "healthians",
+    "home-blood-test",
+    "diagnostic",
+    "landing-page",
+    "google-ads",
+    "meta-ads"
+  ],
+  "author": "Healthians Brand Performance Marketing",
+  "license": "MIT"
+}
