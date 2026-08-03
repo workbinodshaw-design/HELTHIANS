@@ -296,10 +296,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (statusFilter !== 'all' && !(b.status || '').toLowerCase().includes(statusFilter)) return false;
 
       // Tab/Sidebar filter
-      if (currentFilter === 'new') return b.status === 'New Booking';
-      if (currentFilter === 'callback') return Boolean(b.callBackDate);
-      if (currentFilter === 'lab') return b.status === 'In Lab Analysis';
-      if (currentFilter === 'completed') return b.status === 'Report Ready';
+      if (currentFilter === 'new') return b.status === 'New Booking' || b.status === 'Pending' || !b.status;
+      if (currentFilter === 'callback') return Boolean(b.callBackDate) || b.status === 'Call Reminder Scheduled';
+      if (currentFilter === 'lab') return b.status === 'In Lab Analysis' || b.status === 'In Lab Testing';
+      if (currentFilter === 'completed') return b.status === 'Report Ready' || b.status === 'Done';
       return true;
     });
 
@@ -311,13 +311,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let countNw = 0;
 
     bookings.forEach(b => {
-      if (b.callBackDate) {
+      if (b.callBackDate || b.status === 'Call Reminder Scheduled') {
         countCb++;
-        if (b.callBackDate <= now) dueCallbacks++;
+        if (b.callBackDate && b.callBackDate <= now) dueCallbacks++;
       }
       if (b.status === 'New Booking' || !b.status || b.status === 'Pending') countNw++;
-      if (b.status === 'In Lab Analysis') countLb++;
-      if (b.status === 'Report Ready') countRdy++;
+      if (b.status === 'In Lab Analysis' || b.status === 'In Lab Testing') countLb++;
+      if (b.status === 'Report Ready' || b.status === 'Done') countRdy++;
     });
 
     // Update Sidebar Navigation count indicators
@@ -380,9 +380,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let statusBadgeClass = 'badge-pending';
         let displayStatus = 'Pending';
-        if (b.status === 'Collector Assigned') { statusBadgeClass = 'badge-assigned'; displayStatus = 'Assigned'; }
-        if (b.status === 'In Lab Analysis') { statusBadgeClass = 'badge-lab'; displayStatus = 'In Lab Testing'; }
-        if (b.status === 'Report Ready') { statusBadgeClass = 'badge-ready'; displayStatus = 'Report Ready'; }
+        if (b.status === 'In Lab Analysis' || b.status === 'In Lab Testing') { statusBadgeClass = 'badge-lab'; displayStatus = 'In Lab Testing'; }
+        if (b.status === 'Call Reminder Scheduled') { statusBadgeClass = 'badge-assigned'; displayStatus = 'Call Reminder Scheduled'; }
+        if (b.status === 'Report Ready' || b.status === 'Done') { statusBadgeClass = 'badge-ready'; displayStatus = 'Done'; }
         if (b.status === 'Cancelled') { statusBadgeClass = 'badge-cancel'; displayStatus = 'Cancelled'; }
 
         const dateObj = new Date(b.timestamp || Date.now());
@@ -425,9 +425,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <label class="sc-label">Update Order Status</label>
             <div class="sc-tech-wrapper">
               <select class="sc-tech-select status-select" data-id="${b.id}" title="Change status instantly">
-                <option value="New Booking" ${b.status === 'New Booking' || !b.status || b.status === 'Pending' ? 'selected' : ''}>⏳ Pending / New</option>
-                <option value="In Lab Analysis" ${b.status === 'In Lab Analysis' || b.status === 'Collector Assigned' ? 'selected' : ''}>🧪 In Lab Testing</option>
-                <option value="Report Ready" ${b.status === 'Report Ready' ? 'selected' : ''}>🟢 Report Ready</option>
+                <option value="Pending" ${b.status === 'New Booking' || !b.status || b.status === 'Pending' ? 'selected' : ''}>⏳ Pending</option>
+                <option value="In Lab Testing" ${b.status === 'In Lab Analysis' || b.status === 'In Lab Testing' ? 'selected' : ''}>🧪 In Lab Testing</option>
+                <option value="Call Reminder Scheduled" ${b.status === 'Call Reminder Scheduled' ? 'selected' : ''}>⏰ Call Reminder Scheduled</option>
+                <option value="Done" ${b.status === 'Report Ready' || b.status === 'Done' ? 'selected' : ''}>🟢 Done</option>
                 <option value="Cancelled" ${b.status === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
               </select>
             </div>
