@@ -215,13 +215,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   callButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      logConversionEvent('Call_Button_Clicked', { number: '+91-999-888-0005' });
+      logConversionEvent('Call_Button_Clicked', { number: '+91-9044401435' });
     });
   });
 
   waButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      logConversionEvent('WhatsApp_Chat_Initiated', { destination: '+91-999-888-0005' });
+      logConversionEvent('WhatsApp_Chat_Initiated', { destination: '+91-9044401435' });
     });
   });
 

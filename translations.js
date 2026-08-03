@@ -8,7 +8,7 @@
 window.HEALTHIANS_TRANSLATIONS = {
   en: {
     lang_toggle: "🇮🇳 हिंदी",
-    call_no: "999-888-0005",
+    call_no: "90444 01435",
 
     // Hero Top Section
     badge_24: 'Results in <strong style="color:#00A0A8; font-weight:700;">24 Hours</strong>',
@@ -114,7 +114,7 @@ window.HEALTHIANS_TRANSLATIONS = {
   hi: {
     lang_toggle: "🇬🇧 English",
     header_wa: "WhatsApp",
-    call_no: "999-888-0005",
+    call_no: "90444 01435",
 
     // Hero Top Section
     badge_24: 'रिपोर्ट <strong style="color:#00A0A8; font-weight:700;">24 घंटे में</strong>',
