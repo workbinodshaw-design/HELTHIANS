@@ -298,7 +298,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Tab/Sidebar filter
       if (currentFilter === 'new') return b.status === 'New Booking';
       if (currentFilter === 'callback') return Boolean(b.callBackDate);
-      if (currentFilter === 'assigned') return b.status === 'Collector Assigned' || Boolean(b.technician);
       if (currentFilter === 'lab') return b.status === 'In Lab Analysis';
       if (currentFilter === 'completed') return b.status === 'Report Ready';
       return true;
@@ -307,7 +306,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Compute metrics and counts
     let countCb = 0;
     let dueCallbacks = 0;
-    let countAsg = 0;
     let countLb = 0;
     let countRdy = 0;
     let countNw = 0;
@@ -317,8 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
         countCb++;
         if (b.callBackDate <= now) dueCallbacks++;
       }
-      if (b.status === 'New Booking') countNw++;
-      if (b.status === 'Collector Assigned' || b.technician) countAsg++;
+      if (b.status === 'New Booking' || !b.status || b.status === 'Pending') countNw++;
       if (b.status === 'In Lab Analysis') countLb++;
       if (b.status === 'Report Ready') countRdy++;
     });
@@ -327,26 +324,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const sideAll = document.getElementById('side-count-all');
     const sideNew = document.getElementById('side-count-new');
     const sideCb = document.getElementById('side-count-cb');
-    const sideAssigned = document.getElementById('side-count-assigned');
     const sideLab = document.getElementById('side-count-lab');
     const sideComplete = document.getElementById('side-count-completed');
     if (sideAll) sideAll.textContent = bookings.length;
     if (sideNew) sideNew.textContent = countNw;
     if (sideCb) sideCb.textContent = countCb;
-    if (sideAssigned) sideAssigned.textContent = countAsg;
     if (sideLab) sideLab.textContent = countLb;
     if (sideComplete) sideComplete.textContent = countRdy;
 
     // Update Top Status Stats Tabs counters
     const topAll = document.getElementById('top-count-all');
     const topNew = document.getElementById('top-count-new');
-    const topAssigned = document.getElementById('top-count-assigned');
     const topLab = document.getElementById('top-count-lab');
     const topCompleted = document.getElementById('top-count-completed');
     const topCb = document.getElementById('top-count-cb');
     if (topAll) topAll.textContent = bookings.length;
     if (topNew) topNew.textContent = countNw;
-    if (topAssigned) topAssigned.textContent = countAsg;
     if (topLab) topLab.textContent = countLb;
     if (topCompleted) topCompleted.textContent = countRdy;
     if (topCb) topCb.textContent = countCb;
@@ -429,14 +422,13 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div class="sc-section">
-            <label class="sc-label">Assign Phlebotomist</label>
+            <label class="sc-label">Update Order Status</label>
             <div class="sc-tech-wrapper">
-              <select class="sc-tech-select tech-select" data-id="${b.id}">
-                <option value="" ${!b.technician ? 'selected' : ''}>Select Phlebotomist</option>
-                <option value="Raj Kumar" ${b.technician === 'Raj Kumar' || b.technician === 'Rahul Sharma [HLT-104]' ? 'selected' : ''}>👨🏽‍⚕️ Raj Kumar</option>
-                <option value="Suresh Yadav" ${b.technician === 'Suresh Yadav' || b.technician === 'Vikram Singh [HLT-209]' ? 'selected' : ''}>👨🏽‍⚕️ Suresh Yadav</option>
-                <option value="Amit Verma" ${b.technician === 'Amit Verma' || b.technician === 'Sunita Rao [HLT-312]' ? 'selected' : ''}>👨🏽‍⚕️ Amit Verma</option>
-                <option value="Priya Mehta" ${b.technician === 'Priya Mehta' || b.technician === 'Amit Kumar [HLT-401]' ? 'selected' : ''}>👩🏽‍⚕️ Priya Mehta</option>
+              <select class="sc-tech-select status-select" data-id="${b.id}" title="Change status instantly">
+                <option value="New Booking" ${b.status === 'New Booking' || !b.status || b.status === 'Pending' ? 'selected' : ''}>⏳ Pending / New</option>
+                <option value="In Lab Analysis" ${b.status === 'In Lab Analysis' || b.status === 'Collector Assigned' ? 'selected' : ''}>🧪 In Lab Testing</option>
+                <option value="Report Ready" ${b.status === 'Report Ready' ? 'selected' : ''}>🟢 Report Ready</option>
+                <option value="Cancelled" ${b.status === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
               </select>
             </div>
           </div>
@@ -491,20 +483,6 @@ document.addEventListener('DOMContentLoaded', () => {
       sel.addEventListener('change', (e) => {
         const id = e.target.getAttribute('data-id');
         modifyOrder(id, { status: e.target.value });
-      });
-    });
-
-    document.querySelectorAll('.tech-select').forEach(sel => {
-      sel.addEventListener('change', (e) => {
-        const id = e.target.getAttribute('data-id');
-        const order = bookings.find(x => x.id === id);
-        if (order) {
-          const updates = { technician: e.target.value };
-          if (updates.technician && order.status === 'New Booking') {
-            updates.status = 'Collector Assigned';
-          }
-          modifyOrder(id, updates);
-        }
       });
     });
 

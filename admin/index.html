@@ -89,14 +89,6 @@
                 <span class="item-text">Call Back Reminders</span>
                 <span class="badge-pill count-cb-badge" id="side-count-cb">0</span>
               </a>
-            </li>
-            <li>
-              <a href="#" class="sidebar-item" data-filter="assigned">
-                <span class="item-icon">🛵</span>
-                <span class="item-text">Phlebotomists</span>
-                <span class="badge-pill" id="side-count-assigned">0</span>
-              </a>
-            </li>
             <li>
               <a href="#" class="sidebar-item" data-filter="lab">
                 <span class="item-icon">🧪</span>
@@ -175,11 +167,6 @@
             <span class="tab-label">Pending</span>
             <span class="tab-count chip-amber" id="top-count-new">0</span>
           </button>
-          <button class="status-tab" data-filter="assigned">
-            <span class="tab-icon">🛵</span>
-            <span class="tab-label">Assigned</span>
-            <span class="tab-count chip-blue" id="top-count-assigned">0</span>
-          </button>
           <button class="status-tab" data-filter="lab">
             <span class="tab-icon">🧪</span>
             <span class="tab-label">In Lab Testing</span>
@@ -226,9 +213,9 @@
               <select id="filter-status" class="filter-select">
                 <option value="ALL">All Status</option>
                 <option value="New Booking">Pending / New</option>
-                <option value="Collector Assigned">Assigned</option>
                 <option value="In Lab Analysis">In Lab Testing</option>
                 <option value="Report Ready">Report Ready</option>
+                <option value="Cancelled">Cancelled</option>
               </select>
             </div>
           </div>
