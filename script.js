@@ -277,6 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modalPkgSpan) modalPkgSpan.textContent = bookingData.selectedPackage;
         if (modalCitySpan) modalCitySpan.textContent = chosenCity;
 
+        successModal.style.display = 'flex';
         successModal.classList.add('active');
       }
 
@@ -294,11 +295,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (modalCloseBtn && successModal) {
     modalCloseBtn.addEventListener('click', () => {
+      successModal.style.display = 'none';
       successModal.classList.remove('active');
     });
 
     successModal.addEventListener('click', (e) => {
       if (e.target === successModal) {
+        successModal.style.display = 'none';
         successModal.classList.remove('active');
       }
     });
