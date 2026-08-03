@@ -32,9 +32,7 @@
     </div>
 
     <div class="header-right">
-      <button id="add-sample-btn" class="btn-secondary" title="Add another dummy test booking to practice with">
-        <span>⚡ + Add Sample Order</span>
-      </button>
+      <span class="live-indicator" style="font-size: 0.78rem; font-weight: 700; color: #059669; background: #ECFDF5; padding: 6px 12px; border-radius: 20px; border: 1px solid #A7F3D0;">⚡ REAL-TIME CLOUD CONNECTED</span>
       <a href="../index.html" class="btn-live-site">
         <span>🌐 View Live Website</span>
       </a>
@@ -102,7 +100,7 @@
         <button class="filter-pill" data-filter="completed">🟢 Report Ready (<span id="count-completed-pill">0</span>)</button>
       </div>
       <div class="controls-right">
-        <button id="reset-storage-btn" class="btn-text-only" title="Restore factory default test patients">Reset Test Data</button>
+        <span style="font-size: 0.8rem; color: #64748B; font-weight: 600;">📁 Live Production Database</span>
       </div>
     </section>
 
@@ -127,7 +125,7 @@
       <div id="empty-state" class="empty-state hidden">
         <div class="empty-icon">📭</div>
         <h4>No patient bookings match this filter right now!</h4>
-        <p>Try switching to "All Bookings" or click the "+ Add Sample Order" button above to test.</p>
+        <p>Your live cloud database is clean! New customer orders submitted on your website will appear here in real time.</p>
       </div>
     </section>
   </main>
@@ -171,6 +169,10 @@
     </div>
   </div>
 
+  <!-- Google Firebase Cloud Backend SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../firebase-config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

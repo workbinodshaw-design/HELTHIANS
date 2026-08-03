@@ -1,12 +1,11 @@
 /**
  * ========================================================================
- * HEALTHIANS® OPS COMMAND DESK - INTERACTION ENGINE & CALLBACK ALARM
+ * HEALTHIANS® OPS COMMAND DESK - PRODUCTION CLOUD FIRESTORE ENGINE
+ * Real-time streaming database connection & callback reminder system
  * ========================================================================
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  const STORAGE_KEY = 'healthians_admin_bookings';
-  
   // DOM References
   const tbody = document.getElementById('bookings-tbody');
   const searchInput = document.getElementById('search-input');
@@ -43,103 +42,87 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let currentFilter = 'all';
   let searchTerm = '';
+  let currentLiveBookings = [];
 
-  // 1. INITIALIZE DEMO / REAL STORAGE
-  function initStorage() {
-    const existing = localStorage.getItem(STORAGE_KEY);
-    if (!existing || JSON.parse(existing).length === 0) {
-      loadDefaultSampleData();
+  // 1. CONNECT TO REAL-TIME GOOGLE CLOUD FIRESTORE DATABASE
+  function initRealtimeDatabase() {
+    if (window.healthiansDb) {
+      console.log('⚡ Listening to live streaming customer bookings from Google Cloud Firestore...');
+      window.healthiansDb.collection('bookings')
+        .onSnapshot((snapshot) => {
+          currentLiveBookings = [];
+          snapshot.forEach((doc) => {
+            const data = doc.data();
+            data.id = doc.id; // Ensure document ID is attached
+            currentLiveBookings.push(data);
+          });
+
+          // Sort by timestamp newest first
+          currentLiveBookings.sort((a, b) => {
+            const timeA = new Date(a.timestamp || 0).getTime();
+            const timeB = new Date(b.timestamp || 0).getTime();
+            return timeB - timeA;
+          });
+
+          render();
+        }, (err) => {
+          console.error('⚠️ Firestore snapshot notification error. Please ensure Firestore is created in Test Mode:', err);
+          fallbackToLocal();
+        });
+    } else {
+      console.warn('⚠️ Cloud Firestore connection not found, falling back to local cache.');
+      fallbackToLocal();
     }
   }
 
-  function loadDefaultSampleData() {
-    const now = new Date();
-    // Create an alarm date that is due RIGHT NOW (15 mins ago) to showcase the alarm banner!
-    const dueTime = new Date(now.getTime() - 15 * 60000).toISOString().slice(0, 16);
-    const tomorrowTime = new Date(now.getTime() + 24 * 3600000).toISOString().slice(0, 16);
-
-    const defaultOrders = [
-      {
-        id: 'ORD-98214',
-        name: 'Sneha Sharma',
-        mobile: '9876543210',
-        city: 'Delhi NCR',
-        selectedPackage: 'Full Body Vital Super',
-        timestamp: new Date(now.getTime() - 40 * 60000).toISOString(),
-        status: 'New Booking',
-        technician: '',
-        scheduleSlot: 'Today 06:00 - 07:00 AM Fasting',
-        callBackDate: dueTime,
-        callBackNote: 'Patient was driving. Requested immediate call back at this time for package discount details.'
-      },
-      {
-        id: 'ORD-84721',
-        name: 'Amit Verma',
-        mobile: '9123456789',
-        city: 'Gurgaon',
-        selectedPackage: 'Diabetes & Lipid Profile Care',
-        timestamp: new Date(now.getTime() - 120 * 60000).toISOString(),
-        status: 'Collector Assigned',
-        technician: 'Rahul Sharma [HLT-104]',
-        scheduleSlot: 'Tomorrow 07:00 - 08:00 AM Fasting',
-        callBackDate: '',
-        callBackNote: ''
-      },
-      {
-        id: 'ORD-65342',
-        name: 'Rajesh Gupta',
-        mobile: '9988776655',
-        city: 'Noida',
-        selectedPackage: 'Thyroid Care Shield',
-        timestamp: new Date(now.getTime() - 300 * 60000).toISOString(),
-        status: 'In Lab Analysis',
-        technician: 'Vikram Singh [HLT-209]',
-        scheduleSlot: 'Today 06:00 - 07:00 AM Fasting',
-        callBackDate: '',
-        callBackNote: ''
-      },
-      {
-        id: 'ORD-44910',
-        name: 'Pooja Nair',
-        mobile: '9012345678',
-        city: 'Mumbai',
-        selectedPackage: 'Vitamin D & B12 Advanced Check',
-        timestamp: new Date(now.getTime() - 600 * 60000).toISOString(),
-        status: 'Report Ready',
-        technician: 'Sunita Rao [HLT-312]',
-        scheduleSlot: 'Completed',
-        callBackDate: tomorrowTime,
-        callBackNote: 'Report sent. Call back tomorrow morning to check if patient wantsdoctor explanation.'
-      }
-    ];
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultOrders));
-  }
-
-  function getBookings() {
+  function fallbackToLocal() {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      currentLiveBookings = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
     } catch (e) {
-      return [];
+      currentLiveBookings = [];
+    }
+    render();
+  }
+
+  // Helper to persist edits back to Cloud Firestore
+  function updateBookingField(id, updateData) {
+    if (window.healthiansDb) {
+      window.healthiansDb.collection('bookings').doc(id).update(updateData)
+        .then(() => console.log(`✅ Order ${id} updated in cloud database`))
+        .catch(err => console.error(`Error updating cloud document:`, err));
+    } else {
+      // Offline fallback
+      const idx = currentLiveBookings.findIndex(x => x.id === id);
+      if (idx !== -1) {
+        Object.assign(currentLiveBookings[idx], updateData);
+        localStorage.setItem('healthians_admin_bookings', JSON.stringify(currentLiveBookings));
+        render();
+      }
     }
   }
 
-  function saveBookings(bookings) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+  function deleteBookingDoc(id) {
+    if (window.healthiansDb) {
+      window.healthiansDb.collection('bookings').doc(id).delete()
+        .then(() => console.log(`🗑️ Order ${id} deleted from cloud database`))
+        .catch(err => console.error(`Error deleting doc:`, err));
+    } else {
+      currentLiveBookings = currentLiveBookings.filter(x => x.id !== id);
+      localStorage.setItem('healthians_admin_bookings', JSON.stringify(currentLiveBookings));
+      render();
+    }
   }
 
   // 2. RENDER TABLE & COMPUTE METRICS
   function render() {
-    const bookings = getBookings();
+    const bookings = currentLiveBookings;
     const now = new Date().toISOString().slice(0, 16);
 
     // Filter logic
     const filtered = bookings.filter(b => {
-      // Search term filter
-      const matchSearch = (b.name + ' ' + b.mobile + ' ' + b.city + ' ' + b.selectedPackage).toLowerCase().includes(searchTerm.toLowerCase());
+      const matchSearch = ((b.name || '') + ' ' + (b.mobile || '') + ' ' + (b.city || '') + ' ' + (b.selectedPackage || '')).toLowerCase().includes(searchTerm.toLowerCase());
       if (!matchSearch) return false;
 
-      // Category tab filter
       if (currentFilter === 'new') return b.status === 'New Booking';
       if (currentFilter === 'callback') return Boolean(b.callBackDate);
       if (currentFilter === 'assigned') return b.status === 'Collector Assigned' || Boolean(b.technician);
@@ -203,18 +186,15 @@ document.addEventListener('DOMContentLoaded', () => {
           row.classList.add('row-alert-highlight');
         }
 
-        // Status style class helper
         let statusClass = 'status-new';
         if (b.status === 'Collector Assigned') statusClass = 'status-assigned';
         if (b.status === 'In Lab Analysis') statusClass = 'status-lab';
         if (b.status === 'Report Ready') statusClass = 'status-ready';
         if (b.status === 'Cancelled') statusClass = 'status-cancel';
 
-        // Format timestamp nice
         const dateObj = new Date(b.timestamp || Date.now());
         const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
-        // Format callback date display
         let callbackHtml = `<button class="btn-callback-add" data-id="${b.id}">⏰ Schedule Call Back</button>`;
         if (b.callBackDate) {
           const cbDate = new Date(b.callBackDate).toLocaleString([], {month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit'});
@@ -228,15 +208,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         row.innerHTML = `
           <td class="patient-meta">
-            <span class="p-name">${b.name}</span>
-            <span class="p-city">${b.city}</span>
+            <span class="p-name">${b.name || 'Patient'}</span>
+            <span class="p-city">${b.city || 'India'}</span>
             <br>
-            <a href="tel:${b.mobile}" class="p-phone">📞 +91 ${b.mobile}</a>
+            <a href="tel:${b.mobile}" class="p-phone">📞 +91 ${b.mobile || ''}</a>
             <span class="p-time">ID: ${b.id} &bull; Booked: ${dateStr}</span>
           </td>
           
           <td>
-            <span class="pkg-pill">${b.selectedPackage}</span>
+            <span class="pkg-pill">${b.selectedPackage || 'General Inquiry'}</span>
           </td>
 
           <td>
@@ -292,48 +272,37 @@ document.addEventListener('DOMContentLoaded', () => {
     bindRowEvents();
   }
 
-  // 3. ROW EVENT LISTENERS (Status changes, schedule dropdowns, WhatsApp dispatch)
+  // 3. ROW EVENT LISTENERS
   function bindRowEvents() {
-    const bookings = getBookings();
+    const bookings = currentLiveBookings;
 
-    // Slot Change
+    // Slot Change -> Sync to Cloud Firestore
     document.querySelectorAll('.slot-select').forEach(sel => {
       sel.addEventListener('change', (e) => {
         const id = e.target.getAttribute('data-id');
-        const order = bookings.find(x => x.id === id);
-        if (order) {
-          order.scheduleSlot = e.target.value;
-          saveBookings(bookings);
-          render();
-        }
+        updateBookingField(id, { scheduleSlot: e.target.value });
       });
     });
 
-    // Status Change
+    // Status Change -> Sync to Cloud Firestore
     document.querySelectorAll('.status-select').forEach(sel => {
       sel.addEventListener('change', (e) => {
         const id = e.target.getAttribute('data-id');
-        const order = bookings.find(x => x.id === id);
-        if (order) {
-          order.status = e.target.value;
-          saveBookings(bookings);
-          render();
-        }
+        updateBookingField(id, { status: e.target.value });
       });
     });
 
-    // Technician Change
+    // Technician Change -> Sync to Cloud Firestore
     document.querySelectorAll('.tech-select').forEach(sel => {
       sel.addEventListener('change', (e) => {
         const id = e.target.getAttribute('data-id');
         const order = bookings.find(x => x.id === id);
         if (order) {
-          order.technician = e.target.value;
-          if (order.technician && order.status === 'New Booking') {
-            order.status = 'Collector Assigned'; // Automatically update status!
+          const updates = { technician: e.target.value };
+          if (updates.technician && order.status === 'New Booking') {
+            updates.status = 'Collector Assigned';
           }
-          saveBookings(bookings);
-          render();
+          updateBookingField(id, updates);
         }
       });
     });
@@ -346,17 +315,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // WhatsApp Dispatch & Customer Messaging
+    // WhatsApp Dispatch
     document.querySelectorAll('.btn-wa-dispatch').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = btn.getAttribute('data-id');
         const order = bookings.find(x => x.id === id);
         if (order) {
           let msg = '';
-          let targetPhone = order.mobile.replace(/\D/g, '');
+          let targetPhone = (order.mobile || '').replace(/\D/g, '');
           
           if (order.technician) {
-            // Send dispatch alert to Technician or Customer
             msg = `🚀 *HEALTHIANS® DISPATCH UPDATE*\n\nHello *${order.name}* (${order.city}),\nYour diagnostic home sample collection is confirmed!\n\n📅 *Slot:* ${order.scheduleSlot}\n🧪 *Test:* ${order.selectedPackage}\n🛵 *Assigned Phlebotomist:* ${order.technician}\n\nOur technician will arrive promptly at your home! For support, reply here.`;
           } else if (order.status === 'Report Ready') {
             msg = `🎉 *HEALTHIANS® SMART REPORT READY*\n\nHello *${order.name}*,\nGood news! Your diagnostic results for *${order.selectedPackage}* are fully processed by our NABL lab.\n\nYour interactive health dashboard & PDF report have been sent to your registered email/number. Stay healthy!`;
@@ -364,21 +332,18 @@ document.addEventListener('DOMContentLoaded', () => {
             msg = `Hello *${order.name}*,\nThank you for booking with Healthians® in ${order.city} for *${order.selectedPackage}*.\n\nWe are reaching out to confirm your home address and sample collection time slot. Please reply with your preferred time!`;
           }
 
-          // Open WhatsApp web or mobile
           const url = `https://wa.me/91${targetPhone}?text=${encodeURIComponent(msg)}`;
           window.open(url, '_blank');
         }
       });
     });
 
-    // Delete Booking
+    // Delete Booking from Cloud Firestore
     document.querySelectorAll('.btn-delete-row').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = btn.getAttribute('data-id');
-        if (confirm(`Are you sure you want to delete patient order ${id}?`)) {
-          const updated = bookings.filter(x => x.id !== id);
-          saveBookings(updated);
-          render();
+        if (confirm(`Are you sure you want to permanently delete patient order ${id}?`)) {
+          deleteBookingDoc(id);
         }
       });
     });
@@ -386,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 4. CALLBACK MODAL ENGINE ("Call Me Tomorrow")
   function openCallbackModal(id) {
-    const bookings = getBookings();
+    const bookings = currentLiveBookings;
     const order = bookings.find(x => x.id === id);
     if (!order) return;
 
@@ -407,12 +372,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === modal) closeModal();
   });
 
-  // Quick shortcut buttons (+3h, +24h)
   document.querySelectorAll('.btn-quick-time').forEach(btn => {
     btn.addEventListener('click', () => {
       const hours = parseInt(btn.getAttribute('data-hours'), 10);
       const targetDate = new Date(Date.now() + hours * 3600000);
-      // format for datetime-local (YYYY-MM-DDTHH:MM)
       const formatted = targetDate.toISOString().slice(0, 16);
       callbackDatetime.value = formatted;
     });
@@ -421,15 +384,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (clearCallbackBtn) {
     clearCallbackBtn.addEventListener('click', () => {
       const id = modalOrderId.value;
-      const bookings = getBookings();
-      const order = bookings.find(x => x.id === id);
-      if (order) {
-        order.callBackDate = '';
-        order.callBackNote = '';
-        saveBookings(bookings);
-        closeModal();
-        render();
-      }
+      updateBookingField(id, { callBackDate: '', callBackNote: '' });
+      closeModal();
     });
   }
 
@@ -437,15 +393,11 @@ document.addEventListener('DOMContentLoaded', () => {
     callbackForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const id = modalOrderId.value;
-      const bookings = getBookings();
-      const order = bookings.find(x => x.id === id);
-      if (order) {
-        order.callBackDate = callbackDatetime.value;
-        order.callBackNote = callbackNote.value;
-        saveBookings(bookings);
-        closeModal();
-        render();
-      }
+      updateBookingField(id, {
+        callBackDate: callbackDatetime.value,
+        callBackNote: callbackNote.value
+      });
+      closeModal();
     });
   }
 
@@ -466,7 +418,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Click on stat summary cards to filter table
   document.querySelectorAll('.stat-card').forEach(card => {
     card.addEventListener('click', () => {
       const filterTarget = card.getAttribute('data-filter');
@@ -483,54 +434,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 6. EXTRA DEMO TOOLS (Add Sample / Reset Data)
-  const addSampleBtn = document.getElementById('add-sample-btn');
-  if (addSampleBtn) {
-    addSampleBtn.addEventListener('click', () => {
-      const sampleNames = ['Anjali Deshpande', 'Vikramaditya Rao', 'Meera Joshi', 'Ramesh Patel', 'Divya Kapoor', 'Harshvardhan Sinha'];
-      const sampleCities = ['Delhi NCR', 'Mumbai', 'Bengaluru', 'Pune', 'Hyderabad', 'Kolkata'];
-      const samplePackages = ['Full Body Vital Super', 'Diabetes & Lipid Profile Care', 'Thyroid Care Shield', 'Vitamin D & B12 Advanced Check', 'Senior Citizen Complete Guardian'];
-      const sampleSlots = ['Pending Scheduling', 'Today 06:00 - 07:00 AM Fasting', 'Tomorrow 07:00 - 08:00 AM Fasting', 'Tomorrow 09:00 - 11:00 AM'];
-
-      const randomName = sampleNames[Math.floor(Math.random() * sampleNames.length)];
-      const randomCity = sampleCities[Math.floor(Math.random() * sampleCities.length)];
-      const randomPkg = samplePackages[Math.floor(Math.random() * samplePackages.length)];
-      const randomSlot = sampleSlots[Math.floor(Math.random() * sampleSlots.length)];
-      const randomPhone = '9' + Math.floor(100000000 + Math.random() * 900000000);
-
-      const newOrder = {
-        id: 'ORD-' + Math.floor(10000 + Math.random() * 90000),
-        name: randomName,
-        mobile: randomPhone,
-        city: randomCity,
-        selectedPackage: randomPkg,
-        timestamp: new Date().toISOString(),
-        status: 'New Booking',
-        technician: '',
-        scheduleSlot: randomSlot,
-        callBackDate: '',
-        callBackNote: ''
-      };
-
-      const bookings = getBookings();
-      bookings.unshift(newOrder);
-      saveBookings(bookings);
-      render();
-    });
-  }
-
-  const resetStorageBtn = document.getElementById('reset-storage-btn');
-  if (resetStorageBtn) {
-    resetStorageBtn.addEventListener('click', () => {
-      if (confirm('This will restore the default demo test patients. Continue?')) {
-        localStorage.removeItem(STORAGE_KEY);
-        loadDefaultSampleData();
-        render();
-      }
-    });
-  }
-
-  // INIT
-  initStorage();
-  render();
+  // INIT REAL-TIME DATABASE
+  initRealtimeDatabase();
 });
