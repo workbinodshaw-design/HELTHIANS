@@ -27,16 +27,16 @@
       <form id="enterprise-login-form" class="login-form">
         <div class="form-group">
           <label for="admin-email">Administrator Email / Staff ID</label>
-          <input type="email" id="admin-email" required placeholder="official.mptripathi@gmail.com" value="official.mptripathi@gmail.com">
+          <input type="email" id="admin-email" required placeholder="Enter authorized executive email..." autocomplete="username">
         </div>
 
         <div class="form-group">
           <label for="admin-password">Secure Passcode</label>
-          <input type="password" id="admin-password" required placeholder="••••••••••••••••" value="HealthiansOps2026!">
+          <input type="password" id="admin-password" required placeholder="••••••••••••••••" autocomplete="current-password">
         </div>
 
         <div id="login-error-msg" class="login-error hidden">
-          ⚠️ Authentication Rejected: Unauthorized email or incorrect credentials.
+          ⚠️ Authentication Rejected: Invalid executive email or password.
         </div>
 
         <button type="submit" class="btn-login-submit">
@@ -45,7 +45,7 @@
       </form>
 
       <div class="login-footer">
-        <p>💡 <strong>Official Executive Verification Ready:</strong><br>Pre-configured for authorized enterprise director: <code>official.mptripathi@gmail.com</code>. Your credentials will securely authenticate against live Google Cloud IAM!</p>
+        <p>🔒 <strong>Restricted Enterprise System:</strong><br>All credentials are cryptographically authenticated directly against Google Cloud Firebase. Unauthorized access attempts are monitored and denied.</p>
       </div>
     </div>
   </div>

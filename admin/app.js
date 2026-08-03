@@ -96,65 +96,50 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = adminEmailInput.value.trim().toLowerCase();
       const password = adminPasswordInput.value;
 
-      // 1. Executive Whitelist Protection (Blocks unauthorized strangers from registering)
-      const authorizedEmails = ['official.mptripathi@gmail.com', 'admin@healthians.com', 'admin'];
-      const isAuthorized = authorizedEmails.includes(email) || email.endsWith('@healthians.com');
-
-      if (!isAuthorized) {
-        loginErrorMsg.textContent = '⚠️ Security Rejection: This email is not authorized for Healthians executive operations.';
+      // 1. Strict Executive Whitelist (Only official owner is permitted)
+      if (email !== 'official.mptripathi@gmail.com') {
+        loginErrorMsg.textContent = '⚠️ Access Denied: Only official.mptripathi@gmail.com is authorized for this executive portal.';
         loginErrorMsg.classList.remove('hidden');
         return;
       }
 
       const btnSubmit = loginForm.querySelector('button[type="submit"]');
       const originalText = btnSubmit ? btnSubmit.innerHTML : '🔒 Unlock Operations Dashboard ➔';
-      if (btnSubmit) btnSubmit.innerHTML = '<span>⏳ Verifying Executive Credentials...</span>';
+      if (btnSubmit) btnSubmit.innerHTML = '<span>⏳ Verifying directly with Firebase Cloud...</span>';
 
-      // 2. Real Google Cloud IAM Authentication via Firebase Auth
-      let authSuccessful = false;
-      if (window.HealthiansBackend && window.HealthiansBackend.auth) {
-        try {
-          await window.HealthiansBackend.auth.signInWithEmailAndPassword(email, password);
-          console.log(`✅ [Cloud IAM Confirmed] Executive ${email} signed in via Firebase Auth.`);
-          authSuccessful = true;
-        } catch (authErr) {
-          // If account is not registered yet in Firebase IAM, auto-register official executive on the fly!
-          if (authErr.code === 'auth/user-not-found' || authErr.code === 'auth/invalid-credential' || authErr.code === 'auth/invalid-login-credentials') {
-            try {
-              await window.HealthiansBackend.auth.createUserWithEmailAndPassword(email, password);
-              console.log(`🎉 [Cloud IAM Created] Official executive identity registered in Google Cloud for ${email}!`);
-              authSuccessful = true;
-            } catch (createErr) {
-              console.warn('Notice: Firebase IAM cloud verification fallback triggered:', createErr.code);
-              // Fallback to local cryptographic verification if cloud IAM method disabled in console
-              if (password === 'HealthiansOps2026!' || password.length >= 8) {
-                authSuccessful = true;
-              }
-            }
-          } else {
-            console.warn('Notice: Offline/Local enterprise verification activated:', authErr.message);
-            if (password === 'HealthiansOps2026!') {
-              authSuccessful = true;
-            }
-          }
+      // 2. 100% Real Google Firebase Cloud Authentication
+      try {
+        if (!window.HealthiansBackend || !window.HealthiansBackend.auth) {
+          throw new Error('Firebase Authentication SDK is not initialized or offline.');
         }
-      } else {
-        // Zero-roadblock Edge Security verification
-        if (password === 'HealthiansOps2026!') {
-          authSuccessful = true;
-        }
-      }
 
-      if (btnSubmit) btnSubmit.innerHTML = originalText;
+        // Authenticate directly with Firebase Google IAM Console
+        const userCredential = await window.HealthiansBackend.auth.signInWithEmailAndPassword(email, password);
+        console.log('✅ Real Firebase Auth successful for user:', userCredential.user.email);
 
-      // 3. Complete Gateway Unlocking
-      if (authSuccessful) {
+        if (btnSubmit) btnSubmit.innerHTML = originalText;
         sessionStorage.setItem('healthians_admin_auth', 'VERIFIED_ENTERPRISE_ADMIN');
         sessionStorage.setItem('healthians_admin_email', email);
         loginErrorMsg.classList.add('hidden');
         unlockDashboard();
-      } else {
-        loginErrorMsg.textContent = '⚠️ Authentication Rejected: Incorrect password for authorized executive.';
+
+      } catch (authErr) {
+        if (btnSubmit) btnSubmit.innerHTML = originalText;
+        console.error('Firebase Auth Error:', authErr);
+        
+        // Formatted feedback directly from real Firebase IAM Server
+        let errorMsg = '⚠️ Authentication Rejected: Incorrect password or unverified account.';
+        if (authErr.code === 'auth/user-not-found' || authErr.code === 'auth/invalid-credential' || authErr.code === 'auth/invalid-login-credentials') {
+          errorMsg = '⚠️ Login Failed: Invalid credentials or user not registered in Firebase Console.';
+        } else if (authErr.code === 'auth/wrong-password') {
+          errorMsg = '⚠️ Login Failed: Incorrect secret passcode.';
+        } else if (authErr.code === 'auth/operation-not-allowed') {
+          errorMsg = '⚠️ Notice: Email/Password Sign-In must be turned ON under Authentication > Sign-in method in your Firebase Console!';
+        } else if (authErr.message) {
+          errorMsg = `⚠️ Firebase Error: ${authErr.message}`;
+        }
+
+        loginErrorMsg.textContent = errorMsg;
         loginErrorMsg.classList.remove('hidden');
         adminPasswordInput.value = '';
         adminPasswordInput.focus();
