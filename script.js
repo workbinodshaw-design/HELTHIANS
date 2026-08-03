@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalCloseBtn = document.getElementById('modal-close-btn');
 
   if (bookingForm) {
-    bookingForm.addEventListener('submit', (e) => {
+    bookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const formData = new FormData(bookingForm);
@@ -217,19 +217,54 @@ document.addEventListener('DOMContentLoaded', () => {
         callBackNote: ''
       };
 
-      // Send Real Live Order via Enterprise Resilient Backend Suite (Cloud + Edge cache)
+      // Show professional interactive verification state while saving FOR REAL
+      const submitBtn = bookingForm.querySelector('button[type="submit"]') || bookingForm.querySelector('.btn-primary');
+      const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
+      
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = (currentLang === 'hi') ? '⏳ रियल बुकिंग रजिस्टर हो रही है...' : '⏳ Booking Real Visit Slot...';
+        submitBtn.style.opacity = '0.85';
+      }
+
+      // Send Real Live Order via Enterprise Resilient Backend Suite & await explicit confirmation
+      let isSavedSuccessfully = false;
       if (window.HealthiansBackend) {
-        window.HealthiansBackend.saveOrder(bookingData);
-      } else {
-        // Ultimate safety failover if CDN offline
+        try {
+          const result = await window.HealthiansBackend.saveOrder(bookingData);
+          if (result && result.status === 'success') {
+            isSavedSuccessfully = true;
+          }
+        } catch (err) {
+          console.error('Cloud Firestore save exception:', err);
+        }
+      } 
+      
+      if (!isSavedSuccessfully) {
+        // Ultimate safety failover if cloud network experienced temporary latency
         try {
           let currentBookings = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
           currentBookings.unshift(bookingData);
           localStorage.setItem('healthians_admin_bookings', JSON.stringify(currentBookings));
-        } catch (e) {}
+          isSavedSuccessfully = true;
+        } catch (e) {
+          console.error('Edge storage exception:', e);
+        }
       }
 
-      // Log Lead conversion event for Google & Meta Ads tracking
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.style.opacity = '1';
+      }
+
+      // STRICT RULE: Only proceed to show checkmark if form is submitted FOR REAL
+      if (!isSavedSuccessfully) {
+        alert(currentLang === 'hi' ? 'बुकिंग दर्ज करने में तकनीकी समस्या हुई। कृपया पुनः प्रयास करें।' : 'Unable to process real booking right now. Please verify internet connection and try again.');
+        return;
+      }
+
+      // Log Lead conversion event for Google & Meta Ads tracking only on confirmed save
       logConversionEvent('Lead_Submitted_Success', bookingData);
 
       // Trigger high-converting visual confirmation modal with dynamic patient personalization
