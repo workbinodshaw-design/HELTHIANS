@@ -18,6 +18,7 @@
   };
 
   let dbInstance = null;
+  let authInstance = null;
   let isCloudOnline = false;
 
   // Initialize Firebase securely using Browser Compat SDK
@@ -27,6 +28,9 @@
         firebase.initializeApp(firebaseConfig);
       }
       dbInstance = firebase.firestore();
+      if (firebase.auth) {
+        authInstance = firebase.auth();
+      }
       
       // Enable Firestore offline data persistence if supported
       dbInstance.enablePersistence().catch(err => {
@@ -34,7 +38,7 @@
       });
 
       isCloudOnline = true;
-      console.log('✅ Healthians Enterprise Cloud Firestore Connected!');
+      console.log('✅ Healthians Enterprise Cloud Firestore & Auth Connected!');
     } else {
       console.warn('⚠️ Cloud CDN latency detected. Edge Local Resiliency Engine activated.');
     }
@@ -42,9 +46,10 @@
     console.error('⚠️ Firebase Initialization Notice:', err);
   }
 
-  // Export Enterprise Database Helper Suite to Window
+  // Export Enterprise Database & Auth Helper Suite to Window
   window.HealthiansBackend = {
     db: dbInstance,
+    auth: authInstance,
     isOnline: () => isCloudOnline && dbInstance !== null,
 
     /**

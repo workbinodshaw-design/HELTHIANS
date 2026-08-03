@@ -27,7 +27,7 @@
       <form id="enterprise-login-form" class="login-form">
         <div class="form-group">
           <label for="admin-email">Administrator Email / Staff ID</label>
-          <input type="email" id="admin-email" required placeholder="admin@healthians.com" value="admin@healthians.com">
+          <input type="email" id="admin-email" required placeholder="official.mptripathi@gmail.com" value="official.mptripathi@gmail.com">
         </div>
 
         <div class="form-group">
@@ -36,7 +36,7 @@
         </div>
 
         <div id="login-error-msg" class="login-error hidden">
-          ⚠️ Authentication Rejected: Incorrect administrator credentials.
+          ⚠️ Authentication Rejected: Unauthorized email or incorrect credentials.
         </div>
 
         <button type="submit" class="btn-login-submit">
@@ -45,7 +45,7 @@
       </form>
 
       <div class="login-footer">
-        <p>💡 <strong>Owner Verification Auto-Initialized:</strong><br>For your ₹100 Crore production build, default credentials have been pre-filled above (`admin@healthians.com` / `HealthiansOps2026!`). Simply click unlock!</p>
+        <p>💡 <strong>Official Executive Verification Ready:</strong><br>Pre-configured for authorized enterprise director: <code>official.mptripathi@gmail.com</code>. Your credentials will securely authenticate against live Google Cloud IAM!</p>
       </div>
     </div>
   </div>
@@ -207,8 +207,9 @@
     </div>
   </div>
 
-  <!-- Google Firebase Cloud Backend SDKs -->
+  <!-- Google Firebase Cloud Backend & Auth SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="../firebase-config.js"></script>
   <script src="app.js"></script>
