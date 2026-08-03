@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- DASHBOARD DOM REFERENCES ---
   const tbody = document.getElementById('bookings-tbody');
+  const mobileCardsContainer = document.getElementById('bookings-mobile-cards');
   const searchInput = document.getElementById('search-input');
   const emptyState = document.getElementById('empty-state');
   const filterPills = document.querySelectorAll('.filter-pill');
@@ -75,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     currentLiveBookings = [];
     if (tbody) tbody.innerHTML = '';
+    if (mobileCardsContainer) mobileCardsContainer.innerHTML = '';
     
     enterpriseDashboard.classList.add('hidden');
     loginPortal.classList.remove('hidden');
@@ -295,8 +297,9 @@ document.addEventListener('DOMContentLoaded', () => {
       alertBanner.classList.add('hidden');
     }
 
-    // Populate Table
-    tbody.innerHTML = '';
+    // Populate Table and Mobile Touch Cards
+    if (tbody) tbody.innerHTML = '';
+    if (mobileCardsContainer) mobileCardsContainer.innerHTML = '';
     if (filtered.length === 0) {
       emptyState.classList.remove('hidden');
     } else {
@@ -388,6 +391,74 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         tbody.appendChild(row);
+
+        // Populate Mobile Touch Patient Action Card
+        if (mobileCardsContainer) {
+          const card = document.createElement('div');
+          card.className = `patient-mobile-card ${isDue ? 'card-due-alert' : ''}`;
+          card.innerHTML = `
+            <div class="card-top">
+              <div class="card-patient-info">
+                <h3 class="card-name">${b.name || 'Patient'}</h3>
+                <span class="card-city">📍 ${b.city || 'India'} &bull; <small>ID: ${b.id}</small></span>
+                <span class="card-date">🕒 Booked: ${dateStr}</span>
+              </div>
+              <span class="card-status-badge ${statusClass}">${b.status || 'New Booking'}</span>
+            </div>
+
+            <div class="card-middle">
+              <a href="tel:${b.mobile}" class="btn-touch-call">📞 Call +91 ${b.mobile || ''}</a>
+              <div style="margin-top: 6px;"><span class="pkg-pill">${b.selectedPackage || 'General Inquiry'}</span></div>
+            </div>
+
+            <div class="card-controls">
+              <div class="card-form-row">
+                <label>Schedule Slot Visit:</label>
+                <select class="card-select slot-select" data-id="${b.id}">
+                  <option value="Pending Scheduling" ${b.scheduleSlot === 'Pending Scheduling' ? 'selected' : ''}>Pending Scheduling</option>
+                  <option value="Today 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Today 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>Today 06:00 - 07:00 AM Fasting</option>
+                  <option value="Today 07:00 - 08:00 AM Fasting" ${b.scheduleSlot === 'Today 07:00 - 08:00 AM Fasting' ? 'selected' : ''}>Today 07:00 - 08:00 AM Fasting</option>
+                  <option value="Today 09:00 - 11:00 AM" ${b.scheduleSlot === 'Today 09:00 - 11:00 AM' ? 'selected' : ''}>Today 09:00 - 11:00 AM</option>
+                  <option value="Today 12:00 - 02:00 PM" ${b.scheduleSlot === 'Today 12:00 - 02:00 PM' ? 'selected' : ''}>Today 12:00 - 02:00 PM</option>
+                  <option value="Tomorrow 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Tomorrow 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>Tomorrow 06:00 - 07:00 AM Fasting</option>
+                  <option value="Tomorrow 08:00 - 10:00 AM" ${b.scheduleSlot === 'Tomorrow 08:00 - 10:00 AM' ? 'selected' : ''}>Tomorrow 08:00 - 10:00 AM</option>
+                  <option value="Completed" ${b.scheduleSlot === 'Completed' ? 'selected' : ''}>✅ Slot Visit Completed</option>
+                </select>
+              </div>
+
+              <div class="card-form-row" style="margin-top: 10px;">
+                <label>Order Status & Assignee:</label>
+                <select class="card-select status-select ${statusClass}" data-id="${b.id}" style="margin-bottom: 6px;">
+                  <option value="New Booking" ${b.status === 'New Booking' ? 'selected' : ''}>🟡 New Booking</option>
+                  <option value="Collector Assigned" ${b.status === 'Collector Assigned' ? 'selected' : ''}>🔵 Collector Assigned</option>
+                  <option value="Sample Collected" ${b.status === 'Sample Collected' ? 'selected' : ''}>🟣 Sample Collected</option>
+                  <option value="In Lab Analysis" ${b.status === 'In Lab Analysis' ? 'selected' : ''}>🧪 In Lab Analysis</option>
+                  <option value="Report Ready" ${b.status === 'Report Ready' ? 'selected' : ''}>🟢 Report Ready</option>
+                  <option value="Cancelled" ${b.status === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
+                </select>
+                <select class="card-select tech-select" data-id="${b.id}">
+                  <option value="" ${!b.technician ? 'selected' : ''}>— Assign Phlebotomist —</option>
+                  <option value="Rahul Sharma [HLT-104]" ${b.technician === 'Rahul Sharma [HLT-104]' ? 'selected' : ''}>🛵 Rahul Sharma [HLT-104]</option>
+                  <option value="Vikram Singh [HLT-209]" ${b.technician === 'Vikram Singh [HLT-209]' ? 'selected' : ''}>🛵 Vikram Singh [HLT-209]</option>
+                  <option value="Sunita Rao [HLT-312]" ${b.technician === 'Sunita Rao [HLT-312]' ? 'selected' : ''}>🛵 Sunita Rao [HLT-312]</option>
+                  <option value="Amit Kumar [HLT-401]" ${b.technician === 'Amit Kumar [HLT-401]' ? 'selected' : ''}>🛵 Amit Kumar [HLT-401]</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="card-callback-box">
+              ${callbackHtml}
+            </div>
+
+            <div class="card-actions">
+              <button class="btn-wa-dispatch btn-touch-wa" data-id="${b.id}" title="Send Dispatch WhatsApp">
+                <span>💬 WhatsApp Dispatch</span>
+              </button>
+              <button class="btn-delete-row btn-touch-delete" data-id="${b.id}" title="Delete Order">🗑️ Delete</button>
+            </div>
+          `;
+          mobileCardsContainer.appendChild(card);
+        }
       });
     }
 

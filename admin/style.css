@@ -1036,3 +1036,299 @@ body {
   75% { transform: translateX(-6px); }
 }
 
+/* ======================================================================
+   MOBILE-FIRST LUXURY TOUCH UI & RESEMBLED APP ARCHITECTURE
+   ====================================================================== */
+
+/* By default on large desktop screens, hide mobile cards view */
+@media (min-width: 769px) {
+  .mobile-cards-view {
+    display: none !important;
+  }
+}
+
+/* On mobile and tablet screens, swap unreadable HTML table for iOS/Android style Action Cards! */
+@media (max-width: 768px) {
+  .bookings-table {
+    display: none !important;
+  }
+
+  .mobile-cards-view {
+    display: flex !important;
+    flex-direction: column;
+    gap: 18px;
+    padding: 8px 4px 32px 4px;
+    width: 100%;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .header-center .search-box {
+    width: 100%;
+    margin: 0;
+  }
+
+  .header-center .search-box input {
+    width: 100%;
+    padding: 12px 14px 12px 40px;
+    font-size: 0.92rem;
+  }
+
+  .header-right {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .header-right .btn-logout, .header-right .btn-live-site {
+    margin: 0;
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+
+  .metrics-grid, .stats-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    padding: 12px 16px !important;
+  }
+
+  .stat-card {
+    padding: 16px !important;
+    border-radius: 16px !important;
+  }
+
+  .stat-value {
+    font-size: 1.6rem !important;
+  }
+
+  .controls-bar {
+    padding: 0 16px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .filter-pills {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 8px !important;
+    gap: 8px !important;
+  }
+
+  .filter-pill {
+    padding: 10px 16px !important;
+    font-size: 0.85rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  .table-container {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 16px !important;
+  }
+}
+
+/* Extra small mobile smartphones */
+@media (max-width: 480px) {
+  .metrics-grid, .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ======================================================================
+   PATIENT MOBILE TOUCH CARD DESIGN SYSTEM (iOS / ANDROID FEEL)
+   ====================================================================== */
+.patient-mobile-card {
+  background: #FFFFFF;
+  border-radius: 22px;
+  border: 1px solid #E2E8F0;
+  padding: 22px;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.07), 0 4px 6px -2px rgba(15, 23, 42, 0.03);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.patient-mobile-card:active {
+  transform: scale(0.985);
+}
+
+.patient-mobile-card.card-due-alert {
+  border-color: #FECACA;
+  background: linear-gradient(180deg, #FFF5F5 0%, #FFFFFF 30%);
+  box-shadow: 0 12px 28px -5px rgba(220, 38, 38, 0.12);
+  border-left: 6px solid #DC2626;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  border-bottom: 1px dashed #E2E8F0;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+}
+
+.card-patient-info .card-name {
+  font-family: 'Outfit', -apple-system, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.card-city {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+.card-date {
+  display: block;
+  font-size: 0.76rem;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.card-status-badge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.card-middle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.btn-touch-call {
+  display: inline-flex;
+  align-items: center;
+  background: #EFF6FF;
+  color: #2563EB;
+  border: 1px solid #BFDBFE;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 14px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-touch-call:hover {
+  background: #2563EB;
+  color: #FFFFFF;
+}
+
+.card-controls {
+  background: #F8FAFC;
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid #F1F5F9;
+  margin-bottom: 16px;
+}
+
+.card-form-row label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.card-select {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #0F172A;
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 12px;
+  outline: none;
+  transition: border 0.15s;
+  font-family: inherit;
+}
+
+.card-select:focus {
+  border-color: #0284C7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+.card-callback-box {
+  margin-bottom: 16px;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid #E2E8F0;
+}
+
+.btn-touch-wa {
+  flex: 1;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #FFFFFF;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-touch-wa:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 20px -3px rgba(16, 185, 129, 0.45);
+}
+
+.btn-touch-delete {
+  padding: 14px 18px;
+  background: #FEF2F2;
+  color: #DC2626;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: 1px solid #FECACA;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-touch-delete:hover {
+  background: #DC2626;
+  color: #FFFFFF;
+}
+
+
