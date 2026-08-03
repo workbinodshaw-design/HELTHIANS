@@ -1331,4 +1331,152 @@ body {
   color: #FFFFFF;
 }
 
+/* ======================================================================
+   MOBILE APP EXCLUSIVE NAVIGATION & LUXURY AVATAR SYSTEM
+   ====================================================================== */
+
+/* Hide mobile bottom nav by default on computers/laptops */
+@media (min-width: 769px) {
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}
+
+/* Enable sticky iPhone/Android app navigation bar on mobile smartphones */
+@media (max-width: 768px) {
+  .mobile-bottom-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(226, 232, 240, 0.9);
+    z-index: 999;
+    padding: 8px 6px 12px 6px;
+    justify-content: space-around;
+    box-shadow: 0 -4px 25px rgba(15, 23, 42, 0.08);
+  }
+
+  .admin-main {
+    padding-bottom: 100px !important;
+  }
+}
+
+.mobile-nav-item {
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 6px 8px;
+  border-radius: 14px;
+  color: #64748B;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex: 1;
+  min-width: 60px;
+}
+
+.mobile-nav-item:active {
+  transform: scale(0.92);
+}
+
+.mobile-nav-item.active {
+  color: #0284C7;
+  background: #F0F9FF;
+}
+
+.mobile-nav-item.nav-amber-item.active {
+  color: #D97706;
+  background: #FFFBEB;
+}
+
+.nav-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.nav-text {
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* AVATAR & CARD RIBBON SYSTEM */
+.card-avatar-flex {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.patient-avatar-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 8px 18px -4px rgba(2, 132, 199, 0.35);
+  font-family: 'Outfit', -apple-system, sans-serif;
+  letter-spacing: 1px;
+}
+
+.id-chip {
+  font-weight: 700;
+  color: #64748B;
+  background: #F1F5F9;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.card-middle-ribbon {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 16px;
+  background: #F8FAFC;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+}
+
+.btn-touch-call {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%) !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  padding: 14px 20px !important;
+  border-radius: 14px !important;
+  font-size: 1.02rem !important;
+  text-decoration: none;
+  box-shadow: 0 8px 18px -4px rgba(2, 132, 199, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.btn-touch-call:hover, .btn-touch-call:active {
+  transform: scale(0.985);
+  box-shadow: 0 10px 22px -4px rgba(2, 132, 199, 0.5);
+}
+
+.pkg-pill-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+
 

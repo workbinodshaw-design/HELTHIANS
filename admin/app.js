@@ -289,6 +289,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (countLab) countLab.textContent = countLb;
     if (countCompletedPill) countCompletedPill.textContent = countRdy;
 
+    // Update Mobile Bottom Navigation bar counters
+    const mobAll = document.getElementById('mob-count-all');
+    const mobNew = document.getElementById('mob-count-new');
+    const mobCb = document.getElementById('mob-count-cb');
+    if (mobAll) mobAll.textContent = bookings.length;
+    if (mobNew) mobNew.textContent = countNw;
+    if (mobCb) mobCb.textContent = countCb;
+
     // Alert Banner trigger
     if (dueCallbacks > 0) {
       alertBanner.classList.remove('hidden');
@@ -392,43 +400,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tbody.appendChild(row);
 
-        // Populate Mobile Touch Patient Action Card
+        // Populate Mobile Touch Patient Action Card (Ultra Luxury App Edition)
         if (mobileCardsContainer) {
           const card = document.createElement('div');
           card.className = `patient-mobile-card ${isDue ? 'card-due-alert' : ''}`;
+          
+          // Create avatar initials
+          const ptName = (b.name || 'Patient').trim();
+          const initials = ptName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() || 'VIP';
+
           card.innerHTML = `
             <div class="card-top">
-              <div class="card-patient-info">
-                <h3 class="card-name">${b.name || 'Patient'}</h3>
-                <span class="card-city">📍 ${b.city || 'India'} &bull; <small>ID: ${b.id}</small></span>
-                <span class="card-date">🕒 Booked: ${dateStr}</span>
+              <div class="card-avatar-flex">
+                <div class="patient-avatar-circle">${initials}</div>
+                <div class="card-patient-info">
+                  <h3 class="card-name">${ptName}</h3>
+                  <span class="card-city">📍 ${b.city || 'India'} &bull; <small class="id-chip">ID: ${b.id.slice(-6)}</small></span>
+                  <span class="card-date">🕒 Booked: ${dateStr}</span>
+                </div>
               </div>
               <span class="card-status-badge ${statusClass}">${b.status || 'New Booking'}</span>
             </div>
 
-            <div class="card-middle">
-              <a href="tel:${b.mobile}" class="btn-touch-call">📞 Call +91 ${b.mobile || ''}</a>
-              <div style="margin-top: 6px;"><span class="pkg-pill">${b.selectedPackage || 'General Inquiry'}</span></div>
+            <div class="card-middle-ribbon">
+              <a href="tel:${b.mobile}" class="btn-touch-call">
+                <span class="call-icon">📞</span>
+                <span>Call +91 ${b.mobile || ''}</span>
+              </a>
+              <div class="pkg-pill-wrap"><span class="pkg-pill">${b.selectedPackage || 'General Inquiry'}</span></div>
             </div>
 
             <div class="card-controls">
               <div class="card-form-row">
-                <label>Schedule Slot Visit:</label>
+                <label>📅 Schedule Home Visit Slot:</label>
                 <select class="card-select slot-select" data-id="${b.id}">
-                  <option value="Pending Scheduling" ${b.scheduleSlot === 'Pending Scheduling' ? 'selected' : ''}>Pending Scheduling</option>
-                  <option value="Today 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Today 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>Today 06:00 - 07:00 AM Fasting</option>
-                  <option value="Today 07:00 - 08:00 AM Fasting" ${b.scheduleSlot === 'Today 07:00 - 08:00 AM Fasting' ? 'selected' : ''}>Today 07:00 - 08:00 AM Fasting</option>
-                  <option value="Today 09:00 - 11:00 AM" ${b.scheduleSlot === 'Today 09:00 - 11:00 AM' ? 'selected' : ''}>Today 09:00 - 11:00 AM</option>
-                  <option value="Today 12:00 - 02:00 PM" ${b.scheduleSlot === 'Today 12:00 - 02:00 PM' ? 'selected' : ''}>Today 12:00 - 02:00 PM</option>
-                  <option value="Tomorrow 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Tomorrow 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>Tomorrow 06:00 - 07:00 AM Fasting</option>
-                  <option value="Tomorrow 08:00 - 10:00 AM" ${b.scheduleSlot === 'Tomorrow 08:00 - 10:00 AM' ? 'selected' : ''}>Tomorrow 08:00 - 10:00 AM</option>
+                  <option value="Pending Scheduling" ${b.scheduleSlot === 'Pending Scheduling' ? 'selected' : ''}>⏳ Pending Scheduling</option>
+                  <option value="Today 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Today 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>🌅 Today 06:00 - 07:00 AM Fasting</option>
+                  <option value="Today 07:00 - 08:00 AM Fasting" ${b.scheduleSlot === 'Today 07:00 - 08:00 AM Fasting' ? 'selected' : ''}>🌅 Today 07:00 - 08:00 AM Fasting</option>
+                  <option value="Today 09:00 - 11:00 AM" ${b.scheduleSlot === 'Today 09:00 - 11:00 AM' ? 'selected' : ''}>☀️ Today 09:00 - 11:00 AM</option>
+                  <option value="Today 12:00 - 02:00 PM" ${b.scheduleSlot === 'Today 12:00 - 02:00 PM' ? 'selected' : ''}>🌞 Today 12:00 - 02:00 PM</option>
+                  <option value="Tomorrow 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Tomorrow 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>📅 Tomorrow 06:00 - 07:00 AM Fasting</option>
+                  <option value="Tomorrow 08:00 - 10:00 AM" ${b.scheduleSlot === 'Tomorrow 08:00 - 10:00 AM' ? 'selected' : ''}>📅 Tomorrow 08:00 - 10:00 AM</option>
                   <option value="Completed" ${b.scheduleSlot === 'Completed' ? 'selected' : ''}>✅ Slot Visit Completed</option>
                 </select>
               </div>
 
-              <div class="card-form-row" style="margin-top: 10px;">
-                <label>Order Status & Assignee:</label>
-                <select class="card-select status-select ${statusClass}" data-id="${b.id}" style="margin-bottom: 6px;">
+              <div class="card-form-row" style="margin-top: 12px;">
+                <label>🧪 Order Status & Phlebotomist:</label>
+                <select class="card-select status-select ${statusClass}" data-id="${b.id}" style="margin-bottom: 8px;">
                   <option value="New Booking" ${b.status === 'New Booking' ? 'selected' : ''}>🟡 New Booking</option>
                   <option value="Collector Assigned" ${b.status === 'Collector Assigned' ? 'selected' : ''}>🔵 Collector Assigned</option>
                   <option value="Sample Collected" ${b.status === 'Sample Collected' ? 'selected' : ''}>🟣 Sample Collected</option>
@@ -605,7 +624,23 @@ document.addEventListener('DOMContentLoaded', () => {
       filterPills.forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
       currentFilter = pill.getAttribute('data-filter');
+      
+      // Also update bottom nav bar indicator
+      document.querySelectorAll('.mobile-nav-item').forEach(m => {
+        m.classList.toggle('active', m.getAttribute('data-filter') === currentFilter);
+      });
+
       render();
+    });
+  });
+
+  // Mobile bottom nav item click binders
+  document.querySelectorAll('.mobile-nav-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-filter');
+      const matchPill = document.querySelector(`.filter-pill[data-filter="${target}"]`);
+      if (matchPill) matchPill.click();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
 
