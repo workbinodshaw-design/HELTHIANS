@@ -1076,12 +1076,241 @@ img {
 .wa-float-btn:hover { transform: scale(1.08); box-shadow: 0 14px 34px rgba(37, 211, 102, 0.6); }
 .wa-float-btn svg { width: 34px; height: 34px; color: #FFFFFF; }
 
-/* Modal */
-.modal-overlay-clean { position: fixed; inset: 0; background: rgba(10, 37, 40, 0.65); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-.modal-overlay-clean.active { opacity: 1; pointer-events: auto; }
-.modal-box-clean { background: #FFFFFF; border-radius: 28px; max-width: 440px; width: 100%; padding: 34px 28px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.3); transform: translateY(20px) scale(0.95); transition: transform 0.3s; }
-.modal-overlay-clean.active .modal-box-clean { transform: translateY(0) scale(1); }
-.success-check-icon { width: 68px; height: 68px; background: #E5FAFB; color: var(--healthians-blue); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 800; margin: 0 auto 18px auto; box-shadow: 0 10px 20px rgba(0,160,168,0.2); }
+/* ==========================================================================
+   SUPER LUXURY ANIMATED SUCCESS MODAL (Stripe & Apple UX Pattern)
+   ========================================================================== */
+.modal-overlay-clean {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 37, 40, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay-clean.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box-luxury {
+  background: #FFFFFF;
+  border-radius: 32px;
+  max-width: 460px;
+  width: 100%;
+  padding: 38px 30px;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(0, 160, 168, 0.15);
+  transform: translateY(35px) scale(0.92);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  position: relative;
+}
+
+.modal-overlay-clean.active .modal-box-luxury {
+  transform: translateY(0) scale(1);
+}
+
+/* Animated Green Checkmark Circle with Pulse */
+.success-tick-wrapper {
+  position: relative;
+  width: 86px;
+  height: 86px;
+  margin: 0 auto 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-tick-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(22, 163, 74, 0.25);
+  animation: tickPulse 2s infinite ease-out;
+}
+
+@keyframes tickPulse {
+  0% { transform: scale(0.95); opacity: 0.9; }
+  70% { transform: scale(1.45); opacity: 0; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+
+.success-tick-circle {
+  width: 74px;
+  height: 74px;
+  background: linear-gradient(135deg, #22C55E 0%, #15803D 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 28px rgba(22, 163, 74, 0.4);
+  z-index: 2;
+  transform: scale(0);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s;
+}
+
+.modal-overlay-clean.active .success-tick-circle {
+  transform: scale(1);
+}
+
+.animated-check-svg {
+  width: 38px;
+  height: 38px;
+  color: #FFFFFF;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.65, 0, 0.45, 1) 0.3s;
+}
+
+.modal-overlay-clean.active .animated-check-svg {
+  stroke-dashoffset: 0;
+}
+
+.modal-badge-tag {
+  display: inline-block;
+  background: #ECFDF5;
+  color: #047857;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  text-transform: uppercase;
+}
+
+.modal-main-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+
+.modal-sub-desc {
+  font-size: 0.94rem;
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.modal-summary-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+.summary-row-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sum-icon {
+  font-size: 1.5rem;
+  background: #FFFFFF;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+
+.sum-text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.sum-label {
+  font-size: 0.78rem;
+  color: #64748B;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.sum-value {
+  font-size: 0.95rem;
+  color: #0F172A;
+  font-weight: 600;
+}
+
+.modal-action-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-modal-primary {
+  width: 100%;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 9999px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(22, 163, 74, 0.35);
+  transition: all 0.2s ease;
+}
+
+.btn-modal-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(22, 163, 74, 0.45);
+}
+
+.btn-modal-wa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 24px;
+  background: #F1F5F9;
+  color: #0F172A;
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  font-size: 0.94rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-modal-wa:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+}
+
+.btn-modal-wa svg {
+  width: 20px;
+  height: 20px;
+  color: #25D366;
+}
+
+@media (max-width: 480px) {
+  .modal-box-luxury {
+    padding: 30px 20px;
+    border-radius: 26px;
+  }
+  .modal-main-title {
+    font-size: 1.4rem;
+  }
+}
 
 /* ==========================================================================
    DESKTOP & PC VERSION SCALING (Proportional & Elegant)

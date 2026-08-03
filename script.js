@@ -232,8 +232,16 @@ document.addEventListener('DOMContentLoaded', () => {
       // Log Lead conversion event for Google & Meta Ads tracking
       logConversionEvent('Lead_Submitted_Success', bookingData);
 
-      // Trigger high-converting visual confirmation modal
+      // Trigger high-converting visual confirmation modal with dynamic patient personalization
       if (successModal) {
+        const modalNameSpan = document.getElementById('modal-patient-name');
+        const modalPkgSpan = document.getElementById('modal-pkg-name');
+        const modalCitySpan = document.getElementById('modal-city-name');
+        
+        if (modalNameSpan) modalNameSpan.textContent = patientName;
+        if (modalPkgSpan) modalPkgSpan.textContent = bookingData.selectedPackage;
+        if (modalCitySpan) modalCitySpan.textContent = chosenCity;
+
         successModal.classList.add('active');
       }
 
