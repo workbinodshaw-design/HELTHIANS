@@ -262,15 +262,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function modifyOrder(id, fields) {
+    const order = currentLiveBookings.find(x => x.id === id);
+    if (order) {
+      Object.assign(order, fields);
+    }
     if (window.HealthiansBackend && window.HealthiansBackend.updateOrder) {
       window.HealthiansBackend.updateOrder(id, fields);
     }
+    render();
   }
 
   function removeOrder(id) {
+    currentLiveBookings = currentLiveBookings.filter(x => x.id !== id);
     if (window.HealthiansBackend && window.HealthiansBackend.deleteOrder) {
       window.HealthiansBackend.deleteOrder(id);
     }
+    render();
   }
 
   // ======================================================================
