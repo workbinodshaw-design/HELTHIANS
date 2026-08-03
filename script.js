@@ -183,20 +183,16 @@ document.addEventListener('DOMContentLoaded', () => {
         callBackNote: ''
       };
 
-      // Send Real Live Order directly to Google Cloud Firestore Database
-      if (window.healthiansDb) {
-        window.healthiansDb.collection('bookings').doc(bookingData.id).set(bookingData)
-          .then(() => console.log('✅ Live Order securely beamed to Cloud Firestore!'))
-          .catch(err => console.error('⚠️ Cloud database notice:', err));
-      }
-
-      // Keep local cache copy for fast redundancy
-      try {
-        let currentBookings = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
-        currentBookings.unshift(bookingData);
-        localStorage.setItem('healthians_admin_bookings', JSON.stringify(currentBookings));
-      } catch (e) {
-        console.warn('Storage saving notice:', e);
+      // Send Real Live Order via Enterprise Resilient Backend Suite (Cloud + Edge cache)
+      if (window.HealthiansBackend) {
+        window.HealthiansBackend.saveOrder(bookingData);
+      } else {
+        // Ultimate safety failover if CDN offline
+        try {
+          let currentBookings = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
+          currentBookings.unshift(bookingData);
+          localStorage.setItem('healthians_admin_bookings', JSON.stringify(currentBookings));
+        } catch (e) {}
       }
 
       // Log Lead conversion event for Google & Meta Ads tracking

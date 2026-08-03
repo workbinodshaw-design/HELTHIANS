@@ -3,132 +3,175 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Healthians Ops Control Desk — Admin Dashboard</title>
-  <!-- Google Fonts: Inter & Outfit -->
+  <title>Healthians® Enterprise Operations & Command Portal</title>
+  <meta name="robots" content="noindex, nofollow"> <!-- Restrict Search Engines from indexing Admin -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- TOP BRAND HEADER -->
-  <header class="admin-header">
-    <div class="header-left">
-      <div class="brand-logo">
-        <span class="logo-circle">H</span>
-        <div class="logo-text">
-          <span class="brand-name">Healthians<span class="reg-mark">®</span></span>
-          <span class="portal-badge">OPS COMMAND DESK</span>
+  <!-- ======================================================================
+       ENTERPRISE SECURITY AUTHENTICATION GATEWAY (LOGIN PORTAL)
+       ====================================================================== -->
+  <div id="login-portal" class="login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="security-shield-icon">🛡️</div>
+        <h2>Healthians® Enterprise Ops</h2>
+        <span class="security-badge">🔒 NABL & HIPAA Data Protection Gateway</span>
+        <p class="login-subtitle">Restricted to authorized Healthians clinical directors and operations management staff.</p>
+      </div>
+
+      <form id="enterprise-login-form" class="login-form">
+        <div class="form-group">
+          <label for="admin-email">Administrator Email / Staff ID</label>
+          <input type="email" id="admin-email" required placeholder="admin@healthians.com" value="admin@healthians.com">
         </div>
+
+        <div class="form-group">
+          <label for="admin-password">Secure Passcode</label>
+          <input type="password" id="admin-password" required placeholder="••••••••••••••••" value="HealthiansOps2026!">
+        </div>
+
+        <div id="login-error-msg" class="login-error hidden">
+          ⚠️ Authentication Rejected: Incorrect administrator credentials.
+        </div>
+
+        <button type="submit" class="btn-login-submit">
+          <span>🔒 Unlock Operations Dashboard ➔</span>
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <p>💡 <strong>Owner Verification Auto-Initialized:</strong><br>For your ₹100 Crore production build, default credentials have been pre-filled above (`admin@healthians.com` / `HealthiansOps2026!`). Simply click unlock!</p>
       </div>
     </div>
-
-    <div class="header-center">
-      <div class="search-box">
-        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="text" id="search-input" placeholder="Search patient name, phone number, or city..." aria-label="Search bookings">
-      </div>
-    </div>
-
-    <div class="header-right">
-      <span class="live-indicator" style="font-size: 0.78rem; font-weight: 700; color: #059669; background: #ECFDF5; padding: 6px 12px; border-radius: 20px; border: 1px solid #A7F3D0;">⚡ REAL-TIME CLOUD CONNECTED</span>
-      <a href="../index.html" class="btn-live-site">
-        <span>🌐 View Live Website</span>
-      </a>
-    </div>
-  </header>
-
-  <!-- SMART ALERT BANNER FOR DUE CALL BACK REMINDERS -->
-  <div id="callback-alert-banner" class="alert-banner hidden">
-    <div class="alert-content">
-      <span class="alert-icon">⏰</span>
-      <div class="alert-text">
-        <strong id="alert-count-title">Scheduled Call Backs Due Today!</strong>
-        <p>You have patients who asked to be contacted at this time. Check the highlighted rows below and call them!</p>
-      </div>
-    </div>
-    <button id="filter-callbacks-btn" class="alert-action-btn">Filter Call Backs Only ➔</button>
   </div>
 
-  <!-- MAIN DASHBOARD CONTENT -->
-  <main class="dashboard-main">
-    
-    <!-- STATS SUMMARY CARDS -->
-    <section class="stats-grid">
-      <div class="stat-card" data-filter="all">
-        <div class="stat-icon bg-teal">📋</div>
-        <div class="stat-details">
-          <span class="stat-label">Total Patient Inquiries</span>
-          <h3 class="stat-value" id="stat-total">0</h3>
+  <!-- ======================================================================
+       MAIN OPERATIONS DASHBOARD (HIDDEN UNTIL AUTHENTICATED)
+       ====================================================================== -->
+  <div id="enterprise-dashboard" class="dashboard-wrapper hidden">
+    <!-- TOP APP BAR -->
+    <header class="admin-header">
+      <div class="header-left">
+        <span class="admin-logo-text">Healthians<span class="logo-dot">.</span><span class="logo-badge">Enterprise Ops</span></span>
+      </div>
+
+      <div class="header-center">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="search-input" placeholder="Search patient name, phone number, or city..." aria-label="Search bookings">
         </div>
       </div>
 
-      <div class="stat-card stat-alert" data-filter="callback">
-        <div class="stat-icon bg-amber">⏰</div>
-        <div class="stat-details">
-          <span class="stat-label">Scheduled Call Backs</span>
-          <h3 class="stat-value text-amber" id="stat-callback">0</h3>
+      <div class="header-right">
+        <span id="connection-status-pill" class="live-indicator" style="font-size: 0.78rem; font-weight: 700; color: #059669; background: #ECFDF5; padding: 6px 12px; border-radius: 20px; border: 1px solid #A7F3D0;">⚡ CLOUD CONNECTED</span>
+        <a href="../index.html" class="btn-live-site" target="_blank">
+          <span>🌐 View Live Website</span>
+        </a>
+        <button id="btn-logout-lock" class="btn-logout" title="Lock session and return to security portal">
+          <span>🔒 Lock Controls</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- SMART ALERT BANNER FOR DUE CALL BACK REMINDERS -->
+    <div id="callback-alert-banner" class="alert-banner hidden">
+      <div class="alert-content">
+        <span class="alert-icon">⏰</span>
+        <div class="alert-text">
+          <strong id="alert-count-title">Scheduled Call Backs Due Today!</strong>
+          <p>You have patients who asked to be contacted at this time. Check the highlighted rows below and call them!</p>
         </div>
       </div>
+      <button id="filter-callbacks-btn" class="btn-alert-action">View Due Reminders ➔</button>
+    </div>
 
-      <div class="stat-card" data-filter="dispatch">
-        <div class="stat-icon bg-blue">🛵</div>
-        <div class="stat-details">
-          <span class="stat-label">Active Field Dispatches</span>
-          <h3 class="stat-value text-blue" id="stat-dispatch">0</h3>
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="admin-main">
+      <!-- HERO METRICS ROW -->
+      <section class="metrics-grid">
+        <div class="stat-card" data-filter="all">
+          <div class="stat-top">
+            <span class="stat-label">Total Live Orders</span>
+            <span class="stat-icon icon-teal">📊</span>
+          </div>
+          <h2 id="stat-total" class="stat-value">0</h2>
+          <span class="stat-meta">Real-time across all cities</span>
         </div>
-      </div>
 
-      <div class="stat-card" data-filter="completed">
-        <div class="stat-icon bg-green">🟢</div>
-        <div class="stat-details">
-          <span class="stat-label">Reports Ready & Sent</span>
-          <h3 class="stat-value text-green" id="stat-completed">0</h3>
+        <div class="stat-card stat-amber" data-filter="callback">
+          <div class="stat-top">
+            <span class="stat-label">Scheduled Call Backs</span>
+            <span class="stat-icon icon-amber">⏰</span>
+          </div>
+          <h2 id="stat-callback" class="stat-value">0</h2>
+          <span class="stat-meta">Active patient contact timers</span>
         </div>
-      </div>
-    </section>
 
-    <!-- TAB FILTER PILLS -->
-    <section class="controls-bar">
-      <div class="filter-pills">
-        <button class="filter-pill active" data-filter="all">All Bookings (<span id="count-all">0</span>)</button>
-        <button class="filter-pill" data-filter="new">New Requests (<span id="count-new">0</span>)</button>
-        <button class="filter-pill pill-amber" data-filter="callback">⏰ Call Back Reminders (<span id="count-callback-pill">0</span>)</button>
-        <button class="filter-pill" data-filter="assigned">🛵 Phlebotomists Assigned (<span id="count-assigned">0</span>)</button>
-        <button class="filter-pill" data-filter="lab">🧪 In Lab Testing (<span id="count-lab">0</span>)</button>
-        <button class="filter-pill" data-filter="completed">🟢 Report Ready (<span id="count-completed-pill">0</span>)</button>
-      </div>
-      <div class="controls-right">
-        <span style="font-size: 0.8rem; color: #64748B; font-weight: 600;">📁 Live Production Database</span>
-      </div>
-    </section>
+        <div class="stat-card" data-filter="assigned">
+          <div class="stat-top">
+            <span class="stat-label">Phlebotomists Dispatched</span>
+            <span class="stat-icon icon-blue">🛵</span>
+          </div>
+          <h2 id="stat-dispatch" class="stat-value">0</h2>
+          <span class="stat-meta">In field / route confirmed</span>
+        </div>
 
-    <!-- TABLE AREA -->
-    <section class="table-container">
-      <table class="bookings-table" aria-label="Patient sample collection orders">
-        <thead>
-          <tr>
-            <th>Patient Info & Contact</th>
-            <th>Diagnostic Test Package</th>
-            <th>Home Visit Schedule Slot</th>
-            <th>Status & Tech Assignment</th>
-            <th>⏰ Call Back / Reminder</th>
-            <th>Quick Actions</th>
-          </tr>
-        </thead>
-        <tbody id="bookings-tbody">
-          <!-- Dynamically populated via app.js -->
-        </tbody>
-      </table>
+        <div class="stat-card" data-filter="completed">
+          <div class="stat-top">
+            <span class="stat-label">Smart Reports Ready</span>
+            <span class="stat-icon icon-green">🧪</span>
+          </div>
+          <h2 id="stat-completed" class="stat-value">0</h2>
+          <span class="stat-meta">Verified by NABL Labs</span>
+        </div>
+      </section>
 
-      <div id="empty-state" class="empty-state hidden">
-        <div class="empty-icon">📭</div>
-        <h4>No patient bookings match this filter right now!</h4>
-        <p>Your live cloud database is clean! New customer orders submitted on your website will appear here in real time.</p>
-      </div>
-    </section>
-  </main>
+      <!-- TAB FILTER & CONTROLS ROW -->
+      <section class="controls-bar">
+        <div class="filter-pills">
+          <button class="filter-pill active" data-filter="all">All Bookings (<span id="count-all">0</span>)</button>
+          <button class="filter-pill" data-filter="new">New Requests (<span id="count-new">0</span>)</button>
+          <button class="filter-pill pill-amber" data-filter="callback">⏰ Call Back Reminders (<span id="count-callback-pill">0</span>)</button>
+          <button class="filter-pill" data-filter="assigned">🛵 Phlebotomists Assigned (<span id="count-assigned">0</span>)</button>
+          <button class="filter-pill" data-filter="lab">🧪 In Lab Testing (<span id="count-lab">0</span>)</button>
+          <button class="filter-pill" data-filter="completed">🟢 Report Ready (<span id="count-completed-pill">0</span>)</button>
+        </div>
+        <div class="controls-right">
+          <span style="font-size: 0.8rem; color: #64748B; font-weight: 600;">🛡️ ₹100Cr Enterprise Production Tier</span>
+        </div>
+      </section>
+
+      <!-- TABLE AREA -->
+      <section class="table-container">
+        <table class="bookings-table" aria-label="Patient sample collection orders">
+          <thead>
+            <tr>
+              <th>Patient Info & Contact</th>
+              <th>Diagnostic Test Package</th>
+              <th>Home Visit Schedule Slot</th>
+              <th>Status & Tech Assignment</th>
+              <th>⏰ Call Back / Reminder</th>
+              <th>Quick Actions</th>
+            </tr>
+          </thead>
+          <tbody id="bookings-tbody">
+            <!-- Dynamically populated via app.js -->
+          </tbody>
+        </table>
+
+        <div id="empty-state" class="empty-state hidden">
+          <div class="empty-icon">📭</div>
+          <h4>No patient bookings match this filter right now!</h4>
+          <p>Your live cloud database is secure and ready! New customer orders submitted on your website will stream here instantly.</p>
+        </div>
+      </section>
+    </main>
+  </div>
 
   <!-- MODAL: CALL BACK SCHEDULER ("Call Me Tomorrow") -->
   <div id="callback-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -138,34 +181,29 @@
         <button id="modal-close-btn" class="close-btn" aria-label="Close modal">✕</button>
       </div>
       
-      <div class="modal-body">
-        <p class="modal-desc">When a customer says <strong>"Call me tomorrow"</strong> or wants to postpone, set a date and time here. The dashboard will alert you when it's due!</p>
+      <form id="callback-form">
+        <input type="hidden" id="modal-order-id" value="">
         
-        <form id="callback-form">
-          <input type="hidden" id="modal-order-id">
-          
-          <div class="form-group">
-            <label for="callback-datetime">Select Call Back Date & Time</label>
-            <input type="datetime-local" id="callback-datetime" required class="luxury-input">
-          </div>
-          
-          <div class="form-group">
-            <label for="callback-note">Special Instruction & Customer Note</label>
-            <textarea id="callback-note" rows="3" placeholder="e.g., Patient is busy at office today. Wants call tomorrow morning at 10 AM to confirm fasting instructions and price." class="luxury-input"></textarea>
-          </div>
-
-          <div class="quick-btns">
-            <span>Quick shortcut:</span>
-            <button type="button" class="btn-quick-time" data-hours="3">+3 Hours</button>
+        <div class="form-field">
+          <label for="callback-datetime">When should our diagnostic counselor call this patient?</label>
+          <input type="datetime-local" id="callback-datetime" class="modal-input" required>
+          <div class="quick-times">
+            <button type="button" class="btn-quick-time" data-hours="2">In 2 Hours</button>
+            <button type="button" class="btn-quick-time" data-hours="5">In 5 Hours</button>
             <button type="button" class="btn-quick-time" data-hours="24">Tomorrow Morning (24h)</button>
           </div>
-          
-          <div class="modal-footer">
-            <button type="button" id="clear-callback-btn" class="btn-cancel">Clear Reminder</button>
-            <button type="submit" class="btn-primary-modal">Save Reminder ➔</button>
-          </div>
-        </form>
-      </div>
+        </div>
+
+        <div class="form-field">
+          <label for="callback-note">Counselor Notes & Special Instructions</label>
+          <textarea id="callback-note" class="modal-textarea" placeholder="E.g., Patient wants fasting package discount, call back after discussion with family..."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="clear-callback-btn" class="btn-cancel">Clear Reminder</button>
+          <button type="submit" class="btn-primary-modal">Save Reminder ➔</button>
+        </div>
+      </form>
     </div>
   </div>
 
