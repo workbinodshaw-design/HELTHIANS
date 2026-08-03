@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healthians Ops Control Desk — Admin Dashboard</title>
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- TOP BRAND HEADER -->
+  <header class="admin-header">
+    <div class="header-left">
+      <div class="brand-logo">
+        <span class="logo-circle">H</span>
+        <div class="logo-text">
+          <span class="brand-name">Healthians<span class="reg-mark">®</span></span>
+          <span class="portal-badge">OPS COMMAND DESK</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="search-input" placeholder="Search patient name, phone number, or city..." aria-label="Search bookings">
+      </div>
+    </div>
+
+    <div class="header-right">
+      <button id="add-sample-btn" class="btn-secondary" title="Add another dummy test booking to practice with">
+        <span>⚡ + Add Sample Order</span>
+      </button>
+      <a href="../index.html" class="btn-live-site">
+        <span>🌐 View Live Website</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- SMART ALERT BANNER FOR DUE CALL BACK REMINDERS -->
+  <div id="callback-alert-banner" class="alert-banner hidden">
+    <div class="alert-content">
+      <span class="alert-icon">⏰</span>
+      <div class="alert-text">
+        <strong id="alert-count-title">Scheduled Call Backs Due Today!</strong>
+        <p>You have patients who asked to be contacted at this time. Check the highlighted rows below and call them!</p>
+      </div>
+    </div>
+    <button id="filter-callbacks-btn" class="alert-action-btn">Filter Call Backs Only ➔</button>
+  </div>
+
+  <!-- MAIN DASHBOARD CONTENT -->
+  <main class="dashboard-main">
+    
+    <!-- STATS SUMMARY CARDS -->
+    <section class="stats-grid">
+      <div class="stat-card" data-filter="all">
+        <div class="stat-icon bg-teal">📋</div>
+        <div class="stat-details">
+          <span class="stat-label">Total Patient Inquiries</span>
+          <h3 class="stat-value" id="stat-total">0</h3>
+        </div>
+      </div>
+
+      <div class="stat-card stat-alert" data-filter="callback">
+        <div class="stat-icon bg-amber">⏰</div>
+        <div class="stat-details">
+          <span class="stat-label">Scheduled Call Backs</span>
+          <h3 class="stat-value text-amber" id="stat-callback">0</h3>
+        </div>
+      </div>
+
+      <div class="stat-card" data-filter="dispatch">
+        <div class="stat-icon bg-blue">🛵</div>
+        <div class="stat-details">
+          <span class="stat-label">Active Field Dispatches</span>
+          <h3 class="stat-value text-blue" id="stat-dispatch">0</h3>
+        </div>
+      </div>
+
+      <div class="stat-card" data-filter="completed">
+        <div class="stat-icon bg-green">🟢</div>
+        <div class="stat-details">
+          <span class="stat-label">Reports Ready & Sent</span>
+          <h3 class="stat-value text-green" id="stat-completed">0</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB FILTER PILLS -->
+    <section class="controls-bar">
+      <div class="filter-pills">
+        <button class="filter-pill active" data-filter="all">All Bookings (<span id="count-all">0</span>)</button>
+        <button class="filter-pill" data-filter="new">New Requests (<span id="count-new">0</span>)</button>
+        <button class="filter-pill pill-amber" data-filter="callback">⏰ Call Back Reminders (<span id="count-callback-pill">0</span>)</button>
+        <button class="filter-pill" data-filter="assigned">🛵 Phlebotomists Assigned (<span id="count-assigned">0</span>)</button>
+        <button class="filter-pill" data-filter="lab">🧪 In Lab Testing (<span id="count-lab">0</span>)</button>
+        <button class="filter-pill" data-filter="completed">🟢 Report Ready (<span id="count-completed-pill">0</span>)</button>
+      </div>
+      <div class="controls-right">
+        <button id="reset-storage-btn" class="btn-text-only" title="Restore factory default test patients">Reset Test Data</button>
+      </div>
+    </section>
+
+    <!-- TABLE AREA -->
+    <section class="table-container">
+      <table class="bookings-table" aria-label="Patient sample collection orders">
+        <thead>
+          <tr>
+            <th>Patient Info & Contact</th>
+            <th>Diagnostic Test Package</th>
+            <th>Home Visit Schedule Slot</th>
+            <th>Status & Tech Assignment</th>
+            <th>⏰ Call Back / Reminder</th>
+            <th>Quick Actions</th>
+          </tr>
+        </thead>
+        <tbody id="bookings-tbody">
+          <!-- Dynamically populated via app.js -->
+        </tbody>
+      </table>
+
+      <div id="empty-state" class="empty-state hidden">
+        <div class="empty-icon">📭</div>
+        <h4>No patient bookings match this filter right now!</h4>
+        <p>Try switching to "All Bookings" or click the "+ Add Sample Order" button above to test.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: CALL BACK SCHEDULER ("Call Me Tomorrow") -->
+  <div id="callback-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title">⏰ Schedule Customer Call Back</h3>
+        <button id="modal-close-btn" class="close-btn" aria-label="Close modal">✕</button>
+      </div>
+      
+      <div class="modal-body">
+        <p class="modal-desc">When a customer says <strong>"Call me tomorrow"</strong> or wants to postpone, set a date and time here. The dashboard will alert you when it's due!</p>
+        
+        <form id="callback-form">
+          <input type="hidden" id="modal-order-id">
+          
+          <div class="form-group">
+            <label for="callback-datetime">Select Call Back Date & Time</label>
+            <input type="datetime-local" id="callback-datetime" required class="luxury-input">
+          </div>
+          
+          <div class="form-group">
+            <label for="callback-note">Special Instruction & Customer Note</label>
+            <textarea id="callback-note" rows="3" placeholder="e.g., Patient is busy at office today. Wants call tomorrow morning at 10 AM to confirm fasting instructions and price." class="luxury-input"></textarea>
+          </div>
+
+          <div class="quick-btns">
+            <span>Quick shortcut:</span>
+            <button type="button" class="btn-quick-time" data-hours="3">+3 Hours</button>
+            <button type="button" class="btn-quick-time" data-hours="24">Tomorrow Morning (24h)</button>
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" id="clear-callback-btn" class="btn-cancel">Clear Reminder</button>
+            <button type="submit" class="btn-primary-modal">Save Reminder ➔</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

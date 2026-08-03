@@ -170,12 +170,27 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const bookingData = {
-        name: formData.get('patient_name'),
-        mobile: formData.get('mobile_number'),
+        id: 'ORD-' + Math.floor(10000 + Math.random() * 90000),
+        name: formData.get('patient_name') || 'Patient Name',
+        mobile: formData.get('mobile_number') || 'Unknown Number',
         city: chosenCity,
         selectedPackage: currentSelectedPackage || 'General Home Blood Collection Inquiry',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        status: 'New Booking',
+        technician: '',
+        scheduleSlot: 'Pending Scheduling',
+        callBackDate: '',
+        callBackNote: ''
       };
+
+      // Save to Admin Portal Storage (Magic Sync!)
+      try {
+        let currentBookings = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
+        currentBookings.unshift(bookingData); // Add newest order to top of list
+        localStorage.setItem('healthians_admin_bookings', JSON.stringify(currentBookings));
+      } catch (e) {
+        console.warn('Storage saving notice:', e);
+      }
 
       // Log Lead conversion event for Google & Meta Ads tracking
       logConversionEvent('Lead_Submitted_Success', bookingData);
