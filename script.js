@@ -6,6 +6,24 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Global App Language & Security Sanitation Engine
+  let currentLang = localStorage.getItem('healthians_lang') || 'en';
+
+  function sanitizeInput(str) {
+    if (typeof str !== 'string') return '';
+    return str.replace(/[<>&"'/]/g, function(s) {
+      const entityMap = {
+        '<': '&lt;',
+        '>': '&gt;',
+        '&': '&amp;',
+        '"': '&quot;',
+        "'": '&#39;',
+        '/': '&#x2F;'
+      };
+      return entityMap[s] || s;
+    }).trim();
+  }
+
   // 1. MINIMALIST NOTION/APPLE FAQ ACCORDION HANDLER
   const faqRows = document.querySelectorAll('.faq-row');
   
@@ -158,7 +176,23 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
 
       const formData = new FormData(bookingForm);
-      const chosenCity = formData.get('city');
+      const chosenCity = sanitizeInput(formData.get('city') || '');
+      const patientName = sanitizeInput(formData.get('patient_name') || '');
+      const rawMobile = (formData.get('mobile_number') || '').replace(/\D/g, '');
+
+      if (!patientName || patientName.length < 2) {
+        alert(currentLang === 'hi' ? 'कृपया मरीज का पूरा नाम दर्ज करें।' : 'Please enter a valid Patient Name.');
+        const nameInput = document.getElementById('lead-name');
+        if (nameInput) nameInput.focus();
+        return;
+      }
+
+      if (!rawMobile || rawMobile.length < 10) {
+        alert(currentLang === 'hi' ? 'कृपया एक वैध 10-अंकीय मोबाइल नंबर दर्ज करें।' : 'Please enter a valid 10-digit mobile number.');
+        const phoneInput = document.getElementById('lead-phone');
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
 
       if (!chosenCity || chosenCity.trim() === '') {
         alert(currentLang === 'hi' ? 'कृपया अपना शहर चुनें।' : 'Please select your city.');
@@ -171,10 +205,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const bookingData = {
         id: 'ORD-' + Math.floor(10000 + Math.random() * 90000),
-        name: formData.get('patient_name') || 'Patient Name',
-        mobile: formData.get('mobile_number') || 'Unknown Number',
+        name: patientName,
+        mobile: rawMobile,
         city: chosenCity,
-        selectedPackage: currentSelectedPackage || 'General Home Blood Collection Inquiry',
+        selectedPackage: sanitizeInput(currentSelectedPackage || 'General Home Blood Collection Inquiry'),
         timestamp: new Date().toISOString(),
         status: 'New Booking',
         technician: '',
@@ -246,7 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // 6. INSTANT HINDI / ENGLISH LANGUAGE TRANSLATION ENGINE
   const langSwitcherBtn = document.getElementById('lang-switcher') || document.getElementById('lang-toggle-btn');
   const currentLangText = document.getElementById('current-lang-text');
-  let currentLang = localStorage.getItem('healthians_lang') || 'en';
 
   function applyLanguage(lang) {
     if (!window.HEALTHIANS_TRANSLATIONS || !window.HEALTHIANS_TRANSLATIONS[lang]) return;

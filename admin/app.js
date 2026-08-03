@@ -56,6 +56,18 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentLiveBookings = [];
   let dbSubscriptionUnsubscribe = null;
 
+  // Security Helper: Defend against Stored XSS Attacks
+  function escapeHTML(str) {
+    if (!str && str !== 0) return '';
+    return String(str).replace(/[&<>'"]/g, tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag));
+  }
+
   // ======================================================================
   // 1. ZERO-TRUST ENTERPRISE AUTHENTICATION ENGINE
   // ======================================================================
@@ -98,6 +110,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = adminEmailInput.value.trim().toLowerCase();
       const password = adminPasswordInput.value;
 
+      // 0. Brute-Force Rate Limiting Security Shield
+      const lockUntil = parseInt(localStorage.getItem('healthians_lock_until') || '0', 10);
+      if (Date.now() < lockUntil) {
+        const remainingSec = Math.ceil((lockUntil - Date.now()) / 1000);
+        loginErrorMsg.textContent = `⛔ Security Shield Alert: Exceeded failed access attempts. Executive portal locked for ${remainingSec} seconds against brute-force attacks.`;
+        loginErrorMsg.classList.remove('hidden');
+        return;
+      }
+
       // 1. Strict Executive Whitelist (Only official owner is permitted)
       if (email !== 'official.mptripathi@gmail.com') {
         loginErrorMsg.textContent = '⚠️ Access Denied: Only official.mptripathi@gmail.com is authorized for this executive portal.';
@@ -119,6 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const userCredential = await window.HealthiansBackend.auth.signInWithEmailAndPassword(email, password);
         console.log('✅ Real Firebase Auth successful for user:', userCredential.user.email);
 
+        // Clear brute force counter upon successful authentication
+        localStorage.removeItem('healthians_failed_attempts');
+        localStorage.removeItem('healthians_lock_until');
+
         if (btnSubmit) btnSubmit.innerHTML = originalText;
         sessionStorage.setItem('healthians_admin_auth', 'VERIFIED_ENTERPRISE_ADMIN');
         sessionStorage.setItem('healthians_admin_email', email);
@@ -129,12 +154,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnSubmit) btnSubmit.innerHTML = originalText;
         console.error('Firebase Auth Error:', authErr);
         
+        // Track consecutive failed login attempts
+        let failedCount = parseInt(localStorage.getItem('healthians_failed_attempts') || '0', 10) + 1;
+        localStorage.setItem('healthians_failed_attempts', failedCount.toString());
+        if (failedCount >= 5) {
+          localStorage.setItem('healthians_lock_until', (Date.now() + 300000).toString()); // 5-minute cooldown
+          loginErrorMsg.textContent = '⛔ Security Shield: 5 consecutive failed attempts detected! Portal locked for 5 minutes.';
+          loginErrorMsg.classList.remove('hidden');
+          adminPasswordInput.value = '';
+          return;
+        }
+
         // Formatted feedback directly from real Firebase IAM Server
-        let errorMsg = '⚠️ Authentication Rejected: Incorrect password or unverified account.';
+        let errorMsg = `⚠️ Authentication Rejected: Incorrect password (${5 - failedCount} attempts left before security lockout).`;
         if (authErr.code === 'auth/user-not-found' || authErr.code === 'auth/invalid-credential' || authErr.code === 'auth/invalid-login-credentials') {
-          errorMsg = '⚠️ Login Failed: Invalid credentials or user not registered in Firebase Console.';
+          errorMsg = `⚠️ Login Failed: Invalid credentials (${5 - failedCount} attempts remaining).`;
         } else if (authErr.code === 'auth/wrong-password') {
-          errorMsg = '⚠️ Login Failed: Incorrect secret passcode.';
+          errorMsg = `⚠️ Login Failed: Incorrect secret passcode (${5 - failedCount} attempts remaining).`;
         } else if (authErr.code === 'auth/operation-not-allowed') {
           errorMsg = '⚠️ Notice: Email/Password Sign-In must be turned ON under Authentication > Sign-in method in your Firebase Console!';
         } else if (authErr.message) {
@@ -244,11 +280,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookings = currentLiveBookings;
     const now = new Date().toISOString().slice(0, 16);
 
+    // Get filter selections
+    const cityFilter = (document.getElementById('filter-city') ? document.getElementById('filter-city').value : 'ALL').toLowerCase();
+    const pkgFilter = (document.getElementById('filter-pkg') ? document.getElementById('filter-pkg').value : 'ALL').toLowerCase();
+    const statusFilter = (document.getElementById('filter-status') ? document.getElementById('filter-status').value : 'ALL').toLowerCase();
+
     // Filter logic
     const filtered = bookings.filter(b => {
-      const matchSearch = ((b.name || '') + ' ' + (b.mobile || '') + ' ' + (b.city || '') + ' ' + (b.selectedPackage || '')).toLowerCase().includes(searchTerm.toLowerCase());
+      const matchSearch = ((b.name || '') + ' ' + (b.mobile || '') + ' ' + (b.city || '') + ' ' + (b.selectedPackage || '') + ' ' + (b.id || '')).toLowerCase().includes(searchTerm.toLowerCase());
       if (!matchSearch) return false;
 
+      // Dropdown filters
+      if (cityFilter !== 'all' && !(b.city || '').toLowerCase().includes(cityFilter)) return false;
+      if (pkgFilter !== 'all' && !(b.selectedPackage || '').toLowerCase().includes(pkgFilter)) return false;
+      if (statusFilter !== 'all' && !(b.status || '').toLowerCase().includes(statusFilter)) return false;
+
+      // Tab/Sidebar filter
       if (currentFilter === 'new') return b.status === 'New Booking';
       if (currentFilter === 'callback') return Boolean(b.callBackDate);
       if (currentFilter === 'assigned') return b.status === 'Collector Assigned' || Boolean(b.technician);
@@ -257,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     });
 
-    // Compute metrics
+    // Compute metrics and counts
     let countCb = 0;
     let dueCallbacks = 0;
     let countAsg = 0;
@@ -276,18 +323,33 @@ document.addEventListener('DOMContentLoaded', () => {
       if (b.status === 'Report Ready') countRdy++;
     });
 
-    // Update stat displays
-    if (statTotal) statTotal.textContent = bookings.length;
-    if (statCallback) statCallback.textContent = countCb;
-    if (statDispatch) statDispatch.textContent = countAsg;
-    if (statCompleted) statCompleted.textContent = countRdy;
+    // Update Sidebar Navigation count indicators
+    const sideAll = document.getElementById('side-count-all');
+    const sideNew = document.getElementById('side-count-new');
+    const sideCb = document.getElementById('side-count-cb');
+    const sideAssigned = document.getElementById('side-count-assigned');
+    const sideLab = document.getElementById('side-count-lab');
+    const sideComplete = document.getElementById('side-count-completed');
+    if (sideAll) sideAll.textContent = bookings.length;
+    if (sideNew) sideNew.textContent = countNw;
+    if (sideCb) sideCb.textContent = countCb;
+    if (sideAssigned) sideAssigned.textContent = countAsg;
+    if (sideLab) sideLab.textContent = countLb;
+    if (sideComplete) sideComplete.textContent = countRdy;
 
-    if (countAll) countAll.textContent = bookings.length;
-    if (countNew) countNew.textContent = countNw;
-    if (countCallbackPill) countCallbackPill.textContent = countCb;
-    if (countAssigned) countAssigned.textContent = countAsg;
-    if (countLab) countLab.textContent = countLb;
-    if (countCompletedPill) countCompletedPill.textContent = countRdy;
+    // Update Top Status Stats Tabs counters
+    const topAll = document.getElementById('top-count-all');
+    const topNew = document.getElementById('top-count-new');
+    const topAssigned = document.getElementById('top-count-assigned');
+    const topLab = document.getElementById('top-count-lab');
+    const topCompleted = document.getElementById('top-count-completed');
+    const topCb = document.getElementById('top-count-cb');
+    if (topAll) topAll.textContent = bookings.length;
+    if (topNew) topNew.textContent = countNw;
+    if (topAssigned) topAssigned.textContent = countAsg;
+    if (topLab) topLab.textContent = countLb;
+    if (topCompleted) topCompleted.textContent = countRdy;
+    if (topCb) topCb.textContent = countCb;
 
     // Update Mobile Bottom Navigation bar counters
     const mobAll = document.getElementById('mob-count-all');
@@ -305,192 +367,107 @@ document.addEventListener('DOMContentLoaded', () => {
       alertBanner.classList.add('hidden');
     }
 
-    // Populate Table and Mobile Touch Cards
+    // Populate 3-Column SaaS Cards Grid
+    const saasGrid = document.getElementById('saas-cards-grid');
     if (tbody) tbody.innerHTML = '';
     if (mobileCardsContainer) mobileCardsContainer.innerHTML = '';
+    if (saasGrid) saasGrid.innerHTML = '';
+
     if (filtered.length === 0) {
       emptyState.classList.remove('hidden');
     } else {
       emptyState.classList.add('hidden');
-      filtered.forEach(b => {
-        const row = document.createElement('tr');
-        const isDue = b.callBackDate && b.callBackDate <= now;
-        if (isDue) {
-          row.classList.add('row-alert-highlight');
-        }
 
-        let statusClass = 'status-new';
-        if (b.status === 'Collector Assigned') statusClass = 'status-assigned';
-        if (b.status === 'In Lab Analysis') statusClass = 'status-lab';
-        if (b.status === 'Report Ready') statusClass = 'status-ready';
-        if (b.status === 'Cancelled') statusClass = 'status-cancel';
+      filtered.forEach(b => {
+        const isDue = b.callBackDate && b.callBackDate <= now;
+        const ptName = escapeHTML((b.name || 'Patient').trim());
+        const cleanMobile = escapeHTML((b.mobile || '9999999999').replace(/\D/g, ''));
+        const cleanCity = escapeHTML(b.city || 'Bangalore');
+        const cleanPkg = escapeHTML(b.selectedPackage || 'General Home Blood Collection');
+
+        let statusBadgeClass = 'badge-pending';
+        let displayStatus = 'Pending';
+        if (b.status === 'Collector Assigned') { statusBadgeClass = 'badge-assigned'; displayStatus = 'Assigned'; }
+        if (b.status === 'In Lab Analysis') { statusBadgeClass = 'badge-lab'; displayStatus = 'In Lab Testing'; }
+        if (b.status === 'Report Ready') { statusBadgeClass = 'badge-ready'; displayStatus = 'Report Ready'; }
+        if (b.status === 'Cancelled') { statusBadgeClass = 'badge-cancel'; displayStatus = 'Cancelled'; }
 
         const dateObj = new Date(b.timestamp || Date.now());
-        const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        const dateOnlyStr = dateObj.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+        const timeOnlyStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-        let callbackHtml = `<button class="btn-callback-add" data-id="${b.id}">⏰ Schedule Call Back</button>`;
+        let cbDatePart = '03 Aug 2026';
+        let cbTimePart = '05:30 PM';
         if (b.callBackDate) {
-          const cbDate = new Date(b.callBackDate).toLocaleString([], {month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit'});
-          callbackHtml = `
-            <div class="callback-badge" data-id="${b.id}" title="Click to edit or remove reminder">
-              <span class="cb-time">⏰ ${isDue ? '🚨 DUE NOW: ' : ''}${cbDate}</span>
-              <span class="cb-note">${b.callBackNote || 'No special instructions written.'}</span>
-            </div>
-          `;
+          const cbObj = new Date(b.callBackDate);
+          cbDatePart = cbObj.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+          cbTimePart = cbObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         }
 
-        // Generate Avatar Initials for Desktop Grid
-        const ptName = (b.name || 'Patient').trim();
-        const initials = ptName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() || 'VIP';
+        const card = document.createElement('div');
+        card.className = `saas-card ${isDue ? 'card-due-alert' : ''}`;
 
-        row.innerHTML = `
-          <td class="patient-meta-cell">
-            <div class="pc-patient-flex">
-              <div class="pc-avatar">${initials}</div>
-              <div class="pc-details">
-                <div class="pc-name-row">
-                  <span class="p-name">${ptName}</span>
-                  <span class="p-city">📍 ${b.city || 'India'}</span>
-                </div>
-                <div class="pc-contact-row">
-                  <a href="tel:${b.mobile}" class="pc-call-pill" title="Click to dial immediately">📞 +91 ${b.mobile || ''}</a>
-                </div>
-                <span class="p-time">ID: <strong style="color:#475569;">#${b.id.slice(-8)}</strong> &bull; Booked: ${dateStr}</span>
-              </div>
+        card.innerHTML = `
+          <div class="sc-header">
+            <div class="sc-name-box">
+              <h3 class="sc-name">${ptName}</h3>
             </div>
-          </td>
-          
-          <td class="package-cell">
-            <div class="pkg-wrapper">
-              <span class="pkg-pill">🧪 ${b.selectedPackage || 'General Diagnostic Inquiry'}</span>
+            <span class="sc-status-badge ${statusBadgeClass}">${displayStatus}</span>
+          </div>
+
+          <div class="sc-body">
+            <div class="sc-row full-w">
+              <span class="sc-icon">📞</span>
+              <a href="tel:${cleanMobile}" class="phone-link">+91 ${cleanMobile}</a>
             </div>
-          </td>
+            <div class="sc-grid-2">
+              <div class="sc-row"><span class="sc-icon">📍</span> <span class="sc-text">${cleanCity}</span></div>
+              <div class="sc-row right-align"><span class="sc-icon">📅</span> <span class="sc-text">${dateOnlyStr}</span></div>
+              <div class="sc-row"><span class="sc-icon">🧪</span> <span class="sc-text pkg-ellip" title="${cleanPkg}">${cleanPkg}</span></div>
+              <div class="sc-row right-align"><span class="sc-icon">⏰</span> <span class="sc-text">${timeOnlyStr}</span></div>
+            </div>
+          </div>
 
-          <td class="schedule-cell">
-            <select class="table-select slot-select modern-select" data-id="${b.id}">
-              <option value="Pending Scheduling" ${b.scheduleSlot === 'Pending Scheduling' ? 'selected' : ''}>⏳ Pending Scheduling</option>
-              <option value="Today 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Today 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>🌅 Today 06:00 - 07:00 AM Fasting</option>
-              <option value="Today 07:00 - 08:00 AM Fasting" ${b.scheduleSlot === 'Today 07:00 - 08:00 AM Fasting' ? 'selected' : ''}>🌅 Today 07:00 - 08:00 AM Fasting</option>
-              <option value="Today 09:00 - 11:00 AM" ${b.scheduleSlot === 'Today 09:00 - 11:00 AM' ? 'selected' : ''}>☀️ Today 09:00 - 11:00 AM</option>
-              <option value="Today 12:00 - 02:00 PM" ${b.scheduleSlot === 'Today 12:00 - 02:00 PM' ? 'selected' : ''}>🌞 Today 12:00 - 02:00 PM</option>
-              <option value="Tomorrow 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Tomorrow 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>📅 Tomorrow 06:00 - 07:00 AM Fasting</option>
-              <option value="Tomorrow 08:00 - 10:00 AM" ${b.scheduleSlot === 'Tomorrow 08:00 - 10:00 AM' ? 'selected' : ''}>📅 Tomorrow 08:00 - 10:00 AM</option>
-              <option value="Completed" ${b.scheduleSlot === 'Completed' ? 'selected' : ''}>✅ Slot Visit Completed</option>
-            </select>
-          </td>
+          <div class="sc-section">
+            <label class="sc-label">Assign Phlebotomist</label>
+            <div class="sc-tech-wrapper">
+              <select class="sc-tech-select tech-select" data-id="${b.id}">
+                <option value="" ${!b.technician ? 'selected' : ''}>Select Phlebotomist</option>
+                <option value="Raj Kumar" ${b.technician === 'Raj Kumar' || b.technician === 'Rahul Sharma [HLT-104]' ? 'selected' : ''}>👨🏽‍⚕️ Raj Kumar</option>
+                <option value="Suresh Yadav" ${b.technician === 'Suresh Yadav' || b.technician === 'Vikram Singh [HLT-209]' ? 'selected' : ''}>👨🏽‍⚕️ Suresh Yadav</option>
+                <option value="Amit Verma" ${b.technician === 'Amit Verma' || b.technician === 'Sunita Rao [HLT-312]' ? 'selected' : ''}>👨🏽‍⚕️ Amit Verma</option>
+                <option value="Priya Mehta" ${b.technician === 'Priya Mehta' || b.technician === 'Amit Kumar [HLT-401]' ? 'selected' : ''}>👩🏽‍⚕️ Priya Mehta</option>
+              </select>
+            </div>
+          </div>
 
-          <td class="status-cell">
-            <select class="table-select status-select modern-select ${statusClass}" data-id="${b.id}" style="margin-bottom: 8px;">
-              <option value="New Booking" ${b.status === 'New Booking' ? 'selected' : ''}>🟡 New Booking</option>
-              <option value="Collector Assigned" ${b.status === 'Collector Assigned' ? 'selected' : ''}>🔵 Collector Assigned</option>
-              <option value="Sample Collected" ${b.status === 'Sample Collected' ? 'selected' : ''}>🟣 Sample Collected</option>
-              <option value="In Lab Analysis" ${b.status === 'In Lab Analysis' ? 'selected' : ''}>🧪 In Lab Analysis</option>
-              <option value="Report Ready" ${b.status === 'Report Ready' ? 'selected' : ''}>🟢 Report Ready</option>
-              <option value="Cancelled" ${b.status === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
-            </select>
-            <select class="table-select tech-select modern-select" data-id="${b.id}" style="font-size: 0.82rem; color: #475569; background:#F1F5F9;">
-              <option value="" ${!b.technician ? 'selected' : ''}>— Assign Phlebotomist Tech —</option>
-              <option value="Rahul Sharma [HLT-104]" ${b.technician === 'Rahul Sharma [HLT-104]' ? 'selected' : ''}>🛵 Rahul Sharma [HLT-104]</option>
-              <option value="Vikram Singh [HLT-209]" ${b.technician === 'Vikram Singh [HLT-209]' ? 'selected' : ''}>🛵 Vikram Singh [HLT-209]</option>
-              <option value="Sunita Rao [HLT-312]" ${b.technician === 'Sunita Rao [HLT-312]' ? 'selected' : ''}>🛵 Sunita Rao [HLT-312]</option>
-              <option value="Amit Kumar [HLT-401]" ${b.technician === 'Amit Kumar [HLT-401]' ? 'selected' : ''}>🛵 Amit Kumar [HLT-401]</option>
-            </select>
-          </td>
-
-          <td class="callback-cell">
-            ${callbackHtml}
-          </td>
-
-          <td class="actions-cell">
-            <div class="actions-flex">
-              <button class="btn-wa-dispatch pc-action-wa" data-id="${b.id}" title="Send Instant Dispatch WhatsApp">
-                <span>💬 WhatsApp</span>
+          <div class="sc-section">
+            <label class="sc-label">Schedule Call Back</label>
+            <div class="sc-callback-box">
+              <button class="sc-callback-btn btn-callback-add" data-id="${b.id}" title="Click to schedule reminder">
+                <span class="cb-date-pill">📅 ${cbDatePart}</span>
+                <span class="cb-time-pill">⏰ ${cbTimePart}</span>
               </button>
-              <button class="btn-delete-row pc-action-del" data-id="${b.id}" title="Delete Order">🗑️</button>
             </div>
-          </td>
+          </div>
+
+          <div class="sc-footer-actions">
+            <button class="sc-btn-wa btn-wa-dispatch" data-id="${b.id}" title="Send WhatsApp">
+              <span>💬 WhatsApp</span>
+            </button>
+            <a href="tel:${b.mobile}" class="sc-btn-call" title="Call Customer">
+              <span>📞 Call</span>
+            </a>
+            <button class="sc-btn-track status-shortcut-btn" data-id="${b.id}" data-target-status="Report Ready" title="View Report / Mark Ready">
+              <span>📄 View Report</span>
+            </button>
+            <button class="sc-btn-del btn-delete-row" data-id="${b.id}" title="Delete Order">
+              <span>🗑️</span>
+            </button>
+          </div>
         `;
 
-        tbody.appendChild(row);
-
-        // Populate Mobile Touch Patient Action Card (Ultra Luxury App Edition)
-        if (mobileCardsContainer) {
-          const card = document.createElement('div');
-          card.className = `patient-mobile-card ${isDue ? 'card-due-alert' : ''}`;
-          
-          // Create avatar initials
-          const ptName = (b.name || 'Patient').trim();
-          const initials = ptName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() || 'VIP';
-
-          card.innerHTML = `
-            <div class="card-top">
-              <div class="card-avatar-flex">
-                <div class="patient-avatar-circle">${initials}</div>
-                <div class="card-patient-info">
-                  <h3 class="card-name">${ptName}</h3>
-                  <span class="card-city">📍 ${b.city || 'India'} &bull; <small class="id-chip">ID: ${b.id.slice(-6)}</small></span>
-                  <span class="card-date">🕒 Booked: ${dateStr}</span>
-                </div>
-              </div>
-              <span class="card-status-badge ${statusClass}">${b.status || 'New Booking'}</span>
-            </div>
-
-            <div class="card-middle-ribbon">
-              <a href="tel:${b.mobile}" class="btn-touch-call">
-                <span class="call-icon">📞</span>
-                <span>Call +91 ${b.mobile || ''}</span>
-              </a>
-              <div class="pkg-pill-wrap"><span class="pkg-pill">${b.selectedPackage || 'General Inquiry'}</span></div>
-            </div>
-
-            <div class="card-controls">
-              <div class="card-form-row">
-                <label>📅 Schedule Home Visit Slot:</label>
-                <select class="card-select slot-select" data-id="${b.id}">
-                  <option value="Pending Scheduling" ${b.scheduleSlot === 'Pending Scheduling' ? 'selected' : ''}>⏳ Pending Scheduling</option>
-                  <option value="Today 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Today 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>🌅 Today 06:00 - 07:00 AM Fasting</option>
-                  <option value="Today 07:00 - 08:00 AM Fasting" ${b.scheduleSlot === 'Today 07:00 - 08:00 AM Fasting' ? 'selected' : ''}>🌅 Today 07:00 - 08:00 AM Fasting</option>
-                  <option value="Today 09:00 - 11:00 AM" ${b.scheduleSlot === 'Today 09:00 - 11:00 AM' ? 'selected' : ''}>☀️ Today 09:00 - 11:00 AM</option>
-                  <option value="Today 12:00 - 02:00 PM" ${b.scheduleSlot === 'Today 12:00 - 02:00 PM' ? 'selected' : ''}>🌞 Today 12:00 - 02:00 PM</option>
-                  <option value="Tomorrow 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Tomorrow 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>📅 Tomorrow 06:00 - 07:00 AM Fasting</option>
-                  <option value="Tomorrow 08:00 - 10:00 AM" ${b.scheduleSlot === 'Tomorrow 08:00 - 10:00 AM' ? 'selected' : ''}>📅 Tomorrow 08:00 - 10:00 AM</option>
-                  <option value="Completed" ${b.scheduleSlot === 'Completed' ? 'selected' : ''}>✅ Slot Visit Completed</option>
-                </select>
-              </div>
-
-              <div class="card-form-row" style="margin-top: 12px;">
-                <label>🧪 Order Status & Phlebotomist:</label>
-                <select class="card-select status-select ${statusClass}" data-id="${b.id}" style="margin-bottom: 8px;">
-                  <option value="New Booking" ${b.status === 'New Booking' ? 'selected' : ''}>🟡 New Booking</option>
-                  <option value="Collector Assigned" ${b.status === 'Collector Assigned' ? 'selected' : ''}>🔵 Collector Assigned</option>
-                  <option value="Sample Collected" ${b.status === 'Sample Collected' ? 'selected' : ''}>🟣 Sample Collected</option>
-                  <option value="In Lab Analysis" ${b.status === 'In Lab Analysis' ? 'selected' : ''}>🧪 In Lab Analysis</option>
-                  <option value="Report Ready" ${b.status === 'Report Ready' ? 'selected' : ''}>🟢 Report Ready</option>
-                  <option value="Cancelled" ${b.status === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
-                </select>
-                <select class="card-select tech-select" data-id="${b.id}">
-                  <option value="" ${!b.technician ? 'selected' : ''}>— Assign Phlebotomist —</option>
-                  <option value="Rahul Sharma [HLT-104]" ${b.technician === 'Rahul Sharma [HLT-104]' ? 'selected' : ''}>🛵 Rahul Sharma [HLT-104]</option>
-                  <option value="Vikram Singh [HLT-209]" ${b.technician === 'Vikram Singh [HLT-209]' ? 'selected' : ''}>🛵 Vikram Singh [HLT-209]</option>
-                  <option value="Sunita Rao [HLT-312]" ${b.technician === 'Sunita Rao [HLT-312]' ? 'selected' : ''}>🛵 Sunita Rao [HLT-312]</option>
-                  <option value="Amit Kumar [HLT-401]" ${b.technician === 'Amit Kumar [HLT-401]' ? 'selected' : ''}>🛵 Amit Kumar [HLT-401]</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="card-callback-box">
-              ${callbackHtml}
-            </div>
-
-            <div class="card-actions">
-              <button class="btn-wa-dispatch btn-touch-wa" data-id="${b.id}" title="Send Dispatch WhatsApp">
-                <span>💬 WhatsApp Dispatch</span>
-              </button>
-              <button class="btn-delete-row btn-touch-delete" data-id="${b.id}" title="Delete Order">🗑️ Delete</button>
-            </div>
-          `;
-          mobileCardsContainer.appendChild(card);
-        }
+        if (saasGrid) saasGrid.appendChild(card);
       });
     }
 
@@ -568,6 +545,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+
+    document.querySelectorAll('.status-shortcut-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        const targetStatus = btn.getAttribute('data-target-status') || 'Report Ready';
+        modifyOrder(id, { status: targetStatus });
+        alert('✅ Patient status updated to: ' + targetStatus);
+      });
+    });
   }
 
   // ======================================================================
@@ -634,41 +620,87 @@ document.addEventListener('DOMContentLoaded', () => {
 
   filterPills.forEach(pill => {
     pill.addEventListener('click', () => {
-      filterPills.forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      currentFilter = pill.getAttribute('data-filter');
-      
-      // Also update bottom nav bar indicator
-      document.querySelectorAll('.mobile-nav-item').forEach(m => {
-        m.classList.toggle('active', m.getAttribute('data-filter') === currentFilter);
-      });
-
-      render();
+      const target = pill.getAttribute('data-filter');
+      switchActiveFilter(target);
     });
   });
 
-  // Mobile bottom nav item click binders
-  document.querySelectorAll('.mobile-nav-item').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.getAttribute('data-filter');
-      const matchPill = document.querySelector(`.filter-pill[data-filter="${target}"]`);
-      if (matchPill) matchPill.click();
+  function switchActiveFilter(target) {
+    if (!target) return;
+    currentFilter = target;
+
+    // Update Sidebar tabs
+    document.querySelectorAll('.sidebar-item[data-filter]').forEach(item => {
+      item.classList.toggle('active', item.getAttribute('data-filter') === currentFilter);
+    });
+
+    // Update Top status tabs
+    document.querySelectorAll('.status-tab[data-filter]').forEach(tab => {
+      tab.classList.toggle('active', tab.getAttribute('data-filter') === currentFilter);
+    });
+
+    // Update old filter pills if present
+    filterPills.forEach(p => p.classList.toggle('active', p.getAttribute('data-filter') === currentFilter));
+
+    // Update Mobile bottom nav
+    document.querySelectorAll('.mobile-nav-item').forEach(m => {
+      m.classList.toggle('active', m.getAttribute('data-filter') === currentFilter);
+    });
+
+    render();
+  }
+
+  // Bind Sidebar items & Top status tabs
+  document.querySelectorAll('.sidebar-item[data-filter], .status-tab[data-filter], .mobile-nav-item[data-filter]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = el.getAttribute('data-filter');
+      switchActiveFilter(target);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
 
+  // Bind dropdown filters
+  ['filter-city', 'filter-pkg', 'filter-status'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('change', () => render());
+    }
+  });
+
+  // Clear filters button
+  const btnClear = document.getElementById('btn-clear-filters');
+  if (btnClear) {
+    btnClear.addEventListener('click', () => {
+      ['filter-city', 'filter-pkg', 'filter-status'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = 'ALL';
+      });
+      if (searchInput) searchInput.value = '';
+      searchTerm = '';
+      switchActiveFilter('all');
+    });
+  }
+
+  // Sidebar Logout Profile action
+  const btnSideLogout = document.getElementById('btn-sidebar-logout');
+  if (btnSideLogout) {
+    btnSideLogout.addEventListener('click', () => {
+      const lockBtn = document.getElementById('btn-logout-lock');
+      if (lockBtn) lockBtn.click();
+    });
+  }
+
   document.querySelectorAll('.stat-card').forEach(card => {
     card.addEventListener('click', () => {
       const filterTarget = card.getAttribute('data-filter');
-      const matchPill = document.querySelector(`.filter-pill[data-filter="${filterTarget}"]`);
-      if (matchPill) matchPill.click();
+      switchActiveFilter(filterTarget);
     });
   });
 
   if (filterCallbacksBtn) {
     filterCallbacksBtn.addEventListener('click', () => {
-      const cbPill = document.querySelector('.filter-pill[data-filter="callback"]');
-      if (cbPill) cbPill.click();
+      switchActiveFilter('callback');
       window.scrollTo({ top: 300, behavior: 'smooth' });
     });
   }

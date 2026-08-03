@@ -57,128 +57,222 @@
        MAIN OPERATIONS DASHBOARD (HIDDEN UNTIL AUTHENTICATED)
        ====================================================================== -->
   <div id="enterprise-dashboard" class="dashboard-wrapper hidden">
-    <!-- TOP APP BAR -->
-    <header class="admin-header">
-      <div class="header-left">
-        <span class="admin-logo-text">Healthians<span class="logo-dot">.</span><span class="logo-badge">Enterprise Ops</span></span>
-      </div>
-
-      <div class="header-center">
-        <div class="search-box">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          <input type="text" id="search-input" placeholder="Search patient name, phone number, or city..." aria-label="Search bookings">
+    <div class="saas-app-container">
+      <!-- =========================================================
+           LEFT FIXED SAAS SIDEBAR NAVIGATION
+           ========================================================= -->
+      <aside class="saas-sidebar">
+        <div class="sidebar-brand">
+          <h2 class="brand-title">Healthians<span class="dot-green">.</span></h2>
+          <span class="brand-subtitle">Enterprise Ops</span>
         </div>
-      </div>
 
-      <div class="header-right">
-        <span id="connection-status-pill" class="live-indicator" style="font-size: 0.78rem; font-weight: 700; color: #059669; background: #ECFDF5; padding: 6px 12px; border-radius: 20px; border: 1px solid #A7F3D0;">⚡ CLOUD CONNECTED</span>
-        <a href="../index.html" class="btn-live-site" target="_blank">
-          <span>🌐 View Live Website</span>
-        </a>
-        <button id="btn-logout-lock" class="btn-logout" title="Lock session and return to security portal">
-          <span>🔒 Lock Controls</span>
-        </button>
-      </div>
-    </header>
+        <nav class="sidebar-nav">
+          <ul class="nav-list">
+            <li>
+              <a href="#" class="sidebar-item active" data-filter="all">
+                <span class="item-icon">📁</span>
+                <span class="item-text">Bookings</span>
+                <span class="badge-pill count-all-badge" id="side-count-all">0</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="sidebar-item" data-filter="new">
+                <span class="item-icon">🆕</span>
+                <span class="item-text">New Requests</span>
+                <span class="badge-pill count-new-badge" id="side-count-new">0</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="sidebar-item" data-filter="callback">
+                <span class="item-icon">⏰</span>
+                <span class="item-text">Call Back Reminders</span>
+                <span class="badge-pill count-cb-badge" id="side-count-cb">0</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="sidebar-item" data-filter="assigned">
+                <span class="item-icon">🛵</span>
+                <span class="item-text">Phlebotomists</span>
+                <span class="badge-pill" id="side-count-assigned">0</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="sidebar-item" data-filter="lab">
+                <span class="item-icon">🧪</span>
+                <span class="item-text">In Lab Testing</span>
+                <span class="badge-pill" id="side-count-lab">0</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="sidebar-item" data-filter="completed">
+                <span class="item-icon">🟢</span>
+                <span class="item-text">Report Ready</span>
+                <span class="badge-pill" id="side-count-completed">0</span>
+              </a>
+            </li>
+          </ul>
 
-    <!-- SMART ALERT BANNER FOR DUE CALL BACK REMINDERS -->
-    <div id="callback-alert-banner" class="alert-banner hidden">
-      <div class="alert-content">
-        <span class="alert-icon">⏰</span>
-        <div class="alert-text">
-          <strong id="alert-count-title">Scheduled Call Backs Due Today!</strong>
-          <p>You have patients who asked to be contacted at this time. Check the highlighted rows below and call them!</p>
+          <div class="sidebar-divider"></div>
+
+          <ul class="nav-list">
+            <li><a href="#" class="sidebar-item no-filter"><span class="item-icon">⚙️</span><span class="item-text">Settings</span></a></li>
+            <li><a href="#" class="sidebar-item no-filter"><span class="item-icon">👥</span><span class="item-text">Users & Staff</span></a></li>
+            <li><a href="#" class="sidebar-item no-filter"><span class="item-icon">❓</span><span class="item-text">Support</span></a></li>
+          </ul>
+        </nav>
+
+        <!-- EXECUTIVE PROFILE FOOTER -->
+        <div class="sidebar-footer">
+          <div class="user-profile-box" id="btn-sidebar-logout" title="Click to Lock Controls or Logout">
+            <div class="profile-avatar">
+              <img src="https://ui-avatars.com/api/?name=Admin+Tripathi&background=0284C7&color=fff&bold=true" alt="Admin Avatar">
+            </div>
+            <div class="profile-info">
+              <span class="profile-name">Admin</span>
+              <span class="profile-role">Super Admin</span>
+            </div>
+            <span class="profile-chevron">▼</span>
+          </div>
         </div>
-      </div>
-      <button id="filter-callbacks-btn" class="btn-alert-action">View Due Reminders ➔</button>
+      </aside>
+
+      <!-- =========================================================
+           RIGHT MAIN WORKSPACE (SAAS GRID AREA)
+           ========================================================= -->
+      <main class="saas-main">
+        <!-- TOP SEARCH & STATUS BAR -->
+        <header class="saas-header">
+          <div class="header-search">
+            <svg class="search-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="search-input" placeholder="Search by name, phone, city or order ID..." aria-label="Search bookings">
+          </div>
+          <div class="header-actions">
+            <div class="date-badge">
+              <span>📅 Today, Live Cloud</span>
+            </div>
+            <span id="connection-status-pill" class="live-status-pill">⚡ CLOUD CONNECTED</span>
+            <a href="../index.html" class="btn-new-booking" target="_blank">
+              <span>+ New Booking</span>
+            </a>
+            <button id="btn-logout-lock" class="btn-lock-action" title="Lock Session">🔒 Lock</button>
+          </div>
+        </header>
+
+        <!-- SMART ALERT BANNER FOR DUE CALL BACK REMINDERS -->
+        <div id="callback-alert-banner" class="alert-banner hidden">
+          <div class="alert-content">
+            <span class="alert-icon">⏰</span>
+            <div class="alert-text">
+              <strong id="alert-count-title">Scheduled Call Backs Due Today!</strong>
+              <p>You have patients who asked to be contacted at this time. Check the reminders below and call them!</p>
+            </div>
+          </div>
+          <button id="filter-callbacks-btn" class="btn-alert-action">View Due Reminders ➔</button>
+        </div>
+
+        <!-- HORIZONTAL STATUS STATS TABS (Reference Template Matching) -->
+        <section class="status-tabs-row">
+          <button class="status-tab active" data-filter="all">
+            <span class="tab-icon">📅</span>
+            <span class="tab-label">All Bookings</span>
+            <span class="tab-count count-all-chip" id="top-count-all">0</span>
+          </button>
+          <button class="status-tab" data-filter="new">
+            <span class="tab-icon">⏳</span>
+            <span class="tab-label">Pending</span>
+            <span class="tab-count chip-amber" id="top-count-new">0</span>
+          </button>
+          <button class="status-tab" data-filter="assigned">
+            <span class="tab-icon">🛵</span>
+            <span class="tab-label">Assigned</span>
+            <span class="tab-count chip-blue" id="top-count-assigned">0</span>
+          </button>
+          <button class="status-tab" data-filter="lab">
+            <span class="tab-icon">🧪</span>
+            <span class="tab-label">In Lab Testing</span>
+            <span class="tab-count chip-purple" id="top-count-lab">0</span>
+          </button>
+          <button class="status-tab" data-filter="completed">
+            <span class="tab-icon">🟢</span>
+            <span class="tab-label">Report Ready</span>
+            <span class="tab-count chip-green" id="top-count-completed">0</span>
+          </button>
+          <button class="status-tab" data-filter="callback">
+            <span class="tab-icon">⏰</span>
+            <span class="tab-label">Call Reminders</span>
+            <span class="tab-count chip-red" id="top-count-cb">0</span>
+          </button>
+        </section>
+
+        <!-- FILTER DROPDOWNS BAR -->
+        <section class="filter-dropdowns-bar">
+          <div class="filter-dropdown-group">
+            <div class="filter-select-box">
+              <span class="filter-label">City</span>
+              <select id="filter-city" class="filter-select">
+                <option value="ALL">All Cities</option>
+                <option value="Delhi">Delhi NCR</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Pune">Pune</option>
+              </select>
+            </div>
+
+            <div class="filter-select-box">
+              <span class="filter-label">Package</span>
+              <select id="filter-pkg" class="filter-select">
+                <option value="ALL">All Packages</option>
+                <option value="Full Body">Full Body Checkup</option><option value="Blood">General Home Blood Collection</option><option value="Thyroid">Thyroid Profile</option><option value="Diabetes">Diabetes Profile</option>
+              </select>
+            </div>
+
+            <div class="filter-select-box">
+              <span class="filter-label">Status</span>
+              <select id="filter-status" class="filter-select">
+                <option value="ALL">All Status</option>
+                <option value="New Booking">Pending / New</option>
+                <option value="Collector Assigned">Assigned</option>
+                <option value="In Lab Analysis">In Lab Testing</option>
+                <option value="Report Ready">Report Ready</option>
+              </select>
+            </div>
+          </div>
+
+          <button id="btn-clear-filters" class="btn-clear-filters">✕ Clear Filters</button>
+        </section>
+
+        <!-- 3-COLUMN MODERN CARD GRID AREA (Replaces the Table!) -->
+        <section class="cards-grid-container">
+          <div id="saas-cards-grid" class="saas-cards-grid">
+            <!-- Dynamically populated via app.js with 3-column cards -->
+          </div>
+
+          <!-- Hidden reference for backward DOM compatibility if needed -->
+          <table class="bookings-table hidden" style="display:none;"><tbody id="bookings-tbody"></tbody></table>
+          <div id="bookings-mobile-cards" class="mobile-cards-view hidden" style="display:none;"></div>
+
+          <div id="empty-state" class="empty-state hidden">
+            <div class="empty-icon">📭</div>
+            <h4>No patient bookings match these exact filters!</h4>
+            <p>Try clicking 'Clear Filters' or switching tabs. New orders submitted by customers will stream here instantly.</p>
+          </div>
+        </section>
+
+        <!-- PAGINATION BAR -->
+        <footer class="saas-footer-pagination">
+          <div class="pagination-info">Showing all real-time patient orders on Google Cloud</div>
+          <div class="pagination-controls">
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <span class="page-info">10 / page ▼</span>
+          </div>
+        </footer>
+      </main>
     </div>
-
-    <!-- MAIN DASHBOARD CONTENT -->
-    <main class="admin-main">
-      <!-- HERO METRICS ROW -->
-      <section class="metrics-grid">
-        <div class="stat-card" data-filter="all">
-          <div class="stat-top">
-            <span class="stat-label">Total Live Orders</span>
-            <span class="stat-icon icon-teal">📊</span>
-          </div>
-          <h2 id="stat-total" class="stat-value">0</h2>
-          <span class="stat-meta">Real-time across all cities</span>
-        </div>
-
-        <div class="stat-card stat-amber" data-filter="callback">
-          <div class="stat-top">
-            <span class="stat-label">Scheduled Call Backs</span>
-            <span class="stat-icon icon-amber">⏰</span>
-          </div>
-          <h2 id="stat-callback" class="stat-value">0</h2>
-          <span class="stat-meta">Active patient contact timers</span>
-        </div>
-
-        <div class="stat-card" data-filter="assigned">
-          <div class="stat-top">
-            <span class="stat-label">Phlebotomists Dispatched</span>
-            <span class="stat-icon icon-blue">🛵</span>
-          </div>
-          <h2 id="stat-dispatch" class="stat-value">0</h2>
-          <span class="stat-meta">In field / route confirmed</span>
-        </div>
-
-        <div class="stat-card" data-filter="completed">
-          <div class="stat-top">
-            <span class="stat-label">Smart Reports Ready</span>
-            <span class="stat-icon icon-green">🧪</span>
-          </div>
-          <h2 id="stat-completed" class="stat-value">0</h2>
-          <span class="stat-meta">Verified by NABL Labs</span>
-        </div>
-      </section>
-
-      <!-- TAB FILTER & CONTROLS ROW -->
-      <section class="controls-bar">
-        <div class="filter-pills">
-          <button class="filter-pill active" data-filter="all">All Bookings (<span id="count-all">0</span>)</button>
-          <button class="filter-pill" data-filter="new">New Requests (<span id="count-new">0</span>)</button>
-          <button class="filter-pill pill-amber" data-filter="callback">⏰ Call Back Reminders (<span id="count-callback-pill">0</span>)</button>
-          <button class="filter-pill" data-filter="assigned">🛵 Phlebotomists Assigned (<span id="count-assigned">0</span>)</button>
-          <button class="filter-pill" data-filter="lab">🧪 In Lab Testing (<span id="count-lab">0</span>)</button>
-          <button class="filter-pill" data-filter="completed">🟢 Report Ready (<span id="count-completed-pill">0</span>)</button>
-        </div>
-        <div class="controls-right">
-          <span style="font-size: 0.8rem; color: #64748B; font-weight: 600;">🛡️ ₹100Cr Enterprise Production Tier</span>
-        </div>
-      </section>
-
-      <!-- TABLE AREA -->
-      <section class="table-container">
-        <table class="bookings-table" aria-label="Patient sample collection orders">
-          <thead>
-            <tr>
-              <th>Patient Info & Contact</th>
-              <th>Diagnostic Test Package</th>
-              <th>Home Visit Schedule Slot</th>
-              <th>Status & Tech Assignment</th>
-              <th>⏰ Call Back / Reminder</th>
-              <th>Quick Actions</th>
-            </tr>
-          </thead>
-          <tbody id="bookings-tbody">
-            <!-- Dynamically populated via app.js -->
-          </tbody>
-        </table>
-
-        <!-- MOBILE FRIENDLY STACKED CARDS VIEW (For Smartphones & Tablets) -->
-        <div id="bookings-mobile-cards" class="mobile-cards-view">
-          <!-- Dynamically populated via app.js for small screens -->
-        </div>
-
-        <div id="empty-state" class="empty-state hidden">
-          <div class="empty-icon">📭</div>
-          <h4>No patient bookings match this filter right now!</h4>
-          <p>Your live cloud database is secure and ready! New customer orders submitted on your website will stream here instantly.</p>
-        </div>
-      </section>
-    </main>
 
     <!-- MOBILE FIXED BOTTOM APP NAVIGATION (For Instant Touch Access on Smartphones) -->
     <nav class="mobile-bottom-nav">
