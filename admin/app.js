@@ -339,34 +339,48 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
         }
 
+        // Generate Avatar Initials for Desktop Grid
+        const ptName = (b.name || 'Patient').trim();
+        const initials = ptName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() || 'VIP';
+
         row.innerHTML = `
-          <td class="patient-meta">
-            <span class="p-name">${b.name || 'Patient'}</span>
-            <span class="p-city">${b.city || 'India'}</span>
-            <br>
-            <a href="tel:${b.mobile}" class="p-phone">📞 +91 ${b.mobile || ''}</a>
-            <span class="p-time">ID: ${b.id} &bull; Booked: ${dateStr}</span>
+          <td class="patient-meta-cell">
+            <div class="pc-patient-flex">
+              <div class="pc-avatar">${initials}</div>
+              <div class="pc-details">
+                <div class="pc-name-row">
+                  <span class="p-name">${ptName}</span>
+                  <span class="p-city">📍 ${b.city || 'India'}</span>
+                </div>
+                <div class="pc-contact-row">
+                  <a href="tel:${b.mobile}" class="pc-call-pill" title="Click to dial immediately">📞 +91 ${b.mobile || ''}</a>
+                </div>
+                <span class="p-time">ID: <strong style="color:#475569;">#${b.id.slice(-8)}</strong> &bull; Booked: ${dateStr}</span>
+              </div>
+            </div>
           </td>
           
-          <td>
-            <span class="pkg-pill">${b.selectedPackage || 'General Inquiry'}</span>
+          <td class="package-cell">
+            <div class="pkg-wrapper">
+              <span class="pkg-pill">🧪 ${b.selectedPackage || 'General Diagnostic Inquiry'}</span>
+            </div>
           </td>
 
-          <td>
-            <select class="table-select slot-select" data-id="${b.id}">
-              <option value="Pending Scheduling" ${b.scheduleSlot === 'Pending Scheduling' ? 'selected' : ''}>Pending Scheduling</option>
-              <option value="Today 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Today 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>Today 06:00 - 07:00 AM Fasting</option>
-              <option value="Today 07:00 - 08:00 AM Fasting" ${b.scheduleSlot === 'Today 07:00 - 08:00 AM Fasting' ? 'selected' : ''}>Today 07:00 - 08:00 AM Fasting</option>
-              <option value="Today 09:00 - 11:00 AM" ${b.scheduleSlot === 'Today 09:00 - 11:00 AM' ? 'selected' : ''}>Today 09:00 - 11:00 AM</option>
-              <option value="Today 12:00 - 02:00 PM" ${b.scheduleSlot === 'Today 12:00 - 02:00 PM' ? 'selected' : ''}>Today 12:00 - 02:00 PM</option>
-              <option value="Tomorrow 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Tomorrow 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>Tomorrow 06:00 - 07:00 AM Fasting</option>
-              <option value="Tomorrow 08:00 - 10:00 AM" ${b.scheduleSlot === 'Tomorrow 08:00 - 10:00 AM' ? 'selected' : ''}>Tomorrow 08:00 - 10:00 AM</option>
+          <td class="schedule-cell">
+            <select class="table-select slot-select modern-select" data-id="${b.id}">
+              <option value="Pending Scheduling" ${b.scheduleSlot === 'Pending Scheduling' ? 'selected' : ''}>⏳ Pending Scheduling</option>
+              <option value="Today 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Today 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>🌅 Today 06:00 - 07:00 AM Fasting</option>
+              <option value="Today 07:00 - 08:00 AM Fasting" ${b.scheduleSlot === 'Today 07:00 - 08:00 AM Fasting' ? 'selected' : ''}>🌅 Today 07:00 - 08:00 AM Fasting</option>
+              <option value="Today 09:00 - 11:00 AM" ${b.scheduleSlot === 'Today 09:00 - 11:00 AM' ? 'selected' : ''}>☀️ Today 09:00 - 11:00 AM</option>
+              <option value="Today 12:00 - 02:00 PM" ${b.scheduleSlot === 'Today 12:00 - 02:00 PM' ? 'selected' : ''}>🌞 Today 12:00 - 02:00 PM</option>
+              <option value="Tomorrow 06:00 - 07:00 AM Fasting" ${b.scheduleSlot === 'Tomorrow 06:00 - 07:00 AM Fasting' ? 'selected' : ''}>📅 Tomorrow 06:00 - 07:00 AM Fasting</option>
+              <option value="Tomorrow 08:00 - 10:00 AM" ${b.scheduleSlot === 'Tomorrow 08:00 - 10:00 AM' ? 'selected' : ''}>📅 Tomorrow 08:00 - 10:00 AM</option>
               <option value="Completed" ${b.scheduleSlot === 'Completed' ? 'selected' : ''}>✅ Slot Visit Completed</option>
             </select>
           </td>
 
-          <td>
-            <select class="table-select status-select ${statusClass}" data-id="${b.id}" style="margin-bottom: 6px;">
+          <td class="status-cell">
+            <select class="table-select status-select modern-select ${statusClass}" data-id="${b.id}" style="margin-bottom: 8px;">
               <option value="New Booking" ${b.status === 'New Booking' ? 'selected' : ''}>🟡 New Booking</option>
               <option value="Collector Assigned" ${b.status === 'Collector Assigned' ? 'selected' : ''}>🔵 Collector Assigned</option>
               <option value="Sample Collected" ${b.status === 'Sample Collected' ? 'selected' : ''}>🟣 Sample Collected</option>
@@ -374,9 +388,8 @@ document.addEventListener('DOMContentLoaded', () => {
               <option value="Report Ready" ${b.status === 'Report Ready' ? 'selected' : ''}>🟢 Report Ready</option>
               <option value="Cancelled" ${b.status === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
             </select>
-            <br>
-            <select class="table-select tech-select" data-id="${b.id}" style="font-size: 0.8rem; color: #475569;">
-              <option value="" ${!b.technician ? 'selected' : ''}>— Assign Phlebotomist —</option>
+            <select class="table-select tech-select modern-select" data-id="${b.id}" style="font-size: 0.82rem; color: #475569; background:#F1F5F9;">
+              <option value="" ${!b.technician ? 'selected' : ''}>— Assign Phlebotomist Tech —</option>
               <option value="Rahul Sharma [HLT-104]" ${b.technician === 'Rahul Sharma [HLT-104]' ? 'selected' : ''}>🛵 Rahul Sharma [HLT-104]</option>
               <option value="Vikram Singh [HLT-209]" ${b.technician === 'Vikram Singh [HLT-209]' ? 'selected' : ''}>🛵 Vikram Singh [HLT-209]</option>
               <option value="Sunita Rao [HLT-312]" ${b.technician === 'Sunita Rao [HLT-312]' ? 'selected' : ''}>🛵 Sunita Rao [HLT-312]</option>
@@ -388,12 +401,12 @@ document.addEventListener('DOMContentLoaded', () => {
             ${callbackHtml}
           </td>
 
-          <td>
+          <td class="actions-cell">
             <div class="actions-flex">
-              <button class="btn-wa-dispatch" data-id="${b.id}" title="Send Dispatch WhatsApp">
+              <button class="btn-wa-dispatch pc-action-wa" data-id="${b.id}" title="Send Instant Dispatch WhatsApp">
                 <span>💬 WhatsApp</span>
               </button>
-              <button class="btn-delete-row" data-id="${b.id}" title="Delete Order">🗑️</button>
+              <button class="btn-delete-row pc-action-del" data-id="${b.id}" title="Delete Order">🗑️</button>
             </div>
           </td>
         `;
