@@ -303,6 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (currentFilter === 'callback') return Boolean(b.callBackDate) || b.status === 'Call Reminder Scheduled';
       if (currentFilter === 'lab') return b.status === 'In Lab Analysis' || b.status === 'In Lab Testing';
       if (currentFilter === 'completed') return b.status === 'Report Ready' || b.status === 'Done';
+      if (currentFilter === 'cancelled') return b.status === 'Cancelled';
       return true;
     });
 
@@ -315,6 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let countCont = 0;
     let countProc = 0;
     let countColl = 0;
+    let countCanc = 0;
 
     bookings.forEach(b => {
       if (b.callBackDate || b.status === 'Call Reminder Scheduled') {
@@ -327,6 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (b.status === 'Blood Collected') countColl++;
       if (b.status === 'In Lab Analysis' || b.status === 'In Lab Testing') countLb++;
       if (b.status === 'Report Ready' || b.status === 'Done') countRdy++;
+      if (b.status === 'Cancelled') countCanc++;
     });
 
     // Update Sidebar Navigation count indicators
@@ -338,6 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sideCb = document.getElementById('side-count-cb');
     const sideLab = document.getElementById('side-count-lab');
     const sideComplete = document.getElementById('side-count-completed');
+    const sideCanc = document.getElementById('side-count-cancelled');
     if (sideAll) sideAll.textContent = bookings.length;
     if (sideNew) sideNew.textContent = countNw;
     if (sideCont) sideCont.textContent = countCont;
@@ -346,6 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sideCb) sideCb.textContent = countCb;
     if (sideLab) sideLab.textContent = countLb;
     if (sideComplete) sideComplete.textContent = countRdy;
+    if (sideCanc) sideCanc.textContent = countCanc;
 
     // Update Top Status Stats Tabs counters
     const topAll = document.getElementById('top-count-all');
@@ -356,6 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const topLab = document.getElementById('top-count-lab');
     const topCompleted = document.getElementById('top-count-completed');
     const topCb = document.getElementById('top-count-cb');
+    const topCanc = document.getElementById('top-count-cancelled');
     if (topAll) topAll.textContent = bookings.length;
     if (topNew) topNew.textContent = countNw;
     if (topCont) topCont.textContent = countCont;
@@ -364,6 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (topLab) topLab.textContent = countLb;
     if (topCompleted) topCompleted.textContent = countRdy;
     if (topCb) topCb.textContent = countCb;
+    if (topCanc) topCanc.textContent = countCanc;
 
     // Update Mobile Bottom Navigation bar counters
     const mobAll = document.getElementById('mob-count-all');
@@ -455,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <option value="Blood Collected" ${b.status === 'Blood Collected' ? 'selected' : ''}>🩸 Blood Collected</option>
                 <option value="In Lab Testing" ${b.status === 'In Lab Analysis' || b.status === 'In Lab Testing' ? 'selected' : ''}>🧪 In Lab Testing</option>
                 <option value="Call Reminder Scheduled" ${b.status === 'Call Reminder Scheduled' ? 'selected' : ''}>⏰ Call Reminder Scheduled</option>
-                <option value="Done" ${b.status === 'Report Ready' || b.status === 'Done' ? 'selected' : ''}>🟢 Done / Report Sent</option>
+                <option value="Done" ${b.status === 'Report Ready' || b.status === 'Done' ? 'selected' : ''}>🟢 Done</option>
                 <option value="Cancelled" ${b.status === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
               </select>
             </div>

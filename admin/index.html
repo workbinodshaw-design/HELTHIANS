@@ -114,7 +114,7 @@
             <li>
               <a href="#" class="sidebar-item" data-filter="completed">
                 <span class="item-icon">🟢</span>
-                <span class="item-text">Report Ready</span>
+                <span class="item-text">Done</span>
                 <span class="badge-pill" id="side-count-completed">0</span>
               </a>
             </li>
@@ -123,6 +123,13 @@
                 <span class="item-icon">⏰</span>
                 <span class="item-text">Call Reminders</span>
                 <span class="badge-pill count-cb-badge" id="side-count-cb">0</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="sidebar-item" data-filter="cancelled">
+                <span class="item-icon">❌</span>
+                <span class="item-text">Cancelled</span>
+                <span class="badge-pill" id="side-count-cancelled">0</span>
               </a>
             </li>
           </ul>
@@ -211,13 +218,18 @@
           </button>
           <button class="status-tab" data-filter="completed">
             <span class="tab-icon">🟢</span>
-            <span class="tab-label">Report Ready</span>
+            <span class="tab-label">Done</span>
             <span class="tab-count chip-green" id="top-count-completed">0</span>
           </button>
           <button class="status-tab" data-filter="callback">
             <span class="tab-icon">⏰</span>
             <span class="tab-label">Call Reminders</span>
             <span class="tab-count chip-red" id="top-count-cb">0</span>
+          </button>
+          <button class="status-tab" data-filter="cancelled">
+            <span class="tab-icon">❌</span>
+            <span class="tab-label">Cancelled</span>
+            <span class="tab-count" style="background: #FEF2F2; color: #DC2626;" id="top-count-cancelled">0</span>
           </button>
         </section>
 
