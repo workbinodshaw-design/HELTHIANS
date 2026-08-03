@@ -72,7 +72,7 @@
             <li>
               <a href="#" class="sidebar-item active" data-filter="all">
                 <span class="item-icon">📁</span>
-                <span class="item-text">Bookings</span>
+                <span class="item-text">All Bookings</span>
                 <span class="badge-pill count-all-badge" id="side-count-all">0</span>
               </a>
             </li>
@@ -84,11 +84,26 @@
               </a>
             </li>
             <li>
-              <a href="#" class="sidebar-item" data-filter="callback">
-                <span class="item-icon">⏰</span>
-                <span class="item-text">Call Back Reminders</span>
-                <span class="badge-pill count-cb-badge" id="side-count-cb">0</span>
+              <a href="#" class="sidebar-item" data-filter="contacted">
+                <span class="item-icon">📞</span>
+                <span class="item-text">Contacted</span>
+                <span class="badge-pill" id="side-count-contacted">0</span>
               </a>
+            </li>
+            <li>
+              <a href="#" class="sidebar-item" data-filter="process">
+                <span class="item-icon">⚙️</span>
+                <span class="item-text">Under Process</span>
+                <span class="badge-pill" id="side-count-process">0</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="sidebar-item" data-filter="collected">
+                <span class="item-icon">🩸</span>
+                <span class="item-text">Blood Collected</span>
+                <span class="badge-pill" id="side-count-collected">0</span>
+              </a>
+            </li>
             <li>
               <a href="#" class="sidebar-item" data-filter="lab">
                 <span class="item-icon">🧪</span>
@@ -101,6 +116,13 @@
                 <span class="item-icon">🟢</span>
                 <span class="item-text">Report Ready</span>
                 <span class="badge-pill" id="side-count-completed">0</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="sidebar-item" data-filter="callback">
+                <span class="item-icon">⏰</span>
+                <span class="item-text">Call Reminders</span>
+                <span class="badge-pill count-cb-badge" id="side-count-cb">0</span>
               </a>
             </li>
           </ul>
@@ -156,7 +178,7 @@
         </div>
 
         <!-- HORIZONTAL STATUS STATS TABS (Reference Template Matching) -->
-        <section class="status-tabs-row">
+        <section class="status-tabs-row" style="flex-wrap: wrap; gap: 8px;">
           <button class="status-tab active" data-filter="all">
             <span class="tab-icon">📅</span>
             <span class="tab-label">All Bookings</span>
@@ -166,6 +188,21 @@
             <span class="tab-icon">⏳</span>
             <span class="tab-label">Pending</span>
             <span class="tab-count chip-amber" id="top-count-new">0</span>
+          </button>
+          <button class="status-tab" data-filter="contacted">
+            <span class="tab-icon">📞</span>
+            <span class="tab-label">Contacted</span>
+            <span class="tab-count" style="background: #ECFEFF; color: #0E7490;" id="top-count-contacted">0</span>
+          </button>
+          <button class="status-tab" data-filter="process">
+            <span class="tab-icon">⚙️</span>
+            <span class="tab-label">Under Process</span>
+            <span class="tab-count" style="background: #EEF2FF; color: #4F46E5;" id="top-count-process">0</span>
+          </button>
+          <button class="status-tab" data-filter="collected">
+            <span class="tab-icon">🩸</span>
+            <span class="tab-label">Blood Collected</span>
+            <span class="tab-count" style="background: #FFF1F2; color: #E11D48;" id="top-count-collected">0</span>
           </button>
           <button class="status-tab" data-filter="lab">
             <span class="tab-icon">🧪</span>
@@ -213,6 +250,9 @@
               <select id="filter-status" class="filter-select">
                 <option value="ALL">All Status</option>
                 <option value="Pending">Pending / New</option>
+                <option value="Contacted">Contacted</option>
+                <option value="Under Process">Under Process</option>
+                <option value="Blood Collected">Blood Collected</option>
                 <option value="In Lab Testing">In Lab Testing</option>
                 <option value="Call Reminder Scheduled">Call Reminder Scheduled</option>
                 <option value="Done">Done</option>

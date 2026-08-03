@@ -297,6 +297,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Tab/Sidebar filter
       if (currentFilter === 'new') return b.status === 'New Booking' || b.status === 'Pending' || !b.status;
+      if (currentFilter === 'contacted') return b.status === 'Contacted';
+      if (currentFilter === 'process') return b.status === 'Under Process';
+      if (currentFilter === 'collected') return b.status === 'Blood Collected';
       if (currentFilter === 'callback') return Boolean(b.callBackDate) || b.status === 'Call Reminder Scheduled';
       if (currentFilter === 'lab') return b.status === 'In Lab Analysis' || b.status === 'In Lab Testing';
       if (currentFilter === 'completed') return b.status === 'Report Ready' || b.status === 'Done';
@@ -309,6 +312,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let countLb = 0;
     let countRdy = 0;
     let countNw = 0;
+    let countCont = 0;
+    let countProc = 0;
+    let countColl = 0;
 
     bookings.forEach(b => {
       if (b.callBackDate || b.status === 'Call Reminder Scheduled') {
@@ -316,6 +322,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (b.callBackDate && b.callBackDate <= now) dueCallbacks++;
       }
       if (b.status === 'New Booking' || !b.status || b.status === 'Pending') countNw++;
+      if (b.status === 'Contacted') countCont++;
+      if (b.status === 'Under Process') countProc++;
+      if (b.status === 'Blood Collected') countColl++;
       if (b.status === 'In Lab Analysis' || b.status === 'In Lab Testing') countLb++;
       if (b.status === 'Report Ready' || b.status === 'Done') countRdy++;
     });
@@ -323,11 +332,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update Sidebar Navigation count indicators
     const sideAll = document.getElementById('side-count-all');
     const sideNew = document.getElementById('side-count-new');
+    const sideCont = document.getElementById('side-count-contacted');
+    const sideProc = document.getElementById('side-count-process');
+    const sideColl = document.getElementById('side-count-collected');
     const sideCb = document.getElementById('side-count-cb');
     const sideLab = document.getElementById('side-count-lab');
     const sideComplete = document.getElementById('side-count-completed');
     if (sideAll) sideAll.textContent = bookings.length;
     if (sideNew) sideNew.textContent = countNw;
+    if (sideCont) sideCont.textContent = countCont;
+    if (sideProc) sideProc.textContent = countProc;
+    if (sideColl) sideColl.textContent = countColl;
     if (sideCb) sideCb.textContent = countCb;
     if (sideLab) sideLab.textContent = countLb;
     if (sideComplete) sideComplete.textContent = countRdy;
@@ -335,11 +350,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update Top Status Stats Tabs counters
     const topAll = document.getElementById('top-count-all');
     const topNew = document.getElementById('top-count-new');
+    const topCont = document.getElementById('top-count-contacted');
+    const topProc = document.getElementById('top-count-process');
+    const topColl = document.getElementById('top-count-collected');
     const topLab = document.getElementById('top-count-lab');
     const topCompleted = document.getElementById('top-count-completed');
     const topCb = document.getElementById('top-count-cb');
     if (topAll) topAll.textContent = bookings.length;
     if (topNew) topNew.textContent = countNw;
+    if (topCont) topCont.textContent = countCont;
+    if (topProc) topProc.textContent = countProc;
+    if (topColl) topColl.textContent = countColl;
     if (topLab) topLab.textContent = countLb;
     if (topCompleted) topCompleted.textContent = countRdy;
     if (topCb) topCb.textContent = countCb;
@@ -380,6 +401,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let statusBadgeClass = 'badge-pending';
         let displayStatus = 'Pending';
+        if (b.status === 'Contacted') { statusBadgeClass = 'badge-contacted'; displayStatus = 'Contacted'; }
+        if (b.status === 'Under Process') { statusBadgeClass = 'badge-process'; displayStatus = 'Under Process'; }
+        if (b.status === 'Blood Collected') { statusBadgeClass = 'badge-collected'; displayStatus = 'Blood Collected'; }
         if (b.status === 'In Lab Analysis' || b.status === 'In Lab Testing') { statusBadgeClass = 'badge-lab'; displayStatus = 'In Lab Testing'; }
         if (b.status === 'Call Reminder Scheduled') { statusBadgeClass = 'badge-assigned'; displayStatus = 'Call Reminder Scheduled'; }
         if (b.status === 'Report Ready' || b.status === 'Done') { statusBadgeClass = 'badge-ready'; displayStatus = 'Done'; }
@@ -425,10 +449,13 @@ document.addEventListener('DOMContentLoaded', () => {
             <label class="sc-label">Update Order Status</label>
             <div class="sc-tech-wrapper">
               <select class="sc-tech-select status-select" data-id="${b.id}" title="Change status instantly">
-                <option value="Pending" ${b.status === 'New Booking' || !b.status || b.status === 'Pending' ? 'selected' : ''}>⏳ Pending</option>
+                <option value="Pending" ${b.status === 'New Booking' || !b.status || b.status === 'Pending' ? 'selected' : ''}>⏳ Pending / New</option>
+                <option value="Contacted" ${b.status === 'Contacted' ? 'selected' : ''}>📞 Contacted</option>
+                <option value="Under Process" ${b.status === 'Under Process' ? 'selected' : ''}>⚙️ Under Process</option>
+                <option value="Blood Collected" ${b.status === 'Blood Collected' ? 'selected' : ''}>🩸 Blood Collected</option>
                 <option value="In Lab Testing" ${b.status === 'In Lab Analysis' || b.status === 'In Lab Testing' ? 'selected' : ''}>🧪 In Lab Testing</option>
                 <option value="Call Reminder Scheduled" ${b.status === 'Call Reminder Scheduled' ? 'selected' : ''}>⏰ Call Reminder Scheduled</option>
-                <option value="Done" ${b.status === 'Report Ready' || b.status === 'Done' ? 'selected' : ''}>🟢 Done</option>
+                <option value="Done" ${b.status === 'Report Ready' || b.status === 'Done' ? 'selected' : ''}>🟢 Done / Report Sent</option>
                 <option value="Cancelled" ${b.status === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
               </select>
             </div>
