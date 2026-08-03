@@ -158,6 +158,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const forgotPasswordLink = document.getElementById('forgot-password-link');
+  if (forgotPasswordLink) {
+    forgotPasswordLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = 'official.mptripathi@gmail.com';
+      adminEmailInput.value = email;
+      
+      try {
+        if (window.HealthiansBackend && window.HealthiansBackend.auth) {
+          await window.HealthiansBackend.auth.sendPasswordResetEmail(email);
+          loginErrorMsg.textContent = '📧 Password reset link sent directly to official.mptripathi@gmail.com! Please check your Gmail inbox and click the link to set your secret password!';
+          loginErrorMsg.style.color = '#059669';
+          loginErrorMsg.style.backgroundColor = '#ECFDF5';
+          loginErrorMsg.style.borderColor = '#A7F3D0';
+          loginErrorMsg.classList.remove('hidden');
+        } else {
+          throw new Error('Cloud Auth disconnected.');
+        }
+      } catch (err) {
+        console.error('Password Reset Error:', err);
+        loginErrorMsg.textContent = '⚠️ Unable to send reset email. You can instantly reset your password in Firebase Console by deleting and re-adding your user row!';
+        loginErrorMsg.style.color = '#DC2626';
+        loginErrorMsg.style.backgroundColor = '#FEF2F2';
+        loginErrorMsg.style.borderColor = '#FECACA';
+        loginErrorMsg.classList.remove('hidden');
+      }
+    });
+  }
+
   // ======================================================================
   // 2. RESILIENT DATABASE SYNCHRONIZATION ENGINE
   // ======================================================================
