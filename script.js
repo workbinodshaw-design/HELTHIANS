@@ -120,51 +120,123 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 4. CUSTOM LUXURY CITY SELECTOR
+  // 4. INTERACTIVE SEARCHABLE & MANUAL TYPING CITY SELECTOR
   const cityContainer = document.getElementById('city-select-container');
-  const cityTrigger = document.getElementById('city-dropdown-trigger');
+  const leadCityInput = document.getElementById('lead-city');
   const cityMenu = document.getElementById('city-dropdown-menu');
-  const selectedCityText = document.getElementById('selected-city-text');
-  const leadCitySelect = document.getElementById('lead-city');
-  const dropdownItems = cityMenu ? cityMenu.querySelectorAll('.dropdown-item') : [];
+  const cityChevron = document.getElementById('city-chevron');
 
-  if (cityTrigger && cityMenu) {
-    cityTrigger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isExpanded = cityMenu.classList.toggle('show');
-      cityTrigger.setAttribute('aria-expanded', isExpanded);
-    });
+  const masterCitiesList = [
+    "Agra", "Ahmedabad", "Ahmednagar", "Aizawl", "Ajmer", "Akola", "Aligarh", "Allahabad (Prayagraj)", "Alwar", "Ambala", "Amravati", "Amritsar", "Anand", "Asansol", "Assam", "Aurangabad", "Ayodhya",
+    "Baddi", "Balasore", "Bangalore (Bengaluru)", "Bareilly", "Baroda (Vadodara)", "Bathinda", "Belgaum", "Bellary", "Berhampur", "Bhagalpur", "Bharatpur", "Bharuch", "Bhavnagar", "Bhilai", "Bhiwadi", "Bhilwara", "Bhiwandi", "Bhopal", "Bhubaneswar", "Bidar", "Bihar", "Bikaner", "Bilaspur", "Bokaro", "Bulandshahr", "Burdwan", "Burhanpur",
+    "Calicut (Kozhikode)", "Chandigarh", "Chandrapur", "Chennai", "Chhapra", "Chhindwara", "Chittoor", "Chittorgarh", "Coimbatore", "Cuttack",
+    "Daman", "Darbhanga", "Darjeeling", "Davangere", "Dehradun", "Delhi", "Delhi NCR", "Dewas", "Dhanbad", "Dharamsala", "Dharwad", "Dhule", "Dibrugarh", "Dindigul", "Durgapur", "Durg",
+    "Eluru", "Ernakulam", "Erode", "Etah", "Etawah",
+    "Faizabad", "Faridabad", "Faridkot", "Fatehpur", "Firozabad", "Firozpur",
+    "Gandhidham", "Gandhinagar", "Gangtok", "Gaya", "Ghaziabad", "Ghazipur", "Goa", "Godhra", "Gorakhpur", "Greater Noida", "Guntur", "Gurdaspur", "Gurgaon (Gurugram)", "Guwahati", "Gwalior",
+    "Haldia", "Haldwani", "Haridwar", "Hassan", "Hathras", "Hisar", "Hoshiarpur", "Hosur", "Howrah", "Hubli", "Hyderabad",
+    "Idukki", "Imphal", "Indore", "Itanagar",
+    "Jabalpur", "Jagdalpur", "Jaipur", "Jajpur", "Jalandhar", "Jalgaon", "Jalpaiguri", "Jammu", "Jamnagar", "Jamshedpur", "Jaunpur", "Jhaijar", "Jhalawar", "Jhansi", "Jhunjhunu", "Jodhpur", "Jorhat", "Junagadh",
+    "Kakinada", "Kanchipuram", "Kanyakumari", "Kanpur", "Kapurthala", "Karimnagar", "Karnal", "Karur", "Kashipur", "Katni", "Khammam", "Khandwa", "Kharagpur", "Kochi", "Kodaikanal", "Kolar", "Kolhapur", "Kolkata", "Kollam", "Kota", "Kottayam", "Kozhikode", "Kurnool", "Kurukshetra",
+    "Latur", "Leh", "Lucknow", "Ludhiana",
+    "Madurai", "Mahbubnagar", "Malappuram", "Malda", "Manali", "Mandi", "Mangalore", "Mathura", "Meerut", "Mehsana", "Mirzapur", "Mohali", "Moradabad", "Morbi", "Morena", "Mumbai", "Mumbai & Thane", "Muzaffarnagar", "Muzaffarpur", "Mysore",
+    "Nadiad", "Nagaon", "Nagercoil", "Nagpur", "Nainital", "Nanded", "Narnaul", "Nashik", "Navsari", "Nellore", "New Delhi", "Nizamabad", "Noida",
+    "Ooty", "Orai", "Osmanabad",
+    "Palakkad", "Pali", "Palwal", "Panaji", "Panchkula", "Panipat", "Panvel", "Pathankot", "Patiala", "Patna", "Pimpri-Chinchwad", "Puducherry (Pondicherry)", "Port Blair", "Prayagraj", "Proddatur", "Pune", "Puri", "Purnia", "Purulia",
+    "Qadian", "Quilon",
+    "Raichur", "Raigarh", "Raipur", "Rajahmundry", "Rajkot", "Rajouri", "Rajsamand", "Ramagundam", "Ramanathapuram", "Rampur", "Ranchi", "Raniganj", "Ratlam", "Ratnagiri", "Rewa", "Rishikesh", "Rohtak", "Roorkee", "Rourkela", "Rudrapur",
+    "Sagar", "Saharanpur", "Saharsa", "Salem", "Samastipur", "Sambalpur", "Sangareddy", "Sangli", "Satara", "Satna", "Secunderabad", "Sehore", "Shillong", "Shimla", "Shimoga", "Shivpuri", "Sikar", "Silvassa", "Silchar", "Siliguri", "Sindhudurg", "Singrauli", "Sirmaur", "Sirsa", "Sitapur", "Sivakasi", "Siwan", "Solan", "Solapur", "Sonepat", "Sriganganagar", "Srinagar", "Sultanpur", "Surat", "Surendranagar", "Suryapet",
+    "Tadepalligudem", "Tenali", "Tezpur", "Thane", "Thanjavur", "Thiruvananthapuram", "Thrissur", "Tinsukia", "Tirunelveli", "Tirupati", "Tirupattur", "Tiruppur", "Tiruvannamalai", "Tonk", "Trichy (Tiruchirappalli)", "Trivandrum", "Tumkur", "Tuticorin",
+    "Udaipur", "Udupi", "Ujjain", "Ulhasnagar", "Una", "Unnao", "Uttarkashi",
+    "Vadodara", "Valsad", "Vapi", "Varanasi", "Vasai-Virar", "Vellore", "Veraval", "Vidisha", "Vijayawada", "Villupuram", "Virudhunagar", "Visakhapatnam", "Vizianagaram", "Vrindavan",
+    "Warangal", "Wardha", "Wayanad", "West Bengal",
+    "Yamuna Nagar", "Yavatmal", "Yercaud",
+    "Zirakpur"
+  ];
 
-    dropdownItems.forEach(item => {
-      item.addEventListener('click', (e) => {
+  function renderCityDropdown(filterText = "") {
+    if (!cityMenu) return;
+    cityMenu.innerHTML = "";
+    const cleanFilter = filterText.trim().toLowerCase();
+    
+    // Filter list or show all if filter is empty
+    const matched = masterCitiesList.filter(c => c.toLowerCase().includes(cleanFilter));
+    
+    // If typing something custom or not found in quick suggestions, display manual typing confirmation option
+    if (matched.length === 0 && cleanFilter.length > 0) {
+      const customDiv = document.createElement('div');
+      customDiv.className = 'dropdown-item';
+      customDiv.innerHTML = `Use custom location: <strong style="color:#0E7490; margin-left: 4px;">${sanitizeInput(filterText.trim())}</strong>`;
+      customDiv.addEventListener('click', (e) => {
         e.stopPropagation();
-        const val = item.getAttribute('data-val') || item.textContent.trim();
-        
-        if (selectedCityText) {
-          selectedCityText.textContent = val;
-          selectedCityText.classList.remove('placeholder-txt');
-        }
-
-        if (leadCitySelect) {
-          leadCitySelect.value = val;
-        }
-
-        dropdownItems.forEach(i => i.classList.remove('selected'));
-        item.classList.add('selected');
+        if (leadCityInput) leadCityInput.value = filterText.trim();
         cityMenu.classList.remove('show');
-        cityTrigger.setAttribute('aria-expanded', false);
-        
-        logConversionEvent('City_Selected', { city: val });
+        if (cityChevron) cityChevron.style.transform = 'translateY(-50%) rotate(0deg)';
       });
+      cityMenu.appendChild(customDiv);
+      return;
+    }
+
+    // Render up to top 60 matches for lightning fast performance and smooth UI
+    const listToRender = matched.slice(0, 60);
+    listToRender.forEach(cityName => {
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'dropdown-item';
+      itemDiv.textContent = cityName;
+      itemDiv.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (leadCityInput) {
+          leadCityInput.value = cityName;
+        }
+        cityMenu.classList.remove('show');
+        if (cityChevron) cityChevron.style.transform = 'translateY(-50%) rotate(0deg)';
+        logConversionEvent('City_Selected', { city: cityName });
+      });
+      cityMenu.appendChild(itemDiv);
+    });
+  }
+
+  if (leadCityInput && cityMenu) {
+    leadCityInput.addEventListener('focus', () => {
+      renderCityDropdown(leadCityInput.value);
+      cityMenu.classList.add('show');
+      if (cityChevron) cityChevron.style.transform = 'translateY(-50%) rotate(180deg)';
     });
 
-    document.addEventListener('click', (e) => {
-      if (cityContainer && !cityContainer.contains(e.target)) {
-        cityMenu.classList.remove('show');
-        cityTrigger.setAttribute('aria-expanded', false);
+    leadCityInput.addEventListener('click', (e) => {
+      e.stopPropagation();
+      renderCityDropdown(leadCityInput.value);
+      cityMenu.classList.add('show');
+      if (cityChevron) cityChevron.style.transform = 'translateY(-50%) rotate(180deg)';
+    });
+
+    leadCityInput.addEventListener('input', (e) => {
+      renderCityDropdown(e.target.value);
+      if (!cityMenu.classList.contains('show')) {
+        cityMenu.classList.add('show');
+        if (cityChevron) cityChevron.style.transform = 'translateY(-50%) rotate(180deg)';
       }
     });
   }
+
+  if (cityChevron && cityMenu) {
+    cityChevron.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isShow = cityMenu.classList.toggle('show');
+      cityChevron.style.transform = isShow ? 'translateY(-50%) rotate(180deg)' : 'translateY(-50%) rotate(0deg)';
+      if (isShow && leadCityInput) {
+        renderCityDropdown(leadCityInput.value);
+        leadCityInput.focus();
+      }
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (cityContainer && !cityContainer.contains(e.target)) {
+      if (cityMenu) cityMenu.classList.remove('show');
+      if (cityChevron) cityChevron.style.transform = 'translateY(-50%) rotate(0deg)';
+    }
+  });
 
   // 4B. LEAD FORM SUBMISSION & SUCCESS MODAL (Google Ads & Meta Pixel Lead Event)
   const bookingForm = document.getElementById('healthians-booking-form');
@@ -293,11 +365,10 @@ document.addEventListener('DOMContentLoaded', () => {
       bookingForm.reset();
       currentSelectedPackage = '';
       if (selectedPackageBox) selectedPackageBox.style.display = 'none';
-      if (selectedCityText) {
-        selectedCityText.textContent = currentLang === 'hi' ? 'शहर चुनें' : 'Select City';
-        selectedCityText.classList.add('placeholder-txt');
-      }
-      dropdownItems.forEach(i => i.classList.remove('selected'));
+      const leadCityElem = document.getElementById('lead-city');
+      if (leadCityElem) leadCityElem.value = '';
+      if (cityMenu) cityMenu.classList.remove('show');
+      if (cityChevron) cityChevron.style.transform = 'translateY(-50%) rotate(0deg)';
     });
   }
 

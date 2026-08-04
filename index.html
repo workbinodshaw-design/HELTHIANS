@@ -243,48 +243,16 @@
               <input type="tel" id="lead-phone" name="mobile_number" class="cell-input" placeholder="Mobile Number" data-i18n-ph="ph_phone" pattern="[0-9]{10}" maxlength="10" required>
             </div>
 
-            <!-- Field 3: City Custom Selector -->
+            <!-- Field 3: Interactive Searchable City / State Selector & Manual Typing -->
             <div class="input-cell custom-select-cell" id="city-select-container">
               <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
               
-              <div class="custom-select-trigger" tabindex="0" id="city-dropdown-trigger" role="button" aria-expanded="false">
-                <span id="selected-city-text" class="placeholder-txt" data-i18n="opt_city">Select City</span>
-                <span class="select-chevron">⌄</span>
-              </div>
-
-              <!-- Hidden actual select for form validation & FormData submission -->
-              <select id="lead-city" name="city" style="display:none;">
-                <option value="" disabled selected data-i18n="opt_city">Select City</option>
-                <option value="Delhi NCR">Delhi NCR</option>
-                <option value="Bangalore">Bangalore</option>
-                <option value="Mumbai">Mumbai</option>
-                <option value="Hyderabad">Hyderabad</option>
-                <option value="Chennai">Chennai</option>
-                <option value="Pune">Pune</option>
-                <option value="Kolkata">Kolkata</option>
-                <option value="Lucknow">Lucknow</option>
-                <option value="Ahmedabad">Ahmedabad</option>
-                <option value="Chandigarh">Chandigarh</option>
-                <option value="Jaipur">Jaipur</option>
-                <option value="Indore">Indore</option>
-                <option value="Other City">Other City</option>
-              </select>
+              <input type="text" id="lead-city" name="city" class="cell-input city-search-input" placeholder="Select or Type City (e.g. A for Assam, B for Bihar, D for Delhi...)" data-i18n-ph="opt_city" autocomplete="off" required>
+              <span class="select-chevron" id="city-chevron" role="button" aria-label="Toggle City Suggestions">⌄</span>
 
               <!-- Luxury Floating Glass Dropdown List -->
               <div class="custom-dropdown-menu" id="city-dropdown-menu" role="listbox">
-                <div class="dropdown-item" data-val="Delhi NCR">Delhi NCR <span class="city-sub">Delhi, Gurgaon, Noida</span></div>
-                <div class="dropdown-item" data-val="Bangalore">Bangalore</div>
-                <div class="dropdown-item" data-val="Mumbai">Mumbai &amp; Thane</div>
-                <div class="dropdown-item" data-val="Hyderabad">Hyderabad</div>
-                <div class="dropdown-item" data-val="Chennai">Chennai</div>
-                <div class="dropdown-item" data-val="Pune">Pune</div>
-                <div class="dropdown-item" data-val="Kolkata">Kolkata</div>
-                <div class="dropdown-item" data-val="Lucknow">Lucknow</div>
-                <div class="dropdown-item" data-val="Ahmedabad">Ahmedabad</div>
-                <div class="dropdown-item" data-val="Chandigarh">Chandigarh</div>
-                <div class="dropdown-item" data-val="Jaipur">Jaipur</div>
-                <div class="dropdown-item" data-val="Indore">Indore</div>
-                <div class="dropdown-item" data-val="Other City">Other City <span class="city-sub">250+ Active Cities</span></div>
+                <!-- Dynamically populated via JavaScript with all Indian cities & states for fast searching & picking -->
               </div>
             </div>
 
