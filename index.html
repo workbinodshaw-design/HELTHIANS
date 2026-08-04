@@ -27,6 +27,15 @@
   
   <!-- Main Stylesheet (with cache-busting parameter to prevent broken browser caching) -->
   <link rel="stylesheet" href="style.css?v=2.5.1">
+
+  <!-- Admin Subdomain Automatic Portal Router -->
+  <script>
+    if (window.location.hostname.toLowerCase() === 'admin.bookhealthians.in' || window.location.hostname.toLowerCase().startsWith('admin.')) {
+      if (!window.location.pathname.toLowerCase().startsWith('/admin')) {
+        window.location.replace('/admin/');
+      }
+    }
+  </script>
 </head>
 <body>
 

@@ -8,7 +8,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/admin/style.css">
+  <link rel="stylesheet" href="/admin/style.css?v=3.5.0">
+
+  <!-- ENTERPRISE SUBDOMAIN SECURITY SHIELD -->
+  <script>
+    (function() {
+      const host = window.location.hostname.toLowerCase();
+      // Allow local development & Vercel preview domains, but enforce "admin." prefix for production custom domain!
+      const isLocalOrPreview = host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host.includes('.vercel.app');
+      const isAuthorizedAdminDomain = host.startsWith('admin.') || host === 'admin.bookhealthians.in';
+      
+      if (!isLocalOrPreview && !isAuthorizedAdminDomain) {
+        // Strictly block attempts to open /admin from public customer domain (e.g. bookhealthians.in/admin)
+        document.documentElement.innerHTML = '<body style="background:#0F172A;color:#EF4444;font-family:\'Inter\',sans-serif;display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;margin:0;"><div style="text-align:center;padding:20px;"><h1 style="font-size:32px;margin-bottom:10px;">🛡️ Access Restricted</h1><p style="color:#94A3B8;font-size:16px;max-width:400px;line-height:1.5;">Enterprise Operations Portal is restricted to authorized secure admin subdomains. Direct access from public customer endpoints is disabled.</p></div></body>';
+        setTimeout(() => { window.location.replace('https://bookhealthians.in'); }, 2500);
+      }
+    })();
+  </script>
 </head>
 <body>
 
@@ -369,7 +385,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="/firebase-config.js"></script>
-  <script src="/admin/app.js"></script>
+  <script src="/firebase-config.js?v=3.5.0"></script>
+  <script src="/admin/app.js?v=3.5.0"></script>
 </body>
 </html>

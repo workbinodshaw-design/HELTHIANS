@@ -1,6 +1,18 @@
 {
   "trailingSlash": true,
   "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "admin.bookhealthians.in"
+        }
+      ],
+      "destination": "/admin/"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
