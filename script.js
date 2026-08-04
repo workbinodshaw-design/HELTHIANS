@@ -175,6 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
     bookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      // Anti-Spam / Rate-Limiting Protection (Prevent Flood Attacks)
+      const nowTs = Date.now();
+      const lastSubmitTs = parseInt(sessionStorage.getItem('healthians_last_submit_ts') || '0', 10);
+      if (nowTs - lastSubmitTs < 15000) {
+        alert(currentLang === 'hi' ? 'कृपया कुछ देर प्रतीक्षा कर के पुनः प्रयास करें।' : 'Please wait a few seconds before submitting another booking request.');
+        return;
+      }
+
       const formData = new FormData(bookingForm);
       const chosenCity = sanitizeInput(formData.get('city') || '');
       const patientName = sanitizeInput(formData.get('patient_name') || '');
@@ -217,17 +225,16 @@ document.addEventListener('DOMContentLoaded', () => {
         callBackNote: ''
       };
 
-      // Show professional interactive verification state while saving FOR REAL
+      // Show clean, professional loading state
       const submitBtn = bookingForm.querySelector('button[type="submit"]') || bookingForm.querySelector('.btn-primary');
       const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
       
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = (currentLang === 'hi') ? '⏳ रियल बुकिंग रजिस्टर हो रही है...' : '⏳ Booking Real Visit Slot...';
+        submitBtn.innerHTML = (currentLang === 'hi') ? '⏳ आपकी बुकिंग दर्ज हो रही है...' : '⏳ Securing Visit Slot...';
         submitBtn.style.opacity = '0.85';
       }
 
-      // Send Real Live Order via Enterprise Resilient Backend Suite & await explicit confirmation
       let isSavedSuccessfully = false;
       if (window.HealthiansBackend) {
         try {
@@ -236,19 +243,18 @@ document.addEventListener('DOMContentLoaded', () => {
             isSavedSuccessfully = true;
           }
         } catch (err) {
-          console.error('Cloud Firestore save exception:', err);
+          // Silent error handling to prevent leaking infrastructure details
         }
       } 
       
       if (!isSavedSuccessfully) {
-        // Ultimate safety failover if cloud network experienced temporary latency
         try {
           let currentBookings = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
           currentBookings.unshift(bookingData);
           localStorage.setItem('healthians_admin_bookings', JSON.stringify(currentBookings));
           isSavedSuccessfully = true;
         } catch (e) {
-          console.error('Edge storage exception:', e);
+          // Silent fallback failure handling
         }
       }
 
@@ -258,11 +264,13 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.style.opacity = '1';
       }
 
-      // STRICT RULE: Only proceed to show checkmark if form is submitted FOR REAL
       if (!isSavedSuccessfully) {
-        alert(currentLang === 'hi' ? 'बुकिंग दर्ज करने में तकनीकी समस्या हुई। कृपया पुनः प्रयास करें।' : 'Unable to process real booking right now. Please verify internet connection and try again.');
+        alert(currentLang === 'hi' ? 'बुकिंग दर्ज करने में समस्या हुई। कृपया अपने नेटवर्क की जांच करें।' : 'Unable to confirm booking at this time. Please verify your internet connection and try again.');
         return;
       }
+
+      // Record rate limit timestamp upon confirmed successful submission
+      sessionStorage.setItem('healthians_last_submit_ts', Date.now().toString());
 
       // Log Lead conversion event for Google & Meta Ads tracking only on confirmed save
       logConversionEvent('Lead_Submitted_Success', bookingData);
@@ -383,8 +391,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Helper utility to log performance ad conversion events
+ * Professional Analytics Telemetry Bridge (Google Tag Manager & Meta Pixel compatible)
  */
 function logConversionEvent(eventName, eventData) {
-  console.log(`[Healthians Ads Analytics Event] -> [${eventName}]`, eventData || {});
+  try {
+    if (window.dataLayer && typeof window.dataLayer.push === 'function') {
+      window.dataLayer.push({ event: eventName, ...eventData });
+    }
+    if (typeof window.fbq === 'function') {
+      window.fbq('trackCustom', eventName, eventData);
+    }
+  } catch (e) {
+    // Silent execution in production
+  }
 }

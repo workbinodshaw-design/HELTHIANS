@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function lockDashboard() {
     if (dbSubscriptionUnsubscribe) {
-      dbSubscriptionUnsubscribe(); // Stop receiving patient records immediately
+      dbSubscriptionUnsubscribe();
       dbSubscriptionUnsubscribe = null;
     }
     currentLiveBookings = [];
@@ -92,15 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     enterpriseDashboard.classList.add('hidden');
     loginPortal.classList.remove('hidden');
-    console.log('🔒 [Security Shield] Dashboard locked. Patient records encrypted.');
   }
 
   function unlockDashboard() {
     loginPortal.classList.add('hidden');
     enterpriseDashboard.classList.remove('hidden');
-    console.log('🔓 [Enterprise Auth] Administrator access confirmed. Unlocking dashboard...');
     
-    // Initiate resilient database syncing ONLY after verification
     startResilientSyncEngine();
   }
 
@@ -110,37 +107,31 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = adminEmailInput.value.trim().toLowerCase();
       const password = adminPasswordInput.value;
 
-      // 0. Brute-Force Rate Limiting Security Shield
       const lockUntil = parseInt(localStorage.getItem('healthians_lock_until') || '0', 10);
       if (Date.now() < lockUntil) {
         const remainingSec = Math.ceil((lockUntil - Date.now()) / 1000);
-        loginErrorMsg.textContent = `⛔ Security Shield Alert: Exceeded failed access attempts. Executive portal locked for ${remainingSec} seconds against brute-force attacks.`;
+        loginErrorMsg.textContent = `⛔ Security Alert: Multiple unverified access attempts. Portal locked for ${remainingSec} seconds.`;
         loginErrorMsg.classList.remove('hidden');
         return;
       }
 
-      // 1. Strict Executive Whitelist (Only official owner is permitted)
       if (email !== 'official.mptripathi@gmail.com') {
-        loginErrorMsg.textContent = '⚠️ Access Denied: Only official.mptripathi@gmail.com is authorized for this executive portal.';
+        loginErrorMsg.textContent = '⚠️ Access Denied: Unauthorized executive profile identifier.';
         loginErrorMsg.classList.remove('hidden');
         return;
       }
 
       const btnSubmit = loginForm.querySelector('button[type="submit"]');
       const originalText = btnSubmit ? btnSubmit.innerHTML : '🔒 Unlock Operations Dashboard ➔';
-      if (btnSubmit) btnSubmit.innerHTML = '<span>⏳ Verifying directly with Firebase Cloud...</span>';
+      if (btnSubmit) btnSubmit.innerHTML = '<span>⏳ Authenticating executive access...</span>';
 
-      // 2. 100% Real Google Firebase Cloud Authentication
       try {
         if (!window.HealthiansBackend || !window.HealthiansBackend.auth) {
-          throw new Error('Firebase Authentication SDK is not initialized or offline.');
+          throw new Error('Authentication gateway offline.');
         }
 
-        // Authenticate directly with Firebase Google IAM Console
-        const userCredential = await window.HealthiansBackend.auth.signInWithEmailAndPassword(email, password);
-        console.log('✅ Real Firebase Auth successful for user:', userCredential.user.email);
+        await window.HealthiansBackend.auth.signInWithEmailAndPassword(email, password);
 
-        // Clear brute force counter upon successful authentication
         localStorage.removeItem('healthians_failed_attempts');
         localStorage.removeItem('healthians_lock_until');
 
@@ -152,29 +143,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
       } catch (authErr) {
         if (btnSubmit) btnSubmit.innerHTML = originalText;
-        console.error('Firebase Auth Error:', authErr);
         
-        // Track consecutive failed login attempts
         let failedCount = parseInt(localStorage.getItem('healthians_failed_attempts') || '0', 10) + 1;
         localStorage.setItem('healthians_failed_attempts', failedCount.toString());
         if (failedCount >= 5) {
-          localStorage.setItem('healthians_lock_until', (Date.now() + 300000).toString()); // 5-minute cooldown
-          loginErrorMsg.textContent = '⛔ Security Shield: 5 consecutive failed attempts detected! Portal locked for 5 minutes.';
+          localStorage.setItem('healthians_lock_until', (Date.now() + 300000).toString());
+          loginErrorMsg.textContent = '⛔ Security Shield: 5 consecutive failed attempts detected. Portal locked for 5 minutes.';
           loginErrorMsg.classList.remove('hidden');
           adminPasswordInput.value = '';
           return;
         }
 
-        // Formatted feedback directly from real Firebase IAM Server
-        let errorMsg = `⚠️ Authentication Rejected: Incorrect password (${5 - failedCount} attempts left before security lockout).`;
+        let errorMsg = `⚠️ Authentication Rejected: Incorrect password (${5 - failedCount} attempts remaining).`;
         if (authErr.code === 'auth/user-not-found' || authErr.code === 'auth/invalid-credential' || authErr.code === 'auth/invalid-login-credentials') {
           errorMsg = `⚠️ Login Failed: Invalid credentials (${5 - failedCount} attempts remaining).`;
         } else if (authErr.code === 'auth/wrong-password') {
           errorMsg = `⚠️ Login Failed: Incorrect secret passcode (${5 - failedCount} attempts remaining).`;
         } else if (authErr.code === 'auth/operation-not-allowed') {
-          errorMsg = '⚠️ Notice: Email/Password Sign-In must be turned ON under Authentication > Sign-in method in your Firebase Console!';
-        } else if (authErr.message) {
-          errorMsg = `⚠️ Firebase Error: ${authErr.message}`;
+          errorMsg = '⚠️ Access Error: Sign-in method is temporarily unavailable. Contact enterprise infrastructure support.';
+        } else if (authErr.message && !authErr.message.toLowerCase().includes('firebase')) {
+          errorMsg = `⚠️ Error: ${authErr.message}`;
         }
 
         loginErrorMsg.textContent = errorMsg;
@@ -206,17 +194,16 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         if (window.HealthiansBackend && window.HealthiansBackend.auth) {
           await window.HealthiansBackend.auth.sendPasswordResetEmail(email);
-          loginErrorMsg.textContent = '📧 Password reset link sent directly to official.mptripathi@gmail.com! Please check your Gmail inbox and click the link to set your secret password!';
+          loginErrorMsg.textContent = '📧 Security verification link sent to registered administrator email inbox.';
           loginErrorMsg.style.color = '#059669';
           loginErrorMsg.style.backgroundColor = '#ECFDF5';
           loginErrorMsg.style.borderColor = '#A7F3D0';
           loginErrorMsg.classList.remove('hidden');
         } else {
-          throw new Error('Cloud Auth disconnected.');
+          throw new Error('Auth gateway disconnected.');
         }
       } catch (err) {
-        console.error('Password Reset Error:', err);
-        loginErrorMsg.textContent = '⚠️ Unable to send reset email. You can instantly reset your password in Firebase Console by deleting and re-adding your user row!';
+        loginErrorMsg.textContent = '⚠️ Unable to process reset request at this moment. Please verify network connectivity.';
         loginErrorMsg.style.color = '#DC2626';
         loginErrorMsg.style.backgroundColor = '#FEF2F2';
         loginErrorMsg.style.borderColor = '#FECACA';
@@ -225,23 +212,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ======================================================================
-  // 2. RESILIENT DATABASE SYNCHRONIZATION ENGINE
-  // ======================================================================
   function startResilientSyncEngine() {
     if (window.HealthiansBackend && window.HealthiansBackend.subscribeOrders) {
       dbSubscriptionUnsubscribe = window.HealthiansBackend.subscribeOrders((orders, metadata) => {
         currentLiveBookings = orders;
         
-        // Update connection health UI indicator
         if (connectionStatusPill) {
           if (metadata.source === 'cloud' && window.HealthiansBackend.isOnline()) {
-            connectionStatusPill.innerHTML = '⚡ CLOUD CONNECTED';
+            connectionStatusPill.innerHTML = '⚡ ENTERPRISE SECRETS SECURED & LIVE';
             connectionStatusPill.style.color = '#059669';
             connectionStatusPill.style.background = '#ECFDF5';
             connectionStatusPill.style.borderColor = '#A7F3D0';
           } else {
-            connectionStatusPill.innerHTML = '🛡️ EDGE RESILIENCY ACTIVE';
+            connectionStatusPill.innerHTML = '🛡️ LOCAL EDGE RESILIENCY ACTIVE';
             connectionStatusPill.style.color = '#B45309';
             connectionStatusPill.style.background = '#FFFBEB';
             connectionStatusPill.style.borderColor = '#FDE68A';
@@ -251,7 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
         render();
       });
     } else {
-      console.warn('⚠️ Backend Bridge not found. Loading offline edge storage.');
       try {
         currentLiveBookings = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
       } catch (e) {
