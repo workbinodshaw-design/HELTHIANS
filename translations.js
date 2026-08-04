@@ -48,6 +48,17 @@ window.HEALTHIANS_TRANSLATIONS = {
     step4_t: "Reports in",
     step4_s: "24 Hours",
 
+    // Super Saver Offer Banner
+    saver_ribbon: "🔥 LIMITED TIME OFFER",
+    saver_title: "Healthians Super Saver Package",
+    saver_tag: "5 Essential Tests. Complete Care.",
+    saver_icon_1: "5 Essential<br>Tests",
+    saver_icon_2: "Home<br>Collection",
+    saver_icon_3: "Reports in<br>24-48 Hours",
+    saver_icon_4: "NABL<br>Certified Labs",
+    saver_book_btn: "Book Now at ₹299",
+    saver_slots_warn: "Limited slots per day!",
+
     // Packages
     pkg_tag: "Transparent Pricing",
     pkg_title: "Most Booked Health Checkups",
@@ -153,6 +164,17 @@ window.HEALTHIANS_TRANSLATIONS = {
     step3_s: "कलेक्शन",
     step4_t: "रिपोर्ट",
     step4_s: "24 घंटे में",
+
+    // Super Saver Offer Banner
+    saver_ribbon: "🔥 सीमित समय का ऑफर",
+    saver_title: "हेल्थियंस सुपर सेवर पैकेज",
+    saver_tag: "5 जरूरी टेस्ट। संपूर्ण देखभाल।",
+    saver_icon_1: "5 जरूरी<br>टेस्ट",
+    saver_icon_2: "घर से<br>सैंपल",
+    saver_icon_3: "24-48 घंटे में<br>रिपोर्ट",
+    saver_icon_4: "NABL प्रमाणित<br>लैब",
+    saver_book_btn: "अभी बुक करें मात्र ₹299 में",
+    saver_slots_warn: "प्रतिदिन सीमित स्लॉट उपलब्ध!",
 
     // Packages
     pkg_tag: "पारदर्शी व उचित कीमत",
