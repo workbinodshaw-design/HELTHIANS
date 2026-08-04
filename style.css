@@ -445,19 +445,24 @@ img {
   color: #FFFFFF;
 }
 
-.seal-text-ring {
+.seal-svg-ring {
   position: absolute;
-  font-size: 0.48rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  fill: var(--healthians-blue);
+  font-size: 11.2px;
   font-weight: 800;
-  color: var(--healthians-blue);
+  letter-spacing: 0.6px;
   text-transform: uppercase;
-  letter-spacing: 0.4px;
-  text-align: center;
-  width: 70px;
-  word-wrap: break-word;
-  line-height: 1.15;
   pointer-events: none;
-  opacity: 0.95;
+  animation: sealRotate 24s linear infinite;
+}
+
+@keyframes sealRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* ==========================================================================
