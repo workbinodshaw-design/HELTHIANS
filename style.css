@@ -104,6 +104,59 @@ img {
   width: auto;
 }
 
+/* Partner Branding Badge (Desktop / PC default Layout) */
+.partner-branding-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: 14px;
+  margin-right: auto;
+}
+
+.partner-divider {
+  width: 1.5px;
+  height: 32px;
+  background: linear-gradient(180deg, rgba(14, 116, 144, 0.1) 0%, rgba(14, 116, 144, 0.4) 50%, rgba(14, 116, 144, 0.1) 100%);
+  flex-shrink: 0;
+}
+
+.partner-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.partner-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0E7490;
+  letter-spacing: 0.5px;
+  line-height: 1.15;
+  font-family: 'Outfit', var(--font-primary, sans-serif);
+  text-transform: uppercase;
+}
+
+.partner-subtext {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+  line-height: 1.25;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+.partner-id {
+  color: #0369A1;
+  font-weight: 700;
+  background: #E0F2FE;
+  padding: 1px 7px;
+  border-radius: 6px;
+  border: 1px solid #BAE6FD;
+  margin-left: 3px;
+  display: inline-block;
+  font-size: 0.74rem;
+}
+
 .header-actions {
   display: flex;
   align-items: center;
@@ -1969,5 +2022,87 @@ img {
   .bar-pill-btn svg {
     width: 15px;
     height: 15px;
+  }
+}
+
+/* Responsive Mobile & Tablet formatting for Partner Branding */
+@media (max-width: 820px) {
+  .header-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 0;
+  }
+
+  .logo-wrap {
+    order: 1;
+    flex-shrink: 0;
+  }
+
+  .header-actions {
+    order: 2;
+    flex-shrink: 0;
+    gap: 6px;
+  }
+
+  .partner-branding-box {
+    order: 3;
+    width: 100%;
+    margin: 4px 0 0 0;
+    padding: 7px 12px;
+    background: linear-gradient(90deg, #E0F2FE 0%, #ECFEFF 100%);
+    border: 1px solid #BAE6FD;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(14, 116, 144, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .partner-divider {
+    display: none;
+  }
+
+  .partner-content {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .partner-title {
+    font-size: 0.86rem;
+  }
+
+  .partner-subtext {
+    font-size: 0.73rem;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 480px) {
+  .partner-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+
+  .partner-title {
+    font-size: 0.88rem;
+    letter-spacing: 0.3px;
+  }
+
+  .partner-subtext {
+    font-size: 0.74rem;
+    line-height: 1.35;
+  }
+
+  .partner-id {
+    margin-left: 0;
+    margin-top: 2px;
   }
 }
