@@ -3,26 +3,26 @@
   "cleanUrls": true,
   "redirects": [
     {
-      "source": "/admin/?",
-      "has": [
+      "source": "/admin",
+      "missing": [
         {
           "type": "host",
-          "value": "(bookhealthians\\.in|www\\.bookhealthians\\.in)"
+          "value": "admin.bookhealthians.in"
         }
       ],
       "destination": "/",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/admin/(.*)",
-      "has": [
+      "missing": [
         {
           "type": "host",
-          "value": "(bookhealthians\\.in|www\\.bookhealthians\\.in)"
+          "value": "admin.bookhealthians.in"
         }
       ],
       "destination": "/",
-      "permanent": false
+      "permanent": true
     }
   ],
   "rewrites": [
