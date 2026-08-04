@@ -1768,38 +1768,57 @@ img {
     font-size: 0.84rem;
   }
 
-  /* Super Saver Desktop Layout */
+  .packages-wrapper, .reviews-container {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1140px;
+  }
+}
+
+/* Super Saver Desktop & Large Screen Layout */
+@media (min-width: 1024px) {
   .super-saver-card {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 38px 44px 38px 44px;
-    max-width: 1140px;
-    margin: 48px auto 20px auto;
+    flex-wrap: wrap;
+    padding: 40px 48px;
+    max-width: 1180px;
+    margin: 48px auto 24px auto;
+    gap: 24px;
   }
 
   .super-saver-left {
     max-width: 440px;
+    flex: 1 1 400px;
   }
 
   .saver-title {
-    font-size: 2.05rem;
+    font-size: 2.1rem;
   }
 
   .super-saver-center {
     padding: 24px 28px;
     min-width: 275px;
+    flex: 1 1 270px;
   }
 
   .super-saver-right {
-    height: 250px;
+    height: 260px;
     width: 290px;
-    flex-shrink: 0;
+    flex: 0 0 290px;
   }
+}
 
-  .packages-wrapper, .reviews-container {
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 1140px;
+/* Medium Tablets (768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .super-saver-card {
+    padding: 44px 36px;
+    max-width: 780px;
+    margin: 40px auto;
+  }
+  .super-saver-right {
+    height: 220px;
+    width: 100%;
   }
 }
 
