@@ -2032,7 +2032,7 @@ img {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 8px 0;
+    gap: 6px 0;
   }
 
   .logo-wrap {
@@ -2049,15 +2049,12 @@ img {
   .partner-branding-box {
     order: 3;
     width: 100%;
-    margin: 4px 0 0 0;
-    padding: 7px 12px;
+    margin: 2px 0 0 0;
+    padding: 4px 10px;
     background: linear-gradient(90deg, #E0F2FE 0%, #ECFEFF 100%);
     border: 1px solid #BAE6FD;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(14, 116, 144, 0.05);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(14, 116, 144, 0.04);
   }
 
   .partner-divider {
@@ -2070,39 +2067,56 @@ img {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 4px;
+    flex-wrap: nowrap;
+    gap: 6px;
   }
 
   .partner-title {
-    font-size: 0.86rem;
-  }
-
-  .partner-subtext {
-    font-size: 0.73rem;
-    white-space: normal;
-  }
-}
-
-@media (max-width: 480px) {
-  .partner-content {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 3px;
-  }
-
-  .partner-title {
-    font-size: 0.88rem;
+    font-size: 0.78rem;
+    font-weight: 800;
     letter-spacing: 0.3px;
+    line-height: 1.1;
   }
 
   .partner-subtext {
-    font-size: 0.74rem;
-    line-height: 1.35;
+    font-size: 0.70rem;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .partner-id {
-    margin-left: 0;
-    margin-top: 2px;
+    padding: 0 5px;
+    font-size: 0.68rem;
+    margin-left: 3px;
+  }
+}
+
+@media (max-width: 520px) {
+  .partner-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .partner-title {
+    font-size: 0.75rem;
+    letter-spacing: 0.2px;
+    line-height: 1.15;
+  }
+
+  .partner-subtext {
+    font-size: 0.67rem;
+    line-height: 1.15;
+    white-space: normal;
+  }
+
+  .partner-id {
+    display: inline;
+    padding: 0 4px;
+    border-radius: 4px;
+    font-size: 0.66rem;
+    margin-left: 2px;
   }
 }
