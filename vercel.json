@@ -1,6 +1,30 @@
 {
   "trailingSlash": true,
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/admin/?",
+      "has": [
+        {
+          "type": "host",
+          "value": "(bookhealthians\\.in|www\\.bookhealthians\\.in)"
+        }
+      ],
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/admin/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "(bookhealthians\\.in|www\\.bookhealthians\\.in)"
+        }
+      ],
+      "destination": "/",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/",
