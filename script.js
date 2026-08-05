@@ -534,7 +534,13 @@ document.addEventListener('DOMContentLoaded', () => {
           
           const titleEl = superSaverCard.querySelector('.saver-main-title');
           if (titleEl && offer.title) {
-            titleEl.innerHTML = `${offer.title.replace('SUPER SAVER', '<span class="highlight-navy">SUPER SAVER</span>')}`;
+            let t = offer.title;
+            if (!t.includes('<br>') && !t.includes('span') && t.includes('SUPER SAVER')) {
+              t = t.replace('SUPER SAVER', '<br><span class="highlight-navy">SUPER SAVER</span><br>');
+            } else if (!t.includes('span') && t.includes('SUPER SAVER')) {
+              t = t.replace('SUPER SAVER', '<span class="highlight-navy">SUPER SAVER</span>');
+            }
+            titleEl.innerHTML = t;
           }
           const tagEl = superSaverCard.querySelector('.saver-tag-pill');
           if (tagEl && offer.tag) tagEl.textContent = offer.tag;
@@ -552,6 +558,30 @@ document.addEventListener('DOMContentLoaded', () => {
           
           const warnEl = superSaverCard.querySelector('.saver-limit-txt');
           if (warnEl && offer.warnText) warnEl.textContent = offer.warnText;
+
+          const headingEl = superSaverCard.querySelector('.tests-list-heading');
+          if (headingEl && offer.testsHeading) {
+            headingEl.textContent = offer.testsHeading;
+          }
+
+          const testsBoxEl = superSaverCard.querySelector('.tests-list-box');
+          if (testsBoxEl && Array.isArray(offer.testsList) && offer.testsList.length > 0) {
+            const icons = [
+              `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 3C4.5 3 2 5.5 2 8.5C2 12.5 5 16 7.5 19C10 16 12 12.5 12 8.5C12 5.5 10 3 7.5 3ZM16.5 3C14 3 12 5.5 12 8.5C12 12.5 14 16 16.5 19C19 16 22 12.5 22 8.5C22 5.5 19.5 3 16.5 3Z"/></svg>`,
+              `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+              `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`,
+              `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 18h8M10 22h4M12 18v4M9 6h6M11 2v4M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><line x1="7" y1="14" x2="17" y2="14"/><circle cx="12" cy="14" r="5" stroke="currentColor"/></svg>`,
+              `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 5.5c-2.5-3-6.5-3.5-9-1-2 2-2 6 0 9.5s7.5 7.5 9 7.5 7-4 9-7.5 2-7.5 0-9.5c-2.5-2.5-6.5-2-9 1z"/></svg>`
+            ];
+            testsBoxEl.innerHTML = offer.testsList.map((t, idx) => `
+              <div class="test-item-row ${idx === offer.testsList.length - 1 ? 'no-border' : ''}">
+                <div class="test-teal-circle">
+                  ${icons[idx % icons.length]}
+                </div>
+                <span class="test-name-txt">${t}</span>
+              </div>
+            `).join('');
+          }
         } catch (err) {
           console.error("Error rendering promotional offer:", err);
         }

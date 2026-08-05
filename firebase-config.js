@@ -191,6 +191,13 @@
         mrpPrice: "1,299",
         btnText: "Book Now at ₹299",
         warnText: "Limited slots per day!",
+        testsHeading: "INCLUDES 5 ESSENTIAL TESTS",
+        testsList: [
+          "Creatinine, Serum",
+          "Cholesterol-Total, Serum",
+          "Blood Glucose Fasting", "Urine Routine & Microscopy Extended",
+          "TSH Ultra - Sensitive"
+        ],
         active: true
       };
     },

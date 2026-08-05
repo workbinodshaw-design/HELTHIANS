@@ -919,10 +919,27 @@ document.addEventListener('DOMContentLoaded', () => {
   function populateOfferForm(offer) {
     if (!offer) return;
     const rEl = document.getElementById('offer-ribbon-input'); if (rEl) rEl.value = offer.ribbon || '';
+    const tEl = document.getElementById('offer-title-input'); if (tEl) tEl.value = offer.title || '';
+    const tgEl = document.getElementById('offer-tag-input'); if (tgEl) tgEl.value = offer.tag || '';
     const pEl = document.getElementById('offer-price-input'); if (pEl) pEl.value = offer.offerPrice || '';
     const mEl = document.getElementById('offer-mrp-input'); if (mEl) mEl.value = offer.mrpPrice || '';
     const bEl = document.getElementById('offer-btn-input'); if (bEl) bEl.value = offer.btnText || '';
     const wEl = document.getElementById('offer-warn-input'); if (wEl) wEl.value = offer.warnText || '';
+    const hEl = document.getElementById('offer-tests-heading-input'); if (hEl) hEl.value = offer.testsHeading || 'INCLUDES 5 ESSENTIAL TESTS';
+    const lEl = document.getElementById('offer-tests-list-input');
+    if (lEl) {
+      let list = offer.testsList;
+      if (!Array.isArray(list) || list.length === 0) {
+        list = [
+          "Creatinine, Serum",
+          "Cholesterol-Total, Serum",
+          "Blood Glucose Fasting",
+          "Urine Routine & Microscopy Extended",
+          "TSH Ultra - Sensitive"
+        ];
+      }
+      lEl.value = list.join('\n');
+    }
     const cEl = document.getElementById('offer-active-cb'); if (cEl) cEl.checked = offer.active !== false && offer.enabled !== false;
   }
 
@@ -930,14 +947,25 @@ document.addEventListener('DOMContentLoaded', () => {
   if (formSaveOffer) {
     formSaveOffer.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const rawTests = document.getElementById('offer-tests-list-input') ? document.getElementById('offer-tests-list-input').value : '';
+      const testsArr = rawTests.split('\n').map(x => x.trim()).filter(x => x.length > 0);
+
       const payload = {
         ribbon: document.getElementById('offer-ribbon-input').value.trim() || '🔥 LIMITED TIME OFFER',
-        title: 'Healthians SUPER SAVER PACKAGE',
-        tag: 'ESSENTIAL TESTS. COMPLETE CARE.',
+        title: document.getElementById('offer-title-input') ? (document.getElementById('offer-title-input').value.trim() || 'Healthians SUPER SAVER PACKAGE') : 'Healthians SUPER SAVER PACKAGE',
+        tag: document.getElementById('offer-tag-input') ? (document.getElementById('offer-tag-input').value.trim() || 'ESSENTIAL TESTS. COMPLETE CARE.') : 'ESSENTIAL TESTS. COMPLETE CARE.',
         offerPrice: document.getElementById('offer-price-input').value.trim() || '299',
         mrpPrice: document.getElementById('offer-mrp-input').value.trim() || '1,299',
         btnText: document.getElementById('offer-btn-input').value.trim() || 'Book Now at ₹299',
         warnText: document.getElementById('offer-warn-input').value.trim() || 'Limited slots per day!',
+        testsHeading: document.getElementById('offer-tests-heading-input') ? (document.getElementById('offer-tests-heading-input').value.trim() || 'INCLUDES 5 ESSENTIAL TESTS') : 'INCLUDES 5 ESSENTIAL TESTS',
+        testsList: testsArr.length > 0 ? testsArr : [
+          "Creatinine, Serum",
+          "Cholesterol-Total, Serum",
+          "Blood Glucose Fasting",
+          "Urine Routine & Microscopy Extended",
+          "TSH Ultra - Sensitive"
+        ],
         active: document.getElementById('offer-active-cb').checked
       };
 
