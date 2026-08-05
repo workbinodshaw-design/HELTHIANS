@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="/admin/style.css">
 
   <!-- ENTERPRISE SUBDOMAIN SECURITY SHIELD -->
   <style>
@@ -20,7 +19,7 @@
     (function() {
       const host = window.location.hostname.toLowerCase();
       // Allow local dev & preview deployments, otherwise enforce admin domain prefix!
-      const isLocalOrPreview = host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host.includes('.vercel.app');
+      const isLocalOrPreview = host === '' || window.location.protocol === 'file:' || host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host.includes('.vercel.app') || host.includes('github.io');
       const isAuthorizedAdminDomain = host.startsWith('admin.') || host === 'admin.bookhealthians.in';
       
       if (!isLocalOrPreview && !isAuthorizedAdminDomain) {
@@ -554,8 +553,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="/firebase-config.js"></script>
+  <script src="../firebase-config.js"></script>
   <script src="app.js"></script>
-  <script src="/admin/app.js"></script>
 </body>
 </html>
