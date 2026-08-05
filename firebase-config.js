@@ -124,6 +124,190 @@
           await dbInstance.collection('bookings').doc(id).delete();
         } catch (err) {}
       }
+    },
+
+    // ========================================================================
+    // DYNAMIC PACKAGE & PROMOTIONAL OFFER MANAGEMENT ENGINE
+    // ========================================================================
+    getDefaultPackages: function() {
+      return [
+        {
+          id: "pkg_1",
+          title: "Smart Full Body Checkup",
+          oldPrice: "2,499",
+          newPrice: "999",
+          badge: "Most Booked",
+          benefits: [
+            "Complete Blood Count (CBC) & Thyroid (TSH)",
+            "Liver, Kidney, Lipid Profile & Fasting Sugar",
+            "Free Smart PDF Report & Doctor Telephone Consult"
+          ],
+          params: "74 Diagnostic Parameters Included",
+          fasting: "Fasting required: 8-10 hours overnight",
+          order: 1
+        },
+        {
+          id: "pkg_2",
+          title: "Senior Citizen Health Profile",
+          oldPrice: "3,400",
+          newPrice: "1,499",
+          badge: "",
+          benefits: [
+            "Designed specifically for parents over 50 years",
+            "Heart Risk, Arthritis & Bone Health screening",
+            "Vitamin D & B12, Thyroid, Liver & Kidney profile"
+          ],
+          params: "85 Comprehensive Parameters Included",
+          fasting: "Fasting required: 8-10 hours overnight",
+          order: 2
+        },
+        {
+          id: "pkg_3",
+          title: "Diabetes Screening Package",
+          oldPrice: "1,200",
+          newPrice: "499",
+          badge: "",
+          benefits: [
+            "Accurate 3-month average glucose level (HbA1c)",
+            "Fasting Blood Sugar & Urine Glucose evaluation",
+            "Express report delivery within 12 hours"
+          ],
+          params: "28 Essential Diabetes Parameters Included",
+          fasting: "Fasting required: 8 hours overnight",
+          order: 3
+        }
+      ];
+    },
+
+    getDefaultOffer: function() {
+      return {
+        ribbon: "🔥 LIMITED TIME OFFER",
+        title: "Healthians SUPER SAVER PACKAGE",
+        tag: "ESSENTIAL TESTS. COMPLETE CARE.",
+        offerPrice: "299",
+        mrpPrice: "1,299",
+        btnText: "Book Now at ₹299",
+        warnText: "Limited slots per day!",
+        active: true
+      };
+    },
+
+    getPackages: function() {
+      try {
+        const cached = localStorage.getItem('healthians_custom_packages');
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (e) {}
+      return this.getDefaultPackages();
+    },
+
+    subscribePackages: function(onData) {
+      if (this.isOnline()) {
+        return dbInstance.collection('website_packages').onSnapshot((snapshot) => {
+          let pkgs = [];
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            data.id = doc.id;
+            pkgs.push(data);
+          });
+          if (pkgs.length === 0) {
+            pkgs = this.getDefaultPackages();
+            try {
+              pkgs.forEach(p => {
+                dbInstance.collection('website_packages').doc(p.id).set(p).catch(() => {});
+              });
+            } catch (err) {}
+          }
+          pkgs.sort((a, b) => (a.order || 0) - (b.order || 0));
+          try {
+            localStorage.setItem('healthians_custom_packages', JSON.stringify(pkgs));
+          } catch (e) {}
+          onData(pkgs);
+        }, () => {
+          onData(this.getPackages());
+        });
+      } else {
+        onData(this.getPackages());
+        return () => {};
+      }
+    },
+
+    savePackage: async function(pkgData) {
+      if (!pkgData.id) pkgData.id = 'pkg_' + Date.now();
+      try {
+        let pkgs = this.getPackages();
+        const idx = pkgs.findIndex(p => p.id === pkgData.id);
+        if (idx !== -1) pkgs[idx] = pkgData;
+        else pkgs.push(pkgData);
+        pkgs.sort((a, b) => (a.order || 0) - (b.order || 0));
+        localStorage.setItem('healthians_custom_packages', JSON.stringify(pkgs));
+      } catch (e) {}
+
+      if (this.isOnline()) {
+        try {
+          await dbInstance.collection('website_packages').doc(pkgData.id).set(pkgData);
+          return { status: 'success', cloud: true };
+        } catch (err) {
+          return { status: 'success', cloud: false };
+        }
+      }
+      return { status: 'success', cloud: false };
+    },
+
+    deletePackage: async function(id) {
+      try {
+        let pkgs = this.getPackages().filter(p => p.id !== id);
+        localStorage.setItem('healthians_custom_packages', JSON.stringify(pkgs));
+      } catch (e) {}
+
+      if (this.isOnline()) {
+        try {
+          await dbInstance.collection('website_packages').doc(id).delete();
+        } catch (err) {}
+      }
+    },
+
+    getOfferConfig: function() {
+      try {
+        const cached = localStorage.getItem('healthians_offer_config');
+        if (cached) return JSON.parse(cached);
+      } catch (e) {}
+      return this.getDefaultOffer();
+    },
+
+    subscribeOffer: function(onData) {
+      if (this.isOnline()) {
+        return dbInstance.collection('website_config').doc('super_saver_offer').onSnapshot((doc) => {
+          let offer = doc.exists ? doc.data() : this.getDefaultOffer();
+          try {
+            localStorage.setItem('healthians_offer_config', JSON.stringify(offer));
+          } catch (e) {}
+          onData(offer);
+        }, () => {
+          onData(this.getOfferConfig());
+        });
+      } else {
+        onData(this.getOfferConfig());
+        return () => {};
+      }
+    },
+
+    saveOfferConfig: async function(offerData) {
+      try {
+        localStorage.setItem('healthians_offer_config', JSON.stringify(offerData));
+      } catch (e) {}
+
+      if (this.isOnline()) {
+        try {
+          await dbInstance.collection('website_config').doc('super_saver_offer').set(offerData);
+          return { status: 'success', cloud: true };
+        } catch (err) {
+          return { status: 'success', cloud: false };
+        }
+      }
+      return { status: 'success', cloud: false };
     }
   };
 })();

@@ -631,6 +631,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!target) return;
     currentFilter = target;
 
+    // Ensure Leads view is shown and Controls view is hidden
+    const leadsView = document.getElementById('leads-dashboard-view');
+    const controlsView = document.getElementById('controls-dashboard-view');
+    if (leadsView) leadsView.style.display = 'block';
+    if (controlsView) controlsView.style.display = 'none';
+    document.querySelectorAll('.nav-control-btn').forEach(btn => btn.classList.remove('active'));
+
     // Update Sidebar tabs
     document.querySelectorAll('.sidebar-item[data-filter]').forEach(item => {
       item.classList.toggle('active', item.getAttribute('data-filter') === currentFilter);
@@ -645,7 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
     filterPills.forEach(p => p.classList.toggle('active', p.getAttribute('data-filter') === currentFilter));
 
     // Update Mobile bottom nav
-    document.querySelectorAll('.mobile-nav-item').forEach(m => {
+    document.querySelectorAll('.mobile-nav-item[data-filter]').forEach(m => {
       m.classList.toggle('active', m.getAttribute('data-filter') === currentFilter);
     });
 
@@ -707,6 +714,255 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- INITIALIZE ENTERPRISE GATEWAY ON STARTUP ---
+  // ========================================================================
+  // WEBSITE CONTROLS CENTER (PACKAGE & PROMOTIONAL OFFER MANAGEMENT)
+  // ========================================================================
+  let currentAdminPackages = [];
+  let currentOfferConfig = null;
+
+  document.querySelectorAll('.nav-control-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const leadsView = document.getElementById('leads-dashboard-view');
+      const controlsView = document.getElementById('controls-dashboard-view');
+      if (leadsView) leadsView.style.display = 'none';
+      if (controlsView) controlsView.style.display = 'block';
+
+      document.querySelectorAll('.sidebar-item[data-filter], .status-tab[data-filter], .mobile-nav-item[data-filter]').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-control-btn').forEach(b => b.classList.add('active'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  const btnBackLeads = document.getElementById('btn-back-to-leads');
+  if (btnBackLeads) {
+    btnBackLeads.addEventListener('click', () => {
+      switchActiveFilter('all');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  const editorCard = document.getElementById('pkg-editor-card');
+  const btnAddPkg = document.getElementById('btn-add-new-pkg');
+  const btnCancelEdit = document.getElementById('btn-cancel-pkg-edit');
+  const formSavePkg = document.getElementById('form-save-pkg');
+
+  if (btnAddPkg) {
+    btnAddPkg.addEventListener('click', () => {
+      const idInput = document.getElementById('edit-pkg-id'); if (idInput) idInput.value = '';
+      const titleInput = document.getElementById('edit-pkg-title'); if (titleInput) titleInput.value = '';
+      const oldPriceInput = document.getElementById('edit-pkg-oldprice'); if (oldPriceInput) oldPriceInput.value = '';
+      const newPriceInput = document.getElementById('edit-pkg-newprice'); if (newPriceInput) newPriceInput.value = '';
+      const badgeInput = document.getElementById('edit-pkg-badge'); if (badgeInput) badgeInput.value = '';
+      const paramsInput = document.getElementById('edit-pkg-params'); if (paramsInput) paramsInput.value = '74 Diagnostic Parameters Included';
+      const fastingInput = document.getElementById('edit-pkg-fasting'); if (fastingInput) fastingInput.value = 'Fasting required: 8-10 hours overnight';
+      const benefitsInput = document.getElementById('edit-pkg-benefits'); if (benefitsInput) benefitsInput.value = '';
+      
+      const titleEl = document.getElementById('pkg-editor-title'); if (titleEl) titleEl.textContent = '✨ Add New Diagnostic Package';
+      if (editorCard) {
+        editorCard.style.display = 'block';
+        editorCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  }
+
+  if (btnCancelEdit) {
+    btnCancelEdit.addEventListener('click', () => {
+      if (editorCard) editorCard.style.display = 'none';
+    });
+  }
+
+  window.editPackage = function(id) {
+    const pkg = currentAdminPackages.find(p => p.id === id);
+    if (!pkg) return;
+
+    const idInput = document.getElementById('edit-pkg-id'); if (idInput) idInput.value = pkg.id || '';
+    const titleInput = document.getElementById('edit-pkg-title'); if (titleInput) titleInput.value = pkg.title || '';
+    const oldPriceInput = document.getElementById('edit-pkg-oldprice'); if (oldPriceInput) oldPriceInput.value = pkg.oldPrice || '';
+    const newPriceInput = document.getElementById('edit-pkg-newprice'); if (newPriceInput) newPriceInput.value = pkg.newPrice || '';
+    const badgeInput = document.getElementById('edit-pkg-badge'); if (badgeInput) badgeInput.value = pkg.badge || '';
+    const paramsInput = document.getElementById('edit-pkg-params'); if (paramsInput) paramsInput.value = pkg.params || '';
+    const fastingInput = document.getElementById('edit-pkg-fasting'); if (fastingInput) fastingInput.value = pkg.fasting || '';
+    const benefitsInput = document.getElementById('edit-pkg-benefits'); if (benefitsInput) benefitsInput.value = (pkg.benefits || []).join('\n');
+
+    const titleEl = document.getElementById('pkg-editor-title'); if (titleEl) titleEl.textContent = '✏️ Edit Diagnostic Package: ' + pkg.title;
+    if (editorCard) {
+      editorCard.style.display = 'block';
+      editorCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  window.removePackage = async function(id) {
+    if (confirm('Are you sure you want to delete this checkup package from the live website?')) {
+      await window.HealthiansBackend.deletePackage(id);
+      if (editorCard) editorCard.style.display = 'none';
+    }
+  };
+
+  if (formSavePkg) {
+    formSavePkg.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const idVal = document.getElementById('edit-pkg-id').value;
+      const titleVal = document.getElementById('edit-pkg-title').value.trim();
+      const oldPriceVal = document.getElementById('edit-pkg-oldprice').value.trim();
+      const newPriceVal = document.getElementById('edit-pkg-newprice').value.trim();
+      const badgeVal = document.getElementById('edit-pkg-badge').value.trim();
+      const paramsVal = document.getElementById('edit-pkg-params').value.trim();
+      const fastingVal = document.getElementById('edit-pkg-fasting').value.trim();
+      const benefitsRaw = document.getElementById('edit-pkg-benefits').value;
+      const benefitsArr = benefitsRaw.split('\n').map(l => l.trim()).filter(l => l !== '');
+
+      if (!titleVal || !newPriceVal) {
+        alert('Please provide at least a Package Title and Offer Price.');
+        return;
+      }
+
+      const existingObj = idVal ? currentAdminPackages.find(p => p.id === idVal) : null;
+      const newOrder = existingObj ? existingObj.order : (currentAdminPackages.length + 1);
+
+      const payload = {
+        id: idVal || ('pkg_' + Date.now()),
+        title: titleVal,
+        oldPrice: oldPriceVal,
+        newPrice: newPriceVal,
+        badge: badgeVal,
+        params: paramsVal,
+        fasting: fastingVal,
+        benefits: benefitsArr,
+        order: newOrder
+      };
+
+      const submitBtn = formSavePkg.querySelector('button[type="submit"]');
+      const oldBtnText = submitBtn ? submitBtn.innerText : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerText = '⏳ Publishing to Website...';
+      }
+
+      try {
+        await window.HealthiansBackend.savePackage(payload);
+        if (editorCard) editorCard.style.display = 'none';
+        alert('✅ Success! The checkup package has been published to your live landing page.');
+      } catch (err) {
+        if (editorCard) editorCard.style.display = 'none';
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = oldBtnText;
+        }
+      }
+    });
+  }
+
+  function renderAdminPackages() {
+    const container = document.getElementById('admin-packages-list');
+    if (!container) return;
+
+    if (!currentAdminPackages || currentAdminPackages.length === 0) {
+      container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #64748B;">No checkup packages found. Click '+ Add New Package' above to create one immediately!</div>`;
+      return;
+    }
+
+    let html = '';
+    currentAdminPackages.forEach((p) => {
+      const badgeHtml = p.badge ? `<span style="display: inline-block; background: #FEF3C7; color: #D97706; padding: 2px 10px; border-radius: 99px; font-weight: 800; font-size: 0.72rem; margin-bottom: 8px;">${p.badge}</span>` : '';
+      const benefitsList = (p.benefits || []).map(b => `<li style="font-size: 0.85rem; color: #475569; margin-bottom: 4px;">✓ ${b}</li>`).join('');
+      
+      html += `
+        <div style="border: 1px solid #E2E8F0; border-radius: 14px; padding: 20px; background: #FFFFFF; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 4px rgba(0,0,0,0.03);">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+              <div>
+                ${badgeHtml}
+                <h4 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin: 0 0 6px 0;">${p.title}</h4>
+              </div>
+            </div>
+            <div style="margin-bottom: 12px; display: flex; align-items: baseline; gap: 8px;">
+              <span style="text-decoration: line-through; color: #94A3B8; font-size: 0.9rem;">₹${p.oldPrice || '0'}</span>
+              <span style="font-size: 1.35rem; font-weight: 900; color: #0284C7;">₹${p.newPrice}</span>
+              <span style="font-size: 0.78rem; color: #64748B;">/ patient</span>
+            </div>
+            <ul style="list-style: none; padding: 0; margin: 0 0 16px 0; border-top: 1px dashed #E2E8F0; padding-top: 12px;">
+              ${benefitsList}
+            </ul>
+            <div style="font-size: 0.78rem; color: #64748B; background: #F8FAFC; padding: 8px 10px; border-radius: 6px; margin-bottom: 16px; line-height: 1.4;">
+              <strong>Info:</strong> ${p.params || 'Standard Parameters'}<br>
+              <strong>Prep:</strong> ${p.fasting || 'Fasting required: 8-10 hours'}
+            </div>
+          </div>
+          
+          <div style="display: flex; gap: 8px; border-top: 1px solid #F1F5F9; padding-top: 14px;">
+            <button type="button" onclick="window.editPackage('${p.id}')" style="flex: 1; background: #F1F5F9; color: #0F172A; font-weight: 700; border: 1px solid #CBD5E1; padding: 8px; border-radius: 8px; cursor: pointer;">✏️ Edit</button>
+            <button type="button" onclick="window.removePackage('${p.id}')" style="background: #FEF2F2; color: #DC2626; font-weight: 700; border: 1px solid #FCA5A5; padding: 8px 14px; border-radius: 8px; cursor: pointer;" title="Delete Package">🗑️</button>
+          </div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+  }
+
+  function populateOfferForm(offer) {
+    if (!offer) return;
+    const rEl = document.getElementById('offer-ribbon-input'); if (rEl) rEl.value = offer.ribbon || '';
+    const pEl = document.getElementById('offer-price-input'); if (pEl) pEl.value = offer.offerPrice || '';
+    const mEl = document.getElementById('offer-mrp-input'); if (mEl) mEl.value = offer.mrpPrice || '';
+    const bEl = document.getElementById('offer-btn-input'); if (bEl) bEl.value = offer.btnText || '';
+    const wEl = document.getElementById('offer-warn-input'); if (wEl) wEl.value = offer.warnText || '';
+    const cEl = document.getElementById('offer-active-cb'); if (cEl) cEl.checked = offer.active !== false && offer.enabled !== false;
+  }
+
+  const formSaveOffer = document.getElementById('form-save-offer');
+  if (formSaveOffer) {
+    formSaveOffer.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        ribbon: document.getElementById('offer-ribbon-input').value.trim() || '🔥 LIMITED TIME OFFER',
+        title: 'Healthians SUPER SAVER PACKAGE',
+        tag: 'ESSENTIAL TESTS. COMPLETE CARE.',
+        offerPrice: document.getElementById('offer-price-input').value.trim() || '299',
+        mrpPrice: document.getElementById('offer-mrp-input').value.trim() || '1,299',
+        btnText: document.getElementById('offer-btn-input').value.trim() || 'Book Now at ₹299',
+        warnText: document.getElementById('offer-warn-input').value.trim() || 'Limited slots per day!',
+        active: document.getElementById('offer-active-cb').checked
+      };
+
+      const submitBtn = formSaveOffer.querySelector('button[type="submit"]');
+      const oldText = submitBtn ? submitBtn.innerText : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerText = '⚡ Updating Live Offer...';
+      }
+
+      try {
+        await window.HealthiansBackend.saveOfferConfig(payload);
+        alert('⚡ Success! Your Super Saver promotional offer has been updated on the live customer homepage!');
+      } catch (err) {
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = oldText;
+        }
+      }
+    });
+  }
+
+  function initAdminControls() {
+    if (!window.HealthiansBackend) return;
+    if (typeof window.HealthiansBackend.subscribePackages === 'function') {
+      window.HealthiansBackend.subscribePackages((pkgs) => {
+        currentAdminPackages = pkgs || [];
+        renderAdminPackages();
+      });
+    }
+    if (typeof window.HealthiansBackend.subscribeOffer === 'function') {
+      window.HealthiansBackend.subscribeOffer((offer) => {
+        currentOfferConfig = offer;
+        populateOfferForm(offer);
+      });
+    }
+  }
+
+  // --- INITIALIZE ENTERPRISE GATEWAY & CONTROLS ON STARTUP ---
+  initAdminControls();
   checkAuthenticationState();
 });

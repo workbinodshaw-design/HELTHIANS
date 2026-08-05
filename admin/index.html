@@ -161,6 +161,13 @@
                 <span class="badge-pill" id="side-count-cancelled">0</span>
               </a>
             </li>
+            <li style="margin-top: 12px; border-top: 1px solid #E2E8F0; padding-top: 10px;">
+              <a href="#" class="sidebar-item nav-control-btn" data-view="controls" id="sidebar-controls-btn">
+                <span class="item-icon">🎛️</span>
+                <span class="item-text" style="font-weight: 800; color: #0284C7;">Package Controls</span>
+                <span class="badge-pill" style="background: #0284C7; color: #fff; font-size: 0.7rem;">LIVE</span>
+              </a>
+            </li>
           </ul>
         </nav>
 
@@ -194,6 +201,9 @@
               <span>📅 Today, Live Cloud</span>
             </div>
             <span id="connection-status-pill" class="live-status-pill">⚡ CLOUD CONNECTED</span>
+            <button id="btn-top-controls" class="btn-new-booking nav-control-btn" data-view="controls" style="background: #0F172A; border-color: #0284C7; color: #38BDF8; margin-right: 6px; cursor: pointer;">
+              <span>🎛️ Controls</span>
+            </button>
             <a href="../index.html" class="btn-new-booking" target="_blank">
               <span>+ New Booking</span>
             </a>
@@ -201,9 +211,11 @@
           </div>
         </header>
 
-        <!-- SMART ALERT BANNER FOR DUE CALL BACK REMINDERS -->
-        <div id="callback-alert-banner" class="alert-banner hidden">
-          <div class="alert-content">
+        <!-- LEADS DASHBOARD VIEW CONTAINER -->
+        <div id="leads-dashboard-view">
+          <!-- SMART ALERT BANNER FOR DUE CALL BACK REMINDERS -->
+          <div id="callback-alert-banner" class="alert-banner hidden">
+            <div class="alert-content">
             <span class="alert-icon">⏰</span>
             <div class="alert-text">
               <strong id="alert-count-title">Scheduled Call Backs Due Today!</strong>
@@ -215,6 +227,11 @@
 
         <!-- HORIZONTAL STATUS STATS TABS (Reference Template Matching) -->
         <section class="status-tabs-row" style="flex-wrap: wrap; gap: 8px;">
+          <button class="status-tab nav-control-btn" data-view="controls" style="background: #FFFBEB; border: 2px solid #F59E0B; cursor: pointer; box-shadow: 0 0 12px rgba(245, 158, 11, 0.25); transition: all 0.2s;">
+            <span class="tab-icon">🎛️</span>
+            <span class="tab-label" style="color: #D97706; font-weight: 800;">Package & Offer Controls</span>
+            <span class="tab-count" style="background: #D97706; color: #FFFFFF; font-weight: 800;">NEW ✨</span>
+          </button>
           <button class="status-tab active" data-filter="all">
             <span class="tab-icon">📅</span>
             <span class="tab-label">All Bookings</span>
@@ -332,6 +349,129 @@
             <span class="page-info">10 / page ▼</span>
           </div>
         </footer>
+        </div> <!-- End of #leads-dashboard-view -->
+
+        <!-- =========================================================
+             WEB CONTROLS CENTER (PACKAGE & OFFER MANAGER)
+             ========================================================= -->
+        <div id="controls-dashboard-view" style="display: none; padding: 10px 0; max-width: 1200px; margin: 0 auto;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; background: #FFFFFF; padding: 20px; border-radius: 14px; border: 1px solid #E2E8F0; box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
+            <div>
+              <h2 style="font-size: 1.5rem; font-weight: 800; color: #0F172A; font-family: 'Outfit', sans-serif; margin-bottom: 4px;">🎛️ Website Packages & Offer Command Center</h2>
+              <p style="color: #64748B; font-size: 0.92rem; margin: 0;">Easily add new checkup packages, edit pricing, and update promotional offers on your live landing page.</p>
+            </div>
+            <button id="btn-back-to-leads" class="btn-clear-filters" style="background: #0F172A; color: #FFFFFF; font-weight: 700; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer;">⬅ Back to Leads Dashboard</button>
+          </div>
+
+          <!-- SECTION 1: PACKAGES CONTROL BOX -->
+          <div style="background: #FFFFFF; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 20px rgba(0,0,0,0.03); padding: 24px; margin-bottom: 28px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #F1F5F9; padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin: 0 0 4px 0;">Checkup Packages Catalogue</h3>
+                <p style="font-size: 0.85rem; color: #64748B; margin: 0;">These packages appear directly in the diagnostic test cards section on your customer frontend.</p>
+              </div>
+              <button id="btn-add-new-pkg" class="btn-new-booking" style="background: #0284C7; color: #fff; cursor: pointer; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700;">
+                <span>+ Add New Package</span>
+              </button>
+            </div>
+
+            <!-- DYNAMIC PACKAGES LIST IN ADMIN -->
+            <div id="admin-packages-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
+              <!-- Cards rendered via admin/app.js -->
+            </div>
+
+            <!-- INLINE PACKAGE EDITOR FORM (Hidden by default) -->
+            <div id="pkg-editor-card" style="display: none; margin-top: 28px; background: #F8FAFC; border: 2px solid #0284C7; border-radius: 14px; padding: 24px;">
+              <h4 id="pkg-editor-title" style="font-size: 1.15rem; font-weight: 800; color: #0284C7; margin: 0 0 16px 0;">📝 Add / Edit Diagnostic Package</h4>
+              <form id="form-save-pkg" onsubmit="return false;">
+                <input type="hidden" id="edit-pkg-id" value="">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px;">
+                  <div>
+                    <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Package Title *</label>
+                    <input type="text" id="edit-pkg-title" placeholder="e.g. Smart Full Body Checkup" class="modal-input" style="width:100%;" required>
+                  </div>
+                  <div>
+                    <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">MRP (Old Price) *</label>
+                    <input type="text" id="edit-pkg-oldprice" placeholder="e.g. 2,499" class="modal-input" style="width:100%;" required>
+                  </div>
+                  <div>
+                    <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Offer Price (New Price) *</label>
+                    <input type="text" id="edit-pkg-newprice" placeholder="e.g. 999" class="modal-input" style="width:100%;" required>
+                  </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px;">
+                  <div>
+                    <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Ribbon Badge (Optional)</label>
+                    <input type="text" id="edit-pkg-badge" placeholder="e.g. Most Booked or Best Value" class="modal-input" style="width:100%;">
+                  </div>
+                  <div>
+                    <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Parameters Info Text</label>
+                    <input type="text" id="edit-pkg-params" placeholder="e.g. 74 Diagnostic Parameters Included" class="modal-input" style="width:100%;">
+                  </div>
+                  <div>
+                    <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Fasting Requirement Text</label>
+                    <input type="text" id="edit-pkg-fasting" placeholder="e.g. Fasting required: 8-10 hours overnight" class="modal-input" style="width:100%;">
+                  </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                  <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Test Benefits / Bullet Points (Enter one point per line) *</label>
+                  <textarea id="edit-pkg-benefits" class="modal-textarea" style="width: 100%; height: 100px; font-family: inherit;" placeholder="Complete Blood Count (CBC) & Thyroid (TSH)&#10;Liver, Kidney, Lipid Profile & Fasting Sugar&#10;Free Smart PDF Report & Doctor Telephone Consult" required></textarea>
+                </div>
+
+                <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                  <button type="button" id="btn-cancel-pkg-edit" class="btn-cancel" style="cursor: pointer; padding: 10px 20px;">Cancel</button>
+                  <button type="submit" class="btn-primary-modal" style="cursor: pointer; padding: 10px 24px; font-weight: 700;">💾 Save Package & Publish Live</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- SECTION 2: PROMOTIONAL OFFER BANNER CONTROL BOX -->
+          <div style="background: #FFFFFF; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 20px rgba(0,0,0,0.03); padding: 24px;">
+            <div style="border-bottom: 1px solid #F1F5F9; padding-bottom: 16px; margin-bottom: 20px;">
+              <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin: 0 0 4px 0;">🔥 Super Saver Promotional Banner Controls</h3>
+              <p style="font-size: 0.85rem; color: #64748B; margin: 0;">Change promotional pricing and campaign text for the family health offer banner displayed on the home page.</p>
+            </div>
+
+            <form id="form-save-offer" onsubmit="return false;">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px;">
+                <div>
+                  <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Top Ribbon Label</label>
+                  <input type="text" id="offer-ribbon-input" placeholder="🔥 LIMITED TIME OFFER" class="modal-input" style="width:100%;" required>
+                </div>
+                <div>
+                  <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Offer Price (₹)</label>
+                  <input type="text" id="offer-price-input" placeholder="299" class="modal-input" style="width:100%;" required>
+                </div>
+                <div>
+                  <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Old MRP Price (₹)</label>
+                  <input type="text" id="offer-mrp-input" placeholder="1,299" class="modal-input" style="width:100%;" required>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 20px;">
+                <div>
+                  <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Button Action Text</label>
+                  <input type="text" id="offer-btn-input" placeholder="Book Now at ₹299" class="modal-input" style="width:100%;" required>
+                </div>
+                <div>
+                  <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Urgency Slot Warning Text</label>
+                  <input type="text" id="offer-warn-input" placeholder="Limited slots per day!" class="modal-input" style="width:100%;" required>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #F1F5F9; padding-top: 16px; flex-wrap: wrap; gap: 12px;">
+                <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.9rem; color: #0F172A; cursor: pointer;">
+                  <input type="checkbox" id="offer-active-cb" checked style="width: 18px; height: 18px; accent-color: #0284C7;">
+                  Show this promotional offer banner on the live homepage
+                </label>
+                <button type="submit" class="btn-primary-modal" style="cursor: pointer; padding: 10px 24px; font-weight: 700;">⚡ Publish Offer Update to Live Site</button>
+              </div>
+            </form>
+          </div>
+        </div>
 
         <!-- CASTFLOW ENTERPRISE WATERMARK FOOTER -->
         <div style="margin-top: 20px; padding: 14px 20px; border-top: 1px solid rgba(0, 160, 168, 0.15); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; font-size: 0.8rem; color: #64748B; background: #FFFFFF; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.02);">
@@ -364,6 +504,10 @@
       <button class="mobile-nav-item" data-filter="assigned">
         <span class="nav-icon">🛵</span>
         <span class="nav-text">Staff</span>
+      </button>
+      <button class="mobile-nav-item nav-control-btn" data-view="controls">
+        <span class="nav-icon">🎛️</span>
+        <span class="nav-text" style="color: #0284C7; font-weight: 700;">Controls</span>
       </button>
       <button class="mobile-nav-item" data-filter="completed">
         <span class="nav-icon">🟢</span>
