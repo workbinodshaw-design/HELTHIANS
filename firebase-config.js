@@ -108,8 +108,10 @@
 
       if (this.isOnline()) {
         try {
-          await dbInstance.collection('bookings').doc(id).update(fields);
-        } catch (err) {}
+          await dbInstance.collection('bookings').doc(id).set(fields, { merge: true });
+        } catch (err) {
+          console.error("Failed to update booking in cloud:", err);
+        }
       }
     },
 

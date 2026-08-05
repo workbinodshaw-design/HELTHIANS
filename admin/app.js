@@ -409,12 +409,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const dateOnlyStr = dateObj.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
         const timeOnlyStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-        let cbDatePart = '03 Aug 2026';
-        let cbTimePart = '05:30 PM';
-        if (b.callBackDate) {
-          const cbObj = new Date(b.callBackDate);
-          cbDatePart = cbObj.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
-          cbTimePart = cbObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        let cbDatePart = 'Not Scheduled';
+        let cbTimePart = '+ Set Reminder';
+        if (b.callBackDate && b.callBackDate.trim() !== '') {
+          try {
+            let dateVal = b.callBackDate;
+            if (dateVal.length === 10 && !dateVal.includes('T')) {
+              dateVal += 'T12:00:00';
+            }
+            const cbObj = new Date(dateVal);
+            if (!isNaN(cbObj.getTime())) {
+              cbDatePart = cbObj.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+              cbTimePart = cbObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            }
+          } catch (e) {
+            cbDatePart = b.callBackDate;
+            cbTimePart = 'Scheduled';
+          }
         }
 
         const card = document.createElement('div');
@@ -585,8 +596,9 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const hours = parseInt(btn.getAttribute('data-hours'), 10);
       const targetDate = new Date(Date.now() + hours * 3600000);
-      const formatted = targetDate.toISOString().slice(0, 16);
-      callbackDatetime.value = formatted;
+      const tzOffset = targetDate.getTimezoneOffset() * 60000;
+      const localISOTime = new Date(targetDate.getTime() - tzOffset).toISOString().slice(0, 16);
+      callbackDatetime.value = localISOTime;
     });
   });
 
@@ -594,6 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearCallbackBtn.addEventListener('click', () => {
       const id = modalOrderId.value;
       modifyOrder(id, { callBackDate: '', callBackNote: '' });
+      alert('🗑️ Call back schedule removed for this order.');
       closeModal();
     });
   }
@@ -606,6 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
         callBackDate: callbackDatetime.value,
         callBackNote: callbackNote.value
       });
+      alert('✅ Call back reminder successfully scheduled!');
       closeModal();
     });
   }
