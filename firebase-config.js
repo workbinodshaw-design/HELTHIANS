@@ -73,6 +73,7 @@
         return dbInstance.collection('bookings').onSnapshot((snapshot) => {
           let orders = [];
           snapshot.forEach(doc => {
+            if (doc.id && doc.id.startsWith('_SYS_')) return;
             const data = doc.data();
             data.id = doc.id;
             orders.push(data);
@@ -205,20 +206,15 @@
 
     subscribePackages: function(onData) {
       if (this.isOnline()) {
-        return dbInstance.collection('website_packages').onSnapshot((snapshot) => {
-          let pkgs = [];
-          snapshot.forEach(doc => {
-            const data = doc.data();
-            data.id = doc.id;
-            pkgs.push(data);
-          });
-          if (pkgs.length === 0) {
-            pkgs = this.getDefaultPackages();
-            try {
-              pkgs.forEach(p => {
-                dbInstance.collection('website_packages').doc(p.id).set(p).catch(() => {});
-              });
-            } catch (err) {}
+        return dbInstance.collection('bookings').doc('_SYS_CONFIG_PACKAGES_').onSnapshot((doc) => {
+          let pkgs = null;
+          if (doc.exists && Array.isArray(doc.data().items) && doc.data().items.length > 0) {
+            pkgs = doc.data().items;
+          } else {
+            pkgs = this.getPackages();
+            if (pkgs && pkgs.length > 0) {
+              dbInstance.collection('bookings').doc('_SYS_CONFIG_PACKAGES_').set({ items: pkgs, updated: Date.now() }).catch(() => {});
+            }
           }
           pkgs.sort((a, b) => (a.order || 0) - (b.order || 0));
           try {
@@ -236,8 +232,8 @@
 
     savePackage: async function(pkgData) {
       if (!pkgData.id) pkgData.id = 'pkg_' + Date.now();
+      let pkgs = this.getPackages();
       try {
-        let pkgs = this.getPackages();
         const idx = pkgs.findIndex(p => p.id === pkgData.id);
         if (idx !== -1) pkgs[idx] = pkgData;
         else pkgs.push(pkgData);
@@ -247,24 +243,27 @@
 
       if (this.isOnline()) {
         try {
-          await dbInstance.collection('website_packages').doc(pkgData.id).set(pkgData);
+          await dbInstance.collection('bookings').doc('_SYS_CONFIG_PACKAGES_').set({ items: pkgs, updated: Date.now() });
+          dbInstance.collection('website_packages').doc(pkgData.id).set(pkgData).catch(() => {});
           return { status: 'success', cloud: true };
         } catch (err) {
-          return { status: 'success', cloud: false };
+          console.error("Firebase Cloud save failed:", err);
+          return { status: 'success', cloud: false, error: err.message };
         }
       }
       return { status: 'success', cloud: false };
     },
 
     deletePackage: async function(id) {
+      let pkgs = this.getPackages().filter(p => p.id !== id);
       try {
-        let pkgs = this.getPackages().filter(p => p.id !== id);
         localStorage.setItem('healthians_custom_packages', JSON.stringify(pkgs));
       } catch (e) {}
 
       if (this.isOnline()) {
         try {
-          await dbInstance.collection('website_packages').doc(id).delete();
+          await dbInstance.collection('bookings').doc('_SYS_CONFIG_PACKAGES_').set({ items: pkgs, updated: Date.now() });
+          dbInstance.collection('website_packages').doc(id).delete().catch(() => {});
         } catch (err) {}
       }
     },
@@ -279,8 +278,13 @@
 
     subscribeOffer: function(onData) {
       if (this.isOnline()) {
-        return dbInstance.collection('website_config').doc('super_saver_offer').onSnapshot((doc) => {
-          let offer = doc.exists ? doc.data() : this.getDefaultOffer();
+        return dbInstance.collection('bookings').doc('_SYS_CONFIG_OFFER_').onSnapshot((doc) => {
+          let offer = doc.exists && doc.data().offer ? doc.data().offer : (this.getOfferConfig() || this.getDefaultOffer());
+          if (!doc.exists) {
+            try {
+              dbInstance.collection('bookings').doc('_SYS_CONFIG_OFFER_').set({ offer: offer, updated: Date.now() }).catch(() => {});
+            } catch(e) {}
+          }
           try {
             localStorage.setItem('healthians_offer_config', JSON.stringify(offer));
           } catch (e) {}
@@ -301,10 +305,12 @@
 
       if (this.isOnline()) {
         try {
-          await dbInstance.collection('website_config').doc('super_saver_offer').set(offerData);
+          await dbInstance.collection('bookings').doc('_SYS_CONFIG_OFFER_').set({ offer: offerData, updated: Date.now() });
+          dbInstance.collection('website_config').doc('super_saver_offer').set(offerData).catch(() => {});
           return { status: 'success', cloud: true };
         } catch (err) {
-          return { status: 'success', cloud: false };
+          console.error("Cloud offer save failed:", err);
+          return { status: 'success', cloud: false, error: err.message };
         }
       }
       return { status: 'success', cloud: false };

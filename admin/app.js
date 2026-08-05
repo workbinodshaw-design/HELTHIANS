@@ -840,11 +840,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       try {
-        await window.HealthiansBackend.savePackage(payload);
+        const res = await window.HealthiansBackend.savePackage(payload);
         if (editorCard) editorCard.style.display = 'none';
-        alert('✅ Success! The checkup package has been published to your live landing page.');
+        if (res && res.cloud === false) {
+          alert('✅ Package saved offline in local cache! (Network check: ' + (res.error || 'Offline') + ')');
+        } else {
+          alert('✅ Success! The checkup package has been published directly to Google Cloud! Refresh your website homepage to see it immediately!');
+        }
       } catch (err) {
         if (editorCard) editorCard.style.display = 'none';
+        alert('⚠️ Saved locally in offline cache.');
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
@@ -934,9 +939,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       try {
-        await window.HealthiansBackend.saveOfferConfig(payload);
-        alert('⚡ Success! Your Super Saver promotional offer has been updated on the live customer homepage!');
+        const res = await window.HealthiansBackend.saveOfferConfig(payload);
+        if (res && res.cloud === false) {
+          alert('⚡ Offer saved offline in local cache! (Network check: ' + (res.error || 'Offline') + ')');
+        } else {
+          alert('⚡ Success! Your promotional offer has been synced to Google Cloud! Check your homepage now!');
+        }
       } catch (err) {
+        alert('⚡ Offer saved in offline cache.');
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;

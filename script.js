@@ -460,92 +460,105 @@ document.addEventListener('DOMContentLoaded', () => {
   if (currentLang === 'hi') {
     applyLanguage('hi');
   }
+});
 
-  // 13. DYNAMIC FIREBASE PACKAGES & PROMOTIONAL OFFER SUBSCRIPTION (Admin Control Link)
-  if (window.HealthiansBackend) {
-    if (typeof window.HealthiansBackend.subscribePackages === 'function') {
+// 13. INDEPENDENT REAL-TIME CLOUD PACKAGE & PROMOTIONAL OFFER SUBSCRIPTION
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    if (window.HealthiansBackend && typeof window.HealthiansBackend.subscribePackages === 'function') {
       const packagesWrapper = document.querySelector('.packages-wrapper');
       window.HealthiansBackend.subscribePackages((pkgs) => {
-        if (!packagesWrapper || !Array.isArray(pkgs) || pkgs.length === 0) return;
-        
-        let html = '';
-        pkgs.forEach(pkg => {
-          const badgeHtml = pkg.badge ? `<span class="pkg-most-booked-pill">${pkg.badge}</span>` : '';
-          const benefitsHtml = (pkg.benefits || []).map(b => `<div class="pkg-point"><span class="pkg-point-check">✓</span> <span>${b}</span></div>`).join('');
-          const oldPriceHtml = pkg.oldPrice ? `<span class="pkg-strike">₹${pkg.oldPrice}</span>` : '';
-          const unitText = currentLang === 'hi' ? '/ प्रति मरीज' : '/ patient';
-          const detailsText = currentLang === 'hi' ? 'टेस्ट का पूरा विवरण ▾' : 'View test details ▾';
-          const bookText = currentLang === 'hi' ? 'पैकेज बुक करें' : 'Book Package';
+        try {
+          if (!packagesWrapper || !Array.isArray(pkgs) || pkgs.length === 0) return;
+          const currentLang = localStorage.getItem('healthians_lang') || 'en';
           
-          html += `
-            <div class="package-item" data-pkg="${pkg.title} (₹${pkg.newPrice})">
-              ${badgeHtml}
-              <div>
-                <div class="pkg-top-info">
-                  <h3 class="pkg-title">${pkg.title}</h3>
-                  <div class="pkg-price-row">
-                    ${oldPriceHtml}
-                    <span class="pkg-val">₹${pkg.newPrice}</span>
-                    <span class="pkg-unit">${unitText}</span>
+          let html = '';
+          pkgs.forEach(pkg => {
+            const badgeHtml = pkg.badge ? `<span class="pkg-most-booked-pill">${pkg.badge}</span>` : '';
+            const benefitsHtml = (pkg.benefits || []).map(b => `<div class="pkg-point"><span class="pkg-point-check">✓</span> <span>${b}</span></div>`).join('');
+            const oldPriceHtml = pkg.oldPrice ? `<span class="pkg-strike">₹${pkg.oldPrice}</span>` : '';
+            const unitText = currentLang === 'hi' ? '/ प्रति मरीज' : '/ patient';
+            const detailsText = currentLang === 'hi' ? 'टेस्ट का पूरा विवरण ▾' : 'View test details ▾';
+            const bookText = currentLang === 'hi' ? 'पैकेज बुक करें' : 'Book Package';
+            
+            html += `
+              <div class="package-item" data-pkg="${pkg.title} (₹${pkg.newPrice})">
+                ${badgeHtml}
+                <div>
+                  <div class="pkg-top-info">
+                    <h3 class="pkg-title">${pkg.title}</h3>
+                    <div class="pkg-price-row">
+                      ${oldPriceHtml}
+                      <span class="pkg-val">₹${pkg.newPrice}</span>
+                      <span class="pkg-unit">${unitText}</span>
+                    </div>
+                  </div>
+                  <div class="pkg-benefits-list">
+                    ${benefitsHtml}
+                  </div>
+                  <button type="button" class="accordion-toggle" data-action="toggle-pkg-details">
+                    <span>${detailsText}</span>
+                  </button>
+                  <div class="accordion-panel">
+                    <p style="font-weight:600; color:#111827; margin-bottom:4px;">${pkg.params || 'Comprehensive Diagnostic Test Profile'}</p>
+                    <p>${pkg.fasting || 'Fasting required: 8-10 hours overnight'}</p>
                   </div>
                 </div>
-                <div class="pkg-benefits-list">
-                  ${benefitsHtml}
-                </div>
-                <button type="button" class="accordion-toggle" data-action="toggle-pkg-details">
-                  <span>${detailsText}</span>
-                </button>
-                <div class="accordion-panel">
-                  <p style="font-weight:600; color:#111827; margin-bottom:4px;">${pkg.params || 'Comprehensive Diagnostic Test Profile'}</p>
-                  <p>${pkg.fasting || 'Fasting required: 8-10 hours overnight'}</p>
-                </div>
+                <button class="btn btn-primary pkg-cta-btn select-pkg-btn">${bookText}</button>
               </div>
-              <button class="btn btn-primary pkg-cta-btn select-pkg-btn">${bookText}</button>
-            </div>
-          `;
-        });
-        packagesWrapper.innerHTML = html;
+            `;
+          });
+          packagesWrapper.innerHTML = html;
+        } catch (err) {
+          console.error("Error rendering packages:", err);
+        }
       });
     }
 
-    if (typeof window.HealthiansBackend.subscribeOffer === 'function') {
+    if (window.HealthiansBackend && typeof window.HealthiansBackend.subscribeOffer === 'function') {
       window.HealthiansBackend.subscribeOffer((offer) => {
-        if (!offer) return;
-        const superSaverCard = document.querySelector('.super-saver-card');
-        if (!superSaverCard) return;
-        if (offer.active === false || offer.enabled === false) {
-          superSaverCard.style.display = 'none';
-          return;
-        } else {
-          superSaverCard.style.display = 'block';
+        try {
+          if (!offer) return;
+          const superSaverCard = document.querySelector('.super-saver-card');
+          if (!superSaverCard) return;
+          if (offer.active === false || offer.enabled === false) {
+            superSaverCard.style.display = 'none';
+            return;
+          } else {
+            superSaverCard.style.display = 'block';
+          }
+          
+          superSaverCard.setAttribute('data-pkg', `${offer.title || 'Super Saver Offer'} (₹${offer.offerPrice || '299'})`);
+          const ribbonEl = superSaverCard.querySelector('.offer-ribbon');
+          if (ribbonEl && offer.ribbon) ribbonEl.textContent = offer.ribbon;
+          
+          const titleEl = superSaverCard.querySelector('.saver-main-title');
+          if (titleEl && offer.title) {
+            titleEl.innerHTML = `${offer.title.replace('SUPER SAVER', '<span class="highlight-navy">SUPER SAVER</span>')}`;
+          }
+          const tagEl = superSaverCard.querySelector('.saver-tag-pill');
+          if (tagEl && offer.tag) tagEl.textContent = offer.tag;
+          
+          const amountEl = superSaverCard.querySelector('.amount-val');
+          if (amountEl && offer.offerPrice) amountEl.textContent = offer.offerPrice;
+          
+          const mrpEl = superSaverCard.querySelector('.old-mrp-price');
+          if (mrpEl && offer.mrpPrice) mrpEl.textContent = `₹${offer.mrpPrice}`;
+          
+          const bookBtnSpan = superSaverCard.querySelector('.btn-saver-book span:first-child');
+          if (bookBtnSpan && (offer.btnText || offer.offerPrice)) {
+            bookBtnSpan.textContent = offer.btnText || `Book Now at ₹${offer.offerPrice}`;
+          }
+          
+          const warnEl = superSaverCard.querySelector('.saver-limit-txt');
+          if (warnEl && offer.warnText) warnEl.textContent = offer.warnText;
+        } catch (err) {
+          console.error("Error rendering promotional offer:", err);
         }
-        
-        superSaverCard.setAttribute('data-pkg', `${offer.title || 'Super Saver Offer'} (₹${offer.offerPrice || '299'})`);
-        const ribbonEl = superSaverCard.querySelector('.offer-ribbon');
-        if (ribbonEl && offer.ribbon) ribbonEl.textContent = offer.ribbon;
-        
-        const titleEl = superSaverCard.querySelector('.saver-main-title');
-        if (titleEl && offer.title) {
-          titleEl.innerHTML = `${offer.title.replace('SUPER SAVER', '<span class="highlight-navy">SUPER SAVER</span>')}`;
-        }
-        const tagEl = superSaverCard.querySelector('.saver-tag-pill');
-        if (tagEl && offer.tag) tagEl.textContent = offer.tag;
-        
-        const amountEl = superSaverCard.querySelector('.amount-val');
-        if (amountEl && offer.offerPrice) amountEl.textContent = offer.offerPrice;
-        
-        const mrpEl = superSaverCard.querySelector('.old-mrp-price');
-        if (mrpEl && offer.mrpPrice) mrpEl.textContent = `₹${offer.mrpPrice}`;
-        
-        const bookBtnSpan = superSaverCard.querySelector('.btn-saver-book span:first-child');
-        if (bookBtnSpan && (offer.btnText || offer.offerPrice)) {
-          bookBtnSpan.textContent = offer.btnText || `Book Now at ₹${offer.offerPrice}`;
-        }
-        
-        const warnEl = superSaverCard.querySelector('.saver-limit-txt');
-        if (warnEl && offer.warnText) warnEl.textContent = offer.warnText;
       });
     }
+  } catch (e) {
+    console.error("Error in independent subscription block:", e);
   }
 });
 
