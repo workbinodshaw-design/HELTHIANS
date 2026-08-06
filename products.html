@@ -130,7 +130,24 @@
         </div>
         
         <!-- Products Grid Container -->
-        <div id="products-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; padding: 12px;">
+        <style>
+          #products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            padding: 12px;
+          }
+          
+          /* Desktop layout improvement (DO NOT TOUCH MOBILE) */
+          @media (min-width: 768px) {
+            #products-grid {
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              gap: 24px;
+              padding: 24px;
+            }
+          }
+        </style>
+        <div id="products-grid">
           <!-- Loaded dynamically via products.js -->
         </div>
       </div>

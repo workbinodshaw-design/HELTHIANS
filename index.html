@@ -613,7 +613,25 @@
           <h2 class="sec-title" style="font-size: 1.6rem; color: #0F172A; text-align: center;">💊 Sponsored Products</h2>
         </div>
         <!-- 2-Column Horizontal Grid -->
-        <div id="home-products-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 800px; margin: 0 auto; margin-bottom: 24px;">
+        <style>
+          #home-products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-width: 800px;
+            margin: 0 auto;
+            margin-bottom: 24px;
+          }
+          
+          /* Desktop layout improvement */
+          @media (min-width: 768px) {
+            #home-products-grid {
+              grid-template-columns: repeat(2, 1fr);
+              gap: 24px;
+            }
+          }
+        </style>
+        <div id="home-products-grid">
           <!-- Dynamically loaded via JS -->
         </div>
         
