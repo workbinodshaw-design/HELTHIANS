@@ -323,6 +323,72 @@
         }
       }
       return { status: 'success', cloud: false };
+    },
+
+    // ========================================================================
+    // PHARMACY & MEDICAL PRODUCTS MANAGEMENT ENGINE
+    // ========================================================================
+    subscribeProducts: function(onData) {
+      if (this.isOnline()) {
+        return dbInstance.collection('products').onSnapshot((snapshot) => {
+          let products = [];
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            data.id = doc.id;
+            products.push(data);
+          });
+          
+          try {
+            localStorage.setItem('healthians_products', JSON.stringify(products));
+          } catch (e) {}
+          
+          onData(products);
+        }, () => {
+          const offlineData = JSON.parse(localStorage.getItem('healthians_products') || '[]');
+          onData(offlineData);
+        });
+      } else {
+        const offlineData = JSON.parse(localStorage.getItem('healthians_products') || '[]');
+        onData(offlineData);
+        return () => {};
+      }
+    },
+
+    saveProduct: async function(productData) {
+      if (!productData.id) productData.id = 'prod_' + Date.now();
+      
+      try {
+        let cache = JSON.parse(localStorage.getItem('healthians_products') || '[]');
+        const idx = cache.findIndex(x => x.id === productData.id);
+        if (idx !== -1) cache[idx] = productData;
+        else cache.push(productData);
+        localStorage.setItem('healthians_products', JSON.stringify(cache));
+      } catch (e) {}
+
+      if (this.isOnline()) {
+        try {
+          await dbInstance.collection('products').doc(productData.id).set(productData);
+          return { status: 'success', cloud: true };
+        } catch (err) {
+          console.error("Firebase Cloud save product failed:", err);
+          return { status: 'success', cloud: false, error: err.message };
+        }
+      }
+      return { status: 'success', cloud: false };
+    },
+
+    deleteProduct: async function(id) {
+      try {
+        let cache = JSON.parse(localStorage.getItem('healthians_products') || '[]');
+        cache = cache.filter(x => x.id !== id);
+        localStorage.setItem('healthians_products', JSON.stringify(cache));
+      } catch (e) {}
+
+      if (this.isOnline()) {
+        try {
+          await dbInstance.collection('products').doc(id).delete();
+        } catch (err) {}
+      }
     }
   };
 })();

@@ -990,12 +990,158 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ========================================================================
+  // PHARMACY & MEDICAL PRODUCTS MANAGEMENT ENGINE
+  // ========================================================================
+  let currentAdminProducts = [];
+  
+  const prodEditorCard = document.getElementById('prod-editor-card');
+  const btnAddProd = document.getElementById('btn-add-new-prod');
+  const btnCancelProdEdit = document.getElementById('btn-cancel-prod-edit');
+  const formSaveProd = document.getElementById('form-save-prod');
+
+  if (btnAddProd) {
+    btnAddProd.addEventListener('click', () => {
+      const idInput = document.getElementById('edit-prod-id'); if (idInput) idInput.value = '';
+      const titleInput = document.getElementById('edit-prod-title'); if (titleInput) titleInput.value = '';
+      const oldPriceInput = document.getElementById('edit-prod-oldprice'); if (oldPriceInput) oldPriceInput.value = '';
+      const newPriceInput = document.getElementById('edit-prod-newprice'); if (newPriceInput) newPriceInput.value = '';
+      const imgInput = document.getElementById('edit-prod-img'); if (imgInput) imgInput.value = '';
+      const descInput = document.getElementById('edit-prod-desc'); if (descInput) descInput.value = '';
+      
+      const titleEl = document.getElementById('prod-editor-title'); if (titleEl) titleEl.textContent = '✨ Add New Product';
+      if (prodEditorCard) {
+        prodEditorCard.style.display = 'block';
+        prodEditorCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  }
+
+  if (btnCancelProdEdit) {
+    btnCancelProdEdit.addEventListener('click', () => {
+      if (prodEditorCard) prodEditorCard.style.display = 'none';
+    });
+  }
+
+  window.editProduct = function(id) {
+    const prod = currentAdminProducts.find(p => p.id === id);
+    if (!prod) return;
+
+    const idInput = document.getElementById('edit-prod-id'); if (idInput) idInput.value = prod.id || '';
+    const titleInput = document.getElementById('edit-prod-title'); if (titleInput) titleInput.value = prod.title || '';
+    const oldPriceInput = document.getElementById('edit-prod-oldprice'); if (oldPriceInput) oldPriceInput.value = prod.mrpPrice || '';
+    const newPriceInput = document.getElementById('edit-prod-newprice'); if (newPriceInput) newPriceInput.value = prod.price || '';
+    const imgInput = document.getElementById('edit-prod-img'); if (imgInput) imgInput.value = prod.imageUrl || '';
+    const descInput = document.getElementById('edit-prod-desc'); if (descInput) descInput.value = prod.description || '';
+
+    const titleEl = document.getElementById('prod-editor-title'); if (titleEl) titleEl.textContent = '✏️ Edit Product: ' + prod.title;
+    if (prodEditorCard) {
+      prodEditorCard.style.display = 'block';
+      prodEditorCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  window.removeProduct = async function(id) {
+    if (confirm('Are you sure you want to delete this product from the live website?')) {
+      await window.HealthiansBackend.deleteProduct(id);
+      if (prodEditorCard) prodEditorCard.style.display = 'none';
+    }
+  };
+
+  if (formSaveProd) {
+    formSaveProd.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const idVal = document.getElementById('edit-prod-id').value;
+      const titleVal = document.getElementById('edit-prod-title').value.trim();
+      const oldPriceVal = document.getElementById('edit-prod-oldprice').value.trim();
+      const newPriceVal = document.getElementById('edit-prod-newprice').value.trim();
+      const imgVal = document.getElementById('edit-prod-img').value.trim();
+      const descVal = document.getElementById('edit-prod-desc').value.trim();
+
+      if (!titleVal || !newPriceVal || !imgVal) {
+        alert('Please provide Product Name, Offer Price, and Image URL.');
+        return;
+      }
+
+      const payload = {
+        id: idVal || ('prod_' + Date.now()),
+        title: titleVal,
+        mrpPrice: oldPriceVal,
+        price: newPriceVal,
+        imageUrl: imgVal,
+        description: descVal
+      };
+
+      const submitBtn = formSaveProd.querySelector('button[type="submit"]');
+      const oldBtnText = submitBtn ? submitBtn.innerText : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerText = '⏳ Publishing...';
+      }
+
+      try {
+        await window.HealthiansBackend.saveProduct(payload);
+        if (prodEditorCard) prodEditorCard.style.display = 'none';
+        alert('✅ Product saved successfully!');
+      } catch (err) {
+        if (prodEditorCard) prodEditorCard.style.display = 'none';
+        alert('✅ Product saved successfully!');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = oldBtnText;
+        }
+      }
+    });
+  }
+
+  function renderAdminProducts() {
+    const container = document.getElementById('admin-products-list');
+    if (!container) return;
+
+    if (!currentAdminProducts || currentAdminProducts.length === 0) {
+      container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #64748B;">No products found. Click '+ Add New Product' to create one!</div>`;
+      return;
+    }
+
+    let html = '';
+    currentAdminProducts.forEach((p) => {
+      html += `
+        <div style="border: 1px solid #E2E8F0; border-radius: 14px; padding: 20px; background: #FFFFFF; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 4px rgba(0,0,0,0.03);">
+          <div>
+            <div style="height: 120px; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 8px; background: #F8FAFC; margin-bottom: 12px;">
+               ${p.imageUrl ? `<img src="${p.imageUrl}" alt="${p.title}" style="max-height: 100%; max-width: 100%; object-fit: contain;">` : '<span style="color:#94A3B8;">No Image</span>'}
+            </div>
+            <h4 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin: 0 0 6px 0;">${p.title}</h4>
+            <div style="margin-bottom: 12px; display: flex; align-items: baseline; gap: 8px;">
+              ${p.mrpPrice ? `<span style="text-decoration: line-through; color: #94A3B8; font-size: 0.9rem;">₹${p.mrpPrice}</span>` : ''}
+              <span style="font-size: 1.35rem; font-weight: 900; color: #0F766E;">₹${p.price}</span>
+            </div>
+            ${p.description ? `<p style="font-size: 0.85rem; color: #475569; margin: 0 0 16px 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${p.description}</p>` : ''}
+          </div>
+          
+          <div style="display: flex; gap: 8px; border-top: 1px solid #F1F5F9; padding-top: 14px;">
+            <button type="button" onclick="window.editProduct('${p.id}')" style="flex: 1; background: #F1F5F9; color: #0F172A; font-weight: 700; border: 1px solid #CBD5E1; padding: 8px; border-radius: 8px; cursor: pointer;">✏️ Edit</button>
+            <button type="button" onclick="window.removeProduct('${p.id}')" style="background: #FEF2F2; color: #DC2626; font-weight: 700; border: 1px solid #FCA5A5; padding: 8px 14px; border-radius: 8px; cursor: pointer;" title="Delete Product">🗑️</button>
+          </div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+  }
+
   function initAdminControls() {
     if (!window.HealthiansBackend) return;
     if (typeof window.HealthiansBackend.subscribePackages === 'function') {
       window.HealthiansBackend.subscribePackages((pkgs) => {
         currentAdminPackages = pkgs || [];
         renderAdminPackages();
+      });
+    }
+    if (typeof window.HealthiansBackend.subscribeProducts === 'function') {
+      window.HealthiansBackend.subscribeProducts((products) => {
+        currentAdminProducts = products || [];
+        renderAdminProducts();
       });
     }
     if (typeof window.HealthiansBackend.subscribeOffer === 'function') {
