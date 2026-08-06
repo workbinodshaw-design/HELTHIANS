@@ -592,6 +592,34 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+  // Packages Filter Logic
+  const filterPills = document.querySelectorAll('.filter-pill');
+  const packageItems = document.querySelectorAll('.package-item');
+
+  if (filterPills.length > 0 && packageItems.length > 0) {
+    filterPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        // Remove active class from all
+        filterPills.forEach(p => p.classList.remove('active'));
+        // Add active class to clicked
+        pill.classList.add('active');
+
+        const filterVal = pill.getAttribute('data-filter').toLowerCase();
+
+        packageItems.forEach(item => {
+          // If "all" is clicked, show it. Otherwise check if text contains filter keyword.
+          if (filterVal === 'all' || item.textContent.toLowerCase().includes(filterVal)) {
+            item.style.display = ''; 
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+});
+
 /**
  * Professional Analytics Telemetry Bridge (Google Tag Manager & Meta Pixel compatible)
  */
