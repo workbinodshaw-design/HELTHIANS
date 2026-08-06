@@ -31,8 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  }
-
   // Define global function for Buy Now buttons to bypass mobile listener issues
   window.openProductOrderModal = function(prodName) {
     document.getElementById('order-product-name').value = prodName;
