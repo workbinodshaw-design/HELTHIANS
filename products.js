@@ -38,8 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  }
-
   // Poll for HealthiansBackend to load (since firebase scripts load asynchronously)
   let attempts = 0;
   const initInterval = setInterval(() => {
