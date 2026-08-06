@@ -595,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   // Packages Filter Logic
   const filterPills = document.querySelectorAll('.filter-pill');
-  const packageItems = document.querySelectorAll('.package-item');
+  const packageItems = document.querySelectorAll('.packages-wrapper .package-item');
 
   if (filterPills.length > 0 && packageItems.length > 0) {
     filterPills.forEach(pill => {
