@@ -330,18 +330,16 @@
     // ========================================================================
     subscribeProducts: function(onData) {
       if (this.isOnline()) {
-        return dbInstance.collection('products').onSnapshot((snapshot) => {
+        return dbInstance.collection('bookings').doc('_SYS_CONFIG_PRODUCTS_').onSnapshot((doc) => {
           let products = [];
-          snapshot.forEach(doc => {
-            const data = doc.data();
-            data.id = doc.id;
-            products.push(data);
-          });
-          
+          if (doc.exists && Array.isArray(doc.data().items)) {
+            products = doc.data().items;
+          } else {
+            products = JSON.parse(localStorage.getItem('healthians_products') || '[]');
+          }
           try {
             localStorage.setItem('healthians_products', JSON.stringify(products));
           } catch (e) {}
-          
           onData(products);
         }, () => {
           const offlineData = JSON.parse(localStorage.getItem('healthians_products') || '[]');
@@ -357,8 +355,8 @@
     saveProduct: async function(productData) {
       if (!productData.id) productData.id = 'prod_' + Date.now();
       
+      let cache = JSON.parse(localStorage.getItem('healthians_products') || '[]');
       try {
-        let cache = JSON.parse(localStorage.getItem('healthians_products') || '[]');
         const idx = cache.findIndex(x => x.id === productData.id);
         if (idx !== -1) cache[idx] = productData;
         else cache.push(productData);
@@ -367,7 +365,7 @@
 
       if (this.isOnline()) {
         try {
-          await dbInstance.collection('products').doc(productData.id).set(productData);
+          await dbInstance.collection('bookings').doc('_SYS_CONFIG_PRODUCTS_').set({ items: cache, updated: Date.now() });
           return { status: 'success', cloud: true };
         } catch (err) {
           console.error("Firebase Cloud save product failed:", err);
@@ -378,15 +376,15 @@
     },
 
     deleteProduct: async function(id) {
+      let cache = JSON.parse(localStorage.getItem('healthians_products') || '[]');
       try {
-        let cache = JSON.parse(localStorage.getItem('healthians_products') || '[]');
         cache = cache.filter(x => x.id !== id);
         localStorage.setItem('healthians_products', JSON.stringify(cache));
       } catch (e) {}
 
       if (this.isOnline()) {
         try {
-          await dbInstance.collection('products').doc(id).delete();
+          await dbInstance.collection('bookings').doc('_SYS_CONFIG_PRODUCTS_').set({ items: cache, updated: Date.now() });
         } catch (err) {}
       }
     }
