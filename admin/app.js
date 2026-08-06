@@ -1000,28 +1000,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnCancelProdEdit = document.getElementById('btn-cancel-prod-edit');
   const formSaveProd = document.getElementById('form-save-prod');
 
-  if (btnAddProd) {
-    btnAddProd.addEventListener('click', () => {
-      const idInput = document.getElementById('edit-prod-id'); if (idInput) idInput.value = '';
-      const titleInput = document.getElementById('edit-prod-title'); if (titleInput) titleInput.value = '';
-      const oldPriceInput = document.getElementById('edit-prod-oldprice'); if (oldPriceInput) oldPriceInput.value = '';
-      const newPriceInput = document.getElementById('edit-prod-newprice'); if (newPriceInput) newPriceInput.value = '';
-      const imgInput = document.getElementById('edit-prod-img'); if (imgInput) imgInput.value = '';
-      const descInput = document.getElementById('edit-prod-desc'); if (descInput) descInput.value = '';
-      
-      const titleEl = document.getElementById('prod-editor-title'); if (titleEl) titleEl.textContent = '✨ Add New Product';
-      if (prodEditorCard) {
-        prodEditorCard.style.display = 'block';
-        prodEditorCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    });
-  }
-
-  if (btnCancelProdEdit) {
-    btnCancelProdEdit.addEventListener('click', () => {
-      if (prodEditorCard) prodEditorCard.style.display = 'none';
-    });
-  }
+  window.openAddProductForm = function() {
+    const idInput = document.getElementById('edit-prod-id'); if (idInput) idInput.value = '';
+    const titleInput = document.getElementById('edit-prod-title'); if (titleInput) titleInput.value = '';
+    const oldPriceInput = document.getElementById('edit-prod-oldprice'); if (oldPriceInput) oldPriceInput.value = '';
+    const newPriceInput = document.getElementById('edit-prod-newprice'); if (newPriceInput) newPriceInput.value = '';
+    const imgInput = document.getElementById('edit-prod-img'); if (imgInput) imgInput.value = '';
+    const descInput = document.getElementById('edit-prod-desc'); if (descInput) descInput.value = '';
+    
+    const titleEl = document.getElementById('prod-editor-title'); if (titleEl) titleEl.textContent = '✨ Add New Product';
+    if (prodEditorCard) {
+      prodEditorCard.style.display = 'block';
+      prodEditorCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
 
   window.editProduct = function(id) {
     const prod = currentAdminProducts.find(p => p.id === id);
@@ -1048,52 +1040,49 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  if (formSaveProd) {
-    formSaveProd.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const idVal = document.getElementById('edit-prod-id').value;
-      const titleVal = document.getElementById('edit-prod-title').value.trim();
-      const oldPriceVal = document.getElementById('edit-prod-oldprice').value.trim();
-      const newPriceVal = document.getElementById('edit-prod-newprice').value.trim();
-      const imgVal = document.getElementById('edit-prod-img').value.trim();
-      const descVal = document.getElementById('edit-prod-desc').value.trim();
+  window.saveAdminProduct = async function() {
+    const idVal = document.getElementById('edit-prod-id').value;
+    const titleVal = document.getElementById('edit-prod-title').value.trim();
+    const oldPriceVal = document.getElementById('edit-prod-oldprice').value.trim();
+    const newPriceVal = document.getElementById('edit-prod-newprice').value.trim();
+    const imgVal = document.getElementById('edit-prod-img').value.trim();
+    const descVal = document.getElementById('edit-prod-desc').value.trim();
 
-      if (!titleVal || !newPriceVal || !imgVal) {
-        alert('Please provide Product Name, Offer Price, and Image URL.');
-        return;
-      }
+    if (!titleVal || !newPriceVal || !imgVal) {
+      alert('Please provide Product Name, Offer Price, and Image URL.');
+      return;
+    }
 
-      const payload = {
-        id: idVal || ('prod_' + Date.now()),
-        title: titleVal,
-        mrpPrice: oldPriceVal,
-        price: newPriceVal,
-        imageUrl: imgVal,
-        description: descVal
-      };
+    const payload = {
+      id: idVal || ('prod_' + Date.now()),
+      title: titleVal,
+      mrpPrice: oldPriceVal,
+      price: newPriceVal,
+      imageUrl: imgVal,
+      description: descVal
+    };
 
-      const submitBtn = formSaveProd.querySelector('button[type="submit"]');
-      const oldBtnText = submitBtn ? submitBtn.innerText : '';
+    const submitBtn = document.getElementById('btn-submit-prod');
+    const oldBtnText = submitBtn ? submitBtn.innerText : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerText = '⚡ Publishing...';
+    }
+
+    try {
+      await window.HealthiansBackend.saveProduct(payload);
+      if (prodEditorCard) prodEditorCard.style.display = 'none';
+      alert('✅ Product saved successfully!');
+    } catch (err) {
+      if (prodEditorCard) prodEditorCard.style.display = 'none';
+      alert('✅ Product saved successfully!');
+    } finally {
       if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerText = '⏳ Publishing...';
+        submitBtn.disabled = false;
+        submitBtn.innerText = oldBtnText;
       }
-
-      try {
-        await window.HealthiansBackend.saveProduct(payload);
-        if (prodEditorCard) prodEditorCard.style.display = 'none';
-        alert('✅ Product saved successfully!');
-      } catch (err) {
-        if (prodEditorCard) prodEditorCard.style.display = 'none';
-        alert('✅ Product saved successfully!');
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerText = oldBtnText;
-        }
-      }
-    });
-  }
+    }
+  };
 
   function renderAdminProducts() {
     const container = document.getElementById('admin-products-list');

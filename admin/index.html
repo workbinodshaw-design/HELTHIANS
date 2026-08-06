@@ -498,7 +498,7 @@
                 <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin: 0 0 4px 0;">💊 Pharmacy & Medical Products</h3>
                 <p style="font-size: 0.85rem; color: #64748B; margin: 0;">These products appear on the /products page.</p>
               </div>
-              <button id="btn-add-new-prod" class="btn-new-booking" style="background: #0F766E; color: #fff; cursor: pointer; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700;">
+              <button id="btn-add-new-prod" class="btn-new-booking" onclick="window.openAddProductForm()" style="background: #0F766E; color: #fff; cursor: pointer; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700;">
                 <span>+ Add New Product</span>
               </button>
             </div>
@@ -539,8 +539,8 @@
                 </div>
 
                 <div style="display: flex; gap: 12px; justify-content: flex-end;">
-                  <button type="button" id="btn-cancel-prod-edit" class="btn-cancel" style="cursor: pointer; padding: 10px 20px;">Cancel</button>
-                  <button type="submit" class="btn-primary-modal" style="background: #0F766E; cursor: pointer; padding: 10px 24px; font-weight: 700;">💾 Save Product & Publish Live</button>
+                  <button type="button" id="btn-cancel-prod-edit" onclick="document.getElementById('prod-editor-card').style.display='none'" class="btn-cancel" style="cursor: pointer; padding: 10px 20px;">Cancel</button>
+                  <button type="button" id="btn-submit-prod" onclick="window.saveAdminProduct()" class="btn-primary-modal" style="background: #0F766E; cursor: pointer; padding: 10px 24px; font-weight: 700;">💾 Save Product & Publish Live</button>
                 </div>
               </form>
             </div>
