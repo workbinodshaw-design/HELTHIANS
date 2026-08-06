@@ -24,26 +24,19 @@ document.addEventListener('DOMContentLoaded', () => {
           ${p.description ? `<p style="color: #475569; font-size: 0.8rem; margin-bottom: 12px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${p.description}</p>` : ''}
           
           <div style="margin-top: auto;">
-            <button class="btn btn-primary pkg-cta-btn select-pkg-btn" style="width: 100%; border-radius: 8px; padding: 8px; background: #00A0A8; color: #FFF; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; transition: background 0.3s; margin-top: 6px;" onmouseover="this.style.background='#00858C'" onmouseout="this.style.background='#00A0A8'">Buy Now</button>
+            <button onclick="window.openProductOrderModal('${(p.title || '').replace(/'/g, "\\'")}')" class="btn btn-primary pkg-cta-btn select-pkg-btn" style="width: 100%; border-radius: 8px; padding: 8px; background: #00A0A8; color: #FFF; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; transition: background 0.3s; margin-top: 6px;" onmouseover="this.style.background='#00858C'" onmouseout="this.style.background='#00A0A8'">Buy Now</button>
           </div>
         </div>
       </div>
     `).join('');
-
-    // Attach click listeners to "Buy Now" buttons
-    const buyBtns = grid.querySelectorAll('.select-pkg-btn');
-    buyBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const card = e.target.closest('.product-card');
-        if (!card) return;
-        const prodName = card.getAttribute('data-pkg');
-        
-        document.getElementById('order-product-name').value = prodName;
-        document.getElementById('order-product-name-display').innerText = prodName;
-        document.getElementById('product-order-modal').style.display = 'flex';
-      });
-    });
   }
+
+  // Define global function for Buy Now buttons to bypass mobile listener issues
+  window.openProductOrderModal = function(prodName) {
+    document.getElementById('order-product-name').value = prodName;
+    document.getElementById('order-product-name-display').innerText = prodName;
+    document.getElementById('product-order-modal').style.display = 'flex';
+  };
 
   // Poll for HealthiansBackend to load (since firebase scripts load asynchronously)
   let attempts = 0;
