@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if clicked element is a Book Package button
     const selectBtn = e.target.closest('.select-pkg-btn');
     if (selectBtn) {
-      const pkgItem = selectBtn.closest('.package-item');
+      const pkgItem = selectBtn.closest('.package-item, .super-saver-card');
       if (pkgItem) {
         const pkgName = pkgItem.getAttribute('data-pkg') || 'Selected Package';
         currentSelectedPackage = pkgName;
