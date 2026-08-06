@@ -599,7 +599,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (filterPills.length > 0 && packageItems.length > 0) {
     filterPills.forEach(pill => {
-      pill.addEventListener('click', () => {
+      pill.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent any default button behaviors (like page refresh/jump)
+
         // Remove active class from all
         filterPills.forEach(p => p.classList.remove('active'));
         // Add active class to clicked
