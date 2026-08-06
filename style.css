@@ -1384,9 +1384,9 @@ img {
 
 .package-item {
   background: #FFFFFF;
-  border-radius: 26px;
+  border-radius: 20px;
   border: 1px solid #E2F0F2;
-  padding: 30px 24px;
+  padding: 22px 18px;
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
@@ -1394,8 +1394,8 @@ img {
   position: relative;
   transition: transform 0.3s;
   
-  flex: 0 0 82vw;
-  max-width: 320px;
+  flex: 0 0 75vw;
+  max-width: 290px;
   scroll-snap-align: center;
 }
 
@@ -1405,27 +1405,27 @@ img {
 
 .pkg-most-booked-pill {
   position: absolute;
-  top: 22px;
-  right: 22px;
+  top: 16px;
+  right: 16px;
   background: linear-gradient(135deg, #00A0A8, #007E84);
   color: #FFFFFF;
-  font-size: 0.72rem;
+  font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
-  padding: 5px 12px;
+  padding: 4px 10px;
   border-radius: var(--radius-full);
 }
 
-.pkg-top-info { margin-bottom: 18px; }
-.pkg-title { font-size: 1.3rem; font-weight: 800; color: var(--healthians-dark); margin-bottom: 8px; padding-right: 100px; }
-.pkg-price-row { display: flex; align-items: baseline; gap: 10px; }
-.pkg-strike { font-size: 0.9rem; color: #94A3B8; text-decoration: line-through; }
-.pkg-val { font-size: 1.65rem; font-weight: 800; color: var(--healthians-dark); }
-.pkg-unit { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+.pkg-top-info { margin-bottom: 16px; }
+.pkg-title { font-size: 1.15rem; font-weight: 800; color: var(--healthians-dark); margin-bottom: 6px; padding-right: 85px; line-height: 1.3; }
+.pkg-price-row { display: flex; align-items: baseline; gap: 8px; }
+.pkg-strike { font-size: 0.85rem; color: #94A3B8; text-decoration: line-through; }
+.pkg-val { font-size: 1.45rem; font-weight: 800; color: var(--healthians-dark); }
+.pkg-unit { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
 
-.pkg-benefits-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; border-top: 1px solid #EBF3F5; padding-top: 18px; }
-.pkg-point { display: flex; align-items: flex-start; gap: 10px; font-size: 0.92rem; font-weight: 500; color: var(--text-primary); line-height: 1.5; }
-.pkg-point-check { width: 20px; height: 20px; border-radius: 6px; background: #DCFCE7; color: #16A34A; font-weight: 800; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.pkg-benefits-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; border-top: 1px solid #EBF3F5; padding-top: 14px; }
+.pkg-point { display: flex; align-items: flex-start; gap: 8px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); line-height: 1.4; }
+.pkg-point-check { width: 16px; height: 16px; border-radius: 4px; background: #DCFCE7; color: #16A34A; font-weight: 800; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
 
 .accordion-toggle { background: #F4FBFC; border: 1px solid #D8ECF0; color: var(--healthians-blue); font-size: 0.85rem; font-weight: 700; padding: 6px 14px; border-radius: 12px; margin-bottom: 20px; cursor: pointer; display: inline-block; }
 .accordion-panel { max-height: 0; overflow: hidden; transition: max-height 0.3s; font-size: 0.86rem; color: var(--text-muted); background: #F8FCFD; border-radius: 12px; }
@@ -1957,7 +1957,17 @@ img {
   .packages-wrapper .package-item {
     flex: auto;
     max-width: none;
+    padding: 30px 24px;
+    border-radius: 26px;
   }
+  .pkg-most-booked-pill { top: 22px; right: 22px; font-size: 0.72rem; padding: 5px 12px; }
+  .pkg-title { font-size: 1.3rem; margin-bottom: 8px; padding-right: 100px; line-height: 1.4; }
+  .pkg-val { font-size: 1.65rem; }
+  .pkg-strike { font-size: 0.9rem; }
+  .pkg-unit { font-size: 0.85rem; }
+  .pkg-benefits-list { gap: 10px; margin-bottom: 20px; padding-top: 18px; }
+  .pkg-point { gap: 10px; font-size: 0.92rem; line-height: 1.5; }
+  .pkg-point-check { width: 20px; height: 20px; border-radius: 6px; font-size: 0.75rem; }
 }
 
 /* Super Saver Desktop & Large Screen Layout (992px and up) */
