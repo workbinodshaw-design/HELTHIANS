@@ -210,6 +210,48 @@
   </a>
 
   <!-- =====================================================================
+       PRODUCT ORDER MODAL (WHATSAPP REDIRECT)
+       ===================================================================== -->
+  <div id="product-order-modal" class="modal-overlay-clean" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 37, 40, 0.75); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 99999; padding: 20px;" role="dialog" aria-modal="true">
+    <div class="modal-box-luxury" style="background: #FFFFFF; border-radius: 20px; max-width: 400px; width: 100%; padding: 28px; box-shadow: 0 30px 70px rgba(0,0,0,0.4); border: 1px solid #E2E8F0; position: relative; margin: auto;">
+      <h3 style="font-size: 1.3rem; font-weight: 800; color: #0F172A; margin: 0 0 16px 0;">🛒 Place Order</h3>
+      <p style="font-size: 0.9rem; color: #64748B; margin: 0 0 20px 0; line-height: 1.4;">Fill in your details to order <strong id="order-product-name-display" style="color:#0F766E;"></strong> directly via WhatsApp.</p>
+      
+      <form id="form-product-order" onsubmit="return false;">
+        <input type="hidden" id="order-product-name">
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Full Name *</label>
+          <input type="text" id="order-name" class="modal-input" placeholder="e.g. Rahul Sharma" style="width: 100%; padding: 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-family: 'Outfit', sans-serif;" required>
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Phone Number *</label>
+          <input type="tel" id="order-phone" class="modal-input" placeholder="e.g. 9876543210" style="width: 100%; padding: 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-family: 'Outfit', sans-serif;" required>
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Delivery Address *</label>
+          <textarea id="order-address" class="modal-textarea" placeholder="Complete address with landmark" style="width: 100%; height: 70px; padding: 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-family: 'Outfit', sans-serif; resize: none;" required></textarea>
+        </div>
+        
+        <div style="margin-bottom: 24px;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #334155; margin-bottom: 6px;">Pincode *</label>
+          <input type="text" id="order-pincode" class="modal-input" placeholder="e.g. 110001" style="width: 100%; padding: 12px; border: 1px solid #CBD5E1; border-radius: 8px; font-family: 'Outfit', sans-serif;" required>
+        </div>
+        
+        <div style="display: flex; gap: 12px;">
+          <button type="button" onclick="document.getElementById('product-order-modal').style.display='none'" style="flex: 1; padding: 12px; background: #F1F5F9; color: #475569; border: none; border-radius: 8px; font-weight: 700; font-family: 'Outfit', sans-serif; cursor: pointer;">Cancel</button>
+          <button type="submit" style="flex: 1.5; padding: 12px; background: #25D366; color: #FFF; border: none; border-radius: 8px; font-weight: 700; font-family: 'Outfit', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width: 18px; height: 18px;"><path d="M12.01 2.002c-5.522 0-9.999 4.477-9.999 9.999 0 1.764.46 3.488 1.335 5.004L2.002 22l5.127-1.343a9.96 9.96 0 0 0 4.881 1.282c5.522 0 10-4.478 10-10 0-5.522-4.478-9.998-10-9.998zm5.952 14.135c-.25.7-1.467 1.335-2.023 1.41-.557.075-1.277.202-3.874-.874-3.136-1.302-5.161-4.542-5.318-4.747-.156-.203-1.272-1.688-1.272-3.221 0-1.534.795-2.289 1.077-2.6.282-.312.617-.39.821-.39.203 0 .406 0 .586.008.196.008.454-.075.712.547.266.626.908 2.215.987 2.378.078.163.132.352.015.586-.118.234-.176.383-.348.586-.172.203-.359.454-.515.609-.172.172-.352.359-.156.695.195.336.868 1.432 1.864 2.322 1.282 1.149 2.36 1.503 2.696 1.667.336.164.532.141.727-.086.195-.227.844-.986 1.07-1.322.227-.336.454-.282.758-.172.305.109 1.94.915 2.276 1.087.336.172.563.258.641.406.078.148.078.852-.172 1.551z"/></svg>
+            Order
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
        SUPER LUXURY ANIMATED SUCCESS MODAL WITH UNBREAKABLE INLINE STYLING
        ===================================================================== -->
   <div id="booking-success-modal" class="modal-overlay-clean" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 37, 40, 0.75); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 99999; padding: 20px;" role="dialog" aria-modal="true" aria-labelledby="modal-success-heading">

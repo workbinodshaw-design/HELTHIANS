@@ -29,6 +29,20 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     `).join('');
+
+    // Attach click listeners to "Buy Now" buttons
+    const buyBtns = grid.querySelectorAll('.select-pkg-btn');
+    buyBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const card = e.target.closest('.product-card');
+        if (!card) return;
+        const prodName = card.getAttribute('data-pkg');
+        
+        document.getElementById('order-product-name').value = prodName;
+        document.getElementById('order-product-name-display').innerText = prodName;
+        document.getElementById('product-order-modal').style.display = 'flex';
+      });
+    });
   }
 
   // Poll for HealthiansBackend to load (since firebase scripts load asynchronously)
@@ -43,4 +57,43 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Failed to load HealthiansBackend for Products.');
     }
   }, 100);
+
+  // Handle Product Order Form Submission (WhatsApp Redirect)
+  const orderForm = document.getElementById('form-product-order');
+  if (orderForm) {
+    orderForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const prodName = document.getElementById('order-product-name').value;
+      const name = document.getElementById('order-name').value.trim();
+      const phone = document.getElementById('order-phone').value.trim();
+      const address = document.getElementById('order-address').value.trim();
+      const pincode = document.getElementById('order-pincode').value.trim();
+      
+      if (!name || !phone || !address || !pincode) {
+        alert("Please fill all details.");
+        return;
+      }
+      
+      // Target WhatsApp Number
+      const waNumber = "919451521465";
+      
+      // Construct Message
+      let msg = `Hello, I want to order a product:\n\n`;
+      msg += `*Product:* ${prodName}\n`;
+      msg += `*Name:* ${name}\n`;
+      msg += `*Phone:* ${phone}\n`;
+      msg += `*Address:* ${address}\n`;
+      msg += `*Pincode:* ${pincode}\n`;
+      
+      const encodedMsg = encodeURIComponent(msg);
+      const waUrl = `https://wa.me/${waNumber}?text=${encodedMsg}`;
+      
+      // Close modal
+      document.getElementById('product-order-modal').style.display = 'none';
+      
+      // Redirect to WhatsApp
+      window.open(waUrl, '_blank');
+    });
+  }
 });
