@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
       logConversionEvent('Lead_Submitted_Success', bookingData);
 
       // Redirect to Thank You page with dynamic patient personalization
-      window.location.href = `/thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(chosenCity)}`;
+      window.location.href = `thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(chosenCity)}`;
 
       // Reset form fields and custom selector
       bookingForm.reset();
