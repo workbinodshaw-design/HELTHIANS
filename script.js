@@ -348,19 +348,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // Log Lead conversion event for Google & Meta Ads tracking only on confirmed save
       logConversionEvent('Lead_Submitted_Success', bookingData);
 
-      // Trigger high-converting visual confirmation modal with dynamic patient personalization
-      if (successModal) {
-        const modalNameSpan = document.getElementById('modal-patient-name');
-        const modalPkgSpan = document.getElementById('modal-pkg-name');
-        const modalCitySpan = document.getElementById('modal-city-name');
-        
-        if (modalNameSpan) modalNameSpan.textContent = patientName;
-        if (modalPkgSpan) modalPkgSpan.textContent = bookingData.selectedPackage;
-        if (modalCitySpan) modalCitySpan.textContent = chosenCity;
-
-        successModal.style.display = 'flex';
-        successModal.classList.add('active');
-      }
+      // Redirect to Thank You page with dynamic patient personalization
+      window.location.href = `/thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(chosenCity)}`;
 
       // Reset form fields and custom selector
       bookingForm.reset();
@@ -373,19 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (modalCloseBtn && successModal) {
-    modalCloseBtn.addEventListener('click', () => {
-      successModal.style.display = 'none';
-      successModal.classList.remove('active');
-    });
 
-    successModal.addEventListener('click', (e) => {
-      if (e.target === successModal) {
-        successModal.style.display = 'none';
-        successModal.classList.remove('active');
-      }
-    });
-  }
 
   // 5. CLICK TRACKING FOR CALL & WHATSAPP CTAS (For ads attribution)
   const callButtons = document.querySelectorAll('a[href^="tel:"]');

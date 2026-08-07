@@ -874,56 +874,6 @@
     </div>
   </div>
 
-  <!-- =====================================================================
-       SUPER LUXURY ANIMATED SUCCESS MODAL WITH UNBREAKABLE INLINE STYLING
-       ===================================================================== -->
-  <div id="booking-success-modal" class="modal-overlay-clean" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 37, 40, 0.75); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 99999; padding: 20px;" role="dialog" aria-modal="true" aria-labelledby="modal-success-heading">
-    <div class="modal-box-luxury" style="background: #FFFFFF; border-radius: 28px; max-width: 450px; width: 100%; padding: 36px 28px; text-align: center; box-shadow: 0 30px 70px rgba(0,0,0,0.4); border: 1px solid #E2E8F0; position: relative; margin: auto;">
-      <!-- Animated Pulsing Tickmark -->
-      <div class="success-tick-wrapper" style="position: relative; width: 80px; height: 80px; margin: 0 auto 18px auto; display: flex; align-items: center; justify-content: center;">
-        <div class="success-tick-pulse" style="position: absolute; width: 80px; height: 80px; border-radius: 50%; background: rgba(22, 163, 74, 0.2);"></div>
-        <div class="success-tick-circle" style="width: 72px; height: 72px; background: linear-gradient(135deg, #22C55E 0%, #15803D 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(22, 163, 74, 0.4); position: relative; z-index: 2;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" class="animated-check-svg" style="width: 38px; height: 38px; max-width: 38px; max-height: 38px; display: block;">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-        </div>
-      </div>
-
-      <div class="modal-badge-tag" style="display: inline-block; background: #ECFDF5; color: #047857; font-size: 0.8rem; font-weight: 700; padding: 6px 14px; border-radius: 50px; margin-bottom: 12px; border: 1px solid rgba(16, 185, 129, 0.3); text-transform: uppercase;">🎉 Booking Request Confirmed</div>
-      <h3 id="modal-success-heading" class="modal-main-title" style="font-size: 1.55rem; font-weight: 800; color: #0F172A; margin-bottom: 10px;">Thank You, <span id="modal-patient-name" style="color: #00A0A8;">Patient</span>!</h3>
-      
-      <p id="modal-msg-clean" class="modal-sub-desc" style="font-size: 0.93rem; color: #475569; line-height: 1.6; margin-bottom: 22px;">
-        Your home blood test request for <strong id="modal-pkg-name" style="color: #0F172A;">Checkup Package</strong> in <strong id="modal-city-name" style="color: #0F172A;">Your City</strong> has been successfully registered.
-      </p>
-
-      <!-- High-Converting Summary Box -->
-      <div class="modal-summary-card" style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 18px; padding: 16px; margin-bottom: 24px; text-align: left;">
-        <div class="summary-row-item" style="display: flex; align-items: center; gap: 12px;">
-          <span class="sum-icon" style="font-size: 1.4rem; background: #FFFFFF; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.05); flex-shrink: 0;">📞</span>
-          <div class="sum-text-group">
-            <div class="sum-label" style="font-size: 0.75rem; color: #64748B; font-weight: 600; text-transform: uppercase;">Express Doctor Callback</div>
-            <div class="sum-value" style="color: #16A34A; font-weight: 700; font-size: 0.95rem;">Within 5 Minutes</div>
-          </div>
-        </div>
-        <div class="summary-row-item" style="display: flex; align-items: center; gap: 12px; border-top: 1px dashed rgba(0,160,168,0.2); padding-top: 10px; margin-top: 10px;">
-          <span class="sum-icon" style="font-size: 1.4rem; background: #FFFFFF; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.05); flex-shrink: 0;">🔬</span>
-          <div class="sum-text-group">
-            <div class="sum-label" style="font-size: 0.75rem; color: #64748B; font-weight: 600; text-transform: uppercase;">Collection Type & Reports</div>
-            <div class="sum-value" style="color: #0F172A; font-weight: 600; font-size: 0.92rem;">Free Doorstep Visit • 24hr Smart Report</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-action-row" style="display: flex; flex-direction: column; gap: 10px;">
-        <button type="button" id="modal-close-btn" class="btn-modal-primary" style="width: 100%; padding: 15px 24px; background: linear-gradient(135deg, #16A34A 0%, #15803D 100%); color: #FFFFFF; border: none; border-radius: 50px; font-size: 1.05rem; font-weight: 700; cursor: pointer; box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35);">Got It, Thanks! ✓</button>
-        <a id="modal-wa-btn" href="https://wa.me/919044401435?text=Hello%2C%20I%20just%20submitted%20my%20booking%20and%20want%20instant%20confirmation." target="_blank" rel="noopener noreferrer" class="btn-modal-wa" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px 24px; background: #F1F5F9; color: #0F172A; border: 1px solid #E2E8F0; border-radius: 50px; font-size: 0.92rem; font-weight: 600; text-decoration: none;">
-          <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px; max-width: 20px; color: #25D366; flex-shrink: 0;"><path d="M12.01 2.002c-5.522 0-9.999 4.477-9.999 9.999 0 1.764.46 3.488 1.335 5.004L2.002 22l5.127-1.343a9.96 9.96 0 0 0 4.881 1.282c5.522 0 10-4.478 10-10 0-5.522-4.478-9.998-10-9.998zm5.952 14.135c-.25.7-1.467 1.335-2.023 1.41-.557.075-1.277.202-3.874-.874-3.136-1.302-5.161-4.542-5.318-4.747-.156-.203-1.272-1.688-1.272-3.221 0-1.534.795-2.289 1.077-2.6.282-.312.617-.39.821-.39.203 0 .406 0 .586.008.196.008.454-.075.712.547.266.626.908 2.215.987 2.378.078.163.132.352.015.586-.118.234-.176.383-.348.586-.172.203-.359.454-.515.609-.172.172-.352.359-.156.695.195.336.868 1.432 1.864 2.322 1.282 1.149 2.36 1.503 2.696 1.667.336.164.532.141.727-.086.195-.227.844-.986 1.07-1.322.227-.336.454-.282.758-.172.305.109 1.94.915 2.276 1.087.336.172.563.258.641.406.078.148.078.852-.172 1.551z"/></svg>
-          Chat directly on WhatsApp
-        </a>
-      </div>
-    </div>
-  </div>
-
   <!-- Google Firebase Cloud Backend SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
