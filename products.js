@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       
       // Target WhatsApp Number
-      const waNumber = "919451521465";
+      const waNumber = "919044401435";
       
       // Construct Message
       let msg = `Hello, I want to order a product:\n\n`;
