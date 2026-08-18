@@ -6,6 +6,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  window._pageLoadTimestamp = Date.now();
   // Global App Language & Security Sanitation Engine
   let currentLang = localStorage.getItem('healthians_lang') || 'en';
 
@@ -257,8 +258,21 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const formData = new FormData(bookingForm);
+  
+        // 1. Smart Honeypot Check (Bots fill hidden fields)
+        if (formData.get('_system_verification_code')) {
+          console.warn('Bot detected by honeypot field.');
+          return; // Silently reject
+        }
 
-      const chosenCity = sanitizeInput(formData.get('city') || '');
+        // 2. Time-based Bot Detection (Bots fill forms instantly)
+        const timeSinceLoad = nowTs - window._pageLoadTimestamp;
+        if (timeSinceLoad < 3000) {
+          console.warn('Bot detected by completion speed.');
+          return; // Silently reject if completed in less than 3 seconds
+        }
+
+        const chosenCity = sanitizeInput(formData.get('city') || '');
       const patientName = sanitizeInput(formData.get('patient_name') || '');
       const rawMobile = (formData.get('mobile_number') || '').replace(/\D/g, '');
 
