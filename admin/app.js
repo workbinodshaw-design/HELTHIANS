@@ -107,14 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = adminEmailInput.value.trim().toLowerCase();
       const password = adminPasswordInput.value;
 
-      const lockUntil = parseInt(localStorage.getItem('healthians_lock_until') || '0', 10);
-      if (Date.now() < lockUntil) {
-        const remainingSec = Math.ceil((lockUntil - Date.now()) / 1000);
-        loginErrorMsg.textContent = `⛔ Security Alert: Multiple unverified access attempts. Portal locked for ${remainingSec} seconds.`;
-        loginErrorMsg.classList.remove('hidden');
-        return;
-      }
-
       if (email !== 'official.mptripathi@gmail.com') {
         loginErrorMsg.textContent = '⚠️ Access Denied: Unauthorized executive profile identifier.';
         loginErrorMsg.classList.remove('hidden');
