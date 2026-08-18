@@ -257,12 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const formData = new FormData(bookingForm);
-      
-      // Honeypot Anti-Spam Check
-      if (formData.get('website_url')) {
-        console.warn('Bot detected by honeypot field.');
-        return; // Silently reject
-      }
 
       const chosenCity = sanitizeInput(formData.get('city') || '');
       const patientName = sanitizeInput(formData.get('patient_name') || '');
