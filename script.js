@@ -348,8 +348,24 @@ document.addEventListener('DOMContentLoaded', () => {
       // Log Lead conversion event for Google & Meta Ads tracking only on confirmed save
       logConversionEvent('Lead_Submitted_Success', bookingData);
 
-      // Redirect to Thank You page with dynamic patient personalization
-      window.location.href = `thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(chosenCity)}`;
+      // Ensure form data keys match Apps Script
+      formData.append('package', bookingData.selectedPackage);
+      formData.append('name', patientName);
+      formData.append('phone', rawMobile);
+
+      // Send to Google Apps Script for Email & Calendar
+      fetch("https://script.google.com/macros/s/AKfycbwW8eTLsWx-PxpD4jekGGWqAEwf2OhVcPyRi5tL9gSsbEIZfvtr0iMNSDBbjjTlmP-W/exec", {
+        method: "POST",
+        body: formData,
+        mode: "no-cors"
+      }).then(() => {
+        // Redirect to Thank You page with dynamic patient personalization
+        window.location.href = `thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(chosenCity)}`;
+      }).catch(err => {
+        console.error("Error sending to Apps Script:", err);
+        // Fallback redirect
+        window.location.href = `thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(chosenCity)}`;
+      });
 
       // Reset form fields and custom selector
       bookingForm.reset();
