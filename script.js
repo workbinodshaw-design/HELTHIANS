@@ -364,15 +364,14 @@ document.addEventListener('DOMContentLoaded', () => {
       fetch("https://script.google.com/macros/s/AKfycbwW8eTLsWx-PxpD4jekGGWqAEwf2OhVcPyRi5tL9gSsbEIZfvtr0iMNSDBbjjTlmP-W/exec", {
         method: "POST",
         body: formData,
-        mode: "no-cors"
-      }).then(() => {
-        // Redirect to Thank You page with dynamic patient personalization
+        mode: "no-cors",
+        keepalive: true
+      }).catch(err => console.error(err));
+
+      // Redirect quickly instead of waiting for email to send
+      setTimeout(() => {
         window.location.href = `thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(chosenCity)}`;
-      }).catch(err => {
-        console.error("Error sending to Apps Script:", err);
-        // Fallback redirect
-        window.location.href = `thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(chosenCity)}`;
-      });
+      }, 600);
 
       // Reset form fields and custom selector
       bookingForm.reset();
