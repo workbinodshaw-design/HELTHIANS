@@ -205,24 +205,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function startResilientSyncEngine() {
-    if (window.HealthiansBackend && window.HealthiansBackend.subscribeOrders) {
+    if (window.HealthiansBackend && window.HealthiansBackend.auth) {
+      window.HealthiansBackend.auth.onAuthStateChanged((user) => {
+        if (user) {
+          if (dbSubscriptionUnsubscribe) dbSubscriptionUnsubscribe();
+          dbSubscriptionUnsubscribe = window.HealthiansBackend.subscribeOrders((orders, metadata) => {
+            currentLiveBookings = orders;
+            
+            if (connectionStatusPill) {
+              if (metadata && metadata.source === 'cloud' && window.HealthiansBackend.isOnline()) {
+                connectionStatusPill.innerHTML = '🛡️ ENTERPRISE SECRETS SECURED & LIVE';
+                connectionStatusPill.style.color = '#059669';
+                connectionStatusPill.style.background = '#ECFDF5';
+                connectionStatusPill.style.borderColor = '#A7F3D0';
+              }
+            }
+            render();
+          });
+        }
+      });
+    } else if (window.HealthiansBackend && window.HealthiansBackend.subscribeOrders) {
       dbSubscriptionUnsubscribe = window.HealthiansBackend.subscribeOrders((orders, metadata) => {
         currentLiveBookings = orders;
-        
-        if (connectionStatusPill) {
-          if (metadata.source === 'cloud' && window.HealthiansBackend.isOnline()) {
-            connectionStatusPill.innerHTML = '⚡ ENTERPRISE SECRETS SECURED & LIVE';
-            connectionStatusPill.style.color = '#059669';
-            connectionStatusPill.style.background = '#ECFDF5';
-            connectionStatusPill.style.borderColor = '#A7F3D0';
-          } else {
-            connectionStatusPill.innerHTML = '🛡️ LOCAL EDGE RESILIENCY ACTIVE';
-            connectionStatusPill.style.color = '#B45309';
-            connectionStatusPill.style.background = '#FFFBEB';
-            connectionStatusPill.style.borderColor = '#FDE68A';
-          }
-        }
-        
         render();
       });
     } else {
