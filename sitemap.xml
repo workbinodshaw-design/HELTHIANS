@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://bookhealthians.in/</loc>
-    <lastmod>2026-08-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
+<url><loc>https://bookhealthians.in/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
+<url><loc>https://bookhealthians.in/tests/cbc-test/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/tests/thyroid-test/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/tests/hba1c-test/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/tests/vitamin-d-test/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/tests/lft-test/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/packages/full-body-checkup/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/packages/diabetes-package/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/packages/thyroid-package/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/locations/mumbai/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/locations/delhi/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/locations/bengaluru/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/locations/pune/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/locations/hyderabad/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/blood-test-at-home/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://bookhealthians.in/diagnostic-tests-at-home/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>

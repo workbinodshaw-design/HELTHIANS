@@ -1,0 +1,178 @@
+{
+  "tests": [
+    {
+      "slug": "cbc-test",
+      "name": "CBC Test",
+      "h1": "Book CBC Test at Home",
+      "title": "CBC Test at Home | Complete Blood Count | Healthians",
+      "description": "Book a Complete Blood Count (CBC) test online with Healthians. Get free home sample collection, NABL certified labs, and accurate digital reports.",
+      "schemaDesc": "Complete Blood Count (CBC) test with free home sample collection across India.",
+      "faq": [
+        {"q": "What is a CBC test?", "a": "A Complete Blood Count (CBC) is a blood test used to evaluate your overall health and detect a wide range of disorders, including anemia, infection and leukemia."},
+        {"q": "Is fasting required for CBC?", "a": "No, fasting is typically not required for a standard CBC test."}
+      ]
+    },
+    {
+      "slug": "thyroid-test",
+      "name": "Thyroid Profile",
+      "h1": "Thyroid Test at Home",
+      "title": "Thyroid Test at Home | T3, T4, TSH Blood Test | Healthians",
+      "description": "Book a Thyroid Profile test (T3, T4, TSH) at home with Healthians. Trusted by millions for accurate diagnostic reports and free home collection.",
+      "schemaDesc": "Comprehensive Thyroid Profile test (T3, T4, TSH) with free home sample collection.",
+      "faq": [
+        {"q": "What is included in a Thyroid Profile?", "a": "A standard Thyroid Profile includes tests for T3 (Triiodothyronine), T4 (Thyroxine), and TSH (Thyroid Stimulating Hormone)."},
+        {"q": "Do I need to fast for a Thyroid test?", "a": "Fasting is usually not mandatory for a basic thyroid profile, but we recommend confirming based on other tests booked together."}
+      ]
+    },
+    {
+      "slug": "hba1c-test",
+      "name": "HbA1c Test",
+      "h1": "Book HbA1c Test at Home",
+      "title": "HbA1c Test at Home | Diabetes Blood Test | Healthians",
+      "description": "Check your 3-month average blood sugar levels with an HbA1c test at home. Healthians offers NABL verified labs and zero visit charges.",
+      "schemaDesc": "HbA1c diabetes blood test with free home sample collection.",
+      "faq": [
+        {"q": "What does an HbA1c test measure?", "a": "The HbA1c test measures your average blood sugar levels over the past 2 to 3 months."},
+        {"q": "Is fasting required for HbA1c?", "a": "No, fasting is not required for an HbA1c test."}
+      ]
+    },
+    {
+      "slug": "vitamin-d-test",
+      "name": "Vitamin D Test",
+      "h1": "Vitamin D Test at Home",
+      "title": "Vitamin D Blood Test at Home | Healthians",
+      "description": "Check your bone health and immunity with a Vitamin D test. Get your blood sample collected safely from your home with Healthians.",
+      "schemaDesc": "Vitamin D blood test with free home sample collection.",
+      "faq": [
+        {"q": "Why is Vitamin D testing important?", "a": "Vitamin D is essential for healthy bones and immune function. A test helps identify deficiencies which are very common."}
+      ]
+    },
+    {
+      "slug": "lft-test",
+      "name": "Liver Function Test",
+      "h1": "Liver Function Test (LFT) at Home",
+      "title": "Liver Function Test (LFT) at Home | Healthians",
+      "description": "Book a Liver Function Test (LFT) at home. Healthians provides safe sample collection and highly accurate lab reports from NABL certified labs.",
+      "schemaDesc": "Liver Function Test (LFT) with free home sample collection.",
+      "faq": [
+        {"q": "What does an LFT test check?", "a": "An LFT measures various enzymes and proteins in your blood to diagnose and monitor liver disease or damage."}
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "slug": "full-body-checkup",
+      "name": "Full Body Checkup",
+      "h1": "Full Body Checkup at Home",
+      "title": "Full Body Checkup at Home | Comprehensive Health Test | Healthians",
+      "description": "Book a comprehensive full body checkup at home with Healthians. Screen for diabetes, thyroid, cholesterol, liver, and kidney health.",
+      "schemaDesc": "Comprehensive Full Body Checkup including vital organ health screenings with free home collection.",
+      "faq": [
+        {"q": "Is fasting required for a full body checkup?", "a": "Yes, a 10-12 hour fast is generally required for full body checkups to ensure accurate lipid and fasting glucose results."}
+      ]
+    },
+    {
+      "slug": "diabetes-package",
+      "name": "Diabetes Package",
+      "h1": "Comprehensive Diabetes Package",
+      "title": "Diabetes Test Package at Home | Healthians",
+      "description": "Monitor your diabetes with our complete diabetes health package. Includes HbA1c, Fasting Blood Sugar, and Lipid Profile.",
+      "schemaDesc": "Comprehensive Diabetes testing package with free home sample collection.",
+      "faq": [
+        {"q": "What tests are in the diabetes package?", "a": "It typically includes Fasting Blood Sugar, HbA1c, and a Lipid profile to comprehensively monitor diabetic health."}
+      ]
+    },
+    {
+      "slug": "thyroid-package",
+      "name": "Thyroid Package",
+      "h1": "Advanced Thyroid Care Package",
+      "title": "Thyroid Health Checkup Package | Healthians",
+      "description": "Comprehensive thyroid screening package including T3, T4, TSH and relevant antibodies. Book your home sample collection now.",
+      "schemaDesc": "Advanced Thyroid testing package with free home sample collection.",
+      "faq": [
+        {"q": "Should I skip my morning thyroid medication before the test?", "a": "Generally, it is advised to take your blood sample before taking your morning dose of thyroid medication, but always consult your doctor."}
+      ]
+    }
+  ],
+  "locations": [
+    {
+      "slug": "mumbai",
+      "name": "Mumbai",
+      "h1": "Home Blood Test in Mumbai",
+      "title": "Home Blood Test in Mumbai | Full Body Checkup | Healthians",
+      "description": "Looking for a blood test near you in Mumbai? Healthians offers free home sample collection and highly accurate NABL certified reports.",
+      "schemaDesc": "Diagnostic services and home blood collection across Mumbai, Maharashtra.",
+      "faq": [
+        {"q": "Do you offer free home sample collection in Mumbai?", "a": "Yes, Healthians provides 100% free home blood sample collection across all major areas in Mumbai."}
+      ]
+    },
+    {
+      "slug": "delhi",
+      "name": "Delhi",
+      "h1": "Home Blood Test in Delhi",
+      "title": "Home Blood Test in Delhi NCR | Full Body Checkup | Healthians",
+      "description": "Book a lab test at home in Delhi NCR. Get free sample collection in 60 minutes with Healthians trusted diagnostic services.",
+      "schemaDesc": "Diagnostic services and home blood collection across Delhi NCR.",
+      "faq": [
+        {"q": "How fast can I get a blood test in Delhi?", "a": "We offer rapid booking with sample collection available in as little as 60 minutes across most parts of Delhi."}
+      ]
+    },
+    {
+      "slug": "bengaluru",
+      "name": "Bengaluru",
+      "h1": "Home Blood Test in Bengaluru",
+      "title": "Home Blood Test in Bengaluru | Full Body Checkup | Healthians",
+      "description": "Healthians provides reliable home blood testing and full body checkups in Bengaluru (Bangalore) with NABL certified accuracy.",
+      "schemaDesc": "Diagnostic services and home blood collection across Bengaluru, Karnataka.",
+      "faq": [
+        {"q": "Is Healthians available in all parts of Bengaluru?", "a": "Yes, our certified phlebotomists cover almost all major residential and commercial areas in Bengaluru."}
+      ]
+    },
+    {
+      "slug": "pune",
+      "name": "Pune",
+      "h1": "Home Blood Test in Pune",
+      "title": "Home Blood Test in Pune | Full Body Checkup | Healthians",
+      "description": "Book accurate and reliable blood tests from home in Pune. Zero visit charges and safe sample collection by Healthians.",
+      "schemaDesc": "Diagnostic services and home blood collection across Pune, Maharashtra.",
+      "faq": [
+        {"q": "Can I book a full body checkup at home in Pune?", "a": "Absolutely. You can book a comprehensive full body checkup and we will collect the sample from your home in Pune."}
+      ]
+    },
+    {
+      "slug": "hyderabad",
+      "name": "Hyderabad",
+      "h1": "Home Blood Test in Hyderabad",
+      "title": "Home Blood Test in Hyderabad | Full Body Checkup | Healthians",
+      "description": "Trusted pathology lab services at home in Hyderabad. Book your blood test or health checkup online with Healthians.",
+      "schemaDesc": "Diagnostic services and home blood collection across Hyderabad, Telangana.",
+      "faq": [
+        {"q": "Are the lab reports from Hyderabad NABL certified?", "a": "Yes, all samples collected in Hyderabad are processed in fully NABL certified partner laboratories."}
+      ]
+    }
+  ],
+  "services": [
+    {
+      "slug": "blood-test-at-home",
+      "name": "Blood Test at Home",
+      "h1": "Blood Test at Home",
+      "title": "Blood Test at Home | Free Sample Collection | Healthians",
+      "description": "Book a blood test at home with Healthians. Skip the clinic waiting room and get safe, hygienic sample collection from your doorstep.",
+      "schemaDesc": "Home blood sample collection service providing maximum convenience and safety.",
+      "faq": [
+        {"q": "How does blood test at home work?", "a": "You book online, a certified phlebotomist arrives at your chosen time, collects the sample safely, and reports are delivered digitally."}
+      ]
+    },
+    {
+      "slug": "diagnostic-tests-at-home",
+      "name": "Diagnostic Tests at Home",
+      "h1": "Diagnostic Tests at Home",
+      "title": "Diagnostic Tests at Home | Pathology Lab Services | Healthians",
+      "description": "Get accurate diagnostic and pathology lab tests from the comfort of your home. Healthians offers a wide range of blood and urine tests.",
+      "schemaDesc": "Comprehensive diagnostic and pathology lab testing services at home.",
+      "faq": [
+        {"q": "What diagnostic tests can be done at home?", "a": "Almost all routine blood and urine tests, including CBC, Thyroid, Diabetes, Liver and Kidney panels can be collected at home."}
+      ]
+    }
+  ]
+}
