@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Redirect quickly instead of waiting for email to send
       setTimeout(() => {
-        window.location.href = `thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(chosenCity)}`;
+        window.location.href = `/thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(chosenCity)}`;
       }, 600);
 
       // Reset form fields and custom selector
