@@ -20,11 +20,11 @@
       const host = window.location.hostname.toLowerCase();
       // Allow local dev & preview deployments, otherwise enforce admin domain prefix!
       const isLocalOrPreview = host === '' || window.location.protocol === 'file:' || host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host.includes('.vercel.app') || host.includes('github.io');
-      const isAuthorizedAdminDomain = host.startsWith('admin.') || host === 'admin.bookhealthians.in';
+      const isAuthorizedAdminDomain = host.startsWith('admin.') || host === 'admin.bookbloodtest.in' || host === 'admin.bookhealthians.in';
       
       if (!isLocalOrPreview && !isAuthorizedAdminDomain) {
         // Immediately eject unauthorized access back to public homepage
-        window.location.replace('https://bookhealthians.in');
+        window.location.replace('https://bookbloodtest.in');
       } else {
         // Authorized domain verified: securely unlock & unhide portal
         document.addEventListener('DOMContentLoaded', () => {

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /admin
 
-Sitemap: https://bookhealthians.in/sitemap.xml
+Sitemap: https://bookbloodtest.in/sitemap.xml

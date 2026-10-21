@@ -7,7 +7,7 @@
       "missing": [
         {
           "type": "host",
-          "value": "admin.bookhealthians.in"
+          "value": "admin.bookbloodtest.in"
         }
       ],
       "destination": "/",
@@ -18,7 +18,7 @@
       "missing": [
         {
           "type": "host",
-          "value": "admin.bookhealthians.in"
+          "value": "admin.bookbloodtest.in"
         }
       ],
       "destination": "/",
@@ -31,7 +31,7 @@
       "has": [
         {
           "type": "host",
-          "value": "admin.bookhealthians.in"
+          "value": "admin.bookbloodtest.in"
         }
       ],
       "destination": "/admin/"

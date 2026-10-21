@@ -14,7 +14,7 @@ with open('index.html', 'r', encoding='utf-8') as f:
     template = f.read()
 
 # Base URL
-BASE_URL = 'https://bookhealthians.in'
+BASE_URL = 'https://bookbloodtest.in'
 
 sitemap_urls = [
     f"<url><loc>{BASE_URL}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>"
