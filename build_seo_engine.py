@@ -12,56 +12,94 @@ def ensure_dir(file_path):
 with open('seo_database.json', 'r', encoding='utf-8') as f:
     db = json.load(f)
 
-# 1. Build the Master Internal Linking Block
+# 1. Build the Master Internal Linking Block (Compact, Collapsible & Tabbed)
 def build_internal_links_html():
-    loc_links = "".join([f'<li><a href="/locations/{item["slug"]}/">Blood Test in {item["name"]}</a></li>\n' for item in db.get('locations', [])])
-    test_links = "".join([f'<li><a href="/tests/{item["slug"]}/">{item["name"]}</a></li>\n' for item in db.get('tests', [])])
-    pkg_links = "".join([f'<li><a href="/packages/{item["slug"]}/">{item["name"]}</a></li>\n' for item in db.get('packages', [])])
-    srv_links = "".join([f'<li><a href="/{item["slug"]}/">{item["name"]}</a></li>\n' for item in db.get('services', [])])
-    art_links = "".join([f'<li><a href="/articles/{item["slug"]}/">{item["name"]}</a></li>\n' for item in db.get('articles', [])])
+    loc_links = "".join([f'<a href="/locations/{item["slug"]}/" class="seo-chip-link">{item["name"]}</a>\n' for item in db.get('locations', [])])
+    test_links = "".join([f'<a href="/tests/{item["slug"]}/" class="seo-chip-link">{item["name"]}</a>\n' for item in db.get('tests', [])])
+    pkg_links = "".join([f'<a href="/packages/{item["slug"]}/" class="seo-chip-link">{item["name"]}</a>\n' for item in db.get('packages', [])])
+    srv_links = "".join([f'<a href="/{item["slug"]}/" class="seo-chip-link">{item["name"]}</a>\n' for item in db.get('services', [])])
+    art_links = "".join([f'<a href="/articles/{item["slug"]}/" class="seo-chip-link">{item["name"]}</a>\n' for item in db.get('articles', [])])
 
     html = f'''
-  <!-- SEO ENTERPRISE INTERNAL LINKING DIRECTORY -->
-  <section class="seo-directory-section" style="background-color: #FFFFFF; padding: 50px 20px; border-top: 1px solid #E2E8F0;">
-    <div class="container" style="max-width: 1200px; margin: 0 auto;">
-      <div style="text-align: center; margin-bottom: 36px;">
-        <span style="display: inline-block; background: #E6F3F5; color: #00A0A8; font-weight: 700; font-size: 0.8rem; padding: 4px 14px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px;">Healthians Diagnostic Network</span>
-        <h2 style="font-size: 1.55rem; color: #0F172A; font-weight: 800; margin-bottom: 8px;">Explore Tests, Health Checkup Packages & Locations Across India</h2>
-        <p style="color: #64748B; font-size: 0.95rem; max-width: 750px; margin: 0 auto;">Browse our complete directory of NABL-certified pathology blood tests, full body health packages, and doorstep sample collection cities.</p>
+  <!-- SEO ENTERPRISE INTERNAL LINKING DIRECTORY (COMPACT COLLAPSIBLE TABS) -->
+  <section class="seo-directory-section">
+    <div class="container" style="max-width: 1100px; margin: 0 auto;">
+      
+      <!-- Collapsible Header Bar -->
+      <div class="seo-dir-header-bar" onclick="toggleSeoDirectory()" id="seo-dir-header" title="Click to view all diagnostic tests & cities directory">
+        <div class="seo-dir-header-title">
+          <span style="background: #E6F3F5; color: #00A0A8; font-weight: 700; font-size: 0.76rem; padding: 3px 12px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px;">Directory</span>
+          <span style="font-size: 1.05rem; color: #0F172A; font-weight: 700;">Explore Blood Tests, Packages &amp; Cities Across India</span>
+        </div>
+        <button type="button" id="seo-dir-toggle-btn" style="background: #FFFFFF; border: 1px solid #CBD5E1; color: #0F766E; font-weight: 700; font-size: 0.82rem; padding: 6px 16px; border-radius: 50px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); font-family: inherit;">
+          <span id="seo-dir-toggle-text">Explore All 82 Categories</span>
+          <span id="seo-dir-toggle-arrow" style="font-size: 0.7rem; transition: transform 0.3s; display: inline-block;">▼</span>
+        </button>
       </div>
 
-      <div class="seo-internal-grid">
-        <div class="seo-internal-col">
-          <h4>📍 Top Cities ({len(db.get('locations', []))})</h4>
-          <ul>
-            {loc_links}
-          </ul>
+      <!-- Collapsible Content Wrapper (Clean & Compact) -->
+      <div id="seo-directory-content" style="display: none; margin-top: 18px; border-top: 1px dashed #CBD5E1; padding-top: 18px;">
+        
+        <!-- Category Tab Buttons -->
+        <div class="seo-tab-nav" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;">
+          <button type="button" class="seo-tab-btn active" data-tab="cities" onclick="switchSeoTab('cities')">📍 Cities ({len(db.get('locations', []))})</button>
+          <button type="button" class="seo-tab-btn" data-tab="tests" onclick="switchSeoTab('tests')">🧪 Blood Tests ({len(db.get('tests', []))})</button>
+          <button type="button" class="seo-tab-btn" data-tab="packages" onclick="switchSeoTab('packages')">🩺 Packages &amp; Services ({len(db.get('packages', [])) + len(db.get('services', []))})</button>
+          <button type="button" class="seo-tab-btn" data-tab="articles" onclick="switchSeoTab('articles')">📚 Health Guides ({len(db.get('articles', []))})</button>
         </div>
 
-        <div class="seo-internal-col">
-          <h4>🧪 Routine Blood Tests ({len(db.get('tests', []))})</h4>
-          <ul>
-            {test_links}
-          </ul>
+        <!-- Panes with Compact Chips -->
+        <div id="tab-cities" class="seo-tab-pane" style="display: flex; flex-wrap: wrap; gap: 8px;">
+          {loc_links}
         </div>
 
-        <div class="seo-internal-col">
-          <h4>🩺 Health Packages & Services</h4>
-          <ul>
-            {pkg_links}
-            {srv_links}
-          </ul>
+        <div id="tab-tests" class="seo-tab-pane" style="display: none; flex-wrap: wrap; gap: 8px;">
+          {test_links}
         </div>
 
-        <div class="seo-internal-col">
-          <h4>📚 Health Guides & Articles ({len(db.get('articles', []))})</h4>
-          <ul>
-            {art_links}
-          </ul>
+        <div id="tab-packages" class="seo-tab-pane" style="display: none; flex-wrap: wrap; gap: 8px;">
+          {pkg_links}
+          {srv_links}
+        </div>
+
+        <div id="tab-articles" class="seo-tab-pane" style="display: none; flex-wrap: wrap; gap: 8px;">
+          {art_links}
         </div>
       </div>
+
     </div>
   </section>
+
+  <script>
+    function toggleSeoDirectory() {{
+      const content = document.getElementById('seo-directory-content');
+      const arrow = document.getElementById('seo-dir-toggle-arrow');
+      const text = document.getElementById('seo-dir-toggle-text');
+      if (!content) return;
+      if (content.style.display === 'none' || !content.style.display) {{
+        content.style.display = 'block';
+        if (arrow) arrow.style.transform = 'rotate(180deg)';
+        if (text) text.innerText = 'Collapse Directory';
+      }} else {{
+        content.style.display = 'none';
+        if (arrow) arrow.style.transform = 'rotate(0deg)';
+        if (text) text.innerText = 'Explore All 82 Categories';
+      }}
+    }}
+
+    function switchSeoTab(tabId) {{
+      const panes = document.querySelectorAll('.seo-tab-pane');
+      const btns = document.querySelectorAll('.seo-tab-btn');
+      panes.forEach(p => p.style.display = 'none');
+      btns.forEach(b => b.classList.remove('active'));
+      
+      const targetPane = document.getElementById('tab-' + tabId);
+      if (targetPane) targetPane.style.display = 'flex';
+      
+      const activeBtn = document.querySelector('[data-tab="' + tabId + '"]');
+      if (activeBtn) activeBtn.classList.add('active');
+    }}
+  </script>
 '''
     return html
 
@@ -72,13 +110,12 @@ with open('index.html', 'r', encoding='utf-8') as f:
     template = f.read()
 
 # Replace existing internal linking block in index.html if present, or add before footer
-old_linking_pattern = r'<!-- SEO INTERNAL LINKING BLOCK -->.*?</footer>'
 new_footer_wrap = f"{internal_links_block}\n</footer>"
 
-if '<!-- SEO INTERNAL LINKING BLOCK -->' in template:
-    template = re.sub(old_linking_pattern, new_footer_wrap, template, flags=re.DOTALL)
-elif '<!-- SEO ENTERPRISE INTERNAL LINKING DIRECTORY -->' in template:
-    template = re.sub(r'<!-- SEO ENTERPRISE INTERNAL LINKING DIRECTORY -->.*?</footer>', new_footer_wrap, template, flags=re.DOTALL)
+if '<!-- SEO ENTERPRISE INTERNAL LINKING DIRECTORY' in template:
+    template = re.sub(r'<!-- SEO ENTERPRISE INTERNAL LINKING DIRECTORY.*?</footer>', new_footer_wrap, template, flags=re.DOTALL)
+elif '<!-- SEO INTERNAL LINKING BLOCK -->' in template:
+    template = re.sub(r'<!-- SEO INTERNAL LINKING BLOCK -->.*?</footer>', new_footer_wrap, template, flags=re.DOTALL)
 else:
     template = template.replace('</footer>', f"{internal_links_block}\n</footer>")
 

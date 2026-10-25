@@ -928,129 +928,168 @@
   
   
   
-  <!-- SEO ENTERPRISE INTERNAL LINKING DIRECTORY -->
-  <section class="seo-directory-section" style="background-color: #FFFFFF; padding: 50px 20px; border-top: 1px solid #E2E8F0;">
-    <div class="container" style="max-width: 1200px; margin: 0 auto;">
-      <div style="text-align: center; margin-bottom: 36px;">
-        <span style="display: inline-block; background: #E6F3F5; color: #00A0A8; font-weight: 700; font-size: 0.8rem; padding: 4px 14px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px;">Healthians Diagnostic Network</span>
-        <h2 style="font-size: 1.55rem; color: #0F172A; font-weight: 800; margin-bottom: 8px;">Explore Tests, Health Checkup Packages & Locations Across India</h2>
-        <p style="color: #64748B; font-size: 0.95rem; max-width: 750px; margin: 0 auto;">Browse our complete directory of NABL-certified pathology blood tests, full body health packages, and doorstep sample collection cities.</p>
+  
+  <!-- SEO ENTERPRISE INTERNAL LINKING DIRECTORY (COMPACT COLLAPSIBLE TABS) -->
+  <section class="seo-directory-section">
+    <div class="container" style="max-width: 1100px; margin: 0 auto;">
+      
+      <!-- Collapsible Header Bar -->
+      <div class="seo-dir-header-bar" onclick="toggleSeoDirectory()" id="seo-dir-header" title="Click to view all diagnostic tests & cities directory">
+        <div class="seo-dir-header-title">
+          <span style="background: #E6F3F5; color: #00A0A8; font-weight: 700; font-size: 0.76rem; padding: 3px 12px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px;">Directory</span>
+          <span style="font-size: 1.05rem; color: #0F172A; font-weight: 700;">Explore Blood Tests, Packages &amp; Cities Across India</span>
+        </div>
+        <button type="button" id="seo-dir-toggle-btn" style="background: #FFFFFF; border: 1px solid #CBD5E1; color: #0F766E; font-weight: 700; font-size: 0.82rem; padding: 6px 16px; border-radius: 50px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); font-family: inherit;">
+          <span id="seo-dir-toggle-text">Explore All 82 Categories</span>
+          <span id="seo-dir-toggle-arrow" style="font-size: 0.7rem; transition: transform 0.3s; display: inline-block;">▼</span>
+        </button>
       </div>
 
-      <div class="seo-internal-grid">
-        <div class="seo-internal-col">
-          <h4>📍 Top Cities (28)</h4>
-          <ul>
-            <li><a href="/locations/delhi/">Blood Test in Delhi NCR</a></li>
-<li><a href="/locations/mumbai/">Blood Test in Mumbai</a></li>
-<li><a href="/locations/bengaluru/">Blood Test in Bengaluru</a></li>
-<li><a href="/locations/pune/">Blood Test in Pune</a></li>
-<li><a href="/locations/hyderabad/">Blood Test in Hyderabad</a></li>
-<li><a href="/locations/gurugram/">Blood Test in Gurugram</a></li>
-<li><a href="/locations/noida/">Blood Test in Noida</a></li>
-<li><a href="/locations/ghaziabad/">Blood Test in Ghaziabad</a></li>
-<li><a href="/locations/faridabad/">Blood Test in Faridabad</a></li>
-<li><a href="/locations/jaipur/">Blood Test in Jaipur</a></li>
-<li><a href="/locations/lucknow/">Blood Test in Lucknow</a></li>
-<li><a href="/locations/chandigarh/">Blood Test in Chandigarh Tricity</a></li>
-<li><a href="/locations/ahmedabad/">Blood Test in Ahmedabad</a></li>
-<li><a href="/locations/kolkata/">Blood Test in Kolkata</a></li>
-<li><a href="/locations/chennai/">Blood Test in Chennai</a></li>
-<li><a href="/locations/indore/">Blood Test in Indore</a></li>
-<li><a href="/locations/bhopal/">Blood Test in Bhopal</a></li>
-<li><a href="/locations/kanpur/">Blood Test in Kanpur</a></li>
-<li><a href="/locations/nagpur/">Blood Test in Nagpur</a></li>
-<li><a href="/locations/patna/">Blood Test in Patna</a></li>
-<li><a href="/locations/surat/">Blood Test in Surat</a></li>
-<li><a href="/locations/vadodara/">Blood Test in Vadodara</a></li>
-<li><a href="/locations/ludhiana/">Blood Test in Ludhiana</a></li>
-<li><a href="/locations/agra/">Blood Test in Agra</a></li>
-<li><a href="/locations/varanasi/">Blood Test in Varanasi</a></li>
-<li><a href="/locations/amritsar/">Blood Test in Amritsar</a></li>
-<li><a href="/locations/meerut/">Blood Test in Meerut</a></li>
-<li><a href="/locations/dehradun/">Blood Test in Dehradun</a></li>
-
-          </ul>
+      <!-- Collapsible Content Wrapper (Clean & Compact) -->
+      <div id="seo-directory-content" style="display: none; margin-top: 18px; border-top: 1px dashed #CBD5E1; padding-top: 18px;">
+        
+        <!-- Category Tab Buttons -->
+        <div class="seo-tab-nav" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;">
+          <button type="button" class="seo-tab-btn active" data-tab="cities" onclick="switchSeoTab('cities')">📍 Cities (28)</button>
+          <button type="button" class="seo-tab-btn" data-tab="tests" onclick="switchSeoTab('tests')">🧪 Blood Tests (22)</button>
+          <button type="button" class="seo-tab-btn" data-tab="packages" onclick="switchSeoTab('packages')">🩺 Packages &amp; Services (14)</button>
+          <button type="button" class="seo-tab-btn" data-tab="articles" onclick="switchSeoTab('articles')">📚 Health Guides (18)</button>
         </div>
 
-        <div class="seo-internal-col">
-          <h4>🧪 Routine Blood Tests (22)</h4>
-          <ul>
-            <li><a href="/tests/cbc-test/">Complete Blood Count (CBC)</a></li>
-<li><a href="/tests/thyroid-test/">Thyroid Profile (T3, T4, TSH)</a></li>
-<li><a href="/tests/hba1c-test/">HbA1c (Glycated Hemoglobin) Test</a></li>
-<li><a href="/tests/vitamin-d-test/">Vitamin D (25-OH) Test</a></li>
-<li><a href="/tests/vitamin-b12-test/">Vitamin B12 (Cyanocobalamin) Test</a></li>
-<li><a href="/tests/lft-test/">Liver Function Test (LFT)</a></li>
-<li><a href="/tests/kft-test/">Kidney Function Test (KFT / RFT)</a></li>
-<li><a href="/tests/lipid-profile-test/">Lipid Profile (Cholesterol Panel)</a></li>
-<li><a href="/tests/fasting-blood-sugar-test/">Fasting Blood Sugar (FBS)</a></li>
-<li><a href="/tests/post-prandial-blood-sugar-test/">Post Prandial Blood Sugar (PPBS)</a></li>
-<li><a href="/tests/urine-routine-test/">Urine Routine & Microscopy</a></li>
-<li><a href="/tests/esr-test/">Erythrocyte Sedimentation Rate (ESR)</a></li>
-<li><a href="/tests/crp-test/">C-Reactive Protein (CRP)</a></li>
-<li><a href="/tests/iron-ferritin-test/">Iron Deficiency & Ferritin Profile</a></li>
-<li><a href="/tests/serum-electrolytes-test/">Serum Electrolytes (Na, K, Cl)</a></li>
-<li><a href="/tests/uric-acid-test/">Serum Uric Acid Test</a></li>
-<li><a href="/tests/calcium-test/">Serum Calcium Total Test</a></li>
-<li><a href="/tests/dengue-test/">Dengue NS1 Antigen & Antibody Test</a></li>
-<li><a href="/tests/beta-hcg-test/">Beta HCG Pregnancy Blood Test</a></li>
-<li><a href="/tests/allergy-test/">Allergy Profile (Total IgE & Common Allergens)</a></li>
-<li><a href="/tests/double-marker-test/">Double Marker Test (First Trimester Screening)</a></li>
-<li><a href="/tests/psa-test/">Prostate Specific Antigen (PSA) Test</a></li>
+        <!-- Panes with Compact Chips -->
+        <div id="tab-cities" class="seo-tab-pane" style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <a href="/locations/delhi/" class="seo-chip-link">Delhi NCR</a>
+<a href="/locations/mumbai/" class="seo-chip-link">Mumbai</a>
+<a href="/locations/bengaluru/" class="seo-chip-link">Bengaluru</a>
+<a href="/locations/pune/" class="seo-chip-link">Pune</a>
+<a href="/locations/hyderabad/" class="seo-chip-link">Hyderabad</a>
+<a href="/locations/gurugram/" class="seo-chip-link">Gurugram</a>
+<a href="/locations/noida/" class="seo-chip-link">Noida</a>
+<a href="/locations/ghaziabad/" class="seo-chip-link">Ghaziabad</a>
+<a href="/locations/faridabad/" class="seo-chip-link">Faridabad</a>
+<a href="/locations/jaipur/" class="seo-chip-link">Jaipur</a>
+<a href="/locations/lucknow/" class="seo-chip-link">Lucknow</a>
+<a href="/locations/chandigarh/" class="seo-chip-link">Chandigarh Tricity</a>
+<a href="/locations/ahmedabad/" class="seo-chip-link">Ahmedabad</a>
+<a href="/locations/kolkata/" class="seo-chip-link">Kolkata</a>
+<a href="/locations/chennai/" class="seo-chip-link">Chennai</a>
+<a href="/locations/indore/" class="seo-chip-link">Indore</a>
+<a href="/locations/bhopal/" class="seo-chip-link">Bhopal</a>
+<a href="/locations/kanpur/" class="seo-chip-link">Kanpur</a>
+<a href="/locations/nagpur/" class="seo-chip-link">Nagpur</a>
+<a href="/locations/patna/" class="seo-chip-link">Patna</a>
+<a href="/locations/surat/" class="seo-chip-link">Surat</a>
+<a href="/locations/vadodara/" class="seo-chip-link">Vadodara</a>
+<a href="/locations/ludhiana/" class="seo-chip-link">Ludhiana</a>
+<a href="/locations/agra/" class="seo-chip-link">Agra</a>
+<a href="/locations/varanasi/" class="seo-chip-link">Varanasi</a>
+<a href="/locations/amritsar/" class="seo-chip-link">Amritsar</a>
+<a href="/locations/meerut/" class="seo-chip-link">Meerut</a>
+<a href="/locations/dehradun/" class="seo-chip-link">Dehradun</a>
 
-          </ul>
         </div>
 
-        <div class="seo-internal-col">
-          <h4>🩺 Health Packages & Services</h4>
-          <ul>
-            <li><a href="/packages/full-body-checkup/">Full Body Health Checkup</a></li>
-<li><a href="/packages/senior-citizen-package/">Senior Citizen Health Package</a></li>
-<li><a href="/packages/diabetes-package/">Comprehensive Diabetes Health Package</a></li>
-<li><a href="/packages/women-health-package/">Women Care & Wellness Health Package</a></li>
-<li><a href="/packages/men-health-package/">Men Executive Health Checkup Package</a></li>
-<li><a href="/packages/thyroid-package/">Advanced Thyroid & Metabolism Care Package</a></li>
-<li><a href="/packages/cardiac-care-package/">Healthy Heart Cardiac Screening Package</a></li>
-<li><a href="/packages/vitamin-deficiency-package/">Complete Vitamin & Mineral Deficiency Package</a></li>
-<li><a href="/packages/fitness-health-package/">Active Fitness & Sports Health Package</a></li>
-<li><a href="/packages/fever-screening-package/">Fever & Acute Infection Screening Package</a></li>
+        <div id="tab-tests" class="seo-tab-pane" style="display: none; flex-wrap: wrap; gap: 8px;">
+          <a href="/tests/cbc-test/" class="seo-chip-link">Complete Blood Count (CBC)</a>
+<a href="/tests/thyroid-test/" class="seo-chip-link">Thyroid Profile (T3, T4, TSH)</a>
+<a href="/tests/hba1c-test/" class="seo-chip-link">HbA1c (Glycated Hemoglobin) Test</a>
+<a href="/tests/vitamin-d-test/" class="seo-chip-link">Vitamin D (25-OH) Test</a>
+<a href="/tests/vitamin-b12-test/" class="seo-chip-link">Vitamin B12 (Cyanocobalamin) Test</a>
+<a href="/tests/lft-test/" class="seo-chip-link">Liver Function Test (LFT)</a>
+<a href="/tests/kft-test/" class="seo-chip-link">Kidney Function Test (KFT / RFT)</a>
+<a href="/tests/lipid-profile-test/" class="seo-chip-link">Lipid Profile (Cholesterol Panel)</a>
+<a href="/tests/fasting-blood-sugar-test/" class="seo-chip-link">Fasting Blood Sugar (FBS)</a>
+<a href="/tests/post-prandial-blood-sugar-test/" class="seo-chip-link">Post Prandial Blood Sugar (PPBS)</a>
+<a href="/tests/urine-routine-test/" class="seo-chip-link">Urine Routine & Microscopy</a>
+<a href="/tests/esr-test/" class="seo-chip-link">Erythrocyte Sedimentation Rate (ESR)</a>
+<a href="/tests/crp-test/" class="seo-chip-link">C-Reactive Protein (CRP)</a>
+<a href="/tests/iron-ferritin-test/" class="seo-chip-link">Iron Deficiency & Ferritin Profile</a>
+<a href="/tests/serum-electrolytes-test/" class="seo-chip-link">Serum Electrolytes (Na, K, Cl)</a>
+<a href="/tests/uric-acid-test/" class="seo-chip-link">Serum Uric Acid Test</a>
+<a href="/tests/calcium-test/" class="seo-chip-link">Serum Calcium Total Test</a>
+<a href="/tests/dengue-test/" class="seo-chip-link">Dengue NS1 Antigen & Antibody Test</a>
+<a href="/tests/beta-hcg-test/" class="seo-chip-link">Beta HCG Pregnancy Blood Test</a>
+<a href="/tests/allergy-test/" class="seo-chip-link">Allergy Profile (Total IgE & Common Allergens)</a>
+<a href="/tests/double-marker-test/" class="seo-chip-link">Double Marker Test (First Trimester Screening)</a>
+<a href="/tests/psa-test/" class="seo-chip-link">Prostate Specific Antigen (PSA) Test</a>
 
-            <li><a href="/blood-test-at-home/">Blood Test at Home</a></li>
-<li><a href="/diagnostic-tests-at-home/">Diagnostic Tests at Home</a></li>
-<li><a href="/pathology-lab-near-me/">Pathology Lab Near Me</a></li>
-<li><a href="/full-body-checkup-at-home/">Full Body Checkup at Home</a></li>
-
-          </ul>
         </div>
 
-        <div class="seo-internal-col">
-          <h4>📚 Health Guides & Articles (18)</h4>
-          <ul>
-            <li><a href="/articles/fasting-rules-before-blood-test/">Fasting Rules Before Blood Test: Everything You Need to Know</a></li>
-<li><a href="/articles/cbc-normal-range-guide/">CBC Test Normal Range Chart: Hemoglobin, WBC, Platelets</a></li>
-<li><a href="/articles/hba1c-normal-range-chart/">HbA1c Normal Range Chart by Age & Diabetes Management</a></li>
-<li><a href="/articles/vitamin-d-deficiency-symptoms/">Vitamin D Deficiency Symptoms, Causes and Treatment</a></li>
-<li><a href="/articles/vitamin-b12-deficiency-guide/">Vitamin B12 Deficiency Symptoms in Vegetarians & Treatment</a></li>
-<li><a href="/articles/high-sgpt-sgot-causes-treatment/">High SGPT and SGOT Levels: What Does It Mean for Your Liver?</a></li>
-<li><a href="/articles/thyroid-tsh-normal-range-guide/">Thyroid Test T3, T4, TSH Normal Levels & When to Test</a></li>
-<li><a href="/articles/lipid-profile-cholesterol-guide/">Lipid Profile Test: Understanding Good vs Bad Cholesterol</a></li>
-<li><a href="/articles/creatinine-kft-normal-range-guide/">Kidney Function Test (KFT): Creatinine and BUN Normal Levels</a></li>
-<li><a href="/articles/high-uric-acid-causes-diet/">High Uric Acid: Causes, Symptoms, and Joint Pain Relief</a></li>
-<li><a href="/articles/importance-of-annual-full-body-checkup/">Why Annual Full Body Checkup is Essential After Age 30</a></li>
-<li><a href="/articles/crp-test-high-levels-guide/">CRP Blood Test: Why High C-Reactive Protein Means Inflammation</a></li>
-<li><a href="/articles/fasting-sugar-vs-hba1c-difference/">Difference Between Fasting Blood Sugar and HbA1c Test</a></li>
-<li><a href="/articles/uti-symptoms-urine-test-guide/">Urine Infection (UTI) Symptoms & Urine Routine Test Guide</a></li>
-<li><a href="/articles/iron-deficiency-anemia-guide/">Iron Deficiency Anemia: Symptoms, Ferritin Levels & Diet</a></li>
-<li><a href="/articles/dengue-symptoms-platelet-test-guide/">Dengue Fever Symptoms, Platelet Count Monitoring & Tests</a></li>
-<li><a href="/articles/preparation-before-blood-sample-collection/">What to Do Before a Morning Blood Sample Collection</a></li>
-<li><a href="/articles/home-blood-sample-collection-protocol/">How Home Sample Collection Works: Safe & Hygienic Protocol</a></li>
+        <div id="tab-packages" class="seo-tab-pane" style="display: none; flex-wrap: wrap; gap: 8px;">
+          <a href="/packages/full-body-checkup/" class="seo-chip-link">Full Body Health Checkup</a>
+<a href="/packages/senior-citizen-package/" class="seo-chip-link">Senior Citizen Health Package</a>
+<a href="/packages/diabetes-package/" class="seo-chip-link">Comprehensive Diabetes Health Package</a>
+<a href="/packages/women-health-package/" class="seo-chip-link">Women Care & Wellness Health Package</a>
+<a href="/packages/men-health-package/" class="seo-chip-link">Men Executive Health Checkup Package</a>
+<a href="/packages/thyroid-package/" class="seo-chip-link">Advanced Thyroid & Metabolism Care Package</a>
+<a href="/packages/cardiac-care-package/" class="seo-chip-link">Healthy Heart Cardiac Screening Package</a>
+<a href="/packages/vitamin-deficiency-package/" class="seo-chip-link">Complete Vitamin & Mineral Deficiency Package</a>
+<a href="/packages/fitness-health-package/" class="seo-chip-link">Active Fitness & Sports Health Package</a>
+<a href="/packages/fever-screening-package/" class="seo-chip-link">Fever & Acute Infection Screening Package</a>
 
-          </ul>
+          <a href="/blood-test-at-home/" class="seo-chip-link">Blood Test at Home</a>
+<a href="/diagnostic-tests-at-home/" class="seo-chip-link">Diagnostic Tests at Home</a>
+<a href="/pathology-lab-near-me/" class="seo-chip-link">Pathology Lab Near Me</a>
+<a href="/full-body-checkup-at-home/" class="seo-chip-link">Full Body Checkup at Home</a>
+
+        </div>
+
+        <div id="tab-articles" class="seo-tab-pane" style="display: none; flex-wrap: wrap; gap: 8px;">
+          <a href="/articles/fasting-rules-before-blood-test/" class="seo-chip-link">Fasting Rules Before Blood Test: Everything You Need to Know</a>
+<a href="/articles/cbc-normal-range-guide/" class="seo-chip-link">CBC Test Normal Range Chart: Hemoglobin, WBC, Platelets</a>
+<a href="/articles/hba1c-normal-range-chart/" class="seo-chip-link">HbA1c Normal Range Chart by Age & Diabetes Management</a>
+<a href="/articles/vitamin-d-deficiency-symptoms/" class="seo-chip-link">Vitamin D Deficiency Symptoms, Causes and Treatment</a>
+<a href="/articles/vitamin-b12-deficiency-guide/" class="seo-chip-link">Vitamin B12 Deficiency Symptoms in Vegetarians & Treatment</a>
+<a href="/articles/high-sgpt-sgot-causes-treatment/" class="seo-chip-link">High SGPT and SGOT Levels: What Does It Mean for Your Liver?</a>
+<a href="/articles/thyroid-tsh-normal-range-guide/" class="seo-chip-link">Thyroid Test T3, T4, TSH Normal Levels & When to Test</a>
+<a href="/articles/lipid-profile-cholesterol-guide/" class="seo-chip-link">Lipid Profile Test: Understanding Good vs Bad Cholesterol</a>
+<a href="/articles/creatinine-kft-normal-range-guide/" class="seo-chip-link">Kidney Function Test (KFT): Creatinine and BUN Normal Levels</a>
+<a href="/articles/high-uric-acid-causes-diet/" class="seo-chip-link">High Uric Acid: Causes, Symptoms, and Joint Pain Relief</a>
+<a href="/articles/importance-of-annual-full-body-checkup/" class="seo-chip-link">Why Annual Full Body Checkup is Essential After Age 30</a>
+<a href="/articles/crp-test-high-levels-guide/" class="seo-chip-link">CRP Blood Test: Why High C-Reactive Protein Means Inflammation</a>
+<a href="/articles/fasting-sugar-vs-hba1c-difference/" class="seo-chip-link">Difference Between Fasting Blood Sugar and HbA1c Test</a>
+<a href="/articles/uti-symptoms-urine-test-guide/" class="seo-chip-link">Urine Infection (UTI) Symptoms & Urine Routine Test Guide</a>
+<a href="/articles/iron-deficiency-anemia-guide/" class="seo-chip-link">Iron Deficiency Anemia: Symptoms, Ferritin Levels & Diet</a>
+<a href="/articles/dengue-symptoms-platelet-test-guide/" class="seo-chip-link">Dengue Fever Symptoms, Platelet Count Monitoring & Tests</a>
+<a href="/articles/preparation-before-blood-sample-collection/" class="seo-chip-link">What to Do Before a Morning Blood Sample Collection</a>
+<a href="/articles/home-blood-sample-collection-protocol/" class="seo-chip-link">How Home Sample Collection Works: Safe & Hygienic Protocol</a>
+
         </div>
       </div>
+
     </div>
   </section>
+
+  <script>
+    function toggleSeoDirectory() {
+      const content = document.getElementById('seo-directory-content');
+      const arrow = document.getElementById('seo-dir-toggle-arrow');
+      const text = document.getElementById('seo-dir-toggle-text');
+      if (!content) return;
+      if (content.style.display === 'none' || !content.style.display) {
+        content.style.display = 'block';
+        if (arrow) arrow.style.transform = 'rotate(180deg)';
+        if (text) text.innerText = 'Collapse Directory';
+      } else {
+        content.style.display = 'none';
+        if (arrow) arrow.style.transform = 'rotate(0deg)';
+        if (text) text.innerText = 'Explore All 82 Categories';
+      }
+    }
+
+    function switchSeoTab(tabId) {
+      const panes = document.querySelectorAll('.seo-tab-pane');
+      const btns = document.querySelectorAll('.seo-tab-btn');
+      panes.forEach(p => p.style.display = 'none');
+      btns.forEach(b => b.classList.remove('active'));
+      
+      const targetPane = document.getElementById('tab-' + tabId);
+      if (targetPane) targetPane.style.display = 'flex';
+      
+      const activeBtn = document.querySelector('[data-tab="' + tabId + '"]');
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+  </script>
 
 </footer>
 

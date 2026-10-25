@@ -2430,3 +2430,78 @@ img {
     align-items: flex-start;
   }
 }
+
+/* =====================================================================
+   COMPACT & COLLAPSIBLE SEO DIRECTORY (TABS & CHIPS)
+   ===================================================================== */
+.seo-directory-section {
+  background-color: #F8FAFC;
+  padding: 24px 20px;
+  border-top: 1px solid #E2E8F0;
+}
+
+.seo-dir-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  cursor: pointer;
+  padding: 10px 0;
+  user-select: none;
+}
+
+.seo-dir-header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.seo-tab-btn {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #475569;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.seo-tab-btn:hover {
+  border-color: #00A0A8;
+  color: #00A0A8;
+}
+.seo-tab-btn.active {
+  background: #00A0A8;
+  border-color: #00A0A8;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0, 160, 168, 0.25);
+}
+
+.seo-chip-link {
+  display: inline-flex;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: #334155;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  line-height: 1.3;
+}
+.seo-chip-link:hover {
+  border-color: #00A0A8;
+  color: #00A0A8;
+  background: #F0FCFD;
+  transform: translateY(-1px);
+}
