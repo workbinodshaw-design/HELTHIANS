@@ -30,70 +30,79 @@
 
   <!-- Schema.org Markup for SEO -->
   <script type="application/ld+json">
-[
   {
     "@context": "https://schema.org",
-    "@type": "MedicalClinic",
-    "name": "HealthiansAr Blood Test & Diagnostics",
-    "url": "https://bookbloodtest.in/",
-    "logo": "https://bookbloodtest.in/images/logo.png",
-    "image": "https://bookbloodtest.in/images/hero.jpg",
-    "description": "Book a home blood test or full body health checkup. Get free home sample collection across India.",
-    "telephone": "+91-9044401435",
-    "priceRange": "₹₹",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "IN"
-    },
-    "medicalSpecialty": "Pathology",
-    "availableService": [
+    "@graph": [
       {
-        "@type": "MedicalTest",
-        "name": "Full Body Checkup"
+        "@type": ["MedicalClinic", "DiagnosticLab"],
+        "name": "Healthians Diagnostics & Home Blood Collection",
+        "url": "https://bookbloodtest.in/",
+        "logo": "https://bookbloodtest.in/images/logo.png",
+        "image": "https://bookbloodtest.in/images/hero.jpg",
+        "description": "Book a home blood test or full body health checkup with Healthians. Free doorstep sample collection across 250+ cities in India, NABL certified labs, and 100% accurate digital reports.",
+        "telephone": "+91-9044401435",
+        "priceRange": "₹₹",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "IN"
+        },
+        "medicalSpecialty": "Pathology",
+        "openingHours": "Mo-Su 06:30-21:00",
+        "availableService": [
+          {
+            "@type": "MedicalTest",
+            "name": "Full Body Checkup"
+          },
+          {
+            "@type": "MedicalTest",
+            "name": "Home Blood Test Collection"
+          },
+          {
+            "@type": "MedicalTest",
+            "name": "Thyroid Profile"
+          },
+          {
+            "@type": "MedicalTest",
+            "name": "Complete Blood Count (CBC)"
+          },
+          {
+            "@type": "MedicalTest",
+            "name": "HbA1c Diabetes Test"
+          }
+        ]
       },
       {
-        "@type": "MedicalTest",
-        "name": "Home Blood Test Collection"
-      },
-      {
-        "@type": "MedicalTest",
-        "name": "Thyroid Profile"
-      }
-    ]
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "How to book a home blood test?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "You can easily book a home blood test online through our website. Fill out the booking form, and a certified phlebotomist will visit your home for a free sample collection."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is home sample collection free?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, we provide 100% free home sample collection for blood tests and full body checkups across major cities in India."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Are the laboratories NABL certified?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, all our partner diagnostic laboratories are fully NABL certified, ensuring maximum accuracy and reliability of your test reports."
-        }
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How to book a home blood test?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can easily book a home blood test online through our website. Fill out the booking form, and a certified phlebotomist will visit your home for a free sample collection."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is home sample collection free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, we provide 100% free home sample collection for blood tests and full body checkups across major cities in India."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are the laboratories NABL certified?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, all our partner diagnostic laboratories are fully NABL certified, ensuring maximum accuracy and reliability of your test reports."
+            }
+          }
+        ]
       }
     ]
   }
-]
-</script>
-  <link rel="canonical" href="https://bookbloodtest.in/">
+  </script>
   
   <!-- OpenGraph for Meta Ads -->
   <meta property="og:type" content="website">
@@ -728,7 +737,7 @@
         </div>
         
         <div style="text-align: center;">
-          <a href="products.html" class="btn btn-primary" style="display: inline-block; padding: 12px 28px; background: #0F766E; color: #FFF; font-weight: 700; border-radius: 50px; text-decoration: none; font-size: 1rem; box-shadow: 0 8px 20px rgba(15, 118, 110, 0.25);">View All Products ➔</a>
+          <a href="/products.html" class="btn btn-primary" style="display: inline-block; padding: 12px 28px; background: #0F766E; color: #FFF; font-weight: 700; border-radius: 50px; text-decoration: none; font-size: 1rem; box-shadow: 0 8px 20px rgba(15, 118, 110, 0.25);">View All Products ➔</a>
         </div>
       </div>
     </section>
@@ -916,45 +925,132 @@
   </div>
 
 
-  <!-- SEO INTERNAL LINKING BLOCK -->
-  <div style="background-color: #fff; padding: 40px 20px; border-top: 1px solid #E2E8F0;">
-    <div style="max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
-      
-      <div>
-        <h3 style="font-size: 1.1rem; color: #0F766E; margin-bottom: 15px; font-weight: 700;">Top Blood Tests</h3>
-        <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
-          <li><a href="/tests/cbc-test/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">CBC Test at Home</a></li>
-          <li><a href="/tests/thyroid-test/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">Thyroid Profile Test</a></li>
-          <li><a href="/tests/hba1c-test/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">HbA1c Test</a></li>
-          <li><a href="/tests/vitamin-d-test/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">Vitamin D Test</a></li>
-          <li><a href="/tests/lft-test/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">Liver Function Test</a></li>
-        </ul>
+  
+  
+  
+  <!-- SEO ENTERPRISE INTERNAL LINKING DIRECTORY -->
+  <section class="seo-directory-section" style="background-color: #FFFFFF; padding: 50px 20px; border-top: 1px solid #E2E8F0;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto;">
+      <div style="text-align: center; margin-bottom: 36px;">
+        <span style="display: inline-block; background: #E6F3F5; color: #00A0A8; font-weight: 700; font-size: 0.8rem; padding: 4px 14px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px;">Healthians Diagnostic Network</span>
+        <h2 style="font-size: 1.55rem; color: #0F172A; font-weight: 800; margin-bottom: 8px;">Explore Tests, Health Checkup Packages & Locations Across India</h2>
+        <p style="color: #64748B; font-size: 0.95rem; max-width: 750px; margin: 0 auto;">Browse our complete directory of NABL-certified pathology blood tests, full body health packages, and doorstep sample collection cities.</p>
       </div>
 
-      <div>
-        <h3 style="font-size: 1.1rem; color: #0F766E; margin-bottom: 15px; font-weight: 700;">Top Packages & Services</h3>
-        <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
-          <li><a href="/packages/full-body-checkup/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">Full Body Checkup</a></li>
-          <li><a href="/packages/diabetes-package/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">Diabetes Package</a></li>
-          <li><a href="/packages/thyroid-package/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">Thyroid Package</a></li>
-          <li><a href="/blood-test-at-home/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">Blood Test at Home</a></li>
-          <li><a href="/diagnostic-tests-at-home/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">Diagnostic Tests at Home</a></li>
-        </ul>
-      </div>
+      <div class="seo-internal-grid">
+        <div class="seo-internal-col">
+          <h4>📍 Top Cities (28)</h4>
+          <ul>
+            <li><a href="/locations/delhi/">Blood Test in Delhi NCR</a></li>
+<li><a href="/locations/mumbai/">Blood Test in Mumbai</a></li>
+<li><a href="/locations/bengaluru/">Blood Test in Bengaluru</a></li>
+<li><a href="/locations/pune/">Blood Test in Pune</a></li>
+<li><a href="/locations/hyderabad/">Blood Test in Hyderabad</a></li>
+<li><a href="/locations/gurugram/">Blood Test in Gurugram</a></li>
+<li><a href="/locations/noida/">Blood Test in Noida</a></li>
+<li><a href="/locations/ghaziabad/">Blood Test in Ghaziabad</a></li>
+<li><a href="/locations/faridabad/">Blood Test in Faridabad</a></li>
+<li><a href="/locations/jaipur/">Blood Test in Jaipur</a></li>
+<li><a href="/locations/lucknow/">Blood Test in Lucknow</a></li>
+<li><a href="/locations/chandigarh/">Blood Test in Chandigarh Tricity</a></li>
+<li><a href="/locations/ahmedabad/">Blood Test in Ahmedabad</a></li>
+<li><a href="/locations/kolkata/">Blood Test in Kolkata</a></li>
+<li><a href="/locations/chennai/">Blood Test in Chennai</a></li>
+<li><a href="/locations/indore/">Blood Test in Indore</a></li>
+<li><a href="/locations/bhopal/">Blood Test in Bhopal</a></li>
+<li><a href="/locations/kanpur/">Blood Test in Kanpur</a></li>
+<li><a href="/locations/nagpur/">Blood Test in Nagpur</a></li>
+<li><a href="/locations/patna/">Blood Test in Patna</a></li>
+<li><a href="/locations/surat/">Blood Test in Surat</a></li>
+<li><a href="/locations/vadodara/">Blood Test in Vadodara</a></li>
+<li><a href="/locations/ludhiana/">Blood Test in Ludhiana</a></li>
+<li><a href="/locations/agra/">Blood Test in Agra</a></li>
+<li><a href="/locations/varanasi/">Blood Test in Varanasi</a></li>
+<li><a href="/locations/amritsar/">Blood Test in Amritsar</a></li>
+<li><a href="/locations/meerut/">Blood Test in Meerut</a></li>
+<li><a href="/locations/dehradun/">Blood Test in Dehradun</a></li>
 
-      <div>
-        <h3 style="font-size: 1.1rem; color: #0F766E; margin-bottom: 15px; font-weight: 700;">Top Cities</h3>
-        <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
-          <li><a href="/locations/mumbai/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">Blood Test in Mumbai</a></li>
-          <li><a href="/locations/delhi/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">Blood Test in Delhi NCR</a></li>
-          <li><a href="/locations/bengaluru/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">Blood Test in Bengaluru</a></li>
-          <li><a href="/locations/pune/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">Blood Test in Pune</a></li>
-          <li><a href="/locations/hyderabad/" style="color: #475569; text-decoration: none; font-size: 0.95rem;">Blood Test in Hyderabad</a></li>
-        </ul>
-      </div>
+          </ul>
+        </div>
 
+        <div class="seo-internal-col">
+          <h4>🧪 Routine Blood Tests (22)</h4>
+          <ul>
+            <li><a href="/tests/cbc-test/">Complete Blood Count (CBC)</a></li>
+<li><a href="/tests/thyroid-test/">Thyroid Profile (T3, T4, TSH)</a></li>
+<li><a href="/tests/hba1c-test/">HbA1c (Glycated Hemoglobin) Test</a></li>
+<li><a href="/tests/vitamin-d-test/">Vitamin D (25-OH) Test</a></li>
+<li><a href="/tests/vitamin-b12-test/">Vitamin B12 (Cyanocobalamin) Test</a></li>
+<li><a href="/tests/lft-test/">Liver Function Test (LFT)</a></li>
+<li><a href="/tests/kft-test/">Kidney Function Test (KFT / RFT)</a></li>
+<li><a href="/tests/lipid-profile-test/">Lipid Profile (Cholesterol Panel)</a></li>
+<li><a href="/tests/fasting-blood-sugar-test/">Fasting Blood Sugar (FBS)</a></li>
+<li><a href="/tests/post-prandial-blood-sugar-test/">Post Prandial Blood Sugar (PPBS)</a></li>
+<li><a href="/tests/urine-routine-test/">Urine Routine & Microscopy</a></li>
+<li><a href="/tests/esr-test/">Erythrocyte Sedimentation Rate (ESR)</a></li>
+<li><a href="/tests/crp-test/">C-Reactive Protein (CRP)</a></li>
+<li><a href="/tests/iron-ferritin-test/">Iron Deficiency & Ferritin Profile</a></li>
+<li><a href="/tests/serum-electrolytes-test/">Serum Electrolytes (Na, K, Cl)</a></li>
+<li><a href="/tests/uric-acid-test/">Serum Uric Acid Test</a></li>
+<li><a href="/tests/calcium-test/">Serum Calcium Total Test</a></li>
+<li><a href="/tests/dengue-test/">Dengue NS1 Antigen & Antibody Test</a></li>
+<li><a href="/tests/beta-hcg-test/">Beta HCG Pregnancy Blood Test</a></li>
+<li><a href="/tests/allergy-test/">Allergy Profile (Total IgE & Common Allergens)</a></li>
+<li><a href="/tests/double-marker-test/">Double Marker Test (First Trimester Screening)</a></li>
+<li><a href="/tests/psa-test/">Prostate Specific Antigen (PSA) Test</a></li>
+
+          </ul>
+        </div>
+
+        <div class="seo-internal-col">
+          <h4>🩺 Health Packages & Services</h4>
+          <ul>
+            <li><a href="/packages/full-body-checkup/">Full Body Health Checkup</a></li>
+<li><a href="/packages/senior-citizen-package/">Senior Citizen Health Package</a></li>
+<li><a href="/packages/diabetes-package/">Comprehensive Diabetes Health Package</a></li>
+<li><a href="/packages/women-health-package/">Women Care & Wellness Health Package</a></li>
+<li><a href="/packages/men-health-package/">Men Executive Health Checkup Package</a></li>
+<li><a href="/packages/thyroid-package/">Advanced Thyroid & Metabolism Care Package</a></li>
+<li><a href="/packages/cardiac-care-package/">Healthy Heart Cardiac Screening Package</a></li>
+<li><a href="/packages/vitamin-deficiency-package/">Complete Vitamin & Mineral Deficiency Package</a></li>
+<li><a href="/packages/fitness-health-package/">Active Fitness & Sports Health Package</a></li>
+<li><a href="/packages/fever-screening-package/">Fever & Acute Infection Screening Package</a></li>
+
+            <li><a href="/blood-test-at-home/">Blood Test at Home</a></li>
+<li><a href="/diagnostic-tests-at-home/">Diagnostic Tests at Home</a></li>
+<li><a href="/pathology-lab-near-me/">Pathology Lab Near Me</a></li>
+<li><a href="/full-body-checkup-at-home/">Full Body Checkup at Home</a></li>
+
+          </ul>
+        </div>
+
+        <div class="seo-internal-col">
+          <h4>📚 Health Guides & Articles (18)</h4>
+          <ul>
+            <li><a href="/articles/fasting-rules-before-blood-test/">Fasting Rules Before Blood Test: Everything You Need to Know</a></li>
+<li><a href="/articles/cbc-normal-range-guide/">CBC Test Normal Range Chart: Hemoglobin, WBC, Platelets</a></li>
+<li><a href="/articles/hba1c-normal-range-chart/">HbA1c Normal Range Chart by Age & Diabetes Management</a></li>
+<li><a href="/articles/vitamin-d-deficiency-symptoms/">Vitamin D Deficiency Symptoms, Causes and Treatment</a></li>
+<li><a href="/articles/vitamin-b12-deficiency-guide/">Vitamin B12 Deficiency Symptoms in Vegetarians & Treatment</a></li>
+<li><a href="/articles/high-sgpt-sgot-causes-treatment/">High SGPT and SGOT Levels: What Does It Mean for Your Liver?</a></li>
+<li><a href="/articles/thyroid-tsh-normal-range-guide/">Thyroid Test T3, T4, TSH Normal Levels & When to Test</a></li>
+<li><a href="/articles/lipid-profile-cholesterol-guide/">Lipid Profile Test: Understanding Good vs Bad Cholesterol</a></li>
+<li><a href="/articles/creatinine-kft-normal-range-guide/">Kidney Function Test (KFT): Creatinine and BUN Normal Levels</a></li>
+<li><a href="/articles/high-uric-acid-causes-diet/">High Uric Acid: Causes, Symptoms, and Joint Pain Relief</a></li>
+<li><a href="/articles/importance-of-annual-full-body-checkup/">Why Annual Full Body Checkup is Essential After Age 30</a></li>
+<li><a href="/articles/crp-test-high-levels-guide/">CRP Blood Test: Why High C-Reactive Protein Means Inflammation</a></li>
+<li><a href="/articles/fasting-sugar-vs-hba1c-difference/">Difference Between Fasting Blood Sugar and HbA1c Test</a></li>
+<li><a href="/articles/uti-symptoms-urine-test-guide/">Urine Infection (UTI) Symptoms & Urine Routine Test Guide</a></li>
+<li><a href="/articles/iron-deficiency-anemia-guide/">Iron Deficiency Anemia: Symptoms, Ferritin Levels & Diet</a></li>
+<li><a href="/articles/dengue-symptoms-platelet-test-guide/">Dengue Fever Symptoms, Platelet Count Monitoring & Tests</a></li>
+<li><a href="/articles/preparation-before-blood-sample-collection/">What to Do Before a Morning Blood Sample Collection</a></li>
+<li><a href="/articles/home-blood-sample-collection-protocol/">How Home Sample Collection Works: Safe & Hygienic Protocol</a></li>
+
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
 </footer>
 

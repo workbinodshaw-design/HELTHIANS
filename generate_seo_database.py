@@ -1,0 +1,1864 @@
+import json
+import os
+
+database = {
+    "locations": [
+        {
+            "slug": "delhi",
+            "name": "Delhi NCR",
+            "state": "Delhi NCR",
+            "h1": "Home Blood Test in Delhi NCR",
+            "title": "Home Blood Test in Delhi NCR | Free Sample Collection | Healthians",
+            "description": "Book a home blood test or full body checkup in Delhi NCR with Healthians. Certified phlebotomists, 60-minute doorstep sample collection & NABL reports.",
+            "schemaDesc": "Pathology lab and doorstep blood sample collection services across Delhi NCR including South Delhi, Dwarka, Rohini, Saket and Janakpuri.",
+            "localities": ["South Delhi", "Dwarka", "Rohini", "Saket", "Janakpuri", "Mayur Vihar", "Connaught Place", "Lajpat Nagar"],
+            "fasting": "Depends on selected tests (10-12h for Sugar/Lipid)",
+            "turnaround": "Reports in 12-24 Hours on WhatsApp",
+            "overview": "Healthians provides seamless home blood collection services across all major localities in Delhi NCR. With automated NABL-accredited diagnostic hubs and temperature-controlled cold chain logistics, we ensure 100% sample integrity and precision laboratory test results.",
+            "keyPoints": [
+                "Doorstep phlebotomist arrival within 60 minutes in active zones",
+                "Zero home collection fee on all routine and package bookings",
+                "Testing conducted in NABL & CAP accredited partner laboratories",
+                "Automated encrypted Smart Reports delivered via WhatsApp & Email within 24 hours",
+                "Complimentary tele-consultation with qualified doctors to explain reports"
+            ],
+            "faq": [
+                {"q": "How can I book a blood test at home in Delhi NCR?", "a": "You can fill out our quick 30-second booking form or message us on WhatsApp. Our certified phlebotomist will arrive at your home at your scheduled morning slot."},
+                {"q": "Is home sample collection free in Delhi?", "a": "Yes, Healthians provides free home sample collection across all residential areas in Delhi NCR."},
+                {"q": "How quickly do I get my test reports in Delhi?", "a": "Most routine blood test reports are processed and delivered via WhatsApp and email within 12 to 24 hours of sample pickup."},
+                {"q": "Are Healthians labs in Delhi NABL accredited?", "a": "Yes, all diagnostic samples are tested inside state-of-the-art NABL and CAP accredited pathology facilities."}
+            ]
+        },
+        {
+            "slug": "mumbai",
+            "name": "Mumbai",
+            "state": "Maharashtra",
+            "h1": "Home Blood Test in Mumbai",
+            "title": "Home Blood Test in Mumbai | Full Body Checkup | Healthians",
+            "description": "Book diagnostic tests & blood tests at home in Mumbai with Healthians. Free sample collection in Andheri, Bandra, Borivali, Thane, Navi Mumbai & beyond.",
+            "schemaDesc": "Diagnostic laboratory and home blood sample collection across Mumbai, Thane, and Navi Mumbai by Healthians.",
+            "localities": ["Andheri", "Bandra", "Borivali", "Thane", "Navi Mumbai", "Powai", "Dadar", "Goregaon"],
+            "fasting": "Fasting advised for lipid and glucose panels",
+            "turnaround": "Reports in 12-24 Hours",
+            "overview": "Avoid Mumbai traffic and crowded hospital diagnostic waiting rooms. Healthians brings certified phlebotomists to your doorstep across South Mumbai, Western Suburbs, Central Suburbs, Thane, and Navi Mumbai for safe, sterile blood collection.",
+            "keyPoints": [
+                "Convenient early morning 6:30 AM slots available for fasting tests",
+                "Single-use vacutainer needles opened directly in front of the patient",
+                "State-of-the-art robotic pathology testing with multi-stage QC checks",
+                "Smart interactive PDF reports delivered on WhatsApp with doctor review"
+            ],
+            "faq": [
+                {"q": "Do you cover Navi Mumbai and Thane for home collection?", "a": "Yes, Healthians phlebotomists cover all major zones across Mumbai, Thane, Navi Mumbai, and Mira-Bhayandar."},
+                {"q": "Can I get my blood test done early morning in Mumbai?", "a": "Yes, we provide early morning home collection starting at 6:30 AM so you can complete your fasting tests effortlessly before breakfast."},
+                {"q": "How do I pay for the test in Mumbai?", "a": "You can pay online via UPI, Credit/Debit card or choose Cash on Collection at your doorstep."}
+            ]
+        },
+        {
+            "slug": "bengaluru",
+            "name": "Bengaluru",
+            "state": "Karnataka",
+            "h1": "Home Blood Test in Bengaluru",
+            "title": "Home Blood Test in Bengaluru | Pathology Lab at Home | Healthians",
+            "description": "Book Healthians blood test at home in Bengaluru. Rapid doorstep sample collection in Whitefield, Koramangala, Indiranagar, HSR Layout, Electronic City & Jayanagar.",
+            "schemaDesc": "Certified doorstep blood testing and pathology services across Bengaluru (Bangalore), Karnataka.",
+            "localities": ["Whitefield", "Koramangala", "Indiranagar", "HSR Layout", "Electronic City", "Jayanagar", "Marathahalli", "Hebbal"],
+            "fasting": "10-12 hours fasting for full body checkups",
+            "turnaround": "Reports in 24 Hours on WhatsApp",
+            "overview": "Experience tech-enabled healthcare at home in Bengaluru with Healthians. From routine CBC and Thyroid tests to comprehensive master health checkups, our trained healthcare professionals ensure timely sample collection and 100% accurate digital reports.",
+            "keyPoints": [
+                "Widespread coverage across tech corridors including Whitefield, HSR, Electronic City and North Bangalore",
+                "Painless blood draw using world-class vacuum collection tubes",
+                "Free tele-consultation with experienced medical practitioners on report completion",
+                "Transparent pricing with no hidden charges or clinic visit costs"
+            ],
+            "faq": [
+                {"q": "Is Healthians available across Electronic City and Whitefield?", "a": "Yes, our certified phlebotomists provide prompt morning and evening doorstep collection throughout Bengaluru's IT corridors."},
+                {"q": "Are the test reports valid for corporate insurance and medical consultations?", "a": "Yes, all our partner laboratories are NABL certified and accepted by doctors, hospitals, and medical insurers nationwide."}
+            ]
+        },
+        {
+            "slug": "pune",
+            "name": "Pune",
+            "state": "Maharashtra",
+            "h1": "Home Blood Test in Pune",
+            "title": "Home Blood Test in Pune | Full Body Health Checkup | Healthians",
+            "description": "Reliable doorstep blood sample collection in Pune. Book tests in Kothrud, Baner, Wakad, Viman Nagar, Hinjewadi & Hadapsar with Healthians.",
+            "schemaDesc": "Diagnostic tests and home health checkups in Pune, Maharashtra with certified phlebotomists.",
+            "localities": ["Kothrud", "Baner", "Wakad", "Viman Nagar", "Hinjewadi", "Hadapsar", "Aundh", "Pimpri-Chinchwad"],
+            "fasting": "Fasting required for blood sugar and lipid panels",
+            "turnaround": "Reports in 12-24 Hours",
+            "overview": "Healthians offers dependable diagnostic services directly at your home in Pune. Skip diagnostic center queues and get your blood samples collected safely by certified professionals adhering to strict sterile safety protocols.",
+            "keyPoints": [
+                "Full coverage of PCMC and PMC residential areas",
+                "6-step safety and hygiene protocol for painless venipuncture",
+                "Fast report turnaround with smart diagnostic trend tracking"
+            ],
+            "faq": [
+                {"q": "Do you provide sample collection in Hinjewadi and Wakad?", "a": "Yes, we have dedicated phlebotomists operating daily across Hinjewadi, Wakad, Baner, and Pimpri-Chinchwad."},
+                {"q": "What happens after my sample is collected?", "a": "Your sample is barcoded, chilled in a temperature-controlled cool-pack container, and transported directly to our NABL accredited hub for robotic testing."}
+            ]
+        },
+        {
+            "slug": "hyderabad",
+            "name": "Hyderabad",
+            "state": "Telangana",
+            "h1": "Home Blood Test in Hyderabad",
+            "title": "Home Blood Test in Hyderabad | Pathology Lab Services | Healthians",
+            "description": "Book pathology tests from home in Hyderabad with Healthians. Free sample collection in Gachibowli, Madhapur, Banjara Hills, Jubilee Hills, Kukatpally & Secunderabad.",
+            "schemaDesc": "Doorstep diagnostic services and clinical blood testing across Hyderabad and Secunderabad.",
+            "localities": ["Gachibowli", "Madhapur", "Banjara Hills", "Jubilee Hills", "Kukatpally", "Secunderabad", "Kondapur", "Uppal"],
+            "fasting": "10-12 hours fasting for comprehensive profiles",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Access premier diagnostic care at home across Hyderabad and Secunderabad. Healthians delivers painless blood draws, NABL-certified diagnostic precision, and free tele-consultations with physicians.",
+            "keyPoints": [
+                "Comprehensive home diagnostics for seniors, working professionals, and families",
+                "Instant WhatsApp updates from sample booking to report dispatch",
+                "Barcoded sample tracking eliminating any possibility of manual sample mix-up"
+            ],
+            "faq": [
+                {"q": "Can I book home blood collection for elderly parents in Hyderabad?", "a": "Yes! Our phlebotomists are specifically trained in gentle, geriatric sample collection, making it completely comfortable for seniors at home."},
+                {"q": "How do I download my test report?", "a": "You will receive an SMS and WhatsApp message with a secure link to download your digital Smart Report as soon as testing is verified."}
+            ]
+        },
+        {
+            "slug": "gurugram",
+            "name": "Gurugram",
+            "state": "Haryana",
+            "h1": "Home Blood Test in Gurugram (Gurgaon)",
+            "title": "Home Blood Test in Gurugram | Free Sample Pickup | Healthians",
+            "description": "Book a blood test at home in Gurgaon with Healthians. Rapid 60-min sample collection in DLF Phase 1-5, Golf Course Road, Sohna Road & Cyber City.",
+            "schemaDesc": "Diagnostic lab tests and master health checkups in Gurugram with doorstep sample collection.",
+            "localities": ["DLF Phase 1-5", "Golf Course Road", "Sohna Road", "Cyber City", "Sector 56", "Sector 57", "South City", "Palam Vihar"],
+            "fasting": "Fasting recommended for fasting sugar & lipid tests",
+            "turnaround": "Reports in 12-24 Hours",
+            "overview": "Healthians operates flagship automated diagnostic laboratories in Gurugram, offering the fastest sample processing and doorstep collection in under 60 minutes across all sectors of Gurgaon.",
+            "keyPoints": [
+                "Express sample collection in DLF, Golf Course Road, Sohna Road, and New Gurgaon",
+                "Direct processing at our state-of-the-art robotic reference lab",
+                "Real-time phlebotomist tracking on your mobile device"
+            ],
+            "faq": [
+                {"q": "How fast can a phlebotomist arrive at my home in Gurgaon?", "a": "In most Gurgaon sectors, our certified phlebotomists can arrive within 60 minutes of booking confirmation."},
+                {"q": "Where is the lab located?", "a": "Samples are processed at our high-throughput NABL-accredited national reference laboratory located in Gurugram."}
+            ]
+        },
+        {
+            "slug": "noida",
+            "name": "Noida",
+            "state": "Uttar Pradesh",
+            "h1": "Home Blood Test in Noida & Greater Noida",
+            "title": "Home Blood Test in Noida | Free Doorstep Collection | Healthians",
+            "description": "Book home blood test in Noida & Greater Noida. Certified phlebotomists, NABL accredited reports, and 60-min sample pickup across Sector 18, 62, 76, 137 & Expressways.",
+            "schemaDesc": "Doorstep pathology testing and health checkups across Noida and Greater Noida.",
+            "localities": ["Sector 62", "Sector 18", "Sector 76", "Sector 137", "Sector 50", "Noida Expressway", "Greater Noida West", "Pari Chowk"],
+            "fasting": "10-12 hours fasting for full body packages",
+            "turnaround": "Reports in 12-24 Hours",
+            "overview": "Healthians provides top-tier diagnostic services across all sectors of Noida and Greater Noida. Enjoy stress-free home sample collection from early morning slots with zero additional home visit charges.",
+            "keyPoints": [
+                "Extensive coverage from Sector 15 to Greater Noida West",
+                "Vacuum blood draw technology for virtually painless experience",
+                "Digital reports delivered directly to WhatsApp"
+            ],
+            "faq": [
+                {"q": "Are Greater Noida and Noida Extension covered?", "a": "Yes, our phlebotomists provide daily morning doorstep collection throughout Greater Noida and Noida Extension."},
+                {"q": "What tests can be done at home in Noida?", "a": "All routine and specialized blood and urine tests including CBC, Thyroid, HbA1c, Vitamin D, LFT, KFT and Full Body Checkups can be done from home."}
+            ]
+        },
+        {
+            "slug": "ghaziabad",
+            "name": "Ghaziabad",
+            "state": "Uttar Pradesh",
+            "h1": "Home Blood Test in Ghaziabad",
+            "title": "Home Blood Test in Ghaziabad | Lab Test at Home | Healthians",
+            "description": "Book pathology tests at home in Ghaziabad with Healthians. Free sample collection in Indirapuram, Vaishali, Vasundhara, Raj Nagar Extension & Crossings Republik.",
+            "schemaDesc": "Diagnostic lab tests and home blood collection in Ghaziabad, UP.",
+            "localities": ["Indirapuram", "Vaishali", "Vasundhara", "Raj Nagar Extension", "Crossings Republik", "Kaushambi", "Govindpuram"],
+            "fasting": "10-12 hours for fasting panels",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Get reliable pathology testing at home in Ghaziabad. Healthians ensures timely sample pickup by vaccinated, certified phlebotomists, delivering NABL-accurate reports right to your phone.",
+            "keyPoints": [
+                "Prompt service across Indirapuram, Vaishali, Vasundhara, and Raj Nagar Extension",
+                "Barcoded vacutainers for complete traceability",
+                "Free doctor consultation on your test results"
+            ],
+            "faq": [
+                {"q": "Do you offer blood tests in Indirapuram and Vaishali?", "a": "Yes, we have dedicated phlebotomists stationed across Indirapuram and Vaishali for rapid doorstep service."},
+                {"q": "Are there extra home visit charges in Ghaziabad?", "a": "No, our home sample collection is 100% free of charge."}
+            ]
+        },
+        {
+            "slug": "faridabad",
+            "name": "Faridabad",
+            "state": "Haryana",
+            "h1": "Home Blood Test in Faridabad",
+            "title": "Home Blood Test in Faridabad | Healthians Pathology Lab",
+            "description": "Book blood test from home in Faridabad with Healthians. Free collection across Sector 14, 15, 16, 21C, NIT, Green Field Colony & Greater Faridabad.",
+            "schemaDesc": "Pathology testing and home blood collection in Faridabad, Haryana.",
+            "localities": ["Sector 14", "Sector 15", "Sector 21C", "NIT Faridabad", "Green Field Colony", "Greater Faridabad (Neharpar)", "Sector 31"],
+            "fasting": "Fasting recommended for sugar & lipid tests",
+            "turnaround": "Reports in 12-24 Hours",
+            "overview": "Healthians provides dependable, hygienic blood testing at your doorstep throughout Faridabad. Eliminate clinic travel and waiting rooms with our hassle-free home diagnostic service.",
+            "keyPoints": [
+                "Full coverage of Old Faridabad, NIT, and Greater Faridabad Neharpar",
+                "Advanced automated sample processing",
+                "Reports delivered on WhatsApp within 24 hours"
+            ],
+            "faq": [
+                {"q": "How do I schedule an early morning slot in Faridabad?", "a": "You can select your preferred time slot (starting 6:30 AM) while booking online or via WhatsApp."},
+                {"q": "Are reports certified by a pathologist?", "a": "Yes, every report is verified by qualified MD pathologists before being released."}
+            ]
+        },
+        {
+            "slug": "jaipur",
+            "name": "Jaipur",
+            "state": "Rajasthan",
+            "h1": "Home Blood Test in Jaipur",
+            "title": "Home Blood Test in Jaipur | Full Body Checkup | Healthians",
+            "description": "Book blood test at home in Jaipur. Free sample collection in Vaishali Nagar, Mansarovar, Malviya Nagar, Raja Park, C-Scheme & Jagatpura with Healthians.",
+            "schemaDesc": "Diagnostic pathology services and home blood collection across Jaipur, Rajasthan.",
+            "localities": ["Vaishali Nagar", "Mansarovar", "Malviya Nagar", "Raja Park", "C-Scheme", "Jagatpura", "Tonk Road", "Vidhyadhar Nagar"],
+            "fasting": "10-12 hours for lipid & diabetes checkups",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Residents of Jaipur can now access premium diagnostic lab testing right from home. Healthians delivers hygienic sample collection, certified accuracy, and transparent pricing across the Pink City.",
+            "keyPoints": [
+                "Service available across Vaishali Nagar, Mansarovar, Malviya Nagar, and Jagatpura",
+                "Zero home collection fees on packages and routine tests",
+                "NABL-verified laboratory processing"
+            ],
+            "faq": [
+                {"q": "Do you provide home blood collection in Mansarovar and Vaishali Nagar?", "a": "Yes, our phlebotomists cover all major residential neighborhoods in Jaipur daily."},
+                {"q": "Can I pay via UPI when the phlebotomist arrives?", "a": "Yes, our phlebotomists carry digital UPI QR codes for seamless and secure payment."}
+            ]
+        },
+        {
+            "slug": "lucknow",
+            "name": "Lucknow",
+            "state": "Uttar Pradesh",
+            "h1": "Home Blood Test in Lucknow",
+            "title": "Home Blood Test in Lucknow | Pathology Lab at Home | Healthians",
+            "description": "Book a blood test at home in Lucknow with Healthians. Free sample collection in Gomti Nagar, Aliganj, Hazratganj, Indira Nagar & Alambagh. NABL accuracy.",
+            "schemaDesc": "Doorstep pathology tests and master health checkups in Lucknow, Uttar Pradesh.",
+            "localities": ["Gomti Nagar", "Aliganj", "Hazratganj", "Indira Nagar", "Alambagh", "Mahanagar", "Jankipuram", "Vikas Nagar"],
+            "fasting": "10-12 hours fasting for full body checkups",
+            "turnaround": "Reports in 12-24 Hours",
+            "overview": "Healthians brings modern diagnostic healthcare to your home in Lucknow. Certified phlebotomists collect samples using sterile, single-use equipment, ensuring complete safety and comfort.",
+            "keyPoints": [
+                "Comprehensive coverage across Gomti Nagar, Indira Nagar, Aliganj, and Hazratganj",
+                "Automated high-throughput laboratory testing",
+                "Doctor consultation included with every health package"
+            ],
+            "faq": [
+                {"q": "Is home blood collection available in Gomti Nagar and Indira Nagar?", "a": "Yes, we have high availability of phlebotomists across Gomti Nagar, Indira Nagar, and all surrounding areas."},
+                {"q": "How can I book a full body checkup in Lucknow?", "a": "Fill our online form or click the WhatsApp button to book your preferred morning time slot instantly."}
+            ]
+        },
+        {
+            "slug": "chandigarh",
+            "name": "Chandigarh Tricity",
+            "state": "Punjab & Haryana",
+            "h1": "Home Blood Test in Chandigarh, Mohali & Panchkula",
+            "title": "Home Blood Test in Chandigarh Tricity | Healthians Pathology",
+            "description": "Book home blood test in Chandigarh, Mohali & Panchkula with Healthians. Free sample collection across all sectors, NABL accredited lab reports in 24 hours.",
+            "schemaDesc": "Doorstep blood testing and health checkup services across Chandigarh, Mohali, and Panchkula.",
+            "localities": ["Chandigarh Sector 1-47", "Mohali Phase 1-11", "Panchkula Sector 1-21", "Zirakpur", "Kharar", "New Chandigarh"],
+            "fasting": "10-12 hours for lipid & glucose tests",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Experience prompt, reliable diagnostic sample collection at home across Chandigarh Tricity (Chandigarh, Mohali, Panchkula, and Zirakpur) with Healthians.",
+            "keyPoints": [
+                "Serving all sectors of Chandigarh, Mohali, Panchkula, and Zirakpur",
+                "Accredited pathology labs with zero sample tampering risk",
+                "Free tele-consultation with qualified doctors"
+            ],
+            "faq": [
+                {"q": "Do you serve Zirakpur and Mohali?", "a": "Yes, our phlebotomists provide prompt doorstep collection across Chandigarh, Mohali, Panchkula, and Zirakpur."},
+                {"q": "What time does home sample collection start?", "a": "Our slots begin as early as 6:30 AM so you can complete fasting tests before your morning routine."}
+            ]
+        },
+        {
+            "slug": "ahmedabad",
+            "name": "Ahmedabad",
+            "state": "Gujarat",
+            "h1": "Home Blood Test in Ahmedabad",
+            "title": "Home Blood Test in Ahmedabad | Full Body Checkup | Healthians",
+            "description": "Book blood test from home in Ahmedabad with Healthians. Free sample collection in Bodakdev, Satellite, Vastrapur, Maninagar, Navrangpura & Bopal.",
+            "schemaDesc": "Pathology testing and doorstep blood sample collection across Ahmedabad and Gandhinagar.",
+            "localities": ["Bodakdev", "Satellite", "Vastrapur", "Maninagar", "Navrangpura", "Bopal", "Prahlad Nagar", "SG Highway"],
+            "fasting": "Fasting advised for lipid and glucose panels",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Healthians provides top-rated diagnostic lab testing at home across Ahmedabad and Gandhinagar. Certified phlebotomists ensure safe, painless blood draws and 100% accurate results.",
+            "keyPoints": [
+                "Coverage across Bodakdev, Satellite, Vastrapur, Bopal, and Maninagar",
+                "NABL accredited laboratories with multi-parameter automated analyzers",
+                "Free digital reports on WhatsApp with doctor interpretation"
+            ],
+            "faq": [
+                {"q": "Can I book home blood collection in Bopal and Satellite?", "a": "Yes, our phlebotomists cover Bopal, Satellite, SG Highway, and all surrounding residential zones."},
+                {"q": "Are there any hidden visit charges in Ahmedabad?", "a": "No, our doorstep collection is completely free for all routine and package bookings."}
+            ]
+        },
+        {
+            "slug": "kolkata",
+            "name": "Kolkata",
+            "state": "West Bengal",
+            "h1": "Home Blood Test in Kolkata",
+            "title": "Home Blood Test in Kolkata | Pathology Lab at Home | Healthians",
+            "description": "Book a home blood test in Kolkata with Healthians. Free sample collection in Salt Lake, New Town, Garia, Ballygunge, Behala & Dum Dum. NABL verified.",
+            "schemaDesc": "Doorstep blood testing and pathology services across Kolkata and Howrah.",
+            "localities": ["Salt Lake", "New Town", "Garia", "Ballygunge", "Behala", "Dum Dum", "Rajarhat", "Tollygunge"],
+            "fasting": "10-12 hours for master checkups",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Avoid chaotic city transit and clinic queues in Kolkata. Healthians provides punctual, hygienic doorstep blood collection across North, South, Central Kolkata, Salt Lake, and New Town.",
+            "keyPoints": [
+                "Prompt service across Salt Lake, New Town, Ballygunge, and Garia",
+                "Sterile vacuum collection tubes ensuring zero contamination",
+                "Fast WhatsApp report delivery within 24 hours"
+            ],
+            "faq": [
+                {"q": "Is home collection available in Salt Lake and New Town?", "a": "Yes, we have high coverage across Salt Lake, New Town, Rajarhat, and surrounding IT sectors."},
+                {"q": "Are reports accepted by Apollo, Fortis, and AMRI doctors?", "a": "Yes, Healthians partner labs are NABL certified and accepted by physicians across all major hospitals."}
+            ]
+        },
+        {
+            "slug": "chennai",
+            "name": "Chennai",
+            "state": "Tamil Nadu",
+            "h1": "Home Blood Test in Chennai",
+            "title": "Home Blood Test in Chennai | Diagnostic Lab at Home | Healthians",
+            "description": "Book blood test at home in Chennai with Healthians. Free sample collection in Anna Nagar, T. Nagar, Adyar, Velachery, OMR, Porur & Tambaram. NABL accuracy.",
+            "schemaDesc": "Diagnostic laboratory and home blood collection services across Chennai, Tamil Nadu.",
+            "localities": ["Anna Nagar", "T. Nagar", "Adyar", "Velachery", "OMR", "Porur", "Tambaram", "Mylapore"],
+            "fasting": "10-12 hours fasting for fasting glucose & lipid panels",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Get reliable pathology testing at your doorstep in Chennai. Healthians certified phlebotomists follow strict aseptic techniques, ensuring quick, comfortable sample collection at your home.",
+            "keyPoints": [
+                "Coverage from Anna Nagar and T. Nagar to OMR and Tambaram",
+                "Advanced automated testing adhering to NABL standards",
+                "Encrypted PDF Smart Report with doctor consultation"
+            ],
+            "faq": [
+                {"q": "Do you provide sample collection along OMR and Velachery?", "a": "Yes, our certified phlebotomists cover all major residential complexes along OMR, Velachery, and Adyar."},
+                {"q": "How do I book an early morning slot in Chennai?", "a": "Simply book online or message via WhatsApp to choose your 6:30 AM or 7:00 AM slot."}
+            ]
+        },
+        {
+            "slug": "indore",
+            "name": "Indore",
+            "state": "Madhya Pradesh",
+            "h1": "Home Blood Test in Indore",
+            "title": "Home Blood Test in Indore | Full Body Checkup | Healthians",
+            "description": "Book pathology tests at home in Indore with Healthians. Free sample collection in Vijay Nagar, Palasia, Rajendra Nagar, Annapurna & Super Corridor.",
+            "schemaDesc": "Doorstep pathology tests and full body checkups in Indore, MP.",
+            "localities": ["Vijay Nagar", "Old Palasia", "New Palasia", "Rajendra Nagar", "Annapurna", "Super Corridor", "Bhawarkua"],
+            "fasting": "10-12 hours for lipid & glucose tests",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Experience India's cleanest diagnostic service in India's cleanest city. Healthians provides hygienic, punctual doorstep blood sample collection across Indore with certified NABL lab reports.",
+            "keyPoints": [
+                "Full coverage of Vijay Nagar, Palasia, Annapurna, and Super Corridor",
+                "Painless blood draws using vacuum tubes",
+                "Free doctor consultation on all report findings"
+            ],
+            "faq": [
+                {"q": "Can I book home collection in Vijay Nagar?", "a": "Yes, our phlebotomists operate daily in Vijay Nagar, Palasia, and throughout Indore."},
+                {"q": "How will I receive my reports in Indore?", "a": "You will receive an encrypted Smart Report PDF directly on WhatsApp and email."}
+            ]
+        },
+        {
+            "slug": "bhopal",
+            "name": "Bhopal",
+            "state": "Madhya Pradesh",
+            "h1": "Home Blood Test in Bhopal",
+            "title": "Home Blood Test in Bhopal | Pathology Lab Services | Healthians",
+            "description": "Book home blood test in Bhopal with Healthians. Free sample collection in MP Nagar, Arera Colony, Kolar Road, Hoshangabad Road & BHEL.",
+            "schemaDesc": "Diagnostic lab tests and home blood collection in Bhopal, Madhya Pradesh.",
+            "localities": ["MP Nagar", "Arera Colony", "Kolar Road", "Hoshangabad Road", "BHEL", "Ayodhya Bypass", "Shahpura"],
+            "fasting": "Fasting recommended for sugar & lipid tests",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Healthians provides trusted pathology testing at home in Bhopal. Certified phlebotomists collect blood samples from your home, eliminating the need to visit crowded hospitals.",
+            "keyPoints": [
+                "Coverage across Arera Colony, MP Nagar, Kolar Road, and Hoshangabad Road",
+                "Automated laboratory processing for error-free results",
+                "Zero home visit charges"
+            ],
+            "faq": [
+                {"q": "Do you collect samples in Kolar Road and Arera Colony?", "a": "Yes, our phlebotomists provide prompt morning collection across Kolar Road, Arera Colony, and surrounding localities."},
+                {"q": "How can I book a test in Bhopal?", "a": "Submit our 30-second online form or chat directly with our team on WhatsApp."}
+            ]
+        },
+        {
+            "slug": "kanpur",
+            "name": "Kanpur",
+            "state": "Uttar Pradesh",
+            "h1": "Home Blood Test in Kanpur",
+            "title": "Home Blood Test in Kanpur | Diagnostic Lab at Home | Healthians",
+            "description": "Book blood test at home in Kanpur with Healthians. Free collection in Swaroop Nagar, Civil Lines, Kakadeo, Kidwai Nagar, Govind Nagar & Kalyanpur.",
+            "schemaDesc": "Doorstep blood testing and health checkups in Kanpur, Uttar Pradesh.",
+            "localities": ["Swaroop Nagar", "Civil Lines", "Kakadeo", "Kidwai Nagar", "Govind Nagar", "Kalyanpur", "Sharda Nagar"],
+            "fasting": "10-12 hours fasting for full body packages",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Get accurate pathology tests at home in Kanpur. Healthians ensures punctual sample collection by certified phlebotomists with automated NABL-certified laboratory reports.",
+            "keyPoints": [
+                "Serving Swaroop Nagar, Civil Lines, Kakadeo, and Kidwai Nagar",
+                "Sterile vacuum collection tubes",
+                "Doctor consultation included"
+            ],
+            "faq": [
+                {"q": "Is home collection available in Kakadeo and Civil Lines?", "a": "Yes, our certified phlebotomists cover Kakadeo, Civil Lines, and all major Kanpur localities."},
+                {"q": "What payment methods are supported in Kanpur?", "a": "We accept UPI, Credit/Debit cards, Net Banking, and Cash on Collection."}
+            ]
+        },
+        {
+            "slug": "nagpur",
+            "name": "Nagpur",
+            "state": "Maharashtra",
+            "h1": "Home Blood Test in Nagpur",
+            "title": "Home Blood Test in Nagpur | Full Body Health Checkup | Healthians",
+            "description": "Book diagnostic tests at home in Nagpur with Healthians. Free collection in Dharampeth, Ramdaspeth, Wardha Road, Manish Nagar & Pratap Nagar.",
+            "schemaDesc": "Pathology testing and home blood sample collection in Nagpur, Maharashtra.",
+            "localities": ["Dharampeth", "Ramdaspeth", "Wardha Road", "Manish Nagar", "Pratap Nagar", "Civil Lines", "Trimurti Nagar"],
+            "fasting": "10-12 hours for fasting panels",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Healthians offers dependable diagnostic services directly at your doorstep in Nagpur. Certified phlebotomists follow rigorous safety protocols for a comfortable sample collection experience.",
+            "keyPoints": [
+                "Coverage across Dharampeth, Wardha Road, and Manish Nagar",
+                "Automated high-precision pathology analyzers",
+                "Reports on WhatsApp with doctor explanation"
+            ],
+            "faq": [
+                {"q": "Can I book home collection on Wardha Road and Manish Nagar?", "a": "Yes, we provide daily morning and afternoon slots throughout Nagpur."},
+                {"q": "Are test results accurate and verified?", "a": "Yes, every sample is processed in NABL accredited labs and checked by medical pathologists."}
+            ]
+        },
+        {
+            "slug": "patna",
+            "name": "Patna",
+            "state": "Bihar",
+            "h1": "Home Blood Test in Patna",
+            "title": "Home Blood Test in Patna | Pathology Lab at Home | Healthians",
+            "description": "Book a blood test at home in Patna with Healthians. Free sample collection in Kankarbagh, Boring Road, Bailey Road, Rajendra Nagar & Danapur.",
+            "schemaDesc": "Diagnostic pathology services and home blood collection in Patna, Bihar.",
+            "localities": ["Kankarbagh", "Boring Road", "Bailey Road", "Rajendra Nagar", "Danapur", "Ashiana Nagar", "Patliputra Colony"],
+            "fasting": "10-12 hours for lipid & diabetes checkups",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Healthians brings modern diagnostic testing to Patna homes. Enjoy convenient, hygienic sample collection from early morning slots with zero extra visit charges.",
+            "keyPoints": [
+                "Serving Boring Road, Kankarbagh, Bailey Road, and Danapur",
+                "Single-use vacutainers for 100% sterile safety",
+                "Smart digital reports delivered on WhatsApp"
+            ],
+            "faq": [
+                {"q": "Is home blood collection available in Boring Road and Kankarbagh?", "a": "Yes, our certified phlebotomists provide prompt doorstep collection across Patna."},
+                {"q": "How can I book a test in Patna?", "a": "You can book easily online in 30 seconds or chat with us on WhatsApp."}
+            ]
+        },
+        {
+            "slug": "surat",
+            "name": "Surat",
+            "state": "Gujarat",
+            "h1": "Home Blood Test in Surat",
+            "title": "Home Blood Test in Surat | Diagnostic Lab at Home | Healthians",
+            "description": "Book pathology tests at home in Surat with Healthians. Free sample collection in Adajan, Vesu, Piplod, Varachha, City Light & Pal.",
+            "schemaDesc": "Doorstep blood testing and health checkups in Surat, Gujarat.",
+            "localities": ["Adajan", "Vesu", "Piplod", "Varachha", "City Light", "Pal", "Athwa", "Katargam"],
+            "fasting": "10-12 hours for full body checkups",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Residents of Surat can now access premier diagnostic testing at home. Healthians delivers hygienic sample collection, certified precision, and transparent pricing across Surat.",
+            "keyPoints": [
+                "Extensive coverage of Adajan, Vesu, Piplod, and City Light",
+                "Automated NABL accredited lab testing",
+                "Free doctor consultation on report completion"
+            ],
+            "faq": [
+                {"q": "Do you provide sample collection in Vesu and Adajan?", "a": "Yes, our phlebotomists operate daily in Vesu, Adajan, and all parts of Surat."},
+                {"q": "Are there extra charges for home collection in Surat?", "a": "No, home sample collection is completely free."}
+            ]
+        },
+        {
+            "slug": "vadodara",
+            "name": "Vadodara",
+            "state": "Gujarat",
+            "h1": "Home Blood Test in Vadodara",
+            "title": "Home Blood Test in Vadodara | Pathology Lab at Home | Healthians",
+            "description": "Book blood test at home in Vadodara with Healthians. Free sample collection in Alkapuri, Gotri, Manjalpur, Karelibaug, Vasna & Waghodia Road.",
+            "schemaDesc": "Diagnostic tests and home health checkups in Vadodara (Baroda), Gujarat.",
+            "localities": ["Alkapuri", "Gotri", "Manjalpur", "Karelibaug", "Vasna", "Waghodia Road", "Akota", "Fatehgunj"],
+            "fasting": "Fasting advised for lipid and glucose panels",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Healthians provides dependable diagnostic lab testing at home across Vadodara. Certified phlebotomists ensure safe, painless blood draws and 100% accurate digital reports.",
+            "keyPoints": [
+                "Serving Alkapuri, Gotri, Manjalpur, and Karelibaug",
+                "Advanced automated sample processing",
+                "Fast report delivery on WhatsApp"
+            ],
+            "faq": [
+                {"q": "Can I schedule home collection in Gotri and Alkapuri?", "a": "Yes, our certified phlebotomists cover Gotri, Alkapuri, and all areas of Vadodara."},
+                {"q": "How do I pay for my booking in Vadodara?", "a": "You can pay via UPI, cards, or cash directly to the visiting phlebotomist."}
+            ]
+        },
+        {
+            "slug": "ludhiana",
+            "name": "Ludhiana",
+            "state": "Punjab",
+            "h1": "Home Blood Test in Ludhiana",
+            "title": "Home Blood Test in Ludhiana | Full Body Checkup | Healthians",
+            "description": "Book a blood test at home in Ludhiana with Healthians. Free collection in Sarabha Nagar, Model Town, Civil Lines, BRS Nagar & Ferozepur Road.",
+            "schemaDesc": "Doorstep pathology tests and master health checkups in Ludhiana, Punjab.",
+            "localities": ["Sarabha Nagar", "Model Town", "Civil Lines", "BRS Nagar", "Ferozepur Road", "Dugri", "South City"],
+            "fasting": "10-12 hours fasting for comprehensive checkups",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Get reliable pathology testing at home in Ludhiana. Healthians ensures timely sample collection by certified phlebotomists with automated NABL-accurate laboratory reports.",
+            "keyPoints": [
+                "Full coverage of Sarabha Nagar, Model Town, and BRS Nagar",
+                "Cold-chain sample transit ensuring 100% accuracy",
+                "Free doctor consultation included"
+            ],
+            "faq": [
+                {"q": "Is home collection available in Model Town and Sarabha Nagar?", "a": "Yes, we have high availability of phlebotomists across Ludhiana."},
+                {"q": "How quickly do reports arrive?", "a": "Most routine reports are delivered on WhatsApp within 24 hours of sample pickup."}
+            ]
+        },
+        {
+            "slug": "agra",
+            "name": "Agra",
+            "state": "Uttar Pradesh",
+            "h1": "Home Blood Test in Agra",
+            "title": "Home Blood Test in Agra | Diagnostic Lab at Home | Healthians",
+            "description": "Book blood test at home in Agra with Healthians. Free sample collection in Sanjay Place, Kamla Nagar, Dayalbagh, Tajganj, Shahganj & Sikandra.",
+            "schemaDesc": "Pathology testing and home blood sample collection in Agra, UP.",
+            "localities": ["Sanjay Place", "Kamla Nagar", "Dayalbagh", "Tajganj", "Shahganj", "Sikandra", "Fatehabad Road"],
+            "fasting": "10-12 hours for lipid & diabetes checkups",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Healthians offers dependable diagnostic services directly at your home in Agra. Certified phlebotomists follow rigorous safety protocols for a comfortable sample collection experience.",
+            "keyPoints": [
+                "Serving Sanjay Place, Kamla Nagar, Dayalbagh, and Sikandra",
+                "Automated high-throughput laboratory analyzers",
+                "Zero home visit charges"
+            ],
+            "faq": [
+                {"q": "Do you provide sample collection in Dayalbagh and Kamla Nagar?", "a": "Yes, our phlebotomists cover all major residential neighborhoods in Agra daily."},
+                {"q": "How can I book a test in Agra?", "a": "Fill our 30-second form or click the WhatsApp button to book instantly."}
+            ]
+        },
+        {
+            "slug": "varanasi",
+            "name": "Varanasi",
+            "state": "Uttar Pradesh",
+            "h1": "Home Blood Test in Varanasi",
+            "title": "Home Blood Test in Varanasi | Pathology Lab at Home | Healthians",
+            "description": "Book a blood test at home in Varanasi with Healthians. Free sample collection in Sigra, Bhelupur, Lanka, Mahmoorganj, Shivpur & Cantonment.",
+            "schemaDesc": "Doorstep pathology tests and health checkups in Varanasi, Uttar Pradesh.",
+            "localities": ["Sigra", "Bhelupur", "Lanka", "Mahmoorganj", "Shivpur", "Cantonment", "Orderly Bazar"],
+            "fasting": "10-12 hours for fasting panels",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Access premier diagnostic care at home across Varanasi. Healthians delivers painless blood draws, NABL-certified precision, and free tele-consultations with physicians.",
+            "keyPoints": [
+                "Serving Sigra, Bhelupur, Lanka, and Mahmoorganj",
+                "Single-use vacutainers for complete safety",
+                "Reports on WhatsApp with doctor explanation"
+            ],
+            "faq": [
+                {"q": "Can I book home collection in Lanka and Sigra?", "a": "Yes, our certified phlebotomists provide prompt morning collection across Varanasi."},
+                {"q": "How do I download my test report?", "a": "You will receive an encrypted Smart Report PDF link directly on WhatsApp and email."}
+            ]
+        },
+        {
+            "slug": "amritsar",
+            "name": "Amritsar",
+            "state": "Punjab",
+            "h1": "Home Blood Test in Amritsar",
+            "title": "Home Blood Test in Amritsar | Full Body Health Checkup | Healthians",
+            "description": "Book diagnostic tests at home in Amritsar with Healthians. Free sample collection in Ranjit Avenue, Lawrence Road, Mall Road, Majitha Road & GT Road.",
+            "schemaDesc": "Diagnostic lab tests and home blood collection in Amritsar, Punjab.",
+            "localities": ["Ranjit Avenue", "Lawrence Road", "Mall Road", "Majitha Road", "GT Road", "Green Avenue", "Civil Lines"],
+            "fasting": "Fasting recommended for sugar & lipid tests",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Healthians provides dependable, hygienic blood testing at your doorstep throughout Amritsar. Eliminate clinic travel and waiting rooms with our hassle-free home diagnostic service.",
+            "keyPoints": [
+                "Coverage across Ranjit Avenue, Lawrence Road, and Civil Lines",
+                "Automated laboratory processing for error-free results",
+                "Free doctor consultation on report findings"
+            ],
+            "faq": [
+                {"q": "Do you provide sample collection in Ranjit Avenue?", "a": "Yes, our phlebotomists operate daily in Ranjit Avenue and all parts of Amritsar."},
+                {"q": "What payment methods are supported in Amritsar?", "a": "We accept UPI, Credit/Debit cards, Net Banking, and Cash on Collection."}
+            ]
+        },
+        {
+            "slug": "meerut",
+            "name": "Meerut",
+            "state": "Uttar Pradesh",
+            "h1": "Home Blood Test in Meerut",
+            "title": "Home Blood Test in Meerut | Diagnostic Lab at Home | Healthians",
+            "description": "Book pathology tests at home in Meerut with Healthians. Free sample collection in Shastri Nagar, Ganga Nagar, Saket, Modipuram & Delhi Road.",
+            "schemaDesc": "Doorstep blood testing and health checkup services in Meerut, UP.",
+            "localities": ["Shastri Nagar", "Ganga Nagar", "Saket", "Modipuram", "Delhi Road", "Kanker Khera", "Begum Bridge"],
+            "fasting": "10-12 hours fasting for full body packages",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Get reliable pathology testing at home in Meerut. Healthians ensures timely sample collection by certified phlebotomists with automated NABL-accurate laboratory reports.",
+            "keyPoints": [
+                "Serving Shastri Nagar, Ganga Nagar, Saket, and Modipuram",
+                "Sterile vacuum collection tubes",
+                "Zero home collection fees"
+            ],
+            "faq": [
+                {"q": "Is home blood collection available in Shastri Nagar and Ganga Nagar?", "a": "Yes, our certified phlebotomists cover all major Meerut neighborhoods."},
+                {"q": "How can I book a test in Meerut?", "a": "Fill our 30-second form or chat directly with our team on WhatsApp."}
+            ]
+        },
+        {
+            "slug": "dehradun",
+            "name": "Dehradun",
+            "state": "Uttarakhand",
+            "h1": "Home Blood Test in Dehradun",
+            "title": "Home Blood Test in Dehradun | Pathology Lab at Home | Healthians",
+            "description": "Book a blood test at home in Dehradun with Healthians. Free sample collection in Rajpur Road, Jakhan, Dharampur, Ballupur, Vasant Vihar & Clement Town.",
+            "schemaDesc": "Doorstep pathology tests and master health checkups in Dehradun, Uttarakhand.",
+            "localities": ["Rajpur Road", "Jakhan", "Dharampur", "Ballupur", "Vasant Vihar", "Clement Town", "Subhash Nagar", "Sahastradhara Road"],
+            "fasting": "10-12 hours for lipid & diabetes checkups",
+            "turnaround": "Reports in 24 Hours",
+            "overview": "Experience prompt, reliable diagnostic sample collection at home across Dehradun with Healthians. From routine blood tests to comprehensive master checkups, we deliver certified accuracy right to your doorstep.",
+            "keyPoints": [
+                "Serving Rajpur Road, Jakhan, Dharampur, and Vasant Vihar",
+                "Vacuum blood draw technology for virtually painless experience",
+                "Encrypted PDF Smart Report with free tele-consultation"
+            ],
+            "faq": [
+                {"q": "Do you provide sample collection along Rajpur Road and Jakhan?", "a": "Yes, our phlebotomists cover Rajpur Road, Jakhan, and all residential zones in Dehradun."},
+                {"q": "How quickly do I get my test reports in Dehradun?", "a": "Most routine blood test reports are processed and delivered via WhatsApp and email within 24 hours of sample pickup."}
+            ]
+        }
+    ],
+
+    "tests": [
+        {
+            "slug": "cbc-test",
+            "name": "Complete Blood Count (CBC)",
+            "h1": "Book CBC Test at Home",
+            "title": "CBC Test at Home | Complete Blood Count Price & Range | Healthians",
+            "description": "Book a Complete Blood Count (CBC) test at home with Healthians. Tests 24+ parameters including Hemoglobin, Platelets, WBC & RBC with free home collection.",
+            "schemaDesc": "Complete Blood Count (CBC) test checking 24 parameters including Hemoglobin, Platelet count, WBC differential, and RBC indices.",
+            "fasting": "No fasting required",
+            "turnaround": "Reports in 12-24 Hours",
+            "sampleType": "Blood (EDTA)",
+            "overview": "A Complete Blood Count (CBC) is one of the most common and vital blood tests. It evaluates your overall health and detects a wide variety of conditions, including anemia, viral and bacterial infections, leukemia, and immune system disorders. Healthians provides painless doorstep CBC sample collection with NABL-certified reporting.",
+            "keyPoints": [
+                "Measures 24 essential hematology parameters",
+                "Includes Hemoglobin, Total Leukocyte Count (TLC), Platelet Count, and RBC indices (MCV, MCH, MCHC)",
+                "Detects underlying fatigue, unseen infections, blood loss, and platelet drops",
+                "Automated 5-part cell counter testing with multi-tier medical verification",
+                "Free tele-consultation with qualified doctors to explain your report"
+            ],
+            "faq": [
+                {"q": "What is a CBC test and why is it done?", "a": "A Complete Blood Count (CBC) measures red blood cells, white blood cells, and platelets. It is done to detect anemia, check for infections, monitor treatment response, and assess general health."},
+                {"q": "Is fasting required for a CBC test?", "a": "No, fasting is not required for a standard CBC test. You can eat and drink normally before sample collection."},
+                {"q": "What does a low platelet count in CBC indicate?", "a": "A low platelet count (thrombocytopenia) can be caused by viral infections like dengue, immune disorders, medications, or bone marrow conditions. A medical doctor should review low platelet counts promptly."},
+                {"q": "How soon will I get my CBC test results?", "a": "CBC test reports are typically generated and delivered via WhatsApp and email within 12 to 24 hours of sample pickup."}
+            ]
+        },
+        {
+            "slug": "thyroid-test",
+            "name": "Thyroid Profile (T3, T4, TSH)",
+            "h1": "Thyroid Profile Test at Home",
+            "title": "Thyroid Profile Test at Home | T3, T4, TSH Blood Test | Healthians",
+            "description": "Book Thyroid Profile test (T3, T4, TSH) at home with Healthians. Free sample collection, NABL certified labs, fast digital reports on WhatsApp in 24 hours.",
+            "schemaDesc": "Comprehensive Thyroid Profile test measuring Total T3, Total T4, and Ultra-sensitive TSH to diagnose hypothyroidism and hyperthyroidism.",
+            "fasting": "Fasting optional (early morning collection recommended)",
+            "turnaround": "Reports in 12-24 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "The Thyroid Profile test measures the levels of thyroid hormones in your blood: Triiodothyronine (T3), Thyroxine (T4), and Thyroid Stimulating Hormone (TSH). It helps diagnose thyroid disorders like hypothyroidism (underactive thyroid) and hyperthyroidism (overactive thyroid), which regulate your metabolism, energy, and body weight.",
+            "keyPoints": [
+                "Includes Total T3, Total T4, and Ultra-sensitive TSH",
+                "Detects unexplained weight gain, chronic fatigue, hair loss, or sudden weight loss",
+                "Crucial for women planning pregnancy or experiencing irregular menstrual cycles",
+                "Tested using advanced chemiluminescence immunoassay (CLIA) technology",
+                "Free doctor consultation to interpret hormone levels"
+            ],
+            "faq": [
+                {"q": "What does a high TSH level mean?", "a": "A high TSH level generally indicates hypothyroidism (an underactive thyroid), meaning your thyroid gland is not producing enough thyroid hormones and your pituitary gland is trying to stimulate it."},
+                {"q": "Do I need to fast before a thyroid test?", "a": "Fasting is not strictly mandatory for a basic thyroid profile, but morning sample collection before breakfast is recommended for the most accurate baseline TSH measurement."},
+                {"q": "Should I take my thyroid medication before the blood test?", "a": "Most endocrinologists advise having your blood sample drawn in the morning before taking your daily thyroid tablet. Confirm with your doctor."}
+            ]
+        },
+        {
+            "slug": "hba1c-test",
+            "name": "HbA1c (Glycated Hemoglobin) Test",
+            "h1": "Book HbA1c Diabetes Test at Home",
+            "title": "HbA1c Test at Home | 3-Month Average Blood Sugar Test | Healthians",
+            "description": "Check your 3-month average blood sugar with an HbA1c test at home. Healthians provides free sample pickup, NABL certified labs & zero visit charges.",
+            "schemaDesc": "HbA1c glycated hemoglobin test evaluating 3-month average glucose control for diabetic screening and monitoring.",
+            "fasting": "No fasting required",
+            "turnaround": "Reports in 12-24 Hours",
+            "sampleType": "Blood (EDTA Whole Blood)",
+            "overview": "The HbA1c test measures the amount of blood sugar (glucose) attached to your hemoglobin over the last 90 days. Unlike daily finger-prick fasting tests which capture a single moment, HbA1c provides a reliable, long-term picture of your blood sugar control, helping screen for prediabetes and type 2 diabetes.",
+            "keyPoints": [
+                "Gold-standard test for diagnosing prediabetes and diabetes",
+                "Measures average glucose over the preceding 2 to 3 months",
+                "No fasting or dietary restriction required prior to sample collection",
+                "Tested via NGSP-certified HPLC (High Performance Liquid Chromatography) methodology",
+                "Helps prevent long-term diabetic complications in eyes, kidneys, and nerves"
+            ],
+            "faq": [
+                {"q": "What is considered a normal HbA1c level?", "a": "Below 5.7% is considered normal. An HbA1c between 5.7% and 6.4% indicates prediabetes, while 6.5% or higher on two separate tests indicates diabetes."},
+                {"q": "Do I need to fast for an HbA1c test?", "a": "No, fasting is not required for an HbA1c test. You can take the test at any time of the day regardless of when you ate."},
+                {"q": "How often should a diabetic person check their HbA1c?", "a": "Diabetic individuals should generally test their HbA1c every 3 months if blood sugar is fluctuating, or every 6 months if sugar levels are stable."}
+            ]
+        },
+        {
+            "slug": "vitamin-d-test",
+            "name": "Vitamin D (25-OH) Test",
+            "h1": "Vitamin D Blood Test at Home",
+            "title": "Vitamin D Blood Test at Home | 25-Hydroxy Vitamin D | Healthians",
+            "description": "Check your bone health and immunity with a Vitamin D (25-OH) test at home. Free doorstep sample collection and accurate NABL reports with Healthians.",
+            "schemaDesc": "Total 25-Hydroxy Vitamin D blood test assessing bone density, calcium absorption, and immunity levels.",
+            "fasting": "No fasting required",
+            "turnaround": "Reports in 24 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "Vitamin D is essential for absorbing calcium, maintaining strong bones, and supporting immune defense. Despite abundant sunlight, over 70% of Indians suffer from Vitamin D deficiency, causing persistent fatigue, bone pain, muscle weakness, and frequent infections.",
+            "keyPoints": [
+                "Measures 25-Hydroxy Vitamin D (D2 + D3)",
+                "Identifies deficiency, insufficiency, or toxicity levels",
+                "Essential for individuals with joint pain, back pain, or fatigue",
+                "Helps physicians prescribe exact therapeutic supplement dosages",
+                "Tested on automated CLIA platforms with high analytical sensitivity"
+            ],
+            "faq": [
+                {"q": "What is the normal range of Vitamin D in blood?", "a": "A 25-OH Vitamin D level between 30 to 100 ng/mL is optimal. Levels between 20-30 ng/mL represent insufficiency, while below 20 ng/mL indicates deficiency."},
+                {"q": "Is fasting required for Vitamin D testing?", "a": "No, fasting is not required for a Vitamin D test."},
+                {"q": "What are common signs of Vitamin D deficiency?", "a": "Common symptoms include constant fatigue, bone and lower back pain, muscle cramps, hair loss, slow wound healing, and mood changes."}
+            ]
+        },
+        {
+            "slug": "vitamin-b12-test",
+            "name": "Vitamin B12 (Cyanocobalamin) Test",
+            "h1": "Vitamin B12 Blood Test at Home",
+            "title": "Vitamin B12 Test at Home | Cyanocobalamin Blood Test | Healthians",
+            "description": "Book a Vitamin B12 test at home with Healthians. Screen for nerve weakness, memory lapses, and anemia with free doorstep collection & NABL reports.",
+            "schemaDesc": "Serum Vitamin B12 (Cyanocobalamin) test assessing nerve function, brain health, and red blood cell production.",
+            "fasting": "Overnight fasting recommended (8-10 hours)",
+            "turnaround": "Reports in 24 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "Vitamin B12 is crucial for nerve function, brain performance, and healthy red blood cell synthesis. Vitamin B12 deficiency is widespread, especially among vegetarians and vegans, leading to tingling sensations in hands and feet, memory fog, chronic tiredness, and megaloblastic anemia.",
+            "keyPoints": [
+                "Quantifies serum cyanocobalamin concentration",
+                "Evaluates peripheral nerve tingling, numbness, and brain fog",
+                "Particularly vital for vegetarians, vegans, and elderly individuals",
+                "High-accuracy chemiluminescent testing methodology",
+                "Includes doctor consultation to review dietary solutions"
+            ],
+            "faq": [
+                {"q": "Why is Vitamin B12 deficiency so common in vegetarians?", "a": "Vitamin B12 is primarily found naturally in animal products like dairy, meat, and eggs. Strict vegetarians or people with gut absorption issues often lack adequate dietary B12."},
+                {"q": "What are the early warning signs of low B12?", "a": "Early signs include tingling or 'pins and needles' in hands and feet, unexplained fatigue, mouth ulcers, pale skin, and difficulty concentrating."}
+            ]
+        },
+        {
+            "slug": "lft-test",
+            "name": "Liver Function Test (LFT)",
+            "h1": "Liver Function Test (LFT) at Home",
+            "title": "Liver Function Test (LFT) at Home | SGPT, SGOT, Bilirubin | Healthians",
+            "description": "Book a comprehensive Liver Function Test (LFT) at home. Measures SGPT, SGOT, Bilirubin, Alkaline Phosphatase & Albumin with free collection & NABL reports.",
+            "schemaDesc": "Comprehensive Liver Function Test (LFT) panel measuring 11 parameters including SGPT, SGOT, Total Bilirubin, Direct Bilirubin, Alkaline Phosphatase, Total Protein, and Albumin.",
+            "fasting": "10-12 hours fasting recommended",
+            "turnaround": "Reports in 12-24 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "A Liver Function Test (LFT) is a comprehensive panel of blood tests that evaluates the health of your liver. It measures hepatic enzymes, proteins, and bilirubin in your bloodstream, diagnosing fatty liver disease, jaundice, hepatitis, medication toxicity, and alcoholic liver damage.",
+            "keyPoints": [
+                "Comprehensive 11-parameter liver diagnostic panel",
+                "Measures SGPT (ALT), SGOT (AST), Bilirubin (Total & Direct), ALP, and Albumin/Globulin ratio",
+                "Detects early non-alcoholic fatty liver disease (NAFLD) and liver inflammation",
+                "Recommended for individuals with abdominal discomfort, jaundice symptoms, or regular alcohol intake",
+                "Tested on automated clinical chemistry analyzers"
+            ],
+            "faq": [
+                {"q": "What does high SGPT and SGOT mean on an LFT?", "a": "Elevated SGPT (ALT) and SGOT (AST) indicate liver cell inflammation or damage, which can be caused by fatty liver, viral hepatitis, alcohol use, or certain medications."},
+                {"q": "Do I need to fast before a Liver Function Test?", "a": "Yes, an overnight fast of 10 to 12 hours is recommended to obtain accurate bilirubin and liver enzyme readings."},
+                {"q": "Can fatty liver be detected with an LFT?", "a": "Yes, elevated liver enzymes (SGPT/SGOT) are often the first laboratory indicator of non-alcoholic fatty liver disease."}
+            ]
+        },
+        {
+            "slug": "kft-test",
+            "name": "Kidney Function Test (KFT / RFT)",
+            "h1": "Kidney Function Test (KFT) at Home",
+            "title": "Kidney Function Test (KFT) at Home | Creatinine & BUN | Healthians",
+            "description": "Book Kidney Function Test (KFT / RFT) at home with Healthians. Measures Serum Creatinine, Blood Urea, BUN, Uric Acid & Electrolytes with free collection.",
+            "schemaDesc": "Renal Function Test (RFT / KFT) panel assessing kidney filtration, creatinine, blood urea nitrogen, and glomerular function.",
+            "fasting": "Fasting optional (drink plenty of water)",
+            "turnaround": "Reports in 12-24 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "The Kidney Function Test (KFT), also called Renal Function Test (RFT), evaluates how effectively your kidneys filter metabolic waste products from your blood. It is essential for patients with high blood pressure, diabetes, or swelling in feet and ankles.",
+            "keyPoints": [
+                "Measures Serum Creatinine, Blood Urea, Blood Urea Nitrogen (BUN), and Uric Acid",
+                "Calculates estimated Glomerular Filtration Rate (eGFR)",
+                "Detects early kidney impairment before symptoms arise",
+                "Vital monitoring tool for hypertensive and diabetic patients",
+                "Fully automated photometry and enzymatic assay analysis"
+            ],
+            "faq": [
+                {"q": "What is the normal level of Serum Creatinine?", "a": "Normal serum creatinine ranges from 0.7 to 1.3 mg/dL for men and 0.5 to 1.1 mg/dL for women. Elevated levels may indicate reduced kidney filtration."},
+                {"q": "Why is KFT test important for diabetic and high BP patients?", "a": "Diabetes and hypertension are the two leading causes of chronic kidney disease. Routine KFT testing allows early detection and management to protect renal health."}
+            ]
+        },
+        {
+            "slug": "lipid-profile-test",
+            "name": "Lipid Profile (Cholesterol Panel)",
+            "h1": "Lipid Profile Test at Home",
+            "title": "Lipid Profile Test at Home | Cholesterol & Triglycerides | Healthians",
+            "description": "Book a Lipid Profile cholesterol test at home with Healthians. Measures Total Cholesterol, HDL (Good), LDL (Bad), Triglycerides & VLDL with free pickup.",
+            "schemaDesc": "Complete Lipid Profile panel evaluating Total Cholesterol, HDL, LDL, VLDL, Triglycerides, and Cardiac Risk Ratios.",
+            "fasting": "Strict 10-12 hours fasting required",
+            "turnaround": "Reports in 12-24 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "A Lipid Profile blood test measures the circulating fats and cholesterols in your blood. Elevated LDL ('bad' cholesterol) and triglycerides significantly increase your risk of heart attack, stroke, and cardiovascular disease. Regular testing enables proactive diet and lifestyle intervention.",
+            "keyPoints": [
+                "Measures Total Cholesterol, HDL (Good), LDL (Bad), Triglycerides, and VLDL",
+                "Calculates Cardiac Risk Ratios (Total Cholesterol/HDL and LDL/HDL)",
+                "Screens for cardiovascular risk, arterial plaque buildup, and coronary artery disease",
+                "Strict 10 to 12 hour fasting ensures accurate triglyceride measurement",
+                "Free tele-consultation with a doctor to discuss heart health"
+            ],
+            "faq": [
+                {"q": "Why is 10-12 hours of fasting strictly required for a lipid profile?", "a": "Eating before the test directly increases blood triglyceride levels and alters LDL calculations, producing false high results. Only water is permitted during fasting."},
+                {"q": "What is the difference between HDL and LDL cholesterol?", "a": "HDL is 'good' cholesterol because it removes excess cholesterol from arteries back to the liver. LDL is 'bad' cholesterol because it deposits plaque inside artery walls."}
+            ]
+        },
+        {
+            "slug": "fasting-blood-sugar-test",
+            "name": "Fasting Blood Sugar (FBS)",
+            "h1": "Fasting Blood Sugar Test at Home",
+            "title": "Fasting Blood Sugar Test at Home | Glucose Fasting | Healthians",
+            "description": "Book a Fasting Blood Sugar (FBS) test at home with Healthians. Accurate glucose testing with free morning doorstep collection & NABL reports.",
+            "schemaDesc": "Fasting Plasma Glucose (FBS) test evaluating baseline blood sugar levels following an 8 to 10-hour fast.",
+            "fasting": "Strict 8-10 hours overnight fasting required",
+            "turnaround": "Reports in 12 Hours",
+            "sampleType": "Blood (Fluoride Plasma / Serum)",
+            "overview": "The Fasting Blood Sugar (FBS) test measures your blood glucose level after an overnight fast of 8 to 10 hours. It is the primary screening tool used to detect insulin resistance, prediabetes, and diabetes mellitus.",
+            "keyPoints": [
+                "Diagnostic baseline test for diabetes and prediabetes",
+                "Collected using specialized sodium fluoride tubes to inhibit glycolysis",
+                "Convenient early morning 6:30 AM slots at your doorstep",
+                "Enzymatic hexokinase assay method for certified precision"
+            ],
+            "faq": [
+                {"q": "What is the normal range for fasting blood sugar?", "a": "Normal fasting blood sugar is 70 to 99 mg/dL. Levels between 100 and 125 mg/dL suggest prediabetes, and 126 mg/dL or higher on two separate tests indicates diabetes."},
+                {"q": "Can I drink tea or coffee before my fasting sugar test?", "a": "No, you must not consume tea, coffee, milk, or any food. Only plain water is allowed during your fasting period."}
+            ]
+        },
+        {
+            "slug": "post-prandial-blood-sugar-test",
+            "name": "Post Prandial Blood Sugar (PPBS)",
+            "h1": "Post Prandial Blood Sugar (PPBS) Test at Home",
+            "title": "PPBS Test at Home | Post Meal Blood Sugar Test | Healthians",
+            "description": "Book Post Prandial Blood Sugar (PPBS) test at home. Accurate 2-hour post-meal glucose testing with doorstep collection & NABL certified reports.",
+            "schemaDesc": "Post Prandial Blood Sugar (PPBS) test measuring blood glucose response 2 hours after a meal.",
+            "fasting": "Collected exactly 2 hours after starting a main meal",
+            "turnaround": "Reports in 12 Hours",
+            "sampleType": "Blood (Fluoride Plasma)",
+            "overview": "The Post Prandial Blood Sugar (PPBS) test measures how your body metabolizes glucose following a meal. It is collected exactly 2 hours after the start of a meal and evaluates insulin sensitivity and diabetic mealtime control.",
+            "keyPoints": [
+                "Measures post-meal blood sugar surge",
+                "Timing starts from the first bite of your meal",
+                "Evaluates pancreatic insulin response",
+                "Helps doctors adjust mealtime diabetes medications and insulin doses"
+            ],
+            "faq": [
+                {"q": "When exactly should the sample be taken for PPBS?", "a": "The blood sample must be collected exactly 2 hours after you take the first bite of your meal."},
+                {"q": "What is a normal post-meal blood sugar level?", "a": "For a non-diabetic individual, blood sugar should be under 140 mg/dL two hours after a meal. For a diabetic person, the typical target is under 180 mg/dL."}
+            ]
+        },
+        {
+            "slug": "urine-routine-test",
+            "name": "Urine Routine & Microscopy",
+            "h1": "Urine Routine & Microscopy Test at Home",
+            "title": "Urine Routine Test at Home | Urine Examination | Healthians",
+            "description": "Book a Urine Routine & Microscopy test at home with Healthians. Screen for urinary tract infections (UTI), kidney health & glucose with sterile collection.",
+            "schemaDesc": "Complete Urine Routine and Microscopy examination checking physical, chemical, and microscopic elements including pus cells, RBCs, protein, and crystals.",
+            "fasting": "No fasting required (clean-catch midstream morning sample)",
+            "turnaround": "Reports in 12 Hours",
+            "sampleType": "Urine (Sterile Container)",
+            "overview": "A Urine Routine & Microscopy test evaluates the physical, chemical, and microscopic characteristics of urine. It detects urinary tract infections (UTIs), kidney disease, proteinuria, glycosuria (diabetes), and kidney stone crystals.",
+            "keyPoints": [
+                "Evaluates 18+ parameters including color, pH, specific gravity, protein, sugar, and ketones",
+                "Microscopic analysis checks for pus cells (leukocytes), red blood cells (RBCs), epithelial cells, and casts",
+                "Sterile, leak-proof collection cup provided directly to your doorstep",
+                "Crucial diagnostic tool for painful urination, back pain, or fever"
+            ],
+            "faq": [
+                {"q": "How should I collect the urine sample at home?", "a": "You will be provided a sterile container. Collect a 'clean-catch midstream' sample: discard the first few drops of urine into the toilet, collect the middle portion into the container, and finish voiding into the toilet."},
+                {"q": "Can a urine routine test detect a UTI?", "a": "Yes, high levels of pus cells (white blood cells), bacteria, and nitrites in urine strongly indicate a urinary tract infection."}
+            ]
+        },
+        {
+            "slug": "esr-test",
+            "name": "Erythrocyte Sedimentation Rate (ESR)",
+            "h1": "ESR Blood Test at Home",
+            "title": "ESR Test at Home | Erythrocyte Sedimentation Rate | Healthians",
+            "description": "Book an ESR blood test at home with Healthians. Detect hidden inflammation, autoimmune flare-ups, and infections with free doorstep collection.",
+            "schemaDesc": "Erythrocyte Sedimentation Rate (ESR) blood test assessing systemic inflammation and autoimmune activity.",
+            "fasting": "No fasting required",
+            "turnaround": "Reports in 12-24 Hours",
+            "sampleType": "Blood (Sodium Citrate / EDTA)",
+            "overview": "The Erythrocyte Sedimentation Rate (ESR) test measures how quickly red blood cells settle at the bottom of a test tube over one hour. Faster settling indicates elevated inflammatory proteins in the blood, signaling conditions like chronic infections, rheumatoid arthritis, or autoimmune disease.",
+            "keyPoints": [
+                "Nonspecific marker for systemic inflammation and tissue breakdown",
+                "Aids diagnosis and monitoring of arthritis, lupus, and chronic infections",
+                "Automated Westergren method for consistent accuracy",
+                "Pairs frequently with Complete Blood Count (CBC) and CRP"
+            ],
+            "faq": [
+                {"q": "What causes an elevated ESR?", "a": "Elevated ESR can be caused by bacterial or viral infections, rheumatoid arthritis, inflammatory bowel disease, kidney disease, or pregnancy."},
+                {"q": "Is fasting necessary for an ESR test?", "a": "No, you do not need to fast for an ESR blood test."}
+            ]
+        },
+        {
+            "slug": "crp-test",
+            "name": "C-Reactive Protein (CRP)",
+            "h1": "C-Reactive Protein (CRP) Test at Home",
+            "title": "CRP Blood Test at Home | C-Reactive Protein Price | Healthians",
+            "description": "Book a C-Reactive Protein (CRP) blood test at home with Healthians. Sensitive marker for acute inflammation, infection, and tissue damage with NABL reports.",
+            "schemaDesc": "Quantitative C-Reactive Protein (CRP) blood test measuring acute-phase inflammatory response in infections and inflammatory diseases.",
+            "fasting": "No fasting required",
+            "turnaround": "Reports in 12-24 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "C-Reactive Protein (CRP) is a substance produced by your liver in response to acute inflammation. A rapid rise in CRP indicates active infection, inflammation, or tissue trauma, making it an indispensable diagnostic marker for doctors.",
+            "keyPoints": [
+                "Highly sensitive quantitative inflammatory marker",
+                "Rises quickly in acute bacterial infections, autoimmune flares, and severe tissue trauma",
+                "Monitors therapeutic response to antibiotics and anti-inflammatory treatments",
+                "Immunoturbidimetric assay with high analytical specificity"
+            ],
+            "faq": [
+                {"q": "What does a high CRP level indicate?", "a": "A high CRP indicates significant acute inflammation in your body, which could be from a bacterial infection, pneumonia, autoimmune condition, or cardiovascular inflammation."},
+                {"q": "How does CRP differ from ESR?", "a": "CRP rises and falls much faster in response to inflammation than ESR, providing a more immediate snapshot of your current inflammatory state."}
+            ]
+        },
+        {
+            "slug": "iron-ferritin-test",
+            "name": "Iron Deficiency & Ferritin Profile",
+            "h1": "Iron & Ferritin Blood Test at Home",
+            "title": "Iron & Ferritin Test at Home | Iron Deficiency Profile | Healthians",
+            "description": "Book Iron Profile with Ferritin test at home with Healthians. Detect anemia, low iron stores, and hair loss causes with free doorstep collection.",
+            "schemaDesc": "Comprehensive Iron Profile measuring Serum Iron, Total Iron Binding Capacity (TIBC), Transferrin Saturation, and Serum Ferritin.",
+            "fasting": "Overnight fasting recommended (8-10 hours)",
+            "turnaround": "Reports in 24 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "An Iron and Ferritin Profile evaluates your active circulating iron as well as the deep iron storage reserves in your body. It is the definitive diagnostic test for iron deficiency anemia, unexplained hair loss, chronic fatigue, and restless leg syndrome.",
+            "keyPoints": [
+                "Measures Serum Iron, TIBC, Transferrin Saturation percentage, and Serum Ferritin",
+                "Distinguishes between iron deficiency anemia and other types of anemia",
+                "Essential for women experiencing excessive fatigue, weakness, or diffuse hair thinning",
+                "Automated chemiluminescence and colorimetric testing"
+            ],
+            "faq": [
+                {"q": "Why is Serum Ferritin more important than simple Serum Iron?", "a": "Serum iron fluctuates daily based on meals. Ferritin reflects your body's total deep iron storage reserves, detecting iron deficiency weeks before anemia appears in a CBC."},
+                {"q": "What are common signs of iron deficiency?", "a": "Severe fatigue, pale skin, cold hands and feet, brittle nails, unusual cravings (pica), dizziness, and diffuse hair loss."}
+            ]
+        },
+        {
+            "slug": "serum-electrolytes-test",
+            "name": "Serum Electrolytes (Na, K, Cl)",
+            "h1": "Serum Electrolytes Blood Test at Home",
+            "title": "Serum Electrolytes Test at Home | Sodium, Potassium, Chloride | Healthians",
+            "description": "Book a Serum Electrolytes test at home with Healthians. Measures Sodium, Potassium & Chloride to evaluate hydration, muscle cramps & kidney balance.",
+            "schemaDesc": "Serum Electrolytes panel measuring Sodium, Potassium, and Chloride levels to evaluate fluid balance and acid-base equilibrium.",
+            "fasting": "No fasting required",
+            "turnaround": "Reports in 12 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "The Serum Electrolytes test measures minerals (Sodium, Potassium, Chloride) that carry an electric charge in your body. They are essential for regulating fluid balance, blood pressure, muscle contractions, and heart rhythm.",
+            "keyPoints": [
+                "Measures Sodium (Na+), Potassium (K+), and Chloride (Cl-)",
+                "Investigates dehydration, severe diarrhea, vomiting, confusion, or muscle weakness",
+                "Critical for patients taking diuretics, blood pressure, or heart medications",
+                "Direct Ion Selective Electrode (ISE) testing technology"
+            ],
+            "faq": [
+                {"q": "What happens if blood potassium is too high or low?", "a": "Potassium is vital for heart function. Abnormal potassium levels (hyperkalemia or hypokalemia) can cause muscle cramps, weakness, and dangerous irregular heart rhythms."},
+                {"q": "Is fasting required for an electrolytes test?", "a": "No, fasting is not required for a standard serum electrolytes test."}
+            ]
+        },
+        {
+            "slug": "uric-acid-test",
+            "name": "Serum Uric Acid Test",
+            "h1": "Uric Acid Blood Test at Home",
+            "title": "Uric Acid Test at Home | Gout & Joint Pain Blood Test | Healthians",
+            "description": "Book a Uric Acid test at home with Healthians. Screen for gout, joint inflammation, and kidney stone risk with free doorstep collection & NABL reports.",
+            "schemaDesc": "Serum Uric Acid blood test for evaluating hyperuricemia, gouty arthritis, and renal lithiasis.",
+            "fasting": "Fasting recommended (8 hours)",
+            "turnaround": "Reports in 12 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "Uric acid is a waste product created when your body breaks down purines found in certain foods and beverages. Excess uric acid can crystallize in joints, causing sudden, excruciating joint pain and inflammation known as gout, or lead to kidney stones.",
+            "keyPoints": [
+                "Quantifies uric acid concentration in serum",
+                "Evaluates severe big toe, ankle, and knee joint swelling and pain",
+                "Screens for potential uric acid kidney stones and kidney impairment",
+                "Enzymatic uricase method for certified analytical accuracy"
+            ],
+            "faq": [
+                {"q": "What foods cause high uric acid?", "a": "Foods rich in purines, such as red meat, seafood, organ meats, beer and alcoholic beverages, and high-fructose corn syrup can increase uric acid levels."},
+                {"q": "What is the normal level of uric acid?", "a": "Normal serum uric acid is generally 3.5 to 7.2 mg/dL for men and 2.6 to 6.0 mg/dL for women."}
+            ]
+        },
+        {
+            "slug": "calcium-test",
+            "name": "Serum Calcium Total Test",
+            "h1": "Calcium Blood Test at Home",
+            "title": "Calcium Blood Test at Home | Bone & Muscle Health | Healthians",
+            "description": "Book a Calcium Total blood test at home with Healthians. Screen for bone loss, osteoporosis, parathyroid disorders & muscle cramps with NABL reports.",
+            "schemaDesc": "Serum Total Calcium blood test assessing bone health, neuromuscular function, and parathyroid activity.",
+            "fasting": "Fasting optional (morning collection preferred)",
+            "turnaround": "Reports in 12 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "Calcium is the most abundant mineral in your body. It is vital for maintaining strong bones and teeth, transmitting nerve impulses, enabling muscle contractions, and assisting blood clotting. Abnormal calcium levels can point to bone diseases, kidney disorders, or parathyroid imbalances.",
+            "keyPoints": [
+                "Measures total circulating calcium in blood serum",
+                "Evaluates osteoporosis risk, muscle spasms, numbness, and kidney stones",
+                "Frequently paired with Vitamin D, Albumin, and Phosphorus testing",
+                "Photometric Arsenazo III assay method for clinical accuracy"
+            ],
+            "faq": [
+                {"q": "What symptoms occur when calcium is low (hypocalcemia)?", "a": "Low calcium can cause tingling in fingers and toes, muscle cramps, spasms, facial twitches, brittle nails, and fatigue."},
+                {"q": "Do I need to fast for a calcium blood test?", "a": "Fasting is typically not required, but morning sample collection is preferred."}
+            ]
+        },
+        {
+            "slug": "dengue-test",
+            "name": "Dengue NS1 Antigen & Antibody Test",
+            "h1": "Dengue Fever Blood Test at Home",
+            "title": "Dengue Test at Home | NS1 Antigen, IgM, IgG & Platelets | Healthians",
+            "description": "Book rapid Dengue test at home with Healthians. Tests Dengue NS1 Antigen, IgM/IgG Antibodies & Platelet count with fast 60-min pickup & urgent reports.",
+            "schemaDesc": "Comprehensive Dengue screening panel including NS1 Antigen (early detection), IgM/IgG Antibodies, and Platelet count.",
+            "fasting": "No fasting required",
+            "turnaround": "Reports in 6-12 Hours (Urgent)",
+            "sampleType": "Blood (Serum & EDTA)",
+            "overview": "Dengue fever is a mosquito-borne viral infection that causes sudden high fever, severe headache, behind-the-eye pain, joint aches, and a precipitous drop in blood platelet counts. Early diagnostic testing with NS1 antigen within the first 1 to 5 days of fever is critical for patient recovery.",
+            "keyPoints": [
+                "Includes Dengue NS1 Antigen for early fever detection (Day 1-5)",
+                "Includes Dengue IgM & IgG antibodies for subsequent viral phases",
+                "Includes CBC Platelet count monitoring to prevent internal bleeding complications",
+                "Rapid doorstep collection and expedited lab reporting",
+                "Critical for high fever, joint pain, nausea, and rash"
+            ],
+            "faq": [
+                {"q": "When is the best time to test for Dengue fever?", "a": "The Dengue NS1 antigen test is most sensitive within the first 1 to 5 days of fever onset. After day 5, Dengue IgM and IgG antibody tests are most effective."},
+                {"q": "How often should platelet count be monitored in dengue?", "a": "In active dengue fever, doctors usually recommend checking platelet counts daily or every 12 hours until platelet counts stabilize above 100,000."}
+            ]
+        },
+        {
+            "slug": "beta-hcg-test",
+            "name": "Beta HCG Pregnancy Blood Test",
+            "h1": "Beta HCG Blood Test at Home",
+            "title": "Beta HCG Blood Test at Home | Pregnancy Confirmation | Healthians",
+            "description": "Book a quantitative Beta HCG blood test at home with Healthians. Accurate pregnancy confirmation, gestational tracking & ectopic pregnancy screening.",
+            "schemaDesc": "Quantitative Beta Human Chorionic Gonadotropin (Beta HCG) blood test for accurate pregnancy confirmation and gestational age assessment.",
+            "fasting": "No fasting required",
+            "turnaround": "Reports in 12-24 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "The quantitative Beta HCG blood test measures the exact concentration of human chorionic gonadotropin in your bloodstream. It is significantly more sensitive and accurate than home urine strip tests, confirming pregnancy as early as 7 to 10 days after conception.",
+            "keyPoints": [
+                "Quantitative measurement of beta-human chorionic gonadotropin",
+                "Confirms pregnancy earlier and with far higher accuracy than urine tests",
+                "Monitors healthy embryo development, multiples (twins), or suspected ectopic pregnancy",
+                "CLIA chemiluminescence immunoassay technology",
+                "Confidential, encrypted digital reports delivered directly to your WhatsApp"
+            ],
+            "faq": [
+                {"q": "How early can a Beta HCG blood test detect pregnancy?", "a": "A Beta HCG blood test can detect pregnancy as early as 7 to 10 days following conception, even before a missed period."},
+                {"q": "What is the difference between qualitative and quantitative Beta HCG?", "a": "A qualitative test gives a simple 'positive or negative' result. A quantitative test measures the exact numerical level of HCG, helping assess gestational progress."}
+            ]
+        },
+        {
+            "slug": "allergy-test",
+            "name": "Allergy Profile (Total IgE & Common Allergens)",
+            "h1": "Allergy Blood Test at Home",
+            "title": "Allergy Blood Test at Home | Total IgE & Comprehensive Panel | Healthians",
+            "description": "Book Allergy blood test at home with Healthians. Measures Total IgE antibody levels to identify food, respiratory & environmental allergy causes.",
+            "schemaDesc": "Total IgE and comprehensive allergen-specific IgE blood screening panel identifying causes of allergic rhinitis, asthma, eczema, and hives.",
+            "fasting": "No fasting required",
+            "turnaround": "Reports in 24-48 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "An Allergy blood test measures immunoglobulin E (IgE) antibodies in your bloodstream. High levels of IgE indicate that your immune system is overreacting to common triggers like dust mites, pollen, pet dander, mold, or food allergens, causing chronic sneezing, skin rashes, or breathing difficulty.",
+            "keyPoints": [
+                "Measures Total IgE antibody concentrations",
+                "Helps pinpoint the root cause of recurrent skin rashes, eczema, asthma, and sinus allergies",
+                "Safe blood test that does not trigger allergic reactions unlike skin prick tests",
+                "Patients do not need to discontinue antihistamine medications prior to blood testing",
+                "Doctor consultation included to help design an allergen avoidance plan"
+            ],
+            "faq": [
+                {"q": "Do I need to stop allergy medications before a blood allergy test?", "a": "No. Unlike skin prick tests which require stopping antihistamines for days, blood IgE allergy testing is not affected by allergy medications."},
+                {"q": "What does a high Total IgE level mean?", "a": "A high Total IgE indicates an allergic predisposition (atopy), active allergic conditions like eczema or asthma, or occasionally parasitic infections."}
+            ]
+        },
+        {
+            "slug": "double-marker-test",
+            "name": "Double Marker Test (First Trimester Screening)",
+            "h1": "Double Marker Pregnancy Test at Home",
+            "title": "Double Marker Test at Home | Pregnancy Blood Test | Healthians",
+            "description": "Book Double Marker pregnancy test at home with Healthians. Screens for Down Syndrome & chromosomal abnormalities in 1st trimester with NABL reports.",
+            "schemaDesc": "First trimester prenatal screening test measuring Free Beta HCG and PAPP-A combined with NT scan data to calculate chromosomal anomaly risk.",
+            "fasting": "No fasting required (done between weeks 11 and 13.6 of pregnancy)",
+            "turnaround": "Reports in 24-48 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "The Double Marker test is a vital prenatal screening blood test performed during the first trimester (weeks 11 to 13.6 of pregnancy). It measures Free Beta HCG and Pregnancy-Associated Plasma Protein-A (PAPP-A) to assess the statistical risk of chromosomal abnormalities such as Down syndrome (Trisomy 21) and Edwards syndrome (Trisomy 18).",
+            "keyPoints": [
+                "Measures Free Beta HCG and PAPP-A levels",
+                "Calculates risk probability for Trisomy 21 (Down Syndrome) and Trisomy 18",
+                "Correlated with ultrasound Nuchal Translucency (NT scan) data",
+                "Safe, non-invasive blood test posing zero risk to the baby or mother",
+                "Verified by senior prenatal geneticists and pathologists"
+            ],
+            "faq": [
+                {"q": "When should the Double Marker test be performed?", "a": "The test must be performed between 11 weeks and 13 weeks 6 days of pregnancy. It is usually scheduled immediately following your NT ultrasound scan."},
+                {"q": "Does a positive or high-risk result mean the baby has Down syndrome?", "a": "No, it is a screening test, not a diagnostic test. A 'high-risk' result simply indicates a higher statistical probability, and your obstetrician may recommend confirmatory diagnostic testing like NIPT or amniocentesis."}
+            ]
+        },
+        {
+            "slug": "psa-test",
+            "name": "Prostate Specific Antigen (PSA) Test",
+            "h1": "PSA Blood Test for Men at Home",
+            "title": "PSA Blood Test at Home | Prostate Cancer Screening | Healthians",
+            "description": "Book a Prostate Specific Antigen (PSA) test at home with Healthians. Screen for prostate enlargement & prostate cancer in men over 40 with free collection.",
+            "schemaDesc": "Serum Total Prostate Specific Antigen (PSA) blood test for prostate health evaluation, BPH screening, and prostate cancer detection.",
+            "fasting": "No fasting required (avoid strenuous cycling 48 hours prior)",
+            "turnaround": "Reports in 12-24 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "The Prostate-Specific Antigen (PSA) test measures the level of PSA, a protein produced by the prostate gland, in a man's blood. Elevated PSA levels can indicate prostate conditions such as Benign Prostatic Hyperplasia (BPH / enlarged prostate), prostatitis (inflammation), or prostate cancer.",
+            "keyPoints": [
+                "Crucial health screening test for men aged 45 and older",
+                "Investigates symptoms like frequent urination at night, weak urine stream, or difficulty urinating",
+                "Aids early detection of prostate cancer when treatment is most effective",
+                "Automated chemiluminescence immunoassay testing",
+                "Doctor consultation included to explain results"
+            ],
+            "faq": [
+                {"q": "What is considered a normal PSA level?", "a": "For most adult men, a total PSA level under 4.0 ng/mL is considered normal. However, age-adjusted reference ranges are used by urologists for clinical correlation."},
+                {"q": "Does a high PSA always mean prostate cancer?", "a": "No. Non-cancerous conditions like an enlarged prostate (BPH), urinary tract infection, or prostate inflammation (prostatitis) frequently elevate PSA levels."}
+            ]
+        }
+    ],
+
+    "packages": [
+        {
+            "slug": "full-body-checkup",
+            "name": "Full Body Health Checkup",
+            "h1": "Comprehensive Full Body Checkup at Home",
+            "title": "Full Body Checkup at Home | 60+ Parameters Health Package | Healthians",
+            "description": "Book a comprehensive Full Body Health Checkup at home with Healthians. 60+ vital tests covering Heart, Liver, Kidney, Thyroid, Blood Sugar & CBC with free pickup.",
+            "schemaDesc": "Comprehensive Full Body Checkup screening 60+ vital health parameters including CBC, Lipid Profile, Liver Function, Kidney Function, Thyroid Profile, and Blood Sugar.",
+            "fasting": "10-12 hours overnight fasting required",
+            "turnaround": "Reports in 24 Hours",
+            "sampleType": "Blood & Urine",
+            "overview": "Take charge of your health before illness strikes. Healthians Full Body Health Checkup provides a deep, multi-organ assessment of your body's vital functions, detecting silent lifestyle diseases like diabetes, hypertension, high cholesterol, liver dysfunction, and kidney stress early.",
+            "keyPoints": [
+                "Includes 60+ essential parameters in a single morning collection",
+                "Complete Blood Count (CBC - 24 parameters)",
+                "Full Liver Function Test (LFT - 11 parameters)",
+                "Full Kidney Function Test (KFT - 5 parameters)",
+                "Complete Lipid Profile / Cholesterol screening (8 parameters)",
+                "Thyroid Profile (TSH) and Fasting Blood Glucose",
+                "Complete Urine Routine and Microscopy examination",
+                "Free tele-consultation with qualified doctor to guide lifestyle changes"
+            ],
+            "faq": [
+                {"q": "Why do I need an annual full body checkup?", "a": "Many severe chronic diseases—including hypertension, high cholesterol, diabetes, and early liver disease—develop with zero warning symptoms. An annual checkup identifies these conditions before they cause permanent damage."},
+                {"q": "Is fasting required for a full body checkup?", "a": "Yes, an overnight fast of 10 to 12 hours is required for accurate fasting blood sugar and lipid profile results. Drinking plain water is completely fine."},
+                {"q": "How does the home sample collection work?", "a": "A certified phlebotomist visits your home at your selected morning slot with sterile vacuum equipment, collects blood and urine samples in 5 minutes, and delivers your Smart Report within 24 hours."}
+            ]
+        },
+        {
+            "slug": "senior-citizen-package",
+            "name": "Senior Citizen Health Package",
+            "h1": "Senior Citizen Health Checkup at Home",
+            "title": "Senior Citizen Health Package at Home | Elderly Health Screening | Healthians",
+            "description": "Book Senior Citizen Health Checkup at home with Healthians. Comprehensive health screening for elderly parents covering Heart, Bone, Kidney, Liver & Diabetes.",
+            "schemaDesc": "Specialized geriatric health checkup package tailored for senior citizens covering bone health, cardiac risk, organ functions, and diabetes.",
+            "fasting": "10-12 hours overnight fasting required",
+            "turnaround": "Reports in 24 Hours",
+            "sampleType": "Blood & Urine",
+            "overview": "Caring for aging parents requires proactive medical vigilance. Healthians Senior Citizen Health Package is specifically designed to address geriatric health risks, monitoring arthritis, cardiovascular health, kidney filtration, bone density, and chronic metabolic diseases in the comfort of home.",
+            "keyPoints": [
+                "Gentle, geriatric-trained phlebotomist visits parents at home",
+                "Covers CBC, HbA1c, Lipid Profile, Liver Panel, Kidney Panel & Uric Acid",
+                "Includes Calcium and Vitamin screening for bone strength and fall prevention",
+                "Detailed doctor consultation to explain reports clearly to parents and family",
+                "Eliminates stressful hospital visits, stairs, and waiting room exposure"
+            ],
+            "faq": [
+                {"q": "Is it safe for elderly parents to get blood drawn at home?", "a": "Yes, our certified phlebotomists have specialized training in gentle, geriatric venipuncture, ensuring a virtually painless and reassuring experience at home."},
+                {"q": "Can children living in another city or abroad book for parents?", "a": "Absolutely! You can book online from anywhere in the world, make payment online, and receive the digital reports directly on your email and WhatsApp."}
+            ]
+        },
+        {
+            "slug": "diabetes-package",
+            "name": "Comprehensive Diabetes Health Package",
+            "h1": "Complete Diabetes Health Package at Home",
+            "title": "Diabetes Health Package at Home | HbA1c, Sugar & Organ Health | Healthians",
+            "description": "Book complete Diabetes Health Package at home with Healthians. Includes HbA1c, Fasting Sugar, Lipid Profile, Kidney Function & Urine Microalbumin with free pickup.",
+            "schemaDesc": "Comprehensive Diabetes monitoring package evaluating 3-month sugar control, kidney health, cardiac lipids, and microvascular risk.",
+            "fasting": "10-12 hours overnight fasting required",
+            "turnaround": "Reports in 24 Hours",
+            "sampleType": "Blood & Urine",
+            "overview": "Effective diabetes management is about much more than just measuring blood sugar. Diabetes can silently affect your kidneys, heart, eyes, and nerves over time. Healthians Comprehensive Diabetes Package evaluates total diabetic control alongside vital organ health.",
+            "keyPoints": [
+                "Gold-standard HbA1c 3-month average glucose assessment",
+                "Fasting Blood Sugar (FBS) baseline measurement",
+                "Complete Lipid Profile to evaluate diabetic cardiac risk",
+                "Kidney Function Test (Creatinine, Urea, eGFR) to detect diabetic nephropathy early",
+                "Urine Routine examination for protein leaks and glycosuria",
+                "Free physician report review and lifestyle guidance"
+            ],
+            "faq": [
+                {"q": "Why do diabetics need kidney and cholesterol tests?", "a": "Diabetes significantly elevates the risk of heart disease and kidney failure. Monitoring kidney filtration and cholesterol levels allows preventative medical action before complications develop."},
+                {"q": "How often should a diabetic person get this checkup done?", "a": "Doctors generally recommend checking HbA1c every 3 months and completing this full multi-organ checkup once every 6 to 12 months."}
+            ]
+        },
+        {
+            "slug": "women-health-package",
+            "name": "Women Care & Wellness Health Package",
+            "h1": "Women Health Checkup Package at Home",
+            "title": "Women Health Checkup at Home | Hormones, Thyroid, Bone & Anemia | Healthians",
+            "description": "Book Women Care Health Package at home with Healthians. Comprehensive checkup for Thyroid, Iron deficiency, Vitamin D, Bone Calcium, CBC & Hormones.",
+            "schemaDesc": "Specialized health screening package for women addressing hormonal balance, thyroid health, anemia, bone density, and metabolic wellness.",
+            "fasting": "10-12 hours overnight fasting recommended",
+            "turnaround": "Reports in 24 Hours",
+            "sampleType": "Blood & Urine",
+            "overview": "From PCOS and thyroid imbalances to anemia, postpartum recovery, and post-menopausal bone thinning, women have unique healthcare needs at every life stage. Healthians Women Care Package provides complete diagnostic insights tailored specifically to female wellness.",
+            "keyPoints": [
+                "Comprehensive Thyroid Profile (T3, T4, TSH) for metabolism and hormonal harmony",
+                "Complete Blood Count and Iron Profile to identify hidden anemia and fatigue causes",
+                "Vitamin D3 and Serum Calcium to guard against early bone loss (osteopenia/osteoporosis)",
+                "Liver and Kidney organ health screenings",
+                "Fasting Blood Sugar and Lipid Profile for metabolic risk screening",
+                "Doctor consultation to discuss women's health goals"
+            ],
+            "faq": [
+                {"q": "At what age should women start getting routine health checkups?", "a": "Women should begin annual routine health checkups by age 25 to monitor thyroid, iron levels, and metabolic indicators, especially if experiencing fatigue, irregular periods, or weight changes."},
+                {"q": "Can I take this test during my menstrual period?", "a": "Yes, routine blood tests can be taken during your period. However, mention your cycle when submitting your urine sample to avoid microscopic trace blood confusion."}
+            ]
+        },
+        {
+            "slug": "men-health-package",
+            "name": "Men Executive Health Checkup Package",
+            "h1": "Men Health Checkup Package at Home",
+            "title": "Men Executive Health Package at Home | Heart, Liver, PSA & Fitness | Healthians",
+            "description": "Book Men Executive Health Package at home with Healthians. Comprehensive screening for Heart health, Liver enzymes, Kidney function, PSA & Diabetes.",
+            "schemaDesc": "Comprehensive men's health screening package evaluating cardiovascular risk, liver health, prostate function, and metabolic wellness.",
+            "fasting": "10-12 hours overnight fasting required",
+            "turnaround": "Reports in 24 Hours",
+            "sampleType": "Blood & Urine",
+            "overview": "Long working hours, stress, irregular eating, and lack of exercise significantly increase the risk of premature heart attacks, fatty liver, and hypertension among men. Healthians Men Executive Health Package delivers actionable diagnostic intelligence to keep men in peak physical health.",
+            "keyPoints": [
+                "Comprehensive Lipid Profile and Cardiac risk calculation",
+                "Liver Function Test (LFT) to monitor fatty liver and alcohol/diet effects",
+                "Kidney Function Test (KFT) and Serum Uric Acid for gout screening",
+                "Prostate Specific Antigen (PSA) screening for men over 40",
+                "Complete Blood Count and Fasting Glucose",
+                "Doctor consultation to review cardiovascular fitness"
+            ],
+            "faq": [
+                {"q": "Why is heart and liver screening so important for men in their 30s and 40s?", "a": "Men have a statistically higher risk of early coronary artery disease and fatty liver. Routine screening detects high triglycerides and elevated liver enzymes early, allowing complete lifestyle reversal."},
+                {"q": "What should I avoid before the test?", "a": "Avoid heavy alcohol consumption for 48 hours prior and fast for 10 to 12 hours before morning collection."}
+            ]
+        },
+        {
+            "slug": "thyroid-package",
+            "name": "Advanced Thyroid & Metabolism Care Package",
+            "h1": "Advanced Thyroid Care Package at Home",
+            "title": "Advanced Thyroid Health Package at Home | T3, T4, TSH & Antibodies | Healthians",
+            "description": "Book Advanced Thyroid Care Package at home with Healthians. Comprehensive screening for T3, T4, TSH, Anti-TPO antibodies & related metabolic health.",
+            "schemaDesc": "Advanced Thyroid and metabolic screening package evaluating thyroid hormones, autoimmune thyroid antibodies, and metabolic wellness.",
+            "fasting": "Fasting optional (early morning collection recommended)",
+            "turnaround": "Reports in 24 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "If you struggle with stubborn weight gain, unexplained hair loss, cold sensitivity, extreme fatigue, or mood swings, a basic TSH test may not tell the whole story. Healthians Advanced Thyroid Package evaluates both active thyroid hormone production and autoimmune thyroid triggers.",
+            "keyPoints": [
+                "Complete Thyroid Profile (Total T3, Total T4, Ultra-sensitive TSH)",
+                "Anti-TPO (Thyroid Peroxidase Antibodies) to detect Hashimoto's thyroiditis",
+                "Complete Blood Count to rule out co-existing thyroid-related anemia",
+                "Lipid Profile to evaluate secondary cholesterol elevations caused by thyroid slowing",
+                "Detailed doctor report review"
+            ],
+            "faq": [
+                {"q": "What is the benefit of testing Anti-TPO antibodies?", "a": "Anti-TPO antibodies reveal if your thyroid imbalance is caused by an autoimmune condition where your immune system attacks your thyroid tissue. This helps doctors tailor long-term treatment."},
+                {"q": "Do I need to fast before this thyroid checkup?", "a": "Morning collection before breakfast is recommended for the most consistent hormone baseline."}
+            ]
+        },
+        {
+            "slug": "cardiac-care-package",
+            "name": "Healthy Heart Cardiac Screening Package",
+            "h1": "Healthy Heart Cardiac Care Package at Home",
+            "title": "Healthy Heart Cardiac Package at Home | Cholesterol, Hs-CRP & Sugar | Healthians",
+            "description": "Book Healthy Heart Cardiac screening at home with Healthians. Evaluates Lipid Profile, High-Sensitivity CRP (Hs-CRP), Sugar & Electrolytes with NABL reports.",
+            "schemaDesc": "Comprehensive cardiovascular risk assessment package measuring lipid fractions, systemic vascular inflammation (Hs-CRP), and cardiac metabolic markers.",
+            "fasting": "10-12 hours overnight fasting strictly required",
+            "turnaround": "Reports in 24 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "Cardiovascular disease is the leading health risk in India today, often affecting people in their 30s and 40s with zero prior symptoms. Healthians Healthy Heart Package evaluates both traditional cholesterol levels and advanced arterial inflammation markers to evaluate real heart attack risk.",
+            "keyPoints": [
+                "Full Lipid Profile (Total Cholesterol, HDL, LDL, VLDL, Triglycerides)",
+                "High-Sensitivity C-Reactive Protein (Hs-CRP) for microvascular inflammation",
+                "Serum Electrolytes (Sodium, Potassium, Chloride) for heart rhythm support",
+                "HbA1c & Fasting Glucose to screen for diabetic cardiovascular strain",
+                "Kidney Function Test (KFT) to evaluate blood pressure organ health",
+                "Doctor consultation to formulate a heart-healthy action plan"
+            ],
+            "faq": [
+                {"q": "What is Hs-CRP and why is it important for the heart?", "a": "High-Sensitivity CRP measures tiny amounts of inflammation within blood vessel walls. Elevated Hs-CRP is a proven independent predictor of coronary artery disease and heart attacks, even in people with normal cholesterol."},
+                {"q": "Who should book a cardiac health checkup?", "a": "Anyone over age 30, individuals with a family history of heart disease, smokers, diabetics, or people experiencing high stress and sedentary routines."}
+            ]
+        },
+        {
+            "slug": "vitamin-deficiency-package",
+            "name": "Complete Vitamin & Mineral Deficiency Package",
+            "h1": "Vitamin Deficiency Checkup at Home",
+            "title": "Complete Vitamin Profile at Home | Vitamin D3, B12, Iron & Calcium | Healthians",
+            "description": "Book Vitamin & Mineral Checkup at home with Healthians. Screen for Vitamin D3, Vitamin B12, Serum Iron, Ferritin & Calcium with free doorstep pickup.",
+            "schemaDesc": "Comprehensive Vitamin and Mineral deficiency profile testing 25-OH Vitamin D, Vitamin B12, Serum Calcium, and Iron Ferritin reserves.",
+            "fasting": "Overnight fasting recommended (8-10 hours)",
+            "turnaround": "Reports in 24 Hours",
+            "sampleType": "Blood (Serum)",
+            "overview": "Are you struggling with persistent body aches, constant low energy, hair thinning, or tingling in your limbs? Nutritional micronutrient deficiencies are extraordinarily common. Healthians Complete Vitamin Package tests all critical vitamins and minerals in a single home visit.",
+            "keyPoints": [
+                "25-Hydroxy Vitamin D3 for bone density and immune health",
+                "Vitamin B12 (Cyanocobalamin) for nerve strength and cognitive focus",
+                "Serum Calcium for bone and muscle contraction",
+                "Complete Iron Profile with Ferritin for hemoglobin and cellular oxygen transport",
+                "Guidance on exact supplement dosages and dietary corrections"
+            ],
+            "faq": [
+                {"q": "Can vitamin deficiencies cause chronic fatigue and hair fall?", "a": "Yes! Vitamin D, Vitamin B12, and Ferritin deficiencies are the leading root causes of unexplained fatigue, brain fog, and widespread hair thinning."},
+                {"q": "Can I take my vitamin supplements before the test?", "a": "It is generally advised to skip your vitamin pills on the morning of the test until your blood sample has been drawn."}
+            ]
+        },
+        {
+            "slug": "fitness-health-package",
+            "name": "Active Fitness & Sports Health Package",
+            "h1": "Fitness & Active Lifestyle Health Package at Home",
+            "title": "Fitness Health Package at Home | Gym, Muscle & Metabolism Checkup | Healthians",
+            "description": "Book Fitness & Gym Health Package at home with Healthians. Evaluates Liver, Kidney, Protein levels, Electrolytes, CBC & Vitamins for fitness enthusiasts.",
+            "schemaDesc": "Sports and active fitness health package screening protein status, kidney clearance, liver enzymes, electrolytes, and hematology.",
+            "fasting": "10-12 hours overnight fasting recommended",
+            "turnaround": "Reports in 24 Hours",
+            "sampleType": "Blood & Urine",
+            "overview": "Whether you are lifting weights at the gym, training for a marathon, or taking protein supplements, regular internal health monitoring is essential. Healthians Active Fitness Package ensures your liver, kidneys, and heart are handling physical training safely and efficiently.",
+            "keyPoints": [
+                "Kidney Function Test (Creatinine, Urea) to monitor high-protein diet processing",
+                "Liver Function Test (SGPT, SGOT, Albumin) to evaluate liver health and recovery",
+                "Complete Blood Count (CBC) to optimize aerobic oxygen carrying capacity (Hemoglobin)",
+                "Serum Electrolytes and Uric Acid to prevent dehydration, cramps, and gout",
+                "Vitamins D & B12 for peak muscular strength and recovery"
+            ],
+            "faq": [
+                {"q": "Why should gym-goers monitor their kidney and liver function?", "a": "High-protein diets, workout supplements, and intense exercise place demands on kidney filtration and liver metabolism. Routine checkups ensure that your organs remain healthy while you pursue your fitness goals."},
+                {"q": "Should I work out heavily right before my blood test?", "a": "Avoid strenuous, exhaustive workouts 24 hours before the test, as intense muscle breakdown can temporarily elevate creatinine and liver enzymes."}
+            ]
+        },
+        {
+            "slug": "fever-screening-package",
+            "name": "Fever & Acute Infection Screening Package",
+            "h1": "Fever & Infection Screening Package at Home",
+            "title": "Fever Blood Test Package at Home | Malaria, Typhoid, Dengue & CBC | Healthians",
+            "description": "Book Fever Screening blood test at home with Healthians. Screen for Dengue NS1, Typhoid (Widal), Malaria, CBC & Urine with urgent sample collection.",
+            "schemaDesc": "Acute fever profile testing for Dengue NS1, Typhoid Widal, Malaria parasites, Complete Blood Count, and Urine infection markers.",
+            "fasting": "No fasting required",
+            "turnaround": "Urgent reports in 6-12 Hours",
+            "sampleType": "Blood & Urine",
+            "overview": "When you or a loved one has an unexplained high fever, running from clinic to clinic is exhausting and unsafe. Healthians Fever Screening Package provides doorstep sample collection, testing for the most common infectious causes of acute fever in India.",
+            "keyPoints": [
+                "Complete Blood Count (CBC) with Platelet Count to track viral infection and dengue risk",
+                "Dengue NS1 Antigen test for rapid early dengue fever detection",
+                "Typhoid Widal / Typhidot antibody test to screen for enteric fever",
+                "Malaria Parasite screening (Smear / Antigen)",
+                "Urine Routine & Microscopy to check for urinary tract infections",
+                "Rapid turnaround time with urgent digital reporting"
+            ],
+            "faq": [
+                {"q": "How quickly can you collect blood for a patient with fever?", "a": "We prioritize fever bookings. A certified phlebotomist can reach your home within 60 minutes in active city zones."},
+                {"q": "Can this test tell if fever is bacterial or viral?", "a": "Yes, the differential leukocyte count in the CBC combined with specific antigen and antibody tests helps doctors determine whether the fever is viral, bacterial (typhoid), or parasitic (malaria)."}
+            ]
+        }
+    ],
+
+    "articles": [
+        {
+            "slug": "fasting-rules-before-blood-test",
+            "name": "Fasting Rules Before Blood Test: Everything You Need to Know",
+            "h1": "Fasting Rules Before Blood Test: Do's and Don'ts Explained",
+            "title": "Fasting Rules Before Blood Test: What Can You Drink & Eat? | Healthians",
+            "description": "Learn the golden rules of fasting before a blood test. Can you drink water or tea? How many hours of fasting are required for Sugar and Lipid tests? Read now.",
+            "schemaDesc": "Medical guide explaining fasting protocols, water intake rules, and medication guidelines before diagnostic blood collection.",
+            "publishDate": "2026-01-15",
+            "overview": "Proper fasting is essential for obtaining accurate diagnostic blood test results. Consuming food, tea, coffee, or juice causes temporary surges in glucose, triglycerides, and enzymes, which can lead to misdiagnosis or unnecessary medications. This guide breaks down exactly what you can and cannot do before your morning blood test.",
+            "keyPoints": [
+                "Water is encouraged: Drinking plain water prevents dehydration and makes your veins easier for the phlebotomist to access.",
+                "Fasting duration: 10 to 12 hours is optimal for Lipid Profile and Full Body Checkups. 8 to 10 hours for Fasting Blood Sugar.",
+                "Zero calories permitted: No black tea, green tea, black coffee, milk, mints, or chewing gum.",
+                "Medication guidance: Never stop critical blood pressure or heart medications without consulting your doctor.",
+                "Avoid alcohol and heavy meals for 24-48 hours prior to lipid and liver panels."
+            ],
+            "faq": [
+                {"q": "Can I drink plain water during fasting before a blood test?", "a": "Yes! In fact, drinking plain water is highly recommended. It hydrates your body, keeps your blood pressure stable, and plumps up your veins so the blood draw is quick and painless."},
+                {"q": "Can I have black coffee or green tea without sugar?", "a": "No. Even unsweetened black coffee and green tea contain caffeine and plant compounds that stimulate digestion and alter liver enzyme and metabolic readings."},
+                {"q": "What happens if I accidentally eat something during my fast?", "a": "Be honest and inform your phlebotomist. Some tests (like CBC or Vitamin D) can still proceed, while fasting sugar and lipid tests should be rescheduled for your safety and report accuracy."}
+            ]
+        },
+        {
+            "slug": "cbc-normal-range-guide",
+            "name": "CBC Test Normal Range Chart: Hemoglobin, WBC, Platelets",
+            "h1": "Complete Blood Count (CBC) Normal Ranges & Values Chart",
+            "title": "CBC Test Normal Range Chart: Hemoglobin, Platelets, WBC | Healthians",
+            "description": "Understanding your Complete Blood Count report. Learn normal reference ranges for Hemoglobin, Platelets, Total Leukocyte Count (TLC) and RBC indices.",
+            "schemaDesc": "Comprehensive clinical reference guide for interpreting Complete Blood Count (CBC) laboratory values and reference intervals.",
+            "publishDate": "2026-01-20",
+            "overview": "A Complete Blood Count (CBC) is the foundational test in laboratory medicine. When your CBC report arrives, the long list of abbreviations—like TLC, DLC, MCV, and RDW—can look overwhelming. This medical guide explains normal ranges, what elevated or low numbers mean, and when to consult a doctor.",
+            "keyPoints": [
+                "Hemoglobin: Normal range is 13.5 - 17.5 g/dL for men, 12.0 - 15.5 g/dL for women. Low levels indicate anemia.",
+                "Platelet Count: Normal range is 150,000 to 450,000 per mcL. Levels below 100,000 require prompt medical evaluation.",
+                "Total Leukocyte Count (TLC): Normal range is 4,000 to 11,000 cells/mcL. High TLC indicates active infection or inflammation.",
+                "Differential WBC: Neutrophils fight bacteria; Lymphocytes combat viral infections; Eosinophils respond to allergies.",
+                "RBC Indices (MCV, MCH, MCHC): Help distinguish between iron deficiency anemia, thalassemia, and B12 deficiency."
+            ],
+            "faq": [
+                {"q": "What causes high white blood cells (leukocytosis) on a CBC?", "a": "Elevated WBC counts most commonly indicate your immune system is actively fighting a bacterial infection, tissue injury, physical stress, or an inflammatory condition."},
+                {"q": "What is the danger level for low platelets?", "a": "While normal platelets are 150,000+, medical concern increases below 50,000, and levels under 20,000 pose significant spontaneous bleeding risks requiring urgent hospital care."}
+            ]
+        },
+        {
+            "slug": "hba1c-normal-range-chart",
+            "name": "HbA1c Normal Range Chart by Age & Diabetes Management",
+            "h1": "HbA1c Normal Range Chart & Target Levels by Age",
+            "title": "HbA1c Normal Range Chart by Age & Diabetes Classification | Healthians",
+            "description": "Check the official HbA1c normal range chart. Understand normal (<5.7%), prediabetes (5.7-6.4%), and diabetic (>6.5%) ranges with doctor guidance.",
+            "schemaDesc": "Clinical guide and reference chart detailing HbA1c glycated hemoglobin classifications and target ranges across age brackets.",
+            "publishDate": "2026-02-05",
+            "overview": "The HbA1c (Glycated Hemoglobin) test is the international standard for diagnosing diabetes and evaluating blood sugar control. Because blood sugar fluctuates every hour, HbA1c calculates your 90-day average. Learn the target numbers, age-based goals, and how to lower your HbA1c naturally.",
+            "keyPoints": [
+                "Normal: Less than 5.7%",
+                "Prediabetes: 5.7% to 6.4% (Crucial window for reversing diabetes through lifestyle)",
+                "Diabetes: 6.5% or higher on two separate tests",
+                "Target for young diabetic adults: Typically under 7.0% to prevent microvascular damage",
+                "Target for seniors (>65 years): Often relaxed to 7.5% - 8.0% to prevent dangerous hypoglycemia (low sugar)"
+            ],
+            "faq": [
+                {"q": "Can prediabetes with an HbA1c of 6.2% be reversed?", "a": "Yes! Prediabetes is fully reversible. Losing 5-7% of body weight, cutting refined carbohydrates and sugar, and walking 30 minutes daily can bring your HbA1c back into the normal range."},
+                {"q": "Why is my daily fasting sugar normal but my HbA1c high?", "a": "Fasting blood sugar measures a single morning moment. If your blood sugar spikes significantly after lunch, dinner, or snacks, your 3-month average HbA1c will be high even if morning fasting readings look fine."}
+            ]
+        },
+        {
+            "slug": "vitamin-d-deficiency-symptoms",
+            "name": "Vitamin D Deficiency Symptoms, Causes and Treatment",
+            "h1": "Vitamin D Deficiency Symptoms: Signs You Must Not Ignore",
+            "title": "Vitamin D Deficiency Symptoms, Levels & Treatment in India | Healthians",
+            "description": "Over 70% of Indians suffer from low Vitamin D. Learn the top symptoms: bone pain, constant fatigue, hair loss & weak immunity, and how to recover fast.",
+            "schemaDesc": "Medical article explaining symptoms, clinical blood ranges, and therapeutic treatment strategies for Vitamin D deficiency.",
+            "publishDate": "2026-02-12",
+            "overview": "Despite living in a sunny country, Vitamin D deficiency is a silent epidemic across India. Air pollution, indoor work cultures, melanin in Indian skin, and lack of dietary fortification mean millions live with severe deficiency. Learn how to spot the signs and restore your levels safely.",
+            "keyPoints": [
+                "Unexplained persistent fatigue, body stiffness, and lethargy",
+                "Deep bone aching and lower back pain, especially in winter or mornings",
+                "Frequent seasonal coughs, colds, and viral infections due to suppressed immunity",
+                "Slow wound healing and persistent muscle cramps",
+                "Diffuse hair shedding in men and women"
+            ],
+            "faq": [
+                {"q": "Can I get enough Vitamin D purely from sunlight in Indian cities?", "a": "In modern urban environments, atmospheric smog blocks UVB rays. You would need 30 minutes of midday sun exposure over large surface areas without sunscreen, which is impractical for most working people. Blood testing and supplementation are usually required."},
+                {"q": "How long does it take to correct severe Vitamin D deficiency?", "a": "With high-dose doctor-prescribed supplements (usually 60,000 IU weekly for 8 to 12 weeks), blood levels generally normalize within 2 to 3 months."}
+            ]
+        },
+        {
+            "slug": "vitamin-b12-deficiency-guide",
+            "name": "Vitamin B12 Deficiency Symptoms in Vegetarians & Treatment",
+            "h1": "Vitamin B12 Deficiency Symptoms: Warning Signs for Vegetarians",
+            "title": "Vitamin B12 Deficiency Symptoms in Vegetarians & Diet | Healthians",
+            "description": "Learn the hidden signs of Vitamin B12 deficiency: tingling in hands, brain fog, fatigue & mouth ulcers. Discover vegetarian diet tips and treatment.",
+            "schemaDesc": "Clinical guide on Vitamin B12 deficiency symptoms, neurological implications, and dietary solutions for vegetarian populations.",
+            "publishDate": "2026-02-18",
+            "overview": "Vitamin B12 is essential for maintaining healthy nerve cells and synthesizing DNA and red blood cells. Since natural B12 is synthesized primarily in animal products, over 80% of Indian vegetarians have suboptimal B12 levels. Left unaddressed, chronic B12 deficiency can cause permanent peripheral nerve damage.",
+            "keyPoints": [
+                "Paresthesia: Tingling, 'pins and needles', or numbness in fingers and toes",
+                "Neurological fog: Forgetfulness, trouble concentrating, and mood swings",
+                "Glossitis and recurrent painful mouth ulcers",
+                "Megaloblastic anemia leading to shortness of breath and pale, yellowish skin",
+                "Dietary sources: Milk, paneer, curd, fortified cereals, or oral supplementation"
+            ],
+            "faq": [
+                {"q": "Can curd and paneer fulfill daily Vitamin B12 requirements?", "a": "While dairy products contain B12, the amounts are modest. A person with severe deficiency cannot replenish their storage solely through dairy and will require oral supplements or injections under medical supervision."},
+                {"q": "Is Vitamin B12 deficiency reversible?", "a": "Yes, fatigue, anemia, and early neurological symptoms resolve quickly with supplementation. However, long-standing nerve damage (peripheral neuropathy) can become permanent if neglected for years."}
+            ]
+        },
+        {
+            "slug": "high-sgpt-sgot-causes-treatment",
+            "name": "High SGPT and SGOT Levels: What Does It Mean for Your Liver?",
+            "h1": "High SGPT and SGOT Levels: Causes, Symptoms & Liver Diet",
+            "title": "High SGPT and SGOT Levels: Meaning, Causes & Treatment | Healthians",
+            "description": "Found elevated SGPT and SGOT on your liver test? Discover what causes elevated liver enzymes, non-alcoholic fatty liver disease (NAFLD), and how to reduce them.",
+            "schemaDesc": "Medical guide explaining the clinical significance of elevated transaminases (ALT/SGPT and AST/SGOT) and non-alcoholic fatty liver management.",
+            "publishDate": "2026-02-25",
+            "overview": "SGPT (ALT) and SGOT (AST) are enzymes contained within liver cells. When liver tissue is inflamed or irritated, these enzymes leak into your bloodstream. Discovering elevated SGPT/SGOT on an annual checkup is the most common early indicator of Non-Alcoholic Fatty Liver Disease (NAFLD).",
+            "keyPoints": [
+                "Normal SGPT (ALT) is under 40-50 U/L; Normal SGOT (AST) is under 40-45 U/L",
+                "Leading causes: Fatty liver disease, alcohol consumption, high-carb diet, obesity, viral hepatitis, and certain painkiller medications",
+                "Fatty liver is 100% reversible in Grade 1 and early Grade 2 stages through diet and exercise",
+                "Dietary tips: Cut refined sugar, fried foods, and refined wheat (maida); increase leafy greens, garlic, green tea, and black coffee",
+                "Recheck LFT levels every 3 to 6 months to monitor improvement"
+            ],
+            "faq": [
+                {"q": "Is an SGPT of 75 dangerous?", "a": "An SGPT of 75 indicates mild to moderate liver cell irritation, most commonly due to fatty liver or medication. While not an emergency, it is a warning sign that requires dietary adjustment, weight loss, and medical follow-up."},
+                {"q": "Can drinking coffee help reduce liver enzymes?", "a": "Yes! Clinical research shows that drinking 1 to 2 cups of unsweetened black coffee daily provides powerful liver-protective antioxidants that help lower elevated SGPT and SGOT."}
+            ]
+        },
+        {
+            "slug": "thyroid-tsh-normal-range-guide",
+            "name": "Thyroid Test T3, T4, TSH Normal Levels & When to Test",
+            "h1": "Thyroid TSH Normal Range, High vs Low Levels Explained",
+            "title": "Thyroid TSH Normal Range Chart: High vs Low Levels | Healthians",
+            "description": "Everything about TSH, T3 & T4 normal ranges. Learn the difference between Hypothyroidism and Hyperthyroidism, common symptoms, and when to get tested.",
+            "schemaDesc": "Clinical reference guide explaining thyroid hormone regulation, TSH reference intervals, and thyroid disease diagnosis.",
+            "publishDate": "2026-03-02",
+            "overview": "Your thyroid gland acts as your body's master metabolic regulator. The pituitary gland in your brain produces Thyroid Stimulating Hormone (TSH) to tell your thyroid how much hormone to make. Understand how to read your thyroid profile numbers and what abnormal results signify.",
+            "keyPoints": [
+                "Normal adult TSH range: 0.4 to 4.5 mIU/L (Target under 2.5 during pregnancy)",
+                "High TSH (>4.5): Hypothyroidism (underactive thyroid) causing sluggishness, weight gain, depression, and hair loss",
+                "Low TSH (<0.4): Hyperthyroidism (overactive thyroid) causing tremors, rapid heart rate, weight loss, and anxiety",
+                "Subclinical Hypothyroidism: Elevated TSH with normal T3 and T4 levels",
+                "Best time to test: Morning fasting before taking daily thyroid medication"
+            ],
+            "faq": [
+                {"q": "Why does high TSH mean low thyroid function?", "a": "Think of TSH as an accelerator pedal. When your thyroid is sluggish and producing too little hormone, your brain presses the pedal harder by pumping out more TSH to stimulate it."},
+                {"q": "What TSH level requires medication?", "a": "Doctors typically initiate thyroxine medication when TSH exceeds 10 mIU/L, or between 4.5 and 10 if symptoms, high cholesterol, thyroid antibodies, or pregnancy are present."}
+            ]
+        },
+        {
+            "slug": "lipid-profile-cholesterol-guide",
+            "name": "Lipid Profile Test: Understanding Good vs Bad Cholesterol",
+            "h1": "Lipid Profile Test: Good vs Bad Cholesterol Explained",
+            "title": "Lipid Profile Test: HDL vs LDL Normal Levels & Diet | Healthians",
+            "description": "Demystifying your cholesterol report. Understand Total Cholesterol, LDL (Bad), HDL (Good) and Triglycerides with actionable heart health tips.",
+            "schemaDesc": "Educational guide detailing lipid profile parameters, atherogenic risk, and dietary strategies for optimal cholesterol management.",
+            "publishDate": "2026-03-10",
+            "overview": "Heart disease is often silent until a major event occurs. A Lipid Profile test provides an essential roadmap of your cardiovascular health. Learn the critical differences between good and bad cholesterol, why triglycerides matter, and how to improve your numbers naturally.",
+            "keyPoints": [
+                "Total Cholesterol: Desirable level is under 200 mg/dL",
+                "LDL Cholesterol ('Bad'): Target under 100 mg/dL (under 70 mg/dL for high-risk cardiac patients)",
+                "HDL Cholesterol ('Good'): Target above 40 mg/dL for men and above 50 mg/dL for women",
+                "Triglycerides: Desirable level under 150 mg/dL (closely linked to dietary carbs and sugar)",
+                "Diet: Avoid trans fats, bakery items, and palm oil; eat more oats, flaxseeds, almonds, and soluble fiber"
+            ],
+            "faq": [
+                {"q": "How can I raise my good HDL cholesterol?", "a": "Regular aerobic exercise (brisk walking 30 minutes daily), consuming omega-3 fatty acids, quitting smoking, and eating nuts like walnuts and almonds are the most effective ways to raise HDL."},
+                {"q": "Why are high triglycerides so common in India?", "a": "High triglycerides in Indian diets are largely driven by high consumption of refined carbohydrates (white rice, maida, sweets) and fried snacks, combined with a sedentary lifestyle."}
+            ]
+        },
+        {
+            "slug": "creatinine-kft-normal-range-guide",
+            "name": "Kidney Function Test (KFT): Creatinine and BUN Normal Levels",
+            "h1": "Kidney Function Test (KFT): Creatinine Normal Ranges & Signs",
+            "title": "Serum Creatinine Normal Range & Kidney Function Guide | Healthians",
+            "description": "Understanding your Kidney Function Test (KFT). Learn normal Serum Creatinine, Blood Urea & eGFR ranges, early kidney warning signs, and prevention tips.",
+            "schemaDesc": "Medical guide to interpreting Kidney Function Test (KFT) markers, serum creatinine levels, and glomerular filtration health.",
+            "publishDate": "2026-03-15",
+            "overview": "Your kidneys filter over 180 liters of blood daily, eliminating toxins while conserving essential minerals. Unfortunately, chronic kidney disease can progress silently until over 60% of kidney function is lost. Learning to interpret your KFT report is vital for protecting your renal longevity.",
+            "keyPoints": [
+                "Serum Creatinine: Normal range is 0.7 to 1.3 mg/dL for men, 0.5 to 1.1 mg/dL for women",
+                "Blood Urea Nitrogen (BUN): Normal range is 7 to 20 mg/dL",
+                "eGFR (estimated Glomerular Filtration Rate): Above 90 mL/min is optimal; below 60 suggests chronic kidney disease",
+                "Warning signs: Swelling in ankles or under eyes (edema), frothy urine, fatigue, metallic taste in mouth",
+                "Protection: Control blood pressure under 130/80, maintain HbA1c under 7.0%, and stay well-hydrated"
+            ],
+            "faq": [
+                {"q": "Can high creatinine be caused by muscle building or gym protein?", "a": "Yes, high muscle mass and creatine monohydrate supplements can mildly elevate blood creatinine without kidney disease. A Cystatin-C test can provide an accurate kidney evaluation independent of muscle mass."},
+                {"q": "How can I naturally lower my creatinine levels?", "a": "Stay adequately hydrated, avoid over-the-counter NSAID painkillers (like ibuprofen), manage blood pressure and blood sugar strictly, and reduce excessive red meat consumption."}
+            ]
+        },
+        {
+            "slug": "high-uric-acid-causes-diet",
+            "name": "High Uric Acid: Causes, Symptoms, and Joint Pain Relief",
+            "h1": "High Uric Acid: Causes, Symptoms & Foods to Avoid",
+            "title": "High Uric Acid: Symptoms, Gout Diet & Natural Treatment | Healthians",
+            "description": "Suffering from high uric acid or sudden big toe joint pain? Learn what causes hyperuricemia, purine-rich foods to avoid, and how to lower levels fast.",
+            "schemaDesc": "Comprehensive clinical guide on hyperuricemia, gouty arthritis pathology, purine metabolism, and therapeutic dietary plans.",
+            "publishDate": "2026-03-22",
+            "overview": "High uric acid (hyperuricemia) occurs when your body either produces too much uric acid or your kidneys cannot excrete it quickly enough. Over time, sharp urate crystals accumulate in joint tissues, causing severe inflammatory attacks of gout, typically striking the big toe or ankles at night.",
+            "keyPoints": [
+                "Normal uric acid range: 3.5 - 7.2 mg/dL for men, 2.6 - 6.0 mg/dL for women",
+                "Symptoms: Sudden, intense burning and swelling in big toe, ankle, or knee",
+                "Foods to avoid: Red meat, organ meats, beer, alcohol, shellfish, and sugary sodas containing high-fructose corn syrup",
+                "Foods that help: Cherries, lemon water, low-fat curd, cucumbers, and drinking 3+ liters of water daily",
+                "High uric acid can also form painful kidney stones"
+            ],
+            "faq": [
+                {"q": "Can high uric acid cause joint pain without redness?", "a": "Yes, chronic mild hyperuricemia can cause persistent aching in joints, heels, and ankles even without the dramatic swelling of an acute gout flare."},
+                {"q": "Does drinking lemon water really reduce uric acid?", "a": "Yes! Fresh lemon juice stimulates the production of calcium carbonate in the body, which helps neutralize uric acid and encourages urinary excretion."}
+            ]
+        },
+        {
+            "slug": "importance-of-annual-full-body-checkup",
+            "name": "Why Annual Full Body Checkup is Essential After Age 30",
+            "h1": "Why an Annual Full Body Checkup is Essential After Age 30",
+            "title": "Why You Need an Annual Full Body Checkup After 30 | Healthians",
+            "description": "Why healthy adults over 30 need annual health checkups. Learn how routine blood screening detects silent diabetes, heart disease & fatty liver early.",
+            "schemaDesc": "Medical essay highlighting preventative healthcare benefits, early disease interception, and longevity through annual full body diagnostics.",
+            "publishDate": "2026-03-28",
+            "overview": "Modern lifestyles—characterized by desk jobs, chronic screen time, high stress, and processed foods—have accelerated the onset of chronic diseases. What used to be conditions of old age are now routinely diagnosed in 30-year-olds. Discover why preventative blood checkups are the smartest investment in your future.",
+            "keyPoints": [
+                "Silent killers: Hypertension, high cholesterol, prediabetes, and fatty liver cause zero symptoms in early stages",
+                "Interception: Reversing prediabetes or early fatty liver takes months, but treating advanced diabetes or cirrhosis takes a lifetime",
+                "Cost savings: A ₹1,000 preventive checkup saves lakhs of rupees in hospital ICU admissions down the road",
+                "Peace of mind: Clear numbers remove anxiety and provide concrete benchmarks for fitness and dietary progress",
+                "Recommended frequency: Once every 12 months for healthy adults; every 6 months for individuals with chronic conditions"
+            ],
+            "faq": [
+                {"q": "I feel completely healthy and fit. Why should I get tested?", "a": "Feeling fine is not a guarantee of internal health. Over 60% of people with high cholesterol or early diabetes feel 100% normal until a critical organ is impacted. Blood tests reveal internal physiological reality before symptoms appear."},
+                {"q": "What core tests must be included in a 30+ checkup?", "a": "A thorough checkup must include CBC, Fasting Sugar, HbA1c, Lipid Profile, Liver Function, Kidney Function, Thyroid Profile, and Vitamin D/B12."}
+            ]
+        },
+        {
+            "slug": "crp-test-high-levels-guide",
+            "name": "CRP Blood Test: Why High C-Reactive Protein Means Inflammation",
+            "h1": "High C-Reactive Protein (CRP): Causes & When to Worry",
+            "title": "CRP Blood Test: Normal Range, High Levels & Causes | Healthians",
+            "description": "What does a high CRP blood test mean? Learn the difference between viral infections, autoimmune disease & cardiac risk markers. Doctor reviewed.",
+            "schemaDesc": "Clinical guide explaining C-Reactive Protein (CRP) pathophysiology, diagnostic significance, and clinical management.",
+            "publishDate": "2026-04-05",
+            "overview": "C-Reactive Protein (CRP) is an acute-phase reactant synthesized by the liver. When tissues in your body experience acute bacterial invasion, viral trauma, or autoimmune flare-ups, liver cells flood the bloodstream with CRP. Discover how doctors interpret this critical diagnostic signal.",
+            "keyPoints": [
+                "Normal standard CRP is under 5.0 to 6.0 mg/L (or under 10 mg/L in some labs)",
+                "Mild elevation (10 - 40 mg/L): Viral infections, mild inflammation, pregnancy, or obesity",
+                "Moderate to severe elevation (40 - 200 mg/L): Acute bacterial infection, pneumonia, or severe autoimmune flares",
+                "Very high (>200 mg/L): Severe systemic bacterial sepsis or major trauma",
+                "High-Sensitivity CRP (Hs-CRP) measures tiny cardiac risk elevations below 3.0 mg/L"
+            ],
+            "faq": [
+                {"q": "How quickly does CRP drop after an infection is treated?", "a": "CRP has a short half-life of roughly 19 hours. Once the underlying bacterial or viral infection resolves, CRP drops rapidly back toward baseline within a few days."},
+                {"q": "Can stress or exercise elevate CRP?", "a": "Intense, exhausting physical exertion can temporarily cause a mild increase in CRP due to transient muscle fiber micro-trauma, but mental stress alone does not cause significant spikes."}
+            ]
+        },
+        {
+            "slug": "fasting-sugar-vs-hba1c-difference",
+            "name": "Difference Between Fasting Blood Sugar and HbA1c Test",
+            "h1": "Fasting Blood Sugar vs HbA1c: Key Differences Explained",
+            "title": "Fasting Blood Sugar vs HbA1c: Which Test is Better? | Healthians",
+            "description": "Confused between Fasting Sugar and HbA1c? Learn how these two tests differ, why doctors order both, and which test is more reliable for diabetes.",
+            "schemaDesc": "Comparative medical guide explaining the diagnostic roles, physiological differences, and clinical utility of Fasting Glucose vs Glycated Hemoglobin.",
+            "publishDate": "2026-04-12",
+            "overview": "Both Fasting Blood Sugar (FBS) and HbA1c measure blood glucose, yet they often yield seemingly contradictory results. One can be normal while the other is elevated. This comprehensive comparison explains why both tests are complementary and essential for mastering diabetes control.",
+            "keyPoints": [
+                "Time window: Fasting sugar captures a single instant (morning baseline). HbA1c captures a 90-day moving average.",
+                "Fasting requirement: FBS requires 8-10 hours strict fasting. HbA1c requires zero fasting.",
+                "Daily fluctuation: FBS is heavily influenced by last night's dinner, stress, and sleep quality. HbA1c ignores daily fluctuations.",
+                "Diagnosis: Both tests are recognized by international diabetes associations; using both together prevents false negatives.",
+                "Post-meal spikes: A patient with normal fasting sugar can still have an elevated HbA1c if post-meal sugars spike during the day."
+            ],
+            "faq": [
+                {"q": "Can I just do an HbA1c test and skip fasting blood sugar?", "a": "While HbA1c is a superior long-term marker, fasting blood sugar shows your true basal hepatic glucose output. Doctors prefer checking both together for complete diagnostic clarity."},
+                {"q": "Can severe anemia distort HbA1c results?", "a": "Yes. Conditions that alter red blood cell lifespan—such as severe iron deficiency anemia or hemolytic anemia—can cause artificially elevated or lowered HbA1c readings."}
+            ]
+        },
+        {
+            "slug": "uti-symptoms-urine-test-guide",
+            "name": "Urine Infection (UTI) Symptoms & Urine Routine Test Guide",
+            "h1": "UTI Symptoms in Men & Women: Urine Routine Test Explained",
+            "title": "UTI Symptoms & Urine Routine Test Interpretation | Healthians",
+            "description": "Experiencing burning during urination or frequent urges? Learn common UTI symptoms, how a Urine Routine test diagnoses infections, and home prevention tips.",
+            "schemaDesc": "Medical guide detailing urinary tract infection etiology, symptoms, laboratory urine analysis markers, and hygienic prevention protocols.",
+            "publishDate": "2026-04-18",
+            "overview": "Urinary Tract Infections (UTIs) are among the most frequent bacterial infections, particularly among women. From mild bladder irritation (cystitis) to severe kidney infections (pyelonephritis), prompt diagnosis via a simple Urine Routine & Microscopy test is key to fast relief and preventing kidney damage.",
+            "keyPoints": [
+                "Common symptoms: Burning sensation during urination (dysuria), constant urgency, cloudy or foul-smelling urine, and lower pelvic pressure",
+                "Pus cells (Leukocytes): Normal is 0-5 per high power field. Higher counts indicate active bacterial infection",
+                "Nitrites & Bacteria: Positive nitrites strongly point to gram-negative bacterial infection like E. coli",
+                "Microscopic Hematuria: Trace red blood cells indicate inflamed bladder lining",
+                "Clean-catch midstream collection prevents contamination from external skin flora"
+            ],
+            "faq": [
+                {"q": "How soon should a UTI be treated?", "a": "A UTI should be evaluated by a doctor promptly. Unchecked bladder infections can ascend upward through the ureters into the kidneys, causing serious pyelonephritis with high fever and back pain."},
+                {"q": "Why are women significantly more prone to UTIs than men?", "a": "Women have a much shorter urethra located closer to the rectal area, allowing bacteria like E. coli to reach the bladder more easily."}
+            ]
+        },
+        {
+            "slug": "iron-deficiency-anemia-guide",
+            "name": "Iron Deficiency Anemia: Symptoms, Ferritin Levels & Diet",
+            "h1": "Iron Deficiency Anemia: Symptoms, Ferritin & Recovery Diet",
+            "title": "Iron Deficiency Anemia: Signs, Ferritin Levels & Diet | Healthians",
+            "description": "Understand iron deficiency anemia. Learn why low Ferritin causes extreme fatigue, cold hands & hair thinning, and discover iron-rich Indian food sources.",
+            "schemaDesc": "Clinical guide on iron metabolism, serum ferritin storage, iron deficiency anemia symptoms, and nutritional dietary interventions.",
+            "publishDate": "2026-04-25",
+            "overview": "Iron deficiency anemia is the most prevalent nutritional deficiency in India, affecting over 50% of women and young children. Iron is the core atom of hemoglobin that carries oxygen to every organ and brain cell. Discover how to identify iron deficiency early before severe exhaustion sets in.",
+            "keyPoints": [
+                "Symptoms: Chronic fatigue, paleness under eyelids, brittle spoon-shaped nails (koilonychia), shortness of breath climbing stairs, and hair fall",
+                "CBC indicators: Low Hemoglobin, low MCV (microcytic), and low MCH (hypochromic)",
+                "Ferritin test: The most sensitive indicator of deep iron stores. Low ferritin confirms iron deficiency even if hemoglobin is borderline",
+                "Indian dietary sources: Spinach (palak), beetroot, pomegranate, lentils, dates, jaggery, roasted chana, and chicken/fish",
+                "Absorption booster: Always pair iron-rich meals with Vitamin C (lemon juice, amla, oranges) to double iron absorption"
+            ],
+            "faq": [
+                {"q": "Why does drinking tea or coffee with meals reduce iron absorption?", "a": "Tea and coffee contain tannins and polyphenols that bind tightly to dietary iron in your digestive tract, blocking up to 60% of iron absorption. Drink tea at least one hour away from meals."},
+                {"q": "How long does it take for iron supplements to raise hemoglobin?", "a": "Oral iron supplements usually increase hemoglobin within 2 to 4 weeks. However, doctors advise continuing therapy for 3 to 6 months to completely refill depleted ferritin stores."}
+            ]
+        },
+        {
+            "slug": "dengue-symptoms-platelet-test-guide",
+            "name": "Dengue Fever Symptoms, Platelet Count Monitoring & Tests",
+            "h1": "Dengue Fever Symptoms: Platelet Monitoring & When to Test",
+            "title": "Dengue Fever Symptoms, Platelet Count & Diagnostic Tests | Healthians",
+            "description": "Recognize critical dengue fever symptoms. Learn when to get the Dengue NS1 test, how to monitor platelet count, and warning signs requiring hospitalization.",
+            "schemaDesc": "Emergency medical guide detailing dengue virus stages, platelet kinetics, critical phase warning signs, and diagnostic testing timelines.",
+            "publishDate": "2026-05-02",
+            "overview": "Transmitted by the Aedes mosquito, dengue fever is an acute viral disease that causes severe symptoms nicknamed 'breakbone fever'. Understanding the 3 distinct phases of dengue—febrile, critical, and recovery—and diligently tracking blood platelet counts can save lives.",
+            "keyPoints": [
+                "Febrile Phase (Days 1-5): Sudden high fever (103°F-105°F), retro-orbital eye pain, severe joint and back pain. Test with Dengue NS1 Antigen",
+                "Critical Phase (Days 3-7): Fever drops, but capillary plasma leakage can occur. Daily CBC Platelet Count monitoring is essential",
+                "Platelet drop: Platelets under 100,000 require close physician monitoring. Under 20,000 requires hospitalization and possible transfusion",
+                "Severe warning signs: Persistent vomiting, severe abdominal pain, gum or nose bleeding, extreme lethargy, and black stools",
+                "Hydration is key: Drink plenty of ORS, coconut water, and soups to maintain plasma volume"
+            ],
+            "faq": [
+                {"q": "Why is the day the fever subsides often the most dangerous in dengue?", "a": "During the 'critical phase' when fever drops, vascular permeability can cause internal fluid leakage into lungs or abdomen, leading to a sudden plunge in platelets and blood pressure shock. Strict observation is vital on days 4 to 7."},
+                {"q": "Can papaya leaf juice increase platelets in dengue?", "a": "Papaya leaf extract has shown modest benefits in some clinical trials, but it must NEVER replace medical hydration, doctor supervision, and regular laboratory platelet monitoring."}
+            ]
+        },
+        {
+            "slug": "preparation-before-blood-sample-collection",
+            "name": "What to Do Before a Morning Blood Sample Collection",
+            "h1": "How to Prepare for Your Home Blood Test: 7 Essential Steps",
+            "title": "How to Prepare for Blood Test Collection at Home | Healthians",
+            "description": "Simple steps to prepare for your home blood sample collection. From water intake to sleep and clothing, ensure a painless, accurate experience.",
+            "schemaDesc": "Practical patient guidance checklist for preparing for home diagnostic blood sample collection.",
+            "publishDate": "2026-05-10",
+            "overview": "Booking a blood test at home is wonderfully convenient, but a few simple preparation steps make all the difference between a quick, painless venipuncture and a difficult blood draw. Here is your ultimate preparation checklist before our phlebotomist rings your doorbell.",
+            "keyPoints": [
+                "Hydrate with plain water: Drink 1-2 glasses of water 30 minutes before collection. Full veins are easier to locate and draw from painlessly.",
+                "Wear loose, comfortable sleeves: Wear a short-sleeved t-shirt or a shirt with loose sleeves that easily roll up past your elbow.",
+                "Fast properly if instructed: 10-12 hours for lipid/full body, 8-10 hours for fasting sugar. No tea, coffee, or snacks.",
+                "Get a good night's rest: Poor sleep can temporarily spike blood pressure and stress hormones.",
+                "Keep your arms warm: Warm skin increases blood flow to surface veins, making blood collection effortless."
+            ],
+            "faq": [
+                {"q": "I am afraid of needles. What should I do during the blood draw?", "a": "Tell your phlebotomist! Our staff are trained to help nervous patients. Look away toward the ceiling, take slow, deep breaths, and relax your arm completely. The vacuum collection needle takes less than 10 seconds."},
+                {"q": "Should I keep pressing the puncture site after the phlebotomist leaves?", "a": "Apply firm, steady pressure with the cotton ball for 3 to 5 minutes without rubbing. Avoid lifting heavy weights with that arm for an hour to prevent minor bruising."}
+            ]
+        },
+        {
+            "slug": "home-blood-sample-collection-protocol",
+            "name": "How Home Sample Collection Works: Safe & Hygienic Protocol",
+            "h1": "How Healthians Doorstep Blood Sample Collection Works",
+            "title": "How Home Blood Sample Collection Works: Safety & Cold Chain | Healthians",
+            "description": "Curious about how home blood tests work? Discover Healthians 6-step hygiene protocol, temperature-controlled cold chain logistics & barcoded safety.",
+            "schemaDesc": "Detailed operational and medical quality overview of Healthians doorstep pathology sample collection, cold chain transit, and robotic testing.",
+            "publishDate": "2026-05-18",
+            "overview": "Many patients wonder: is a home blood test as accurate as going to a hospital lab? The answer is a resounding YES—in fact, often more accurate! Learn about Healthians medical-grade doorstep collection protocol, cold chain logistics, and automated robotic testing that eliminates human error.",
+            "keyPoints": [
+                "Step 1: Punctual arrival of certified, vaccinated phlebotomists in clean uniforms with sanitized medical kits.",
+                "Step 2: Single-use, sealed vacutainer needles opened directly in front of the patient.",
+                "Step 3: Unique barcoding of every tube at the doorstep, eliminating manual mix-ups.",
+                "Step 4: Immediate storage in smart cool-packs maintaining a strictly monitored 2°C to 8°C cold chain.",
+                "Step 5: Robotic, automated processing in NABL & CAP accredited pathology hubs.",
+                "Step 6: Encrypted Smart Reports delivered directly to your WhatsApp with free doctor consultation."
+            ],
+            "faq": [
+                {"q": "How do you ensure my blood sample doesn't get mixed up with someone else's?", "a": "We use a digital barcoding protocol. Your sample tubes are labeled with a unique barcode generated from your booking ID right at your doorstep in your presence before being sealed into the transit container."},
+                {"q": "How does the cold chain preserve sample integrity during travel?", "a": "Our phlebotomists carry specialized temperature-controlled carrier boxes equipped with calibrated gel packs that maintain an optimal 2°C to 8°C environment, preventing cell degradation before reaching the testing analyzer."}
+            ]
+        }
+    ],
+
+    "services": [
+        {
+            "slug": "blood-test-at-home",
+            "name": "Blood Test at Home",
+            "h1": "Blood Test at Home with Free Sample Collection",
+            "title": "Blood Test at Home | Free Doorstep Sample Collection | Healthians",
+            "description": "Book a blood test at home with Healthians. Certified phlebotomists, 60-minute doorstep sample pickup, NABL certified labs & reports in 24 hours.",
+            "schemaDesc": "Doorstep blood testing and clinical diagnostic services with certified phlebotomists across India.",
+            "fasting": "Depends on selected tests (10-12h for sugar/lipids)",
+            "turnaround": "Reports in 12-24 Hours",
+            "overview": "Skip the hospital waiting lines, morning traffic, and clinical exposure. Healthians brings certified diagnostic pathology care directly to your living room. Book any blood test online and get safe, hygienic doorstep collection with accurate digital reports.",
+            "keyPoints": [
+                "Available across 250+ cities in India",
+                "Doorstep phlebotomist arrival in as little as 60 minutes",
+                "100% sterile, single-use vacuum collection equipment",
+                "NABL & CAP accredited testing precision",
+                "Free tele-consultation with qualified doctors on every report"
+            ],
+            "faq": [
+                {"q": "How does blood test at home work?", "a": "You book online in 30 seconds, a certified phlebotomist arrives at your home at your chosen time, painlessly collects the sample, and your encrypted report arrives on WhatsApp within 24 hours."},
+                {"q": "Are home collection blood test results accurate?", "a": "Yes! All samples are transported in 2°C to 8°C cold-chain containers and processed on the same automated robotic analyzers used in top tertiary hospitals."}
+            ]
+        },
+        {
+            "slug": "diagnostic-tests-at-home",
+            "name": "Diagnostic Tests at Home",
+            "h1": "Diagnostic Tests at Home - Pathology Lab Services",
+            "title": "Diagnostic Tests at Home | Pathology Lab Services | Healthians",
+            "description": "Get accurate diagnostic & pathology lab tests from the comfort of your home. Healthians offers 200+ routine & specialized blood and urine tests.",
+            "schemaDesc": "Comprehensive pathology and diagnostic laboratory testing services at home.",
+            "fasting": "Fasting guidelines provided based on test selection",
+            "turnaround": "Reports in 12-24 Hours",
+            "overview": "Healthians provides a comprehensive portfolio of over 200 pathology tests at your doorstep. From routine CBC, Thyroid, and Diabetes tests to specialized autoimmune, cardiac, allergy, and hormonal profiles, we bring the diagnostic lab to your home.",
+            "keyPoints": [
+                "Over 200 routine and specialized diagnostic tests available",
+                "Zero home collection fees on package and routine test bookings",
+                "Automated high-throughput analyzers eliminate manual processing errors",
+                "Digital Smart Reports delivered directly to your WhatsApp and Email"
+            ],
+            "faq": [
+                {"q": "What diagnostic tests can be performed at home?", "a": "Almost all routine and specialized blood and urine diagnostic tests—including CBC, Thyroid, Diabetes panels, Lipid profiles, Liver and Kidney panels, Vitamins, and Hormones—can be safely collected at home."},
+                {"q": "Can I consult a doctor about my diagnostic report?", "a": "Yes! Healthians provides a complimentary tele-consultation with a qualified medical doctor to discuss your diagnostic results and answer your health questions."}
+            ]
+        },
+        {
+            "slug": "pathology-lab-near-me",
+            "name": "Pathology Lab Near Me",
+            "h1": "Best Pathology Lab Near You with Home Collection",
+            "title": "Pathology Lab Near Me | Home Blood Sample Collection | Healthians",
+            "description": "Looking for a pathology lab near you? Healthians delivers NABL accredited laboratory testing directly to your doorstep. Free sample collection in 60 mins.",
+            "schemaDesc": "Local pathology laboratory network providing rapid doorstep sample collection and digital report delivery.",
+            "fasting": "Check specific test requirements",
+            "turnaround": "Reports in 12-24 Hours",
+            "overview": "Why search for a diagnostic center or pathology lab near you and wait in long clinic lines? Healthians transforms your doorstep into the closest pathology center. Our certified phlebotomists reach your home in 60 minutes across all major metropolitan areas.",
+            "keyPoints": [
+                "Find certified diagnostic testing wherever you are in India",
+                "Painless blood draws in your own comfortable home environment",
+                "NABL accredited testing quality matching premier hospital standards",
+                "Over 3 Crore+ Indians trust Healthians for their family health checkups"
+            ],
+            "faq": [
+                {"q": "How do I find a Healthians collection center near me?", "a": "You don't need to visit a physical center! Our certified phlebotomists operate across all neighborhoods and visit your home directly at your convenient morning time."},
+                {"q": "How can I book immediately?", "a": "Fill out our quick 30-second form on this page or tap the WhatsApp button to book an appointment with our local team immediately."}
+            ]
+        },
+        {
+            "slug": "full-body-checkup-at-home",
+            "name": "Full Body Checkup at Home",
+            "h1": "Full Body Health Checkup at Home",
+            "title": "Full Body Checkup at Home | Complete Health Screening | Healthians",
+            "description": "Book a full body health checkup at home with Healthians. Comprehensive multi-organ screening for Heart, Liver, Kidney, Sugar & CBC with free pickup.",
+            "schemaDesc": "Master health checkup and comprehensive full body diagnostic screening at home.",
+            "fasting": "10-12 hours overnight fasting required",
+            "turnaround": "Reports in 24 Hours",
+            "sampleType": "Blood & Urine",
+            "overview": "A routine annual full body health checkup is the single most powerful step you can take to safeguard your long-term health. Healthians makes health screening effortless with convenient doorstep collection, certified laboratory testing, and complimentary doctor consultation.",
+            "keyPoints": [
+                "Screening for 60+ parameters covering every vital organ",
+                "Detects silent lifestyle conditions like hypertension, prediabetes, and fatty liver",
+                "Early morning 6:30 AM slots so you can resume your day without delay",
+                "Encrypted PDF Smart Report with easy-to-understand color-coded indicators",
+                "Free doctor review to help you plan your diet and fitness routine"
+            ],
+            "faq": [
+                {"q": "How long does a home full body checkup collection take?", "a": "The sample collection process takes only 5 to 7 minutes. Our certified phlebotomist arrives with sterile vacuum tubes, draws the sample painlessly, collects your urine sample, and safely packs everything."},
+                {"q": "Are full body checkup reports valid for medical consultations?", "a": "Yes! All Healthians partner laboratories are NABL certified and accepted by physicians and specialists across India."}
+            ]
+        }
+    ]
+}
+
+# Write out cleanly to seo_database.json
+with open('seo_database.json', 'w', encoding='utf-8') as f:
+    json.dump(database, f, indent=2, ensure_ascii=False)
+
+print(f"Successfully generated seo_database.json:")
+print(f"- Locations: {len(database['locations'])}")
+print(f"- Tests: {len(database['tests'])}")
+print(f"- Packages: {len(database['packages'])}")
+print(f"- Articles: {len(database['articles'])}")
+print(f"- Services: {len(database['services'])}")
+total = len(database['locations']) + len(database['tests']) + len(database['packages']) + len(database['articles']) + len(database['services'])
+print(f"- Total SEO Pages: {total}")
