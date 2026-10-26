@@ -1,8 +1,12 @@
 """
 Generate Sitemap Index + Child Sitemaps — exactly like Healthians.com format
 Master: sitemap.xml (sitemapindex)
-Children: sitemap-locations.xml, sitemap-tests.xml, sitemap-packages.xml,
-          sitemap-articles.xml, sitemap-services.xml
+Children:
+  1. sitemap-static.xml    -> Homepage + Core Service Landing Pages
+  2. sitemap-locations.xml -> 28 City Landing Pages
+  3. sitemap-tests.xml     -> 22 Diagnostic Test Pages
+  4. sitemap-packages.xml  -> 10 Health Package Pages
+  5. sitemap-articles.xml  -> 18 Health Articles & Guides
 """
 import json
 from datetime import datetime
@@ -26,7 +30,19 @@ def make_urlset(urls):
     xml += '</urlset>'
     return xml
 
-# ── 1. Locations sitemap ─────────────────────────────────────────────────────
+# ── 1. Static & Core Services sitemap ─────────────────────────────────────────
+static_urls = [
+    {"loc": f"{BASE_URL}/", "lastmod": TODAY, "changefreq": "daily", "priority": "1.0"},
+    {"loc": f"{BASE_URL}/blood-test-at-home/", "lastmod": TODAY, "changefreq": "weekly", "priority": "0.9"},
+    {"loc": f"{BASE_URL}/diagnostic-tests-at-home/", "lastmod": TODAY, "changefreq": "weekly", "priority": "0.9"},
+    {"loc": f"{BASE_URL}/pathology-lab-near-me/", "lastmod": TODAY, "changefreq": "weekly", "priority": "0.9"},
+    {"loc": f"{BASE_URL}/full-body-checkup-at-home/", "lastmod": TODAY, "changefreq": "weekly", "priority": "0.9"}
+]
+with open('sitemap-static.xml', 'w', encoding='utf-8') as f:
+    f.write(make_urlset(static_urls))
+print(f"[OK] sitemap-static.xml     — {len(static_urls)} URLs (Homepage + Core Services)")
+
+# ── 2. Locations sitemap ─────────────────────────────────────────────────────
 loc_urls = []
 for item in db.get('locations', []):
     loc_urls.append({
@@ -35,9 +51,9 @@ for item in db.get('locations', []):
     })
 with open('sitemap-locations.xml', 'w', encoding='utf-8') as f:
     f.write(make_urlset(loc_urls))
-print(f"[OK] sitemap-locations.xml  — {len(loc_urls)} URLs")
+print(f"[OK] sitemap-locations.xml  — {len(loc_urls)} URLs (28 Cities)")
 
-# ── 2. Tests sitemap ─────────────────────────────────────────────────────────
+# ── 3. Tests sitemap ─────────────────────────────────────────────────────────
 test_urls = []
 for item in db.get('tests', []):
     test_urls.append({
@@ -46,25 +62,20 @@ for item in db.get('tests', []):
     })
 with open('sitemap-tests.xml', 'w', encoding='utf-8') as f:
     f.write(make_urlset(test_urls))
-print(f"[OK] sitemap-tests.xml      — {len(test_urls)} URLs")
+print(f"[OK] sitemap-tests.xml      — {len(test_urls)} URLs (22 Lab Tests)")
 
-# ── 3. Packages sitemap ──────────────────────────────────────────────────────
+# ── 4. Packages sitemap ──────────────────────────────────────────────────────
 pkg_urls = []
 for item in db.get('packages', []):
     pkg_urls.append({
         "loc": f"{BASE_URL}/packages/{item['slug']}/",
         "lastmod": TODAY, "changefreq": "weekly", "priority": "0.9"
     })
-for item in db.get('services', []):
-    pkg_urls.append({
-        "loc": f"{BASE_URL}/{item['slug']}/",
-        "lastmod": TODAY, "changefreq": "weekly", "priority": "0.9"
-    })
 with open('sitemap-packages.xml', 'w', encoding='utf-8') as f:
     f.write(make_urlset(pkg_urls))
-print(f"[OK] sitemap-packages.xml   — {len(pkg_urls)} URLs")
+print(f"[OK] sitemap-packages.xml   — {len(pkg_urls)} URLs (10 Health Packages)")
 
-# ── 4. Articles sitemap ──────────────────────────────────────────────────────
+# ── 5. Articles sitemap ──────────────────────────────────────────────────────
 art_urls = []
 for item in db.get('articles', []):
     art_urls.append({
@@ -73,10 +84,11 @@ for item in db.get('articles', []):
     })
 with open('sitemap-articles.xml', 'w', encoding='utf-8') as f:
     f.write(make_urlset(art_urls))
-print(f"[OK] sitemap-articles.xml   — {len(art_urls)} URLs")
+print(f"[OK] sitemap-articles.xml   — {len(art_urls)} URLs (18 Health Guides)")
 
-# ── 5. Master Sitemap Index ──────────────────────────────────────────────────
+# ── 6. Master Sitemap Index ──────────────────────────────────────────────────
 child_sitemaps = [
+    {"loc": f"{BASE_URL}/sitemap-static.xml"},
     {"loc": f"{BASE_URL}/sitemap-locations.xml"},
     {"loc": f"{BASE_URL}/sitemap-tests.xml"},
     {"loc": f"{BASE_URL}/sitemap-packages.xml"},
@@ -96,7 +108,7 @@ with open('sitemap.xml', 'w', encoding='utf-8') as f:
     f.write(index_xml)
 print(f"\n[OK] sitemap.xml (INDEX)    — {len(child_sitemaps)} child sitemaps")
 
-total = len(loc_urls) + len(test_urls) + len(pkg_urls) + len(art_urls)
+total = len(static_urls) + len(loc_urls) + len(test_urls) + len(pkg_urls) + len(art_urls)
 print(f"\n============================================")
 print(f"  DONE! Total URLs indexed: {total}")
 print(f"  Master index: {BASE_URL}/sitemap.xml")
