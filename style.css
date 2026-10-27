@@ -99,9 +99,28 @@ img {
   gap: 16px;
 }
 
+.brand-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
 .healthians-logo {
   height: 32px;
+  width: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+
+.logo-wordmark {
+  height: 26px;
   width: auto;
+  display: block;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* Partner Branding Badge (Desktop / PC default Layout) */
@@ -1506,7 +1525,12 @@ img {
 /* Footer */
 .site-footer { background: var(--healthians-dark); color: #94A3B8; padding: 50px 0 115px 0; font-size: 0.86rem; position: relative; z-index: 10; }
 .footer-grid { display: grid; grid-template-columns: 1fr; gap: 32px; margin-bottom: 36px; }
-.footer-col { display: flex; flex-direction: column; gap: 12px; }
+.footer-col { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.footer-col img { max-width: 100%; width: auto; object-fit: contain; align-self: flex-start; }
+.footer-brand-lockup { display: flex; align-items: center; gap: 10px; align-self: flex-start; margin-bottom: 4px; }
+.footer-brand-icon { height: 34px; width: 34px; object-fit: contain; filter: brightness(0) invert(1); flex-shrink: 0; display: block; }
+.footer-brand-wordmark { height: 24px; width: auto; object-fit: contain; flex-shrink: 0; display: block; }
+.footer-partner-subtext { color: #E2E8F0; font-weight: 500; font-size: 0.84rem; margin: 0 0 4px 0; align-self: flex-start; }
 .footer-brand-text { font-size: 0.86rem; color: #94A3B8; line-height: 1.6; max-width: 400px; }
 .footer-heading { font-size: 0.9rem; font-weight: 700; color: #FFFFFF; text-transform: uppercase; letter-spacing: 0.05em; }
 .footer-legal { max-width: 760px; font-size: 0.78rem; color: #64748B; line-height: 1.6; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 20px 0; margin-bottom: 16px; }
@@ -2132,8 +2156,8 @@ img {
   .partner-branding-box {
     order: 3;
     width: 100%;
-    margin: 2px 0 0 0;
-    padding: 4px 10px;
+    margin: 4px 0 0 0;
+    padding: 5px 10px;
     background: linear-gradient(90deg, #E0F2FE 0%, #ECFEFF 100%);
     border: 1px solid #BAE6FD;
     border-radius: 6px;
@@ -2149,62 +2173,83 @@ img {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    text-align: center;
     flex-wrap: nowrap;
     gap: 6px;
   }
 
-  .partner-title {
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    line-height: 1.1;
-  }
-
   .partner-subtext {
-    font-size: 0.70rem;
-    line-height: 1.1;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #0369A1;
+    line-height: 1.2;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .partner-id {
-    padding: 0 5px;
-    font-size: 0.68rem;
+    padding: 1px 6px;
+    font-size: 0.70rem;
     margin-left: 3px;
   }
 }
 
 @media (max-width: 520px) {
+  .healthians-logo {
+    height: 28px;
+    width: 28px;
+  }
+
+  .logo-wordmark {
+    height: 20px;
+  }
+
+  .brand-logo-link {
+    gap: 6px;
+  }
+
+  .lang-pill {
+    padding: 5px 8px;
+    font-size: 0.74rem;
+  }
+
+  .call-pill {
+    padding: 5px 10px;
+    font-size: 0.74rem;
+  }
+
   .partner-content {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 2px;
   }
 
-  .partner-title {
-    font-size: 0.75rem;
-    letter-spacing: 0.2px;
-    line-height: 1.15;
-  }
-
-  .partner-title-img {
-    height: 18px;
-  }
-
   .partner-subtext {
-    font-size: 0.67rem;
-    line-height: 1.15;
+    font-size: 0.68rem;
+    line-height: 1.25;
     white-space: normal;
+    text-align: center;
   }
 
   .partner-id {
-    display: inline;
+    display: inline-block;
     padding: 0 4px;
     border-radius: 4px;
     font-size: 0.66rem;
     margin-left: 2px;
+  }
+
+  .footer-brand-lockup {
+    gap: 8px;
+  }
+
+  .footer-brand-icon {
+    height: 30px;
+    width: 30px;
+  }
+
+  .footer-brand-wordmark {
+    height: 20px;
   }
 }
 
