@@ -48,7 +48,7 @@ new_schema = '''<script type="application/ld+json">
     "@type": "MedicalClinic",
     "name": "HealthiansAr Blood Test & Diagnostics",
     "url": "https://bookhealthians.in/",
-    "logo": "https://bookhealthians.in/images/logo.png",
+    "logo": "https://bookhealthians.in/images/logo-v2.png",
     "image": "https://bookhealthians.in/images/hero.jpg",
     "description": "Book a home blood test or full body health checkup. Get free home sample collection across India.",
     "telephone": "+91-9044401435",

@@ -343,7 +343,7 @@ def generate_seo_page(category, item):
             "url": canonical,
             "description": item.get("schemaDesc", desc),
             "image": f"{BASE_URL}/images/hero.jpg",
-            "logo": f"{BASE_URL}/images/logo.png",
+            "logo": f"{BASE_URL}/images/logo-v2.png",
             "telephone": "+91-9044401435",
             "priceRange": "₹₹",
             "address": {
@@ -409,7 +409,7 @@ def generate_seo_page(category, item):
                 "name": "Healthians Diagnostics",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": f"{BASE_URL}/images/logo.png"
+                    "url": f"{BASE_URL}/images/logo-v2.png"
                 }
             }
         })

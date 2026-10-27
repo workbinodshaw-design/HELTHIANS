@@ -150,7 +150,7 @@ def build_homepage_schema():
                 "url": f"{BASE_URL}/",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": f"{BASE_URL}/images/logo.png",
+                    "url": f"{BASE_URL}/images/logo-v2.png",
                     "width": 250,
                     "height": 80
                 },
@@ -202,7 +202,7 @@ def build_homepage_schema():
                 "name": BRAND_FULL,
                 "alternateName": "Healthians Home Blood Test",
                 "url": f"{BASE_URL}/",
-                "logo": f"{BASE_URL}/images/logo.png",
+                "logo": f"{BASE_URL}/images/logo-v2.png",
                 "image": f"{BASE_URL}/images/hero.jpg",
                 "description": "Book a home blood test or full body health checkup with Healthians. Free doorstep sample collection across 250+ cities in India, NABL certified labs, and 100% accurate digital reports delivered in 24-48 hours.",
                 "telephone": PHONE,
@@ -468,7 +468,7 @@ def build_page_schema(category, item, canonical, cat_label, cat_url, faqs):
             "url": canonical,
             "description": schema_desc,
             "image": f"{BASE_URL}/images/hero.jpg",
-            "logo": f"{BASE_URL}/images/logo.png",
+            "logo": f"{BASE_URL}/images/logo-v2.png",
             "telephone": PHONE,
             "priceRange": "₹₹",
             "currenciesAccepted": "INR",
@@ -527,7 +527,7 @@ def build_page_schema(category, item, canonical, cat_label, cat_url, faqs):
             "url": canonical,
             "description": schema_desc,
             "image": f"{BASE_URL}/images/hero.jpg",
-            "logo": f"{BASE_URL}/images/logo.png",
+            "logo": f"{BASE_URL}/images/logo-v2.png",
             "telephone": PHONE,
             "priceRange": "₹₹",
             "address": {
@@ -619,7 +619,7 @@ def build_page_schema(category, item, canonical, cat_label, cat_url, faqs):
                 "name": BRAND_FULL,
                 "logo": {
                     "@type": "ImageObject",
-                    "url": f"{BASE_URL}/images/logo.png",
+                    "url": f"{BASE_URL}/images/logo-v2.png",
                     "width": 250,
                     "height": 80
                 }
