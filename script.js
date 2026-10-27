@@ -246,20 +246,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalCloseBtn = document.getElementById('modal-close-btn');
 
   if (bookingForm) {
+    let isSubmittingLead = false;
+
     bookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Anti-Spam / Rate-Limiting Protection (Prevent Flood Attacks)
+      // 1. Strict Concurrency Lock: Prevent multiple requests on rapid double-clicking
+      if (isSubmittingLead) {
+        console.warn('Booking submission already in progress. Ignoring duplicate click.');
+        return false;
+      }
+
       const nowTs = Date.now();
       const lastSubmitTs = parseInt(sessionStorage.getItem('healthians_last_submit_ts') || '0', 10);
-      if (nowTs - lastSubmitTs < 15000) {
-        alert(currentLang === 'hi' ? 'कृपया कुछ देर प्रतीक्षा कर के पुनः प्रयास करें।' : 'Please wait a few seconds before submitting another booking request.');
-        return;
+      if (nowTs - lastSubmitTs < 10000) {
+        alert(currentLang === 'hi' ? 'कृपया कुछ सेकंड प्रतीक्षा करें। आपकी बुकिंग प्रक्रियाधीन है।' : 'Please wait a few seconds. Your previous booking request is being processed.');
+        return false;
       }
 
       const formData = new FormData(bookingForm);
-
-        const chosenCity = sanitizeInput(formData.get('city') || '');
+      const chosenCity = sanitizeInput(formData.get('city') || '');
       const patientName = sanitizeInput(formData.get('patient_name') || '');
       const rawMobile = (formData.get('mobile_number') || '').replace(/\D/g, '');
 
@@ -286,12 +292,39 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      const selectedPkgName = sanitizeInput(currentSelectedPackage || 'General Home Blood Collection Inquiry');
+
+      // 2. Duplicate Detection: Check if identical phone + name was submitted in the last 60 seconds
+      const submissionFingerprint = `${rawMobile}_${patientName.toLowerCase().trim()}_${chosenCity.toLowerCase().trim()}`;
+      const lastFingerprint = sessionStorage.getItem('healthians_last_lead_fingerprint');
+      if (lastFingerprint === submissionFingerprint && (nowTs - lastSubmitTs < 60000)) {
+        console.warn('Identical booking detected within 60s. Redirecting without duplicate database entry.');
+        window.location.href = `/thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(selectedPkgName)}&city=${encodeURIComponent(chosenCity)}`;
+        return false;
+      }
+
+      // 3. Lock submission immediately & show loading state
+      isSubmittingLead = true;
+      const submitBtn = bookingForm.querySelector('button[type="submit"]') || bookingForm.querySelector('.btn-primary');
+      const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = (currentLang === 'hi') ? '⏳ आपकी बुकिंग दर्ज हो रही है...' : '⏳ Securing Visit Slot...';
+        submitBtn.style.opacity = '0.7';
+        submitBtn.style.cursor = 'not-allowed';
+      }
+
+      // Record rate limit timestamp & fingerprint immediately
+      sessionStorage.setItem('healthians_last_lead_fingerprint', submissionFingerprint);
+      sessionStorage.setItem('healthians_last_submit_ts', nowTs.toString());
+
       const bookingData = {
         id: 'ORD-' + Math.floor(10000 + Math.random() * 90000),
         name: patientName,
         mobile: rawMobile,
         city: chosenCity,
-        selectedPackage: sanitizeInput(currentSelectedPackage || 'General Home Blood Collection Inquiry'),
+        selectedPackage: selectedPkgName,
         timestamp: new Date().toISOString(),
         status: 'New Booking',
         technician: '',
@@ -299,16 +332,6 @@ document.addEventListener('DOMContentLoaded', () => {
         callBackDate: '',
         callBackNote: ''
       };
-
-      // Show clean, professional loading state
-      const submitBtn = bookingForm.querySelector('button[type="submit"]') || bookingForm.querySelector('.btn-primary');
-      const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
-      
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = (currentLang === 'hi') ? '⏳ आपकी बुकिंग दर्ज हो रही है...' : '⏳ Securing Visit Slot...';
-        submitBtn.style.opacity = '0.85';
-      }
 
       let isSavedSuccessfully = false;
       if (window.HealthiansBackend) {
@@ -318,36 +341,49 @@ document.addEventListener('DOMContentLoaded', () => {
             isSavedSuccessfully = true;
           }
         } catch (err) {
-          // Silent error handling to prevent leaking infrastructure details
+          // Silent fallback
         }
-      } 
-      
+      }
+
       if (!isSavedSuccessfully) {
         try {
           let currentBookings = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
-          currentBookings.unshift(bookingData);
-          localStorage.setItem('healthians_admin_bookings', JSON.stringify(currentBookings));
+          const isDup = currentBookings.some(b =>
+            b.mobile === rawMobile &&
+            b.name.toLowerCase() === patientName.toLowerCase() &&
+            (Date.now() - new Date(b.timestamp).getTime() < 60000)
+          );
+          if (!isDup) {
+            currentBookings.unshift(bookingData);
+            localStorage.setItem('healthians_admin_bookings', JSON.stringify(currentBookings));
+          }
           isSavedSuccessfully = true;
         } catch (e) {
-          // Silent fallback failure handling
+          // Silent fallback
         }
       }
 
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
-        submitBtn.style.opacity = '1';
-      }
-
       if (!isSavedSuccessfully) {
+        // Release lock on actual failure so user can retry
+        isSubmittingLead = false;
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+          submitBtn.style.opacity = '1';
+          submitBtn.style.cursor = 'pointer';
+        }
         alert(currentLang === 'hi' ? 'बुकिंग दर्ज करने में समस्या हुई। कृपया अपने नेटवर्क की जांच करें।' : 'Unable to confirm booking at this time. Please verify your internet connection and try again.');
         return;
       }
 
-      // Record rate limit timestamp upon confirmed successful submission
-      sessionStorage.setItem('healthians_last_submit_ts', Date.now().toString());
+      // 4. Booking confirmed: KEEP button disabled so user CANNOT double submit!
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = (currentLang === 'hi') ? '✅ बुकिंग सफल! रीडायरेक्ट हो रहा है...' : '✅ Booking Confirmed! Redirecting...';
+        submitBtn.style.opacity = '0.9';
+      }
 
-      // Log Lead conversion event for Google & Meta Ads tracking only on confirmed save
+      // Log Lead conversion event for Google & Meta Ads tracking
       logConversionEvent('Lead_Submitted_Success', bookingData);
 
       // Ensure form data keys match Apps Script
@@ -363,12 +399,12 @@ document.addEventListener('DOMContentLoaded', () => {
         keepalive: true
       }).catch(err => console.error(err));
 
-      // Redirect quickly instead of waiting for email to send
+      // Redirect quickly
       setTimeout(() => {
         window.location.href = `/thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(chosenCity)}`;
-      }, 600);
+      }, 500);
 
-      // Reset form fields and custom selector
+      // Reset form fields
       bookingForm.reset();
       currentSelectedPackage = '';
       if (selectedPackageBox) selectedPackageBox.style.display = 'none';

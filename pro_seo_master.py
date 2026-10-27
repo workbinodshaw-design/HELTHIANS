@@ -842,7 +842,43 @@ def generate_seo_page(category, item, template):
     fasting_req = item.get('fasting', 'No special fasting required')
     overview = item.get('overview', desc)
     
-    wa_msg = f"Hello%2C%20I%20want%20to%20book%20{name.replace(' ', '%20')}%20from%20Healthians."
+    import urllib.parse
+    if category == 'locations':
+        banner_title = f"Book Blood Test in {name} at Home — 100% Free Collection"
+        banner_sub = f"Certified phlebotomist at your doorstep in {name}. Reports on WhatsApp &amp; Email."
+        about_title = f"About Blood Test at Home in {name} with Healthians"
+        wa_text = f"Hello, I want to book a blood test at home in {name} from Healthians."
+    elif category == 'tests':
+        banner_title = f"Book {name} at Home — 100% Free Collection"
+        banner_sub = "Certified phlebotomist at your doorstep. Reports on WhatsApp &amp; Email."
+        about_title = f"About {name} with Healthians"
+        wa_text = f"Hello, I want to book {name} at home from Healthians."
+    elif category == 'packages':
+        banner_title = f"Book {name} at Home — 100% Free Collection"
+        banner_sub = "Certified phlebotomist at your doorstep. Reports on WhatsApp &amp; Email."
+        about_title = f"About {name} with Healthians"
+        wa_text = f"Hello, I want to book {name} at home from Healthians."
+    elif category == 'services':
+        banner_title = f"Book {name} — 100% Free Doorstep Collection"
+        banner_sub = "Certified phlebotomist at your doorstep. Reports on WhatsApp &amp; Email."
+        about_title = f"About {name} with Healthians"
+        wa_text = f"Hello, I want to book {name} from Healthians."
+    elif category == 'articles':
+        banner_title = "Book Health Checkup at Home — 100% Free Collection"
+        banner_sub = "Certified phlebotomist at your doorstep. Reports on WhatsApp &amp; Email."
+        about_title = f"About {name} — Health Guide"
+        wa_text = f"Hello, I have a query about {name} from Healthians."
+    else:
+        banner_title = f"Book {name} at Home — 100% Free Collection"
+        banner_sub = "Certified phlebotomist at your doorstep. Reports on WhatsApp &amp; Email."
+        about_title = f"About {name} with Healthians"
+        wa_text = f"Hello, I want to book {name} from Healthians."
+
+    wa_msg = urllib.parse.quote(wa_text)
+    
+    # Also update default wa.me text in footer & floating buttons to match the specific page
+    default_wa_text = "Hello%2C%20I%20want%20to%20book%20a%20home%20blood%20test%20from%20Healthians."
+    page = page.replace(default_wa_text, wa_msg)
     
     # Related city links (for test/package pages — internal linking boost)
     city_cross_links = ""
@@ -895,7 +931,7 @@ def generate_seo_page(category, item, template):
             <span class="seo-pill" style="background:#FEF9C3;color:#78350F;">⭐ 4.8/5 Rating | 52,000+ Reviews</span>
           </div>
 
-          <h2 class="seo-content-h2">About {name} with Healthians</h2>
+          <h2 class="seo-content-h2">{about_title}</h2>
           <p class="seo-text-p">{overview}</p>
 
           <div class="seo-key-highlights-box">
@@ -909,8 +945,8 @@ def generate_seo_page(category, item, template):
           <!-- CTA Banner -->
           <div class="seo-cta-banner">
             <div class="seo-cta-banner-text">
-              <h3>Book {name} at Home — 100% Free Collection</h3>
-              <p>Certified phlebotomist at your doorstep. Reports on WhatsApp &amp; Email.</p>
+              <h3>{banner_title}</h3>
+              <p>{banner_sub}</p>
             </div>
             <div class="seo-cta-buttons">
               <a href="#booking-card-destination" class="seo-cta-btn-call" style="background:#00A0A8;color:#FFF;">📅 Book Now</a>
@@ -1045,39 +1081,12 @@ print(f"\n[OK] Total pages generated: {total_pages}")
 
 
 # ════════════════════════════════════════════════════════════════════════════
-#  8. GENERATE ADVANCED XML SITEMAP (with image sitemap)
+#  8. GENERATE SITEMAP INDEX + SUB-SITEMAPS (Healthians format)
 # ════════════════════════════════════════════════════════════════════════════
 
-print("\n[Step 4/5] Generating advanced XML sitemap...")
-
-sitemap_xml = '''<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-'''
-
-for entry in sitemap_entries:
-    # Add hreflang alternate for each URL
-    sitemap_xml += f'''  <url>
-    <loc>{entry["loc"]}</loc>
-    <lastmod>{entry["lastmod"]}</lastmod>
-    <changefreq>{entry["changefreq"]}</changefreq>
-    <priority>{entry["priority"]}</priority>
-    <image:image>
-      <image:loc>{BASE_URL}/images/hero.jpg</image:loc>
-      <image:title>Healthians Home Blood Test - Book Online</image:title>
-    </image:image>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="{entry["loc"]}"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="{entry["loc"]}"/>
-  </url>
-'''
-
-sitemap_xml += '</urlset>'
-
-with open('sitemap.xml', 'w', encoding='utf-8') as f:
-    f.write(sitemap_xml)
-print(f"[OK] Sitemap: {len(sitemap_entries)} URLs with image + hreflang tags")
+print("\n[Step 4/5] Generating Sitemap Index + Child Sitemaps...")
+import subprocess
+subprocess.run(["python", "build_sitemaps.py"], check=True)
 
 
 # ════════════════════════════════════════════════════════════════════════════

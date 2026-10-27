@@ -50,6 +50,16 @@
     saveOrder: async function(bookingData) {
       try {
         let cache = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
+        // Deduplication shield: Check if same mobile + name was saved in last 60 seconds
+        const isDuplicateRecent = cache.some(x => 
+          x.mobile === bookingData.mobile &&
+          (x.name || '').toLowerCase().trim() === (bookingData.name || '').toLowerCase().trim() &&
+          (Date.now() - new Date(x.timestamp).getTime() < 60000)
+        );
+        if (isDuplicateRecent) {
+          console.warn('[Deduplication] Booking already saved in last 60 seconds. Ignoring duplicate.');
+          return { status: 'success', duplicate: true };
+        }
         if (!cache.some(x => x.id === bookingData.id)) {
           cache.unshift(bookingData);
           localStorage.setItem('healthians_admin_bookings', JSON.stringify(cache));
