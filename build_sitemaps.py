@@ -11,7 +11,7 @@ Children:
 import json
 from datetime import datetime
 
-BASE_URL = 'https://bookbloodtest.in'
+BASE_URL = 'https://www.bookbloodtest.in'
 TODAY = datetime.now().strftime('%Y-%m-%d')
 
 with open('seo_database.json', 'r', encoding='utf-8') as f:

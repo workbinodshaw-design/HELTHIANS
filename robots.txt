@@ -18,4 +18,4 @@ Disallow: /
 User-agent: SemrushBot
 Disallow: /
 
-Sitemap: https://bookbloodtest.in/sitemap.xml
+Sitemap: https://www.bookbloodtest.in/sitemap.xml

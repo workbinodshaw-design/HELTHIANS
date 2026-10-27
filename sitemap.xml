@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://bookbloodtest.in/sitemap-static.xml</loc>
+    <loc>https://www.bookbloodtest.in/sitemap-static.xml</loc>
     <lastmod>2026-10-27</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://bookbloodtest.in/sitemap-locations.xml</loc>
+    <loc>https://www.bookbloodtest.in/sitemap-locations.xml</loc>
     <lastmod>2026-10-27</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://bookbloodtest.in/sitemap-tests.xml</loc>
+    <loc>https://www.bookbloodtest.in/sitemap-tests.xml</loc>
     <lastmod>2026-10-27</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://bookbloodtest.in/sitemap-packages.xml</loc>
+    <loc>https://www.bookbloodtest.in/sitemap-packages.xml</loc>
     <lastmod>2026-10-27</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://bookbloodtest.in/sitemap-articles.xml</loc>
+    <loc>https://www.bookbloodtest.in/sitemap-articles.xml</loc>
     <lastmod>2026-10-27</lastmod>
   </sitemap>
 </sitemapindex>
