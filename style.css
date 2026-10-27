@@ -163,18 +163,18 @@ img {
 }
 
 .powered-by-healthians-img {
-  height: 24px;
+  height: 36px;
   width: auto;
   display: block;
   object-fit: contain;
 }
 
 .powered-by-healthians-footer-img {
-  height: 22px;
+  height: 30px;
   width: auto;
   display: block;
   object-fit: contain;
-  margin: 4px 0 8px 0;
+  margin: 6px 0 10px 0;
 }
 
 .partner-subtext {
@@ -2272,6 +2272,12 @@ img {
     width: 15px;
     height: 15px;
   }
+  .powered-by-healthians-img {
+    height: 28px !important;
+  }
+  .powered-by-healthians-footer-img {
+    height: 22px !important;
+  }
 }
 
 /* Responsive Mobile & Tablet formatting for Partner Branding */
@@ -2298,12 +2304,31 @@ img {
   .partner-branding-box {
     order: 3;
     width: 100%;
-    margin: 4px 0 0 0;
-    padding: 5px 10px;
+    margin: 6px 0 0 0;
+    padding: 6px 14px;
     background: linear-gradient(90deg, #E0F2FE 0%, #ECFEFF 100%);
     border: 1px solid #BAE6FD;
-    border-radius: 6px;
+    border-radius: 8px;
     box-shadow: 0 1px 3px rgba(14, 116, 144, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .powered-by-healthians-img {
+    height: 34px;
+    max-width: 100%;
+    width: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .powered-by-healthians-footer-img {
+    height: 28px;
+    max-width: 100%;
+    width: auto;
+    display: block;
+    object-fit: contain;
   }
 
   .partner-divider {
@@ -2361,11 +2386,19 @@ img {
   }
 
   .powered-by-healthians-img {
-    height: 18px;
+    height: 32px !important;
+    max-width: 100%;
+    width: auto;
+    display: block;
+    object-fit: contain;
   }
 
   .powered-by-healthians-footer-img {
-    height: 18px;
+    height: 26px !important;
+    max-width: 100%;
+    width: auto;
+    display: block;
+    object-fit: contain;
   }
 
   .partner-content {
