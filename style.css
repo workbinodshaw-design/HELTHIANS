@@ -136,6 +136,13 @@ img {
   text-transform: uppercase;
 }
 
+.partner-title-img {
+  height: 22px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
 .partner-subtext {
   font-size: 0.75rem;
   font-weight: 600;
@@ -2180,6 +2187,10 @@ img {
     font-size: 0.75rem;
     letter-spacing: 0.2px;
     line-height: 1.15;
+  }
+
+  .partner-title-img {
+    height: 18px;
   }
 
   .partner-subtext {
