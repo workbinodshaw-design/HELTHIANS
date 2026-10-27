@@ -242,6 +242,12 @@
       height: auto;
     }
     .circular-seal-badge svg { max-height: 74px; max-width: 74px; }
+    .healthians-logo { width: 32px !important; height: 32px !important; object-fit: contain; }
+    .logo-wordmark { height: 26px !important; width: auto !important; object-fit: contain; }
+    .footer-col { display: flex; flex-direction: column; align-items: flex-start; }
+    .footer-brand-lockup { display: flex; align-items: center; gap: 10px; }
+    .footer-brand-icon { width: 34px !important; height: 34px !important; object-fit: contain; filter: brightness(0) invert(1); }
+    .footer-brand-wordmark { height: 24px !important; width: auto !important; object-fit: contain; }
   </style>
 
   <!-- Admin Subdomain Automatic Portal Router -->
@@ -252,7 +258,7 @@
       }
     }
   </script>
-    <!-- ═══ START INDIA SEO SIGNALS ═══ -->
+      <!-- ═══ START INDIA SEO SIGNALS ═══ -->
   <meta property="og:locale" content="en_IN">
   <meta property="og:site_name" content="Healthians | Book Blood Test at Home India">
   <meta name="twitter:image:alt" content="Healthians Home Blood Test — Free Doorstep Sample Collection India">
@@ -1147,6 +1153,7 @@
   
   
   
+  
   <!-- SEO ENTERPRISE INTERNAL LINKING DIRECTORY (COMPACT COLLAPSIBLE TABS) -->
   <section class="seo-directory-section" aria-label="Site Directory">
     <div class="container" style="max-width: 1100px; margin: 0 auto;">
@@ -1158,7 +1165,7 @@
           <span style="font-size:1.05rem;color:#0F172A;font-weight:700;">Blood Tests, Packages &amp; Cities Across India</span>
         </div>
         <button type="button" id="seo-dir-toggle-btn" style="background:#FFF;border:1px solid #CBD5E1;color:#0F766E;font-weight:700;font-size:0.82rem;padding:6px 16px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 1px 4px rgba(0,0,0,0.05);font-family:inherit;">
-          <span id="seo-dir-toggle-text">Explore All 82 Categories</span>
+          <span id="seo-dir-toggle-text">Explore All 83 Categories</span>
           <span id="seo-dir-toggle-arrow" style="font-size:0.7rem;transition:transform 0.3s;display:inline-block;">&#9660;</span>
         </button>
       </div>
@@ -1167,7 +1174,7 @@
       <div id="seo-directory-content" style="display:none;margin-top:18px;border-top:1px dashed #CBD5E1;padding-top:18px;">
         <!-- Tab Buttons -->
         <div class="seo-tab-nav" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;" role="tablist">
-          <button type="button" class="seo-tab-btn active" data-tab="cities" onclick="switchSeoTab('cities')" role="tab" aria-selected="true">🏙️ Cities (28)</button>
+          <button type="button" class="seo-tab-btn active" data-tab="cities" onclick="switchSeoTab('cities')" role="tab" aria-selected="true">🏙️ Cities (29)</button>
           <button type="button" class="seo-tab-btn" data-tab="tests" onclick="switchSeoTab('tests')" role="tab" aria-selected="false">🧪 Blood Tests (22)</button>
           <button type="button" class="seo-tab-btn" data-tab="packages" onclick="switchSeoTab('packages')" role="tab" aria-selected="false">📦 Packages (14)</button>
           <button type="button" class="seo-tab-btn" data-tab="articles" onclick="switchSeoTab('articles')" role="tab" aria-selected="false">📖 Health Guides (18)</button>
@@ -1201,6 +1208,7 @@
 <a href="/locations/amritsar/" class="seo-chip-link">Blood Test in Amritsar</a>
 <a href="/locations/meerut/" class="seo-chip-link">Blood Test in Meerut</a>
 <a href="/locations/dehradun/" class="seo-chip-link">Blood Test in Dehradun</a>
+<a href="/locations/allahabad/" class="seo-chip-link">Blood Test in Allahabad (Prayagraj)</a>
 </div>
         <div id="tab-tests" class="seo-tab-pane" style="display:none;flex-wrap:wrap;gap:8px;" role="tabpanel"><a href="/tests/cbc-test/" class="seo-chip-link">Complete Blood Count (CBC) Test</a>
 <a href="/tests/thyroid-test/" class="seo-chip-link">Thyroid Profile (T3, T4, TSH) Test</a>
@@ -1274,7 +1282,7 @@
       const isHidden = content.style.display === 'none' || !content.style.display;
       content.style.display = isHidden ? 'block' : 'none';
       if (arrow) arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
-      if (text) text.innerText = isHidden ? 'Collapse Directory' : 'Explore All 82 Categories';
+      if (text) text.innerText = isHidden ? 'Collapse Directory' : 'Explore All 83 Categories';
       if (header) header.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
     }
     function switchSeoTab(tabId) {

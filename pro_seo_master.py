@@ -58,6 +58,8 @@ CITY_STATE_MAP = {
     "dehradun": ("Dehradun", "Uttarakhand", "IN-UT", "248001"),
     "ghaziabad": ("Ghaziabad", "Uttar Pradesh", "IN-UP", "201001"),
     "faridabad": ("Faridabad", "Haryana", "IN-HR", "121001"),
+    "allahabad": ("Allahabad", "Uttar Pradesh", "IN-UP", "211001"),
+    "prayagraj": ("Prayagraj", "Uttar Pradesh", "IN-UP", "211001"),
 }
 
 def ensure_dir(path):

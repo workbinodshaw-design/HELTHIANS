@@ -1,7 +1,15 @@
 {
-  
-  
   "redirects": [
+    {
+      "source": "/locations/prayagraj",
+      "destination": "/locations/allahabad/",
+      "permanent": true
+    },
+    {
+      "source": "/locations/prayagraj/",
+      "destination": "/locations/allahabad/",
+      "permanent": true
+    },
     {
       "source": "/admin",
       "missing": [

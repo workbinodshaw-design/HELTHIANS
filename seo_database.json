@@ -1037,6 +1037,55 @@
           "a": "Most routine blood test reports are processed and delivered via WhatsApp and email within 24 hours of sample pickup."
         }
       ]
+    },
+    {
+      "slug": "allahabad",
+      "name": "Allahabad (Prayagraj)",
+      "state": "Uttar Pradesh",
+      "h1": "Home Blood Test in Allahabad (Prayagraj)",
+      "title": "Home Blood Test in Allahabad (Prayagraj) | Free Sample Collection | Healthians",
+      "description": "Book a home blood test or full body checkup in Allahabad (Prayagraj) with Healthians. Certified phlebotomists, 60-minute doorstep sample collection & NABL reports.",
+      "schemaDesc": "Pathology lab and doorstep blood sample collection services across Allahabad (Prayagraj) including Civil Lines, Katra, Georgetown, Dhoomanganj, Naini, and Tagore Town.",
+      "localities": [
+        "Civil Lines",
+        "Katra",
+        "Georgetown",
+        "Dhoomanganj",
+        "Naini",
+        "Tagore Town",
+        "Kareli",
+        "Allahpur",
+        "Jhunsi",
+        "Teliyarganj"
+      ],
+      "fasting": "Depends on selected tests (10-12h for Sugar/Lipid)",
+      "turnaround": "Reports in 12-24 Hours on WhatsApp",
+      "overview": "Healthians provides seamless home blood collection services across all major localities in Allahabad (Prayagraj). With automated NABL-accredited diagnostic hubs and temperature-controlled cold chain logistics, we ensure 100% sample integrity and precision laboratory test results.",
+      "keyPoints": [
+        "Doorstep phlebotomist arrival within 60 minutes across Civil Lines, Katra, Naini & all zones",
+        "Zero home collection fee on all routine blood tests and comprehensive health packages",
+        "Sample testing conducted in NABL & CAP accredited high-precision partner laboratories",
+        "Encrypted Smart Reports delivered directly on WhatsApp & Email within 24 hours",
+        "Free doctor consultation included to review and interpret your test report"
+      ],
+      "faq": [
+        {
+          "q": "How can I book a blood test at home in Allahabad (Prayagraj)?",
+          "a": "You can book easily in 30 seconds by filling the form on this page or messaging us on WhatsApp. Our certified phlebotomist will arrive at your home in Allahabad at your preferred morning slot."
+        },
+        {
+          "q": "Is home sample collection free in Allahabad?",
+          "a": "Yes, Healthians provides 100% free home sample collection across all areas of Allahabad including Civil Lines, Katra, Georgetown, Naini, and Jhunsi."
+        },
+        {
+          "q": "How fast are blood test reports delivered in Allahabad?",
+          "a": "Routine blood test reports such as CBC, Diabetes Sugar, Thyroid, and Lipid Profile are delivered directly on your WhatsApp and email within 12 to 24 hours."
+        },
+        {
+          "q": "Are Healthians labs in Allahabad NABL accredited?",
+          "a": "Yes, all blood samples collected in Allahabad are processed inside NABL and CAP accredited partner diagnostic laboratories following strict clinical quality guidelines."
+        }
+      ]
     }
   ],
   "tests": [
