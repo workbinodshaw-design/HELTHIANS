@@ -265,19 +265,43 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const formData = new FormData(bookingForm);
+      
+      // Security Check 1: Invisible Honeypot Anti-Bot Shield
+      const honeypot = formData.get('_system_verification_code');
+      if (honeypot && honeypot.trim() !== '') {
+        console.warn('[Security Shield] Automated spam bot intercepted and blocked.');
+        return false;
+      }
+
       const chosenCity = sanitizeInput(formData.get('city') || '');
       const patientName = sanitizeInput(formData.get('patient_name') || '');
       const rawMobile = (formData.get('mobile_number') || '').replace(/\D/g, '');
 
-      if (!patientName || patientName.length < 2) {
-        alert(currentLang === 'hi' ? 'कृपया मरीज का पूरा नाम दर्ज करें।' : 'Please enter a valid Patient Name.');
+      // Security Check 2: Patient Name Validation & Injection Shield
+      if (!patientName || patientName.length < 2 || patientName.length > 70) {
+        alert(currentLang === 'hi' ? 'कृपया मरीज का सही नाम दर्ज करें (2 से 70 अक्षर)।' : 'Please enter a valid Patient Name (2 to 70 characters).');
         const nameInput = document.getElementById('lead-name');
         if (nameInput) nameInput.focus();
         return;
       }
 
-      if (!rawMobile || rawMobile.length < 10) {
-        alert(currentLang === 'hi' ? 'कृपया एक वैध 10-अंकीय मोबाइल नंबर दर्ज करें।' : 'Please enter a valid 10-digit mobile number.');
+      if (/[<>{}\[\]\\;]/.test(patientName)) {
+        alert(currentLang === 'hi' ? 'नाम में अमान्य वर्ण शामिल हैं।' : 'Name contains invalid characters.');
+        return;
+      }
+
+      // Security Check 3: Indian Mobile 10-Digit Standard (Starting with 6, 7, 8, or 9)
+      const indianMobileRegex = /^[6-9]\d{9}$/;
+      if (!indianMobileRegex.test(rawMobile)) {
+        alert(currentLang === 'hi' ? 'कृपया एक वैध 10-अंकीय भारतीय मोबाइल नंबर दर्ज करें (6, 7, 8 या 9 से शुरू होने वाला)।' : 'Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.');
+        const phoneInput = document.getElementById('lead-phone');
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
+
+      // Security Check 4: Block Fake Repeated Numbers (e.g. 9999999999, 8888888888)
+      if (/^(\d)\1{9}$/.test(rawMobile)) {
+        alert(currentLang === 'hi' ? 'कृपया एक असली मोबाइल नंबर दर्ज करें।' : 'Please enter an active mobile number.');
         const phoneInput = document.getElementById('lead-phone');
         if (phoneInput) phoneInput.focus();
         return;
