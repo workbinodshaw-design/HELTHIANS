@@ -834,10 +834,11 @@ def generate_seo_page(category, item, template):
     page = re.sub(r'<script type="application/ld\+json">.*?</script>', schema_str, page, count=1, flags=re.DOTALL)
 
     # ── SEO Details Section (Highlights + CTA) ──────────────────────────────
-    highlights = item.get('highlights', [])
-    highlights_html = "".join([f'<li>✅ {h}</li>' for h in highlights[:8]])
-    if not highlights_html:
-        highlights_html = f"<li>✅ Free home sample collection</li><li>✅ NABL certified NABL labs</li><li>✅ Reports in 24-48 hours</li>"
+    raw_points = item.get('keyPoints', item.get('highlights', []))
+    if isinstance(raw_points, list) and raw_points:
+        highlights_html = "".join([f'<li style="margin-bottom:8px;line-height:1.5;"><span style="color:#00A0A8;font-weight:700;margin-right:8px;">✓</span> {h}</li>' for h in raw_points])
+    else:
+        highlights_html = '<li><span style="color:#00A0A8;font-weight:700;margin-right:8px;">✓</span> Free home sample collection by certified phlebotomist</li><li><span style="color:#00A0A8;font-weight:700;margin-right:8px;">✓</span> 100% NABL &amp; CAP accredited laboratory testing</li><li><span style="color:#00A0A8;font-weight:700;margin-right:8px;">✓</span> Digital reports delivered within 24 hours on WhatsApp</li>'
     
     turnaround = item.get('turnaround', '24-48 Hours Report')
     fasting_req = item.get('fasting', 'No special fasting required')
@@ -884,29 +885,47 @@ def generate_seo_page(category, item, template):
     # Related city links (for test/package pages — internal linking boost)
     city_cross_links = ""
     if category in ['tests', 'packages']:
-        cities = db.get('locations', [])[:8]
+        cities = db.get('locations', [])[:10]
         city_links = "".join([
-            f'<a href="/locations/{c["slug"]}/?test={slug}" style="color:#00A0A8;text-decoration:none;font-size:0.82rem;padding:4px 10px;border:1px solid #B2E0E3;border-radius:20px;">{name} in {c["name"]}</a> '
+            f'<a href="/locations/{c["slug"]}/?test={slug}" style="color:#00A0A8;text-decoration:none;font-size:0.82rem;padding:5px 12px;border:1px solid #B2E0E3;border-radius:20px;background:#FFF;font-weight:500;">📍 {name} in {c["name"]}</a> '
             for c in cities
         ])
         city_cross_links = f'''
-        <div style="margin-top:16px;">
-          <p style="font-size:0.9rem;font-weight:600;color:#0F172A;margin:0 0 8px 0;">📍 {name} Near You:</p>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;">{city_links}</div>
+        <div style="margin-top:20px;">
+          <p style="font-size:0.9rem;font-weight:700;color:#0F172A;margin:0 0 8px 0;">📍 {name} Doorstep Collection Across Major Cities:</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">{city_links}</div>
         </div>'''
     
-    # Related test links (for city pages)
+    # Related test & package links (for city pages)
     test_cross_links = ""
+    localities_block = ""
     if category == 'locations':
+        loc_list = item.get('localities', [])
+        if loc_list:
+            chips = "".join([f'<span style="display:inline-block;background:#FFF;border:1px solid #CBD5E1;border-radius:20px;padding:4px 12px;font-size:0.8rem;color:#1E293B;font-weight:500;box-shadow:0 1px 2px rgba(0,0,0,0.03);">📍 {l}</span>' for l in loc_list])
+            localities_block = f'''
+          <div style="margin-top:20px;padding:16px 20px;background:#F8FAFC;border-radius:12px;border:1px solid #E2E8F0;">
+            <p style="font-size:0.92rem;font-weight:700;color:#0F172A;margin:0 0 10px 0;">📍 Free Doorstep Sample Pickup Across {name} Localities:</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">{chips}</div>
+            <p style="font-size:0.78rem;color:#64748B;margin:10px 0 0 0;">✨ Certified, vaccinated phlebotomists arrive at your home or office in {name} within 60 minutes.</p>
+          </div>'''
+
         tests = db.get('tests', [])[:6]
         t_links = "".join([
-            f'<a href="/tests/{t["slug"]}/?city={slug}" style="color:#00A0A8;text-decoration:none;font-size:0.82rem;padding:4px 10px;border:1px solid #B2E0E3;border-radius:20px;">{t["name"]} in {name}</a> '
+            f'<a href="/tests/{t["slug"]}/?city={slug}" style="color:#00A0A8;text-decoration:none;font-size:0.82rem;padding:5px 12px;border:1px solid #B2E0E3;border-radius:20px;background:#FFF;font-weight:500;">🧪 {t["name"]} in {name}</a> '
             for t in tests
         ])
+        pkgs = db.get('packages', [])[:4]
+        pkg_links = "".join([
+            f'<a href="/packages/{p["slug"]}/?city={slug}" style="color:#0F766E;text-decoration:none;font-size:0.82rem;padding:5px 12px;border:1px solid #A7F3D0;border-radius:20px;background:#F0FDF4;font-weight:600;">📦 {p["name"]} in {name}</a> '
+            for p in pkgs
+        ])
         test_cross_links = f'''
-        <div style="margin-top:16px;">
-          <p style="font-size:0.9rem;font-weight:600;color:#0F172A;margin:0 0 8px 0;">🧪 Popular Tests in {name}:</p>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;">{t_links}</div>
+        <div style="margin-top:20px;">
+          <p style="font-size:0.9rem;font-weight:700;color:#0F172A;margin:0 0 8px 0;">🧪 Most Booked Diagnostic Tests in {name}:</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">{t_links}</div>
+          <p style="font-size:0.9rem;font-weight:700;color:#0F172A;margin:14px 0 8px 0;">📦 Popular Health Checkup Packages in {name}:</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">{pkg_links}</div>
         </div>'''
 
     seo_section = f'''
@@ -938,6 +957,73 @@ def generate_seo_page(category, item, template):
           <div class="seo-key-highlights-box">
             <div class="seo-key-highlights-title">✅ Key Diagnostic Highlights &amp; Inclusions</div>
             <ul class="seo-highlights-list">{highlights_html}</ul>
+          </div>
+
+          {localities_block}
+
+          <!-- Enterprise Diagnostic Comparison Table (Google Snippet Optimized) -->
+          <div style="margin-top:24px;border-radius:12px;overflow:hidden;border:1px solid #E2E8F0;box-shadow:0 1px 4px rgba(0,0,0,0.04);">
+            <div style="background:#0F172A;color:#FFF;padding:12px 18px;font-size:0.92rem;font-weight:700;">
+              📊 Healthians Home Collection vs. Traditional Diagnostic Labs
+            </div>
+            <div style="overflow-x:auto;">
+              <table style="width:100%;border-collapse:collapse;font-size:0.84rem;text-align:left;">
+                <thead>
+                  <tr style="background:#F1F5F9;color:#334155;font-weight:700;border-bottom:1px solid #E2E8F0;">
+                    <th style="padding:10px 14px;">Service Feature</th>
+                    <th style="padding:10px 14px;background:#E6F7F8;color:#0F766E;">Healthians Doorstep</th>
+                    <th style="padding:10px 14px;">Offline Pathology Labs</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid #F1F5F9;background:#FFF;">
+                    <td style="padding:10px 14px;font-weight:600;">Home Sample Pickup</td>
+                    <td style="padding:10px 14px;color:#0F766E;font-weight:700;background:#F0FAFA;">✅ 100% Free (Zero Visit Fee)</td>
+                    <td style="padding:10px 14px;color:#64748B;">₹150 - ₹300 Extra / Wait in Queue</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid #F1F5F9;background:#FAFAFA;">
+                    <td style="padding:10px 14px;font-weight:600;">Accreditation Standard</td>
+                    <td style="padding:10px 14px;color:#0F766E;font-weight:700;background:#F0FAFA;">✅ NABL &amp; CAP Verified Labs</td>
+                    <td style="padding:10px 14px;color:#64748B;">⚠️ Often Unregistered / Variable</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid #F1F5F9;background:#FFF;">
+                    <td style="padding:10px 14px;font-weight:600;">Digital WhatsApp Reports</td>
+                    <td style="padding:10px 14px;color:#0F766E;font-weight:700;background:#F0FAFA;">✅ Same Day / Within 24 Hours</td>
+                    <td style="padding:10px 14px;color:#64748B;">⌛ Collect in person next day</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid #F1F5F9;background:#FAFAFA;">
+                    <td style="padding:10px 14px;font-weight:600;">Doctor Consultation</td>
+                    <td style="padding:10px 14px;color:#0F766E;font-weight:700;background:#F0FAFA;">✅ Included Free of Charge</td>
+                    <td style="padding:10px 14px;color:#64748B;">❌ Requires Separate Doctor Fee</td>
+                  </tr>
+                  <tr style="background:#FFF;">
+                    <td style="padding:10px 14px;font-weight:600;">Sample Safety &amp; Cool-Box</td>
+                    <td style="padding:10px 14px;color:#0F766E;font-weight:700;background:#F0FAFA;">✅ 2°C - 8°C Monitored &amp; Barcoded</td>
+                    <td style="padding:10px 14px;color:#64748B;">⚠️ Manual Labeling &amp; Handling</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- E-E-A-T Medical Trust Strip -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:12px;margin-top:20px;">
+            <div style="background:#F0FDF4;border:1px solid #BBF7D0;padding:12px 14px;border-radius:10px;text-align:center;">
+              <div style="font-weight:800;color:#166534;font-size:1.1rem;">3 Crore+</div>
+              <div style="font-size:0.75rem;color:#15803D;font-weight:600;">Patients Trusted</div>
+            </div>
+            <div style="background:#EFF6FF;border:1px solid #BFDBFE;padding:12px 14px;border-radius:10px;text-align:center;">
+              <div style="font-weight:800;color:#1E40AF;font-size:1.1rem;">4.8 / 5 ⭐</div>
+              <div style="font-size:0.75rem;color:#1D4ED8;font-weight:600;">52,000+ Verified Reviews</div>
+            </div>
+            <div style="background:#F0FDFA;border:1px solid #99F6E4;padding:12px 14px;border-radius:10px;text-align:center;">
+              <div style="font-weight:800;color:#0F766E;font-size:1.1rem;">NABL &amp; CAP</div>
+              <div style="font-size:0.75rem;color:#0D9488;font-weight:600;">Accredited Quality</div>
+            </div>
+            <div style="background:#FFF7ED;border:1px solid #FED7AA;padding:12px 14px;border-radius:10px;text-align:center;">
+              <div style="font-weight:800;color:#C2410C;font-size:1.1rem;">60 Mins</div>
+              <div style="font-size:0.75rem;color:#EA580C;font-weight:600;">Rapid Doorstep Pickup</div>
+            </div>
           </div>
 
           {city_cross_links}
