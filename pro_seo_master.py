@@ -85,7 +85,7 @@ total_pages = 0
 
 def build_pro_head_block():
     """Returns the optimized <head> block additions for India SEO."""
-    return """  <!-- ═══ INDIA SEO SIGNALS ═══ -->
+    return """  <!-- ═══ START INDIA SEO SIGNALS ═══ -->
   <meta property="og:locale" content="en_IN">
   <meta property="og:site_name" content="Healthians | Book Blood Test at Home India">
   <meta name="twitter:image:alt" content="Healthians Home Blood Test — Free Doorstep Sample Collection India">
@@ -99,21 +99,22 @@ def build_pro_head_block():
   <meta name="content-language" content="en-IN">
   <link rel="alternate" hreflang="en-IN" href="https://bookbloodtest.in/">
   <link rel="alternate" hreflang="x-default" href="https://bookbloodtest.in/">
-  <!-- ═══ PERFORMANCE PRECONNECTS ═══ -->
+  <!-- PERFORMANCE PRECONNECTS -->
   <link rel="dns-prefetch" href="//www.google-analytics.com">
   <link rel="dns-prefetch" href="//www.googletagmanager.com">
   <link rel="dns-prefetch" href="//firestore.googleapis.com">
   <link rel="dns-prefetch" href="//cdn1.healthians.com">
   <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
-  <!-- ═══ MOBILE APP DEEP LINKS ═══ -->
+  <!-- MOBILE APP DEEP LINKS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Healthians Blood Test">
   <meta name="application-name" content="Healthians Blood Test">
   <meta name="theme-color" content="#00A0A8">
-  <!-- ═══ RICH RESULT ELIGIBILITY ═══ -->
+  <!-- RICH RESULT ELIGIBILITY -->
   <meta name="rating" content="general">
-  <meta name="revisit-after" content="3 days">"""
+  <meta name="revisit-after" content="3 days">
+  <!-- ═══ END INDIA SEO SIGNALS ═══ -->"""
 
 
 def build_homepage_schema():
@@ -1005,17 +1006,12 @@ print("[Step 1/5] Upgrading index.html master template with Pro India SEO tags..
 
 template = raw_template
 
-# Add India SEO head block before </head>
+# Add India SEO head block safely without touching stylesheets or scripts
 india_head = build_pro_head_block()
-if 'og:locale' not in template:
-    template = template.replace('</head>', f'{india_head}\n</head>')
+if '<!-- ═══ START INDIA SEO SIGNALS ═══ -->' in template:
+    template = re.sub(r'<!-- ═══ START INDIA SEO SIGNALS ═══ -->.*?<!-- ═══ END INDIA SEO SIGNALS ═══ -->', india_head, template, flags=re.DOTALL)
 else:
-    # Replace existing og:locale block
-    template = re.sub(r'<!-- .*?INDIA SEO SIGNALS.*?-->.*?(?=<!-- )', 
-                      india_head + '\n', template, flags=re.DOTALL)
-    # Just add what's missing
-    if 'geo.region' not in template:
-        template = template.replace('</head>', f'{india_head}\n</head>')
+    template = template.replace('</head>', f'{india_head}\n</head>')
 
 # Upgrade homepage schema with AggregateRating + all pro nodes
 homepage_schema_str = f'<script type="application/ld+json">\n{build_homepage_schema()}\n</script>'
