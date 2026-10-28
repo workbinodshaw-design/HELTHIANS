@@ -89,7 +89,7 @@ def build_pro_head_block():
     """Returns the optimized <head> block additions for India SEO."""
     return """  <!-- ═══ START INDIA SEO SIGNALS ═══ -->
   <meta property="og:locale" content="en_IN">
-  <meta property="og:site_name" content="Healthians | Book Blood Test at Home India">
+  <meta property="og:site_name" content="Healthians">
   <meta name="twitter:image:alt" content="Healthians Home Blood Test — Free Doorstep Sample Collection India">
   <meta name="twitter:site" content="@Healthians">
   <meta name="twitter:creator" content="@Healthians">
@@ -99,8 +99,8 @@ def build_pro_head_block():
   <meta name="ICBM" content="20.5937, 78.9629">
   <meta name="language" content="English">
   <meta name="content-language" content="en-IN">
-  <link rel="alternate" hreflang="en-IN" href="https://bookbloodtest.in/">
-  <link rel="alternate" hreflang="x-default" href="https://bookbloodtest.in/">
+  <link rel="alternate" hreflang="en-IN" href="https://www.bookbloodtest.in/">
+  <link rel="alternate" hreflang="x-default" href="https://www.bookbloodtest.in/">
   <!-- PERFORMANCE PRECONNECTS -->
   <link rel="dns-prefetch" href="//www.google-analytics.com">
   <link rel="dns-prefetch" href="//www.googletagmanager.com">
@@ -110,8 +110,8 @@ def build_pro_head_block():
   <!-- MOBILE APP DEEP LINKS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Healthians Blood Test">
-  <meta name="application-name" content="Healthians Blood Test">
+  <meta name="apple-mobile-web-app-title" content="Healthians">
+  <meta name="application-name" content="Healthians">
   <meta name="theme-color" content="#00A0A8">
   <!-- RICH RESULT ELIGIBILITY -->
   <meta name="rating" content="general">
@@ -129,7 +129,8 @@ def build_homepage_schema():
                 "@type": "WebSite",
                 "@id": f"{BASE_URL}/#website",
                 "url": f"{BASE_URL}/",
-                "name": "Healthians | Book Blood Test at Home",
+                "name": "Healthians",
+                "alternateName": ["Healthians", "Healthians Diagnostics", "Healthians India", "Healthians Home Blood Test", "BookBloodTest"],
                 "description": "India's most trusted home diagnostic lab booking platform. NABL certified labs, free doorstep sample collection across 250+ cities.",
                 "publisher": {"@id": f"{BASE_URL}/#organization"},
                 "inLanguage": "en-IN",
