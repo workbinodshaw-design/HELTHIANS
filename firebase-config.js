@@ -50,8 +50,9 @@
     saveOrder: async function(bookingData) {
       try {
         let cache = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
-        // Deduplication shield: Check if same mobile + name was saved in last 60 seconds
-        const isDuplicateRecent = cache.some(x => 
+        // Deduplication shield: Check only bookings confirmed delivered to cloud in the last 60 seconds
+        const isDuplicateRecent = cache.some(x =>
+          x.cloudSaved === true &&
           x.mobile === bookingData.mobile &&
           (x.name || '').toLowerCase().trim() === (bookingData.name || '').toLowerCase().trim() &&
           (Date.now() - new Date(x.timestamp).getTime() < 60000)
@@ -60,21 +61,41 @@
           console.warn('[Deduplication] Booking already saved in last 60 seconds. Ignoring duplicate.');
           return { status: 'success', duplicate: true };
         }
-        if (!cache.some(x => x.id === bookingData.id)) {
-          cache.unshift(bookingData);
-          localStorage.setItem('healthians_admin_bookings', JSON.stringify(cache));
-        }
       } catch (e) {}
+
+      const persistLocalRecord = () => {
+        try {
+          const existing = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
+          const updated = existing.filter(x => x.id !== bookingData.id);
+          updated.unshift({ ...bookingData, cloudSaved: true });
+          localStorage.setItem('healthians_admin_bookings', JSON.stringify(updated.slice(0, 50)));
+        } catch (e) {}
+      };
 
       if (this.isOnline()) {
         try {
           await dbInstance.collection('bookings').doc(bookingData.id).set(bookingData);
+          persistLocalRecord();
           return { status: 'success', cloud: true };
         } catch (cloudErr) {
-          return { status: 'success', cloud: false, fallback: true };
+          // Single quick transient retry before falling back
+          try {
+            await new Promise(resolve => setTimeout(resolve, 350));
+            await dbInstance.collection('bookings').doc(bookingData.id).set(bookingData);
+            persistLocalRecord();
+            return { status: 'success', cloud: true, retried: true };
+          } catch (retryErr) {
+            console.warn('[Cloud Save Fallback]', retryErr && retryErr.message ? retryErr.message : retryErr);
+            return {
+              status: 'fallback',
+              cloud: false,
+              fallback: true,
+              error: retryErr && retryErr.message ? retryErr.message : 'cloud_write_failed'
+            };
+          }
         }
       } else {
-        return { status: 'success', cloud: false, fallback: true };
+        return { status: 'fallback', cloud: false, fallback: true, error: 'cloud_offline' };
       }
     },
 
@@ -231,7 +252,7 @@
             pkgs = doc.data().items;
           } else {
             pkgs = this.getPackages();
-            if (pkgs && pkgs.length > 0) {
+            if (pkgs && pkgs.length > 0 && authInstance && authInstance.currentUser) {
               dbInstance.collection('bookings').doc('_SYS_CONFIG_PACKAGES_').set({ items: pkgs, updated: Date.now() }).catch(() => {});
             }
           }
@@ -299,7 +320,7 @@
       if (this.isOnline()) {
         return dbInstance.collection('bookings').doc('_SYS_CONFIG_OFFER_').onSnapshot((doc) => {
           let offer = doc.exists && doc.data().offer ? doc.data().offer : (this.getOfferConfig() || this.getDefaultOffer());
-          if (!doc.exists) {
+          if (!doc.exists && authInstance && authInstance.currentUser) {
             try {
               dbInstance.collection('bookings').doc('_SYS_CONFIG_OFFER_').set({ offer: offer, updated: Date.now() }).catch(() => {});
             } catch(e) {}

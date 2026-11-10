@@ -36,7 +36,8 @@ static_urls = [
     {"loc": f"{BASE_URL}/blood-test-at-home/", "lastmod": TODAY, "changefreq": "weekly", "priority": "0.9"},
     {"loc": f"{BASE_URL}/diagnostic-tests-at-home/", "lastmod": TODAY, "changefreq": "weekly", "priority": "0.9"},
     {"loc": f"{BASE_URL}/pathology-lab-near-me/", "lastmod": TODAY, "changefreq": "weekly", "priority": "0.9"},
-    {"loc": f"{BASE_URL}/full-body-checkup-at-home/", "lastmod": TODAY, "changefreq": "weekly", "priority": "0.9"}
+    {"loc": f"{BASE_URL}/full-body-checkup-at-home/", "lastmod": TODAY, "changefreq": "weekly", "priority": "0.9"},
+    {"loc": f"{BASE_URL}/products.html", "lastmod": TODAY, "changefreq": "weekly", "priority": "0.7"}
 ]
 with open('sitemap-static.xml', 'w', encoding='utf-8') as f:
     f.write(make_urlset(static_urls))

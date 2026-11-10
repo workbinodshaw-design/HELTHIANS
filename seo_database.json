@@ -1092,9 +1092,9 @@
     {
       "slug": "cbc-test",
       "name": "Complete Blood Count (CBC)",
-      "h1": "Book CBC Test at Home",
-      "title": "CBC Test at Home | Complete Blood Count Price & Range | Healthians",
-      "description": "Book a Complete Blood Count (CBC) test at home with Healthians. Tests 24+ parameters including Hemoglobin, Platelets, WBC & RBC with free home collection.",
+      "h1": "Book Complete Blood Count (CBC) Test at Home — ₹299",
+      "title": "CBC Test at Home: Price ₹299, Normal Range & Free Collection | Healthians",
+      "description": "Book Complete Blood Count (CBC) test at home for ₹299 with FREE doorstep collection. Tests 24 parameters including Hemoglobin, Platelets, WBC & RBC in 12 hrs.",
       "schemaDesc": "Complete Blood Count (CBC) test checking 24 parameters including Hemoglobin, Platelet count, WBC differential, and RBC indices.",
       "fasting": "No fasting required",
       "turnaround": "Reports in 12-24 Hours",
@@ -1124,14 +1124,52 @@
           "q": "How soon will I get my CBC test results?",
           "a": "CBC test reports are typically generated and delivered via WhatsApp and email within 12 to 24 hours of sample pickup."
         }
+      ],
+      "price": "299",
+      "mrp": "600",
+      "parametersCount": "24 Parameters",
+      "normalRange": "Hb: 13.5-17.5 g/dL (Men), 12.0-15.5 g/dL (Women); WBC: 4,000-11,000/mcL; Platelets: 1.5-4.5 Lakh/mcL",
+      "relatedArticle": "cbc-normal-range-guide",
+      "whenToTest": [
+        "Persistent weakness, dizziness, or suspected anemia",
+        "High fever, chills, or suspected viral/bacterial infection",
+        "Monitoring platelet drops during dengue or seasonal fever",
+        "Routine annual health screening before surgery or physician checkup"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Hemoglobin (Hb)",
+          "normalRange": "13.5 - 17.5 g/dL (Men) | 12.0 - 15.5 g/dL (Women)",
+          "meaning": "Low levels indicate anemia; oxygen-carrying capacity"
+        },
+        {
+          "parameter": "Total WBC (TLC)",
+          "normalRange": "4,000 - 11,000 cells/mcL",
+          "meaning": "High indicates active infection or inflammation"
+        },
+        {
+          "parameter": "Platelet Count",
+          "normalRange": "150,000 - 450,000 /mcL",
+          "meaning": "Low levels common in dengue/viral fevers; clotting marker"
+        },
+        {
+          "parameter": "RBC Count",
+          "normalRange": "4.5 - 5.9 million/mcL (M) | 4.1 - 5.1 million/mcL (F)",
+          "meaning": "Evaluates red blood cell production and marrow health"
+        },
+        {
+          "parameter": "MCV (Mean Corpuscular Volume)",
+          "normalRange": "80 - 100 fL",
+          "meaning": "Distinguishes iron deficiency (<80) from B12 deficiency (>100)"
+        }
       ]
     },
     {
       "slug": "thyroid-test",
       "name": "Thyroid Profile (T3, T4, TSH)",
-      "h1": "Thyroid Profile Test at Home",
-      "title": "Thyroid Profile Test at Home | T3, T4, TSH Blood Test | Healthians",
-      "description": "Book Thyroid Profile test (T3, T4, TSH) at home with Healthians. Free sample collection, NABL certified labs, fast digital reports on WhatsApp in 24 hours.",
+      "h1": "Thyroid Profile Test (T3, T4, TSH) at Home — ₹449",
+      "title": "Thyroid Profile Test (T3, T4, TSH) at Home: Price ₹449 & Free Pickup | Healthians",
+      "description": "Book Thyroid Profile (T3, T4, TSH) blood test at home for ₹449. Free morning home collection, CLIA NABL reports in 12-24 hours & free doctor consultation.",
       "schemaDesc": "Comprehensive Thyroid Profile test measuring Total T3, Total T4, and Ultra-sensitive TSH to diagnose hypothyroidism and hyperthyroidism.",
       "fasting": "Fasting optional (early morning collection recommended)",
       "turnaround": "Reports in 12-24 Hours",
@@ -1157,14 +1195,42 @@
           "q": "Should I take my thyroid medication before the blood test?",
           "a": "Most endocrinologists advise having your blood sample drawn in the morning before taking your daily thyroid tablet. Confirm with your doctor."
         }
+      ],
+      "price": "449",
+      "mrp": "1100",
+      "parametersCount": "3 Parameters (T3, T4, TSH)",
+      "normalRange": "TSH: 0.4-4.5 mIU/L; Total T3: 80-200 ng/dL; Total T4: 5.1-14.1 mcg/dL",
+      "relatedArticle": "thyroid-tsh-normal-range-guide",
+      "whenToTest": [
+        "Unexplained weight gain or sudden weight loss",
+        "Chronic fatigue, hair fall, dry skin, or cold/heat intolerance",
+        "Irregular periods, fertility concerns, or pregnancy planning",
+        "Follow-up monitoring for hypothyroidism (thyroxine dosage check)"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "TSH (Ultra-Sensitive)",
+          "normalRange": "0.4 - 4.5 mIU/L",
+          "meaning": "High >4.5 indicates Hypothyroidism; Low <0.4 suggests Hyperthyroidism"
+        },
+        {
+          "parameter": "Total T3 (Triiodothyronine)",
+          "normalRange": "80 - 200 ng/dL",
+          "meaning": "Active metabolic thyroid hormone"
+        },
+        {
+          "parameter": "Total T4 (Thyroxine)",
+          "normalRange": "5.1 - 14.1 mcg/dL",
+          "meaning": "Primary hormone secreted by thyroid gland"
+        }
       ]
     },
     {
       "slug": "hba1c-test",
       "name": "HbA1c (Glycated Hemoglobin) Test",
-      "h1": "Book HbA1c Diabetes Test at Home",
-      "title": "HbA1c Test at Home | 3-Month Average Blood Sugar Test | Healthians",
-      "description": "Check your 3-month average blood sugar with an HbA1c test at home. Healthians provides free sample pickup, NABL certified labs & zero visit charges.",
+      "h1": "HbA1c (3-Month Blood Sugar) Test at Home — ₹399",
+      "title": "HbA1c Test at Home: Price ₹399, Normal Range & Free Pickup | Healthians",
+      "description": "Book HbA1c glycated hemoglobin test at home for ₹399. Measures 3-month average blood sugar via HPLC NABL labs with NO fasting required & free sample pickup.",
       "schemaDesc": "HbA1c glycated hemoglobin test evaluating 3-month average glucose control for diabetic screening and monitoring.",
       "fasting": "No fasting required",
       "turnaround": "Reports in 12-24 Hours",
@@ -1190,14 +1256,47 @@
           "q": "How often should a diabetic person check their HbA1c?",
           "a": "Diabetic individuals should generally test their HbA1c every 3 months if blood sugar is fluctuating, or every 6 months if sugar levels are stable."
         }
+      ],
+      "price": "399",
+      "mrp": "850",
+      "parametersCount": "2 Parameters (HbA1c & Estimated Avg Glucose)",
+      "normalRange": "Normal: <5.7%; Prediabetes: 5.7% - 6.4%; Diabetes: >=6.5%",
+      "relatedArticle": "hba1c-normal-range-chart",
+      "whenToTest": [
+        "Excessive thirst, frequent urination, or unexplained fatigue",
+        "Overweight adults aged 30+ or family history of Type 2 Diabetes",
+        "Monitoring 3-month glycemic control in known diabetic patients",
+        "Borderline fasting blood sugar results needing confirmation"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Normal Glucose Range",
+          "normalRange": "Below 5.7%",
+          "meaning": "Healthy 90-day average blood sugar (<117 mg/dL eAG)"
+        },
+        {
+          "parameter": "Prediabetes Range",
+          "normalRange": "5.7% - 6.4%",
+          "meaning": "Reversible elevated glucose risk (117-137 mg/dL eAG)"
+        },
+        {
+          "parameter": "Diabetes Threshold",
+          "normalRange": "6.5% or Higher",
+          "meaning": "Diagnostic for diabetes mellitus (>=140 mg/dL eAG)"
+        },
+        {
+          "parameter": "Diabetic Control Goal",
+          "normalRange": "Under 7.0%",
+          "meaning": "Recommended target for most treated adults"
+        }
       ]
     },
     {
       "slug": "vitamin-d-test",
       "name": "Vitamin D (25-OH) Test",
-      "h1": "Vitamin D Blood Test at Home",
-      "title": "Vitamin D Blood Test at Home | 25-Hydroxy Vitamin D | Healthians",
-      "description": "Check your bone health and immunity with a Vitamin D (25-OH) test at home. Free doorstep sample collection and accurate NABL reports with Healthians.",
+      "h1": "Vitamin D (25-OH) Blood Test at Home — ₹699",
+      "title": "Vitamin D Blood Test at Home: Price ₹699 & Normal Range | Healthians",
+      "description": "Book 25-Hydroxy Vitamin D test at home for ₹699. Check bone density, lower back pain & immunity with free home sample pickup & NABL report in 24 hrs.",
       "schemaDesc": "Total 25-Hydroxy Vitamin D blood test assessing bone density, calcium absorption, and immunity levels.",
       "fasting": "No fasting required",
       "turnaround": "Reports in 24 Hours",
@@ -1223,14 +1322,47 @@
           "q": "What are common signs of Vitamin D deficiency?",
           "a": "Common symptoms include constant fatigue, bone and lower back pain, muscle cramps, hair loss, slow wound healing, and mood changes."
         }
+      ],
+      "price": "699",
+      "mrp": "1800",
+      "parametersCount": "1 Parameter (25-OH Vitamin D)",
+      "normalRange": "Optimal: 30-100 ng/mL; Insufficiency: 20-29 ng/mL; Deficiency: <20 ng/mL",
+      "relatedArticle": "vitamin-d-deficiency-symptoms",
+      "whenToTest": [
+        "Chronic lower back pain, knee ache, or generalized bone discomfort",
+        "Constant tiredness, low immunity, or frequent colds",
+        "Desk workers with minimal midday sunlight exposure",
+        "Before starting high-dose 60,000 IU Vitamin D3 supplementation"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Severe Deficiency",
+          "normalRange": "<10 ng/mL",
+          "meaning": "High risk of osteomalacia, severe fatigue & bone loss"
+        },
+        {
+          "parameter": "Deficient",
+          "normalRange": "10 - 19 ng/mL",
+          "meaning": "Requires doctor-prescribed therapeutic Vitamin D3 course"
+        },
+        {
+          "parameter": "Insufficient",
+          "normalRange": "20 - 29 ng/mL",
+          "meaning": "Suboptimal level; maintenance supplementation advised"
+        },
+        {
+          "parameter": "Sufficient / Optimal",
+          "normalRange": "30 - 100 ng/mL",
+          "meaning": "Healthy calcium absorption & strong bone metabolism"
+        }
       ]
     },
     {
       "slug": "vitamin-b12-test",
       "name": "Vitamin B12 (Cyanocobalamin) Test",
-      "h1": "Vitamin B12 Blood Test at Home",
-      "title": "Vitamin B12 Test at Home | Cyanocobalamin Blood Test | Healthians",
-      "description": "Book a Vitamin B12 test at home with Healthians. Screen for nerve weakness, memory lapses, and anemia with free doorstep collection & NABL reports.",
+      "h1": "Vitamin B12 Blood Test at Home — ₹599",
+      "title": "Vitamin B12 Test at Home: Price ₹599 & Free Sample Pickup | Healthians",
+      "description": "Book Vitamin B12 test at home for ₹599. Detect nerve tingling, fatigue, memory fog & vegetarian anemia early with free doorstep collection & NABL report.",
       "schemaDesc": "Serum Vitamin B12 (Cyanocobalamin) test assessing nerve function, brain health, and red blood cell production.",
       "fasting": "Overnight fasting recommended (8-10 hours)",
       "turnaround": "Reports in 24 Hours",
@@ -1252,14 +1384,42 @@
           "q": "What are the early warning signs of low B12?",
           "a": "Early signs include tingling or 'pins and needles' in hands and feet, unexplained fatigue, mouth ulcers, pale skin, and difficulty concentrating."
         }
+      ],
+      "price": "599",
+      "mrp": "1400",
+      "parametersCount": "1 Parameter (Cyanocobalamin)",
+      "normalRange": "Normal: 200 - 900 pg/mL (Optimal clinical target: >350 pg/mL)",
+      "relatedArticle": "vitamin-b12-deficiency-guide",
+      "whenToTest": [
+        "Tingling, numbness, or 'pins and needles' in hands or feet",
+        "Memory fog, mood changes, weakness, or recurrent mouth ulcers",
+        "Vegetarians, vegans, or adults on long-term acidity/Metformin meds",
+        "Unexplained low hemoglobin with elevated MCV in CBC"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Deficient B12",
+          "normalRange": "<200 pg/mL",
+          "meaning": "Definitive B12 deficiency; nerve & anemia evaluation needed"
+        },
+        {
+          "parameter": "Borderline Low",
+          "normalRange": "200 - 300 pg/mL",
+          "meaning": "Early depletion stage, especially if symptoms present"
+        },
+        {
+          "parameter": "Optimal Range",
+          "normalRange": "350 - 900 pg/mL",
+          "meaning": "Supports healthy nerve myelin & red blood cell synthesis"
+        }
       ]
     },
     {
       "slug": "lft-test",
       "name": "Liver Function Test (LFT)",
-      "h1": "Liver Function Test (LFT) at Home",
-      "title": "Liver Function Test (LFT) at Home | SGPT, SGOT, Bilirubin | Healthians",
-      "description": "Book a comprehensive Liver Function Test (LFT) at home. Measures SGPT, SGOT, Bilirubin, Alkaline Phosphatase & Albumin with free collection & NABL reports.",
+      "h1": "Liver Function Test (LFT) at Home — ₹499",
+      "title": "Liver Function Test (LFT) at Home: Price ₹499, SGPT/SGOT | Healthians",
+      "description": "Book 11-parameter Liver Function Test (LFT) at home for ₹499. Checks SGPT, SGOT, Bilirubin, ALP & Albumin for fatty liver & jaundice with free home pickup.",
       "schemaDesc": "Comprehensive Liver Function Test (LFT) panel measuring 11 parameters including SGPT, SGOT, Total Bilirubin, Direct Bilirubin, Alkaline Phosphatase, Total Protein, and Albumin.",
       "fasting": "10-12 hours fasting recommended",
       "turnaround": "Reports in 12-24 Hours",
@@ -1285,14 +1445,52 @@
           "q": "Can fatty liver be detected with an LFT?",
           "a": "Yes, elevated liver enzymes (SGPT/SGOT) are often the first laboratory indicator of non-alcoholic fatty liver disease."
         }
+      ],
+      "price": "499",
+      "mrp": "1200",
+      "parametersCount": "11 Parameters",
+      "normalRange": "SGPT (ALT): 7-45 U/L; SGOT (AST): 8-40 U/L; Total Bilirubin: 0.2-1.2 mg/dL",
+      "relatedArticle": "high-sgpt-sgot-causes-treatment",
+      "whenToTest": [
+        "Suspected fatty liver, bloating, or upper right abdominal discomfort",
+        "Yellowing of eyes or skin (jaundice), dark urine, or loss of appetite",
+        "Regular alcohol consumption or long-term medication monitoring",
+        "Screening as part of preventive annual master checkups"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "SGPT (ALT)",
+          "normalRange": "7 - 45 U/L",
+          "meaning": "Primary liver cell inflammation & fatty liver enzyme"
+        },
+        {
+          "parameter": "SGOT (AST)",
+          "normalRange": "8 - 40 U/L",
+          "meaning": "Evaluates hepatic & muscular tissue stress"
+        },
+        {
+          "parameter": "Total Bilirubin",
+          "normalRange": "0.2 - 1.2 mg/dL",
+          "meaning": "Elevated levels indicate jaundice or bile duct block"
+        },
+        {
+          "parameter": "Alkaline Phosphatase (ALP)",
+          "normalRange": "44 - 147 IU/L",
+          "meaning": "Checks biliary tract drainage & bone turnover"
+        },
+        {
+          "parameter": "Serum Albumin",
+          "normalRange": "3.5 - 5.2 g/dL",
+          "meaning": "Reflects liver synthetic capacity & protein nutrition"
+        }
       ]
     },
     {
       "slug": "kft-test",
       "name": "Kidney Function Test (KFT / RFT)",
-      "h1": "Kidney Function Test (KFT) at Home",
-      "title": "Kidney Function Test (KFT) at Home | Creatinine & BUN | Healthians",
-      "description": "Book Kidney Function Test (KFT / RFT) at home with Healthians. Measures Serum Creatinine, Blood Urea, BUN, Uric Acid & Electrolytes with free collection.",
+      "h1": "Kidney Function Test (KFT / RFT) at Home — ₹499",
+      "title": "Kidney Function Test (KFT) at Home: Price ₹499, Creatinine | Healthians",
+      "description": "Book Kidney Function Test (KFT / RFT) at home for ₹499. Measures Creatinine, Blood Urea, BUN, Uric Acid & eGFR with free doorstep pickup & NABL reports.",
       "schemaDesc": "Renal Function Test (RFT / KFT) panel assessing kidney filtration, creatinine, blood urea nitrogen, and glomerular function.",
       "fasting": "Fasting optional (drink plenty of water)",
       "turnaround": "Reports in 12-24 Hours",
@@ -1314,14 +1512,47 @@
           "q": "Why is KFT test important for diabetic and high BP patients?",
           "a": "Diabetes and hypertension are the two leading causes of chronic kidney disease. Routine KFT testing allows early detection and management to protect renal health."
         }
+      ],
+      "price": "499",
+      "mrp": "1200",
+      "parametersCount": "8 Parameters",
+      "normalRange": "Creatinine: 0.7-1.3 mg/dL (Men), 0.5-1.1 mg/dL (Women); BUN: 7-20 mg/dL",
+      "relatedArticle": "creatinine-kft-normal-range-guide",
+      "whenToTest": [
+        "Known Diabetes or High Blood Pressure (annual renal safety check)",
+        "Swelling around eyes, ankles, or feet (edema) or frothy urine",
+        "Frequent painkiller (NSAID) usage or kidney stone history",
+        "Unexplained fatigue or changes in urination frequency"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Serum Creatinine",
+          "normalRange": "0.7 - 1.3 mg/dL (M) | 0.5 - 1.1 mg/dL (F)",
+          "meaning": "Key waste clearance indicator; rises when kidney filtering drops"
+        },
+        {
+          "parameter": "Blood Urea",
+          "normalRange": "15 - 40 mg/dL",
+          "meaning": "Evaluates protein breakdown clearance & hydration"
+        },
+        {
+          "parameter": "BUN (Blood Urea Nitrogen)",
+          "normalRange": "7 - 20 mg/dL",
+          "meaning": "Monitors kidney perfusion and urea retention"
+        },
+        {
+          "parameter": "eGFR",
+          "normalRange": ">90 mL/min/1.73m2",
+          "meaning": "Estimates overall percentage of kidney filtration function"
+        }
       ]
     },
     {
       "slug": "lipid-profile-test",
       "name": "Lipid Profile (Cholesterol Panel)",
-      "h1": "Lipid Profile Test at Home",
-      "title": "Lipid Profile Test at Home | Cholesterol & Triglycerides | Healthians",
-      "description": "Book a Lipid Profile cholesterol test at home with Healthians. Measures Total Cholesterol, HDL (Good), LDL (Bad), Triglycerides & VLDL with free pickup.",
+      "h1": "Lipid Profile (Cholesterol) Test at Home — ₹499",
+      "title": "Lipid Profile Test at Home: Price ₹499, Cholesterol Ranges | Healthians",
+      "description": "Book Lipid Profile cholesterol blood test at home for ₹499. Measures Total Cholesterol, LDL, HDL, Triglycerides & Cardiac Ratios with free 6:30 AM pickup.",
       "schemaDesc": "Complete Lipid Profile panel evaluating Total Cholesterol, HDL, LDL, VLDL, Triglycerides, and Cardiac Risk Ratios.",
       "fasting": "Strict 10-12 hours fasting required",
       "turnaround": "Reports in 12-24 Hours",
@@ -1343,14 +1574,47 @@
           "q": "What is the difference between HDL and LDL cholesterol?",
           "a": "HDL is 'good' cholesterol because it removes excess cholesterol from arteries back to the liver. LDL is 'bad' cholesterol because it deposits plaque inside artery walls."
         }
+      ],
+      "price": "499",
+      "mrp": "1200",
+      "parametersCount": "8 Parameters",
+      "normalRange": "Total Chol: <200 mg/dL; LDL: <100 mg/dL; HDL: >40 mg/dL; Triglycerides: <150 mg/dL",
+      "relatedArticle": "lipid-profile-cholesterol-guide",
+      "whenToTest": [
+        "Adults aged 25+ for preventive heart & stroke risk assessment",
+        "High blood pressure, diabetes, obesity, or sedentary lifestyle",
+        "Family history of premature heart attack or high cholesterol",
+        "Monitoring cholesterol response to statins or diet changes"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Total Cholesterol",
+          "normalRange": "<200 mg/dL (Desirable)",
+          "meaning": "Overall cholesterol burden in blood"
+        },
+        {
+          "parameter": "LDL ('Bad') Cholesterol",
+          "normalRange": "<100 mg/dL (Optimal)",
+          "meaning": "Primary plaque-forming lipid in coronary arteries"
+        },
+        {
+          "parameter": "HDL ('Good') Cholesterol",
+          "normalRange": ">40 mg/dL (M) | >50 mg/dL (F)",
+          "meaning": "Protective scavenger clearing arterial cholesterol"
+        },
+        {
+          "parameter": "Triglycerides",
+          "normalRange": "<150 mg/dL (Normal)",
+          "meaning": "Linked closely to high sugar/carb intake & fatty liver"
+        }
       ]
     },
     {
       "slug": "fasting-blood-sugar-test",
       "name": "Fasting Blood Sugar (FBS)",
-      "h1": "Fasting Blood Sugar Test at Home",
-      "title": "Fasting Blood Sugar Test at Home | Glucose Fasting | Healthians",
-      "description": "Book a Fasting Blood Sugar (FBS) test at home with Healthians. Accurate glucose testing with free morning doorstep collection & NABL reports.",
+      "h1": "Fasting Blood Sugar (FBS) Test at Home — ₹149",
+      "title": "Fasting Blood Sugar Test at Home: Price ₹149 & 6:30 AM Pickup | Healthians",
+      "description": "Book Fasting Blood Sugar (FBS) test at home for just ₹149. Early morning 6:30 AM free sample collection, NABL fluoride plasma testing & WhatsApp report in 12 hrs.",
       "schemaDesc": "Fasting Plasma Glucose (FBS) test evaluating baseline blood sugar levels following an 8 to 10-hour fast.",
       "fasting": "Strict 8-10 hours overnight fasting required",
       "turnaround": "Reports in 12 Hours",
@@ -1371,14 +1635,42 @@
           "q": "Can I drink tea or coffee before my fasting sugar test?",
           "a": "No, you must not consume tea, coffee, milk, or any food. Only plain water is allowed during your fasting period."
         }
+      ],
+      "price": "149",
+      "mrp": "300",
+      "parametersCount": "1 Parameter (Fasting Plasma Glucose)",
+      "normalRange": "Normal: 70-99 mg/dL; Prediabetes: 100-125 mg/dL; Diabetes: >=126 mg/dL",
+      "relatedArticle": "fasting-sugar-vs-hba1c-difference",
+      "whenToTest": [
+        "Routine screening for prediabetes or early blood sugar imbalance",
+        "Increased thirst, frequent urination, or unexplained hunger",
+        "Monitoring fasting glucose alongside PPBS or HbA1c",
+        "Routine annual preventive checkup after 8-10 hours overnight fast"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Normal Fasting Sugar",
+          "normalRange": "70 - 99 mg/dL",
+          "meaning": "Healthy overnight basal blood glucose control"
+        },
+        {
+          "parameter": "Impaired Fasting (Prediabetes)",
+          "normalRange": "100 - 125 mg/dL",
+          "meaning": "Early insulin resistance; lifestyle reversal advised"
+        },
+        {
+          "parameter": "Diabetic Range",
+          "normalRange": ">=126 mg/dL",
+          "meaning": "Diagnostic criteria (confirm on repeat test or HbA1c)"
+        }
       ]
     },
     {
       "slug": "post-prandial-blood-sugar-test",
       "name": "Post Prandial Blood Sugar (PPBS)",
-      "h1": "Post Prandial Blood Sugar (PPBS) Test at Home",
-      "title": "PPBS Test at Home | Post Meal Blood Sugar Test | Healthians",
-      "description": "Book Post Prandial Blood Sugar (PPBS) test at home. Accurate 2-hour post-meal glucose testing with doorstep collection & NABL certified reports.",
+      "h1": "Post Prandial Blood Sugar (PPBS) Test at Home — ₹149",
+      "title": "PPBS Test at Home: Price ₹149 (Post-Meal Blood Sugar) | Healthians",
+      "description": "Book Post Prandial Blood Sugar (PPBS) test at home for ₹149. Timed 2-hour post-meal collection by certified phlebotomists & fast 12-hour NABL WhatsApp reports.",
       "schemaDesc": "Post Prandial Blood Sugar (PPBS) test measuring blood glucose response 2 hours after a meal.",
       "fasting": "Collected exactly 2 hours after starting a main meal",
       "turnaround": "Reports in 12 Hours",
@@ -1399,14 +1691,42 @@
           "q": "What is a normal post-meal blood sugar level?",
           "a": "For a non-diabetic individual, blood sugar should be under 140 mg/dL two hours after a meal. For a diabetic person, the typical target is under 180 mg/dL."
         }
+      ],
+      "price": "149",
+      "mrp": "300",
+      "parametersCount": "1 Parameter (2-Hour Post-Meal Glucose)",
+      "normalRange": "Normal: <140 mg/dL (2 hrs post meal); Diabetic Target: <180 mg/dL",
+      "relatedArticle": "fasting-sugar-vs-hba1c-difference",
+      "whenToTest": [
+        "Evaluating how well your body clears blood sugar after meals",
+        "Diabetic patients adjusting daytime tablets or insulin dosage",
+        "Fatigue or sleepiness consistently occurring after lunch/dinner",
+        "Screen alongside Fasting Sugar when gestational diabetes is suspected"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Normal Post-Meal Sugar",
+          "normalRange": "<140 mg/dL",
+          "meaning": "Healthy insulin response 2 hours after starting a meal"
+        },
+        {
+          "parameter": "Impaired Glucose Tolerance",
+          "normalRange": "140 - 199 mg/dL",
+          "meaning": "Prediabetic post-meal sugar spike"
+        },
+        {
+          "parameter": "Diabetes Range",
+          "normalRange": ">=200 mg/dL",
+          "meaning": "Diagnostic post-prandial hyperglycemia"
+        }
       ]
     },
     {
       "slug": "urine-routine-test",
-      "name": "Urine Routine & Microscopy",
-      "h1": "Urine Routine & Microscopy Test at Home",
-      "title": "Urine Routine Test at Home | Urine Examination | Healthians",
-      "description": "Book a Urine Routine & Microscopy test at home with Healthians. Screen for urinary tract infections (UTI), kidney health & glucose with sterile collection.",
+      "name": "Urine Routine & Microscopy Test",
+      "h1": "Urine Test Home Collection (Routine & Microscopy) — ₹199",
+      "title": "Urine Test Home Collection (Routine & Microscopy) | Price ₹199 - Healthians",
+      "description": "Book urine test home collection for ₹199. Sterile leak-proof container provided at doorstep; checks 18+ UTI, pus cells, protein & kidney parameters in 12 hrs.",
       "schemaDesc": "Complete Urine Routine and Microscopy examination checking physical, chemical, and microscopic elements including pus cells, RBCs, protein, and crystals.",
       "fasting": "No fasting required (clean-catch midstream morning sample)",
       "turnaround": "Reports in 12 Hours",
@@ -1427,14 +1747,52 @@
           "q": "Can a urine routine test detect a UTI?",
           "a": "Yes, high levels of pus cells (white blood cells), bacteria, and nitrites in urine strongly indicate a urinary tract infection."
         }
+      ],
+      "price": "199",
+      "mrp": "450",
+      "parametersCount": "18+ Parameters (Physical, Chemical & Microscopy)",
+      "normalRange": "pH: 4.5-8.0; Protein/Sugar: Negative; Pus Cells: 0-5/HPF; RBCs: 0-2/HPF",
+      "relatedArticle": "uti-symptoms-urine-test-guide",
+      "whenToTest": [
+        "Burning pain during urination, urgency, or cloudy/foul-smelling urine",
+        "Fever with chills or lower back/flank pain (suspected UTI)",
+        "Foamy urine or swelling around eyes/ankles (protein leakage check)",
+        "Routine prenatal checkup or diabetes/kidney screening"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Pus Cells (Leukocytes)",
+          "normalRange": "0 - 5 per HPF",
+          "meaning": ">5 cells/HPF strongly indicates Urinary Tract Infection (UTI)"
+        },
+        {
+          "parameter": "Urine Protein (Albumin)",
+          "normalRange": "Negative / Absent",
+          "meaning": "Presence suggests kidney filtration leak or dehydration"
+        },
+        {
+          "parameter": "Urine Glucose (Sugar)",
+          "normalRange": "Negative / Absent",
+          "meaning": "Positivity occurs when blood sugar exceeds ~180 mg/dL"
+        },
+        {
+          "parameter": "Nitrites & Bacteria",
+          "normalRange": "Negative",
+          "meaning": "Positive nitrites point to E. coli or bacterial bladder infection"
+        },
+        {
+          "parameter": "Red Blood Cells (RBCs)",
+          "normalRange": "0 - 2 per HPF",
+          "meaning": "Elevated counts occur in UTI, stones, or menstrual trace"
+        }
       ]
     },
     {
       "slug": "esr-test",
       "name": "Erythrocyte Sedimentation Rate (ESR)",
-      "h1": "ESR Blood Test at Home",
-      "title": "ESR Test at Home | Erythrocyte Sedimentation Rate | Healthians",
-      "description": "Book an ESR blood test at home with Healthians. Detect hidden inflammation, autoimmune flare-ups, and infections with free doorstep collection.",
+      "h1": "ESR Blood Test at Home (Inflammation Rate) — ₹149",
+      "title": "ESR Blood Test at Home: Price ₹149 & Normal Range | Healthians",
+      "description": "Book Erythrocyte Sedimentation Rate (ESR) blood test at home for ₹149. Screens for hidden inflammation, fever, and arthritis with free doorstep pickup.",
       "schemaDesc": "Erythrocyte Sedimentation Rate (ESR) blood test assessing systemic inflammation and autoimmune activity.",
       "fasting": "No fasting required",
       "turnaround": "Reports in 12-24 Hours",
@@ -1455,14 +1813,42 @@
           "q": "Is fasting necessary for an ESR test?",
           "a": "No, you do not need to fast for an ESR blood test."
         }
+      ],
+      "price": "149",
+      "mrp": "300",
+      "parametersCount": "1 Parameter (Westergren ESR)",
+      "normalRange": "Adult Men: 0-15 mm/hr; Adult Women: 0-20 mm/hr",
+      "relatedArticle": "crp-test-high-levels-guide",
+      "whenToTest": [
+        "Unexplained prolonged low-grade fever or persistent body aches",
+        "Joint stiffness or swelling (rheumatoid or inflammatory arthritis)",
+        "Monitoring autoimmune flare-ups alongside CRP and CBC",
+        "Tracking recovery from chronic infections such as TB"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Men (Under 50 Yrs)",
+          "normalRange": "0 - 15 mm/1st hr",
+          "meaning": "Standard healthy sedimentation rate"
+        },
+        {
+          "parameter": "Women (Under 50 Yrs)",
+          "normalRange": "0 - 20 mm/1st hr",
+          "meaning": "Slightly higher baseline due to physiological factors"
+        },
+        {
+          "parameter": "Elevated ESR (>30-50+)",
+          "normalRange": "Consult Physician",
+          "meaning": "Suggests chronic inflammation, infection, anemia, or arthritis"
+        }
       ]
     },
     {
       "slug": "crp-test",
-      "name": "C-Reactive Protein (CRP)",
-      "h1": "C-Reactive Protein (CRP) Test at Home",
-      "title": "CRP Blood Test at Home | C-Reactive Protein Price | Healthians",
-      "description": "Book a C-Reactive Protein (CRP) blood test at home with Healthians. Sensitive marker for acute inflammation, infection, and tissue damage with NABL reports.",
+      "name": "C-Reactive Protein (CRP) Test",
+      "h1": "CRP Test at Home (C-Reactive Protein) — ₹399",
+      "title": "CRP Test at Home: Price ₹399, Normal Range (<5 mg/L) & Free Pickup | Healthians",
+      "description": "Book CRP blood test at home for ₹399 with FREE doorstep collection. Evaluates C-Reactive Protein normal range (<5 mg/L), infection & inflammation in 12-24 hrs.",
       "schemaDesc": "Quantitative C-Reactive Protein (CRP) blood test measuring acute-phase inflammatory response in infections and inflammatory diseases.",
       "fasting": "No fasting required",
       "turnaround": "Reports in 12-24 Hours",
@@ -1483,14 +1869,47 @@
           "q": "How does CRP differ from ESR?",
           "a": "CRP rises and falls much faster in response to inflammation than ESR, providing a more immediate snapshot of your current inflammatory state."
         }
+      ],
+      "price": "399",
+      "mrp": "800",
+      "parametersCount": "1 Quantitative Parameter (C-Reactive Protein)",
+      "normalRange": "Normal: <5.0 mg/L (<0.5 mg/dL); Acute Bacterial Infection: >40 mg/L",
+      "relatedArticle": "crp-test-high-levels-guide",
+      "whenToTest": [
+        "High fever or suspected acute bacterial or respiratory infection",
+        "Autoimmune arthritis, inflammatory bowel flare, or post-surgery fever",
+        "Monitoring response to antibiotics or anti-inflammatory medication",
+        "Evaluating unexplained body pain alongside ESR and CBC"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Normal Standard CRP",
+          "normalRange": "<5.0 mg/L (or <0.5 mg/dL)",
+          "meaning": "No significant acute systemic inflammation"
+        },
+        {
+          "parameter": "Mild Elevation",
+          "normalRange": "5.0 - 40 mg/L",
+          "meaning": "Viral infection, mild inflammation, or tissue strain"
+        },
+        {
+          "parameter": "Moderate to High",
+          "normalRange": "40 - 200 mg/L",
+          "meaning": "Active acute bacterial infection or autoimmune flare"
+        },
+        {
+          "parameter": "Marked Elevation",
+          "normalRange": ">200 mg/L",
+          "meaning": "Severe systemic infection / sepsis — urgent physician review"
+        }
       ]
     },
     {
       "slug": "iron-ferritin-test",
       "name": "Iron Deficiency & Ferritin Profile",
-      "h1": "Iron & Ferritin Blood Test at Home",
-      "title": "Iron & Ferritin Test at Home | Iron Deficiency Profile | Healthians",
-      "description": "Book Iron Profile with Ferritin test at home with Healthians. Detect anemia, low iron stores, and hair loss causes with free doorstep collection.",
+      "h1": "Iron Deficiency & Ferritin Profile at Home — ₹699",
+      "title": "Iron & Ferritin Profile Test at Home: Price ₹699 | Healthians",
+      "description": "Book Iron & Ferritin Profile test at home for ₹699. Measures Serum Iron, TIBC, Transferrin Saturation & Ferritin for anemia, hair fall & fatigue with free pickup.",
       "schemaDesc": "Comprehensive Iron Profile measuring Serum Iron, Total Iron Binding Capacity (TIBC), Transferrin Saturation, and Serum Ferritin.",
       "fasting": "Overnight fasting recommended (8-10 hours)",
       "turnaround": "Reports in 24 Hours",
@@ -1511,14 +1930,47 @@
           "q": "What are common signs of iron deficiency?",
           "a": "Severe fatigue, pale skin, cold hands and feet, brittle nails, unusual cravings (pica), dizziness, and diffuse hair loss."
         }
+      ],
+      "price": "699",
+      "mrp": "1500",
+      "parametersCount": "4 Parameters (Iron, TIBC, UIBC, Ferritin)",
+      "normalRange": "Serum Iron: 60-170 mcg/dL; Ferritin: 30-300 ng/mL (M), 15-150 ng/mL (F); Transferrin Sat: 20-50%",
+      "relatedArticle": "iron-deficiency-anemia-guide",
+      "whenToTest": [
+        "Chronic fatigue, pale skin, brittle nails, or shortness of breath",
+        "Unexplained diffuse hair shedding in women and men",
+        "Low hemoglobin or microcytic hypochromic picture on CBC",
+        "Tracking restoration of iron stores after iron supplement therapy"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Serum Ferritin",
+          "normalRange": "30 - 300 ng/mL (M) | 15 - 150 ng/mL (F)",
+          "meaning": "Gold-standard marker for deep body iron storage reserves"
+        },
+        {
+          "parameter": "Serum Iron",
+          "normalRange": "60 - 170 mcg/dL",
+          "meaning": "Active iron circulating bound to transferrin"
+        },
+        {
+          "parameter": "TIBC (Total Iron Binding)",
+          "normalRange": "240 - 450 mcg/dL",
+          "meaning": "Rises high when the body is depleted of iron"
+        },
+        {
+          "parameter": "Transferrin Saturation",
+          "normalRange": "20% - 50%",
+          "meaning": "Below 15% confirms iron-restricted red cell synthesis"
+        }
       ]
     },
     {
       "slug": "serum-electrolytes-test",
       "name": "Serum Electrolytes (Na, K, Cl)",
-      "h1": "Serum Electrolytes Blood Test at Home",
-      "title": "Serum Electrolytes Test at Home | Sodium, Potassium, Chloride | Healthians",
-      "description": "Book a Serum Electrolytes test at home with Healthians. Measures Sodium, Potassium & Chloride to evaluate hydration, muscle cramps & kidney balance.",
+      "h1": "Serum Electrolytes (Na, K, Cl) Test at Home — ₹399",
+      "title": "Serum Electrolytes Test (Na, K, Cl) at Home: Price ₹399 | Healthians",
+      "description": "Book Serum Electrolytes test at home for ₹399. Checks Sodium, Potassium & Chloride for dehydration, muscle cramps, dizziness & BP meds safety.",
       "schemaDesc": "Serum Electrolytes panel measuring Sodium, Potassium, and Chloride levels to evaluate fluid balance and acid-base equilibrium.",
       "fasting": "No fasting required",
       "turnaround": "Reports in 12 Hours",
@@ -1539,14 +1991,41 @@
           "q": "Is fasting required for an electrolytes test?",
           "a": "No, fasting is not required for a standard serum electrolytes test."
         }
+      ],
+      "price": "399",
+      "mrp": "800",
+      "parametersCount": "3 Parameters (Sodium, Potassium, Chloride)",
+      "normalRange": "Sodium: 136-145 mEq/L; Potassium: 3.5-5.1 mEq/L; Chloride: 98-107 mEq/L",
+      "whenToTest": [
+        "Severe vomiting, diarrhea, weakness, confusion, or heat dehydration",
+        "Muscle cramps, weakness, or palpitations",
+        "Patients on blood pressure diuretics or kidney medications",
+        "Unexplained elderly drowsiness or sudden BP fluctuations"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Sodium (Na+)",
+          "normalRange": "136 - 145 mEq/L",
+          "meaning": "Regulates hydration balance, blood pressure & nerve signaling"
+        },
+        {
+          "parameter": "Potassium (K+)",
+          "normalRange": "3.5 - 5.1 mEq/L",
+          "meaning": "Essential for stable heartbeat rhythm and muscle contraction"
+        },
+        {
+          "parameter": "Chloride (Cl-)",
+          "normalRange": "98 - 107 mEq/L",
+          "meaning": "Maintains fluid volume and acid-base balance"
+        }
       ]
     },
     {
       "slug": "uric-acid-test",
       "name": "Serum Uric Acid Test",
-      "h1": "Uric Acid Blood Test at Home",
-      "title": "Uric Acid Test at Home | Gout & Joint Pain Blood Test | Healthians",
-      "description": "Book a Uric Acid test at home with Healthians. Screen for gout, joint inflammation, and kidney stone risk with free doorstep collection & NABL reports.",
+      "h1": "Serum Uric Acid Blood Test at Home — ₹249",
+      "title": "Uric Acid Blood Test at Home: Price ₹249 & Normal Range | Healthians",
+      "description": "Book Serum Uric Acid blood test at home for ₹249. Screens for gout, big toe joint swelling, heel pain & uric acid kidney stones with free pickup.",
       "schemaDesc": "Serum Uric Acid blood test for evaluating hyperuricemia, gouty arthritis, and renal lithiasis.",
       "fasting": "Fasting recommended (8 hours)",
       "turnaround": "Reports in 12 Hours",
@@ -1567,14 +2046,37 @@
           "q": "What is the normal level of uric acid?",
           "a": "Normal serum uric acid is generally 3.5 to 7.2 mg/dL for men and 2.6 to 6.0 mg/dL for women."
         }
+      ],
+      "price": "249",
+      "mrp": "550",
+      "parametersCount": "1 Parameter (Serum Uric Acid)",
+      "normalRange": "Adult Men: 3.5 - 7.2 mg/dL; Adult Women: 2.6 - 6.0 mg/dL",
+      "relatedArticle": "high-uric-acid-causes-diet",
+      "whenToTest": [
+        "Sudden painful swelling in the big toe, ankle, knee, or heel",
+        "Recurrent kidney stones or high-purine diet / alcohol intake",
+        "Joint stiffness alongside elevated blood pressure or metabolic syndrome",
+        "Monitoring response to gout medications & dietary changes"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Serum Uric Acid (Men)",
+          "normalRange": "3.5 - 7.2 mg/dL",
+          "meaning": "Above 7.2 mg/dL promotes painful urate crystal deposits"
+        },
+        {
+          "parameter": "Serum Uric Acid (Women)",
+          "normalRange": "2.6 - 6.0 mg/dL",
+          "meaning": "Rises after menopause or with reduced kidney clearance"
+        }
       ]
     },
     {
       "slug": "calcium-test",
       "name": "Serum Calcium Total Test",
-      "h1": "Calcium Blood Test at Home",
-      "title": "Calcium Blood Test at Home | Bone & Muscle Health | Healthians",
-      "description": "Book a Calcium Total blood test at home with Healthians. Screen for bone loss, osteoporosis, parathyroid disorders & muscle cramps with NABL reports.",
+      "h1": "Serum Calcium Total Test at Home — ₹249",
+      "title": "Calcium Blood Test at Home: Price ₹249 & Normal Range | Healthians",
+      "description": "Book Serum Calcium blood test at home for ₹249. Evaluates bone strength, muscle cramps, parathyroid function & Vitamin D balance with NABL reports.",
       "schemaDesc": "Serum Total Calcium blood test assessing bone health, neuromuscular function, and parathyroid activity.",
       "fasting": "Fasting optional (morning collection preferred)",
       "turnaround": "Reports in 12 Hours",
@@ -1595,14 +2097,32 @@
           "q": "Do I need to fast for a calcium blood test?",
           "a": "Fasting is typically not required, but morning sample collection is preferred."
         }
+      ],
+      "price": "249",
+      "mrp": "550",
+      "parametersCount": "1 Parameter (Serum Calcium Total)",
+      "normalRange": "Normal Adult Range: 8.6 - 10.2 mg/dL",
+      "relatedArticle": "vitamin-d-deficiency-symptoms",
+      "whenToTest": [
+        "Muscle twitches, leg cramps, or numbness around fingers/mouth",
+        "Osteoporosis screening in women over 45 or post-menopause",
+        "History of kidney stones or abnormal Vitamin D levels",
+        "Bone pain or unexplained chronic weakness"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Total Serum Calcium",
+          "normalRange": "8.6 - 10.2 mg/dL",
+          "meaning": "Below 8.6 indicates hypocalcemia; above 10.2 hypercalcemia"
+        }
       ]
     },
     {
       "slug": "dengue-test",
       "name": "Dengue NS1 Antigen & Antibody Test",
-      "h1": "Dengue Fever Blood Test at Home",
-      "title": "Dengue Test at Home | NS1 Antigen, IgM, IgG & Platelets | Healthians",
-      "description": "Book rapid Dengue test at home with Healthians. Tests Dengue NS1 Antigen, IgM/IgG Antibodies & Platelet count with fast 60-min pickup & urgent reports.",
+      "h1": "Dengue Fever Blood Test (NS1 & Antibodies) at Home — ₹599",
+      "title": "Dengue Test at Home: Price ₹599 (NS1, IgM/IgG) & Fast Report | Healthians",
+      "description": "Book urgent Dengue blood test at home for ₹599. Rapid 60-min sample collection for Dengue NS1 Antigen, IgM/IgG & urgent NABL report within 6-12 hours.",
       "schemaDesc": "Comprehensive Dengue screening panel including NS1 Antigen (early detection), IgM/IgG Antibodies, and Platelet count.",
       "fasting": "No fasting required",
       "turnaround": "Reports in 6-12 Hours (Urgent)",
@@ -1624,14 +2144,42 @@
           "q": "How often should platelet count be monitored in dengue?",
           "a": "In active dengue fever, doctors usually recommend checking platelet counts daily or every 12 hours until platelet counts stabilize above 100,000."
         }
+      ],
+      "price": "599",
+      "mrp": "1400",
+      "parametersCount": "Dengue NS1 + IgM & IgG Screening",
+      "normalRange": "Negative / Non-Reactive (NS1 sensitive Day 1-5; IgM Day 5 onwards)",
+      "relatedArticle": "dengue-symptoms-platelet-test-guide",
+      "whenToTest": [
+        "Sudden high-grade fever (102°F+) with severe frontal headache",
+        "Pain behind the eyes, severe joint/back aches ('breakbone fever')",
+        "Nausea, skin rash, or falling blood platelet counts during monsoon",
+        "Rule out dengue early in first 1 to 5 days of fever"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Dengue NS1 Antigen",
+          "normalRange": "Negative (<0.9 Index)",
+          "meaning": "Most sensitive test on Day 1 to Day 5 of dengue fever"
+        },
+        {
+          "parameter": "Dengue IgM Antibody",
+          "normalRange": "Negative",
+          "meaning": "Detects acute primary infection after Day 4-5"
+        },
+        {
+          "parameter": "Dengue IgG Antibody",
+          "normalRange": "Negative",
+          "meaning": "Indicates secondary or past dengue exposure"
+        }
       ]
     },
     {
       "slug": "beta-hcg-test",
-      "name": "Beta HCG Pregnancy Blood Test",
-      "h1": "Beta HCG Blood Test at Home",
-      "title": "Beta HCG Blood Test at Home | Pregnancy Confirmation | Healthians",
-      "description": "Book a quantitative Beta HCG blood test at home with Healthians. Accurate pregnancy confirmation, gestational tracking & ectopic pregnancy screening.",
+      "name": "Pregnancy Blood Test (Beta HCG)",
+      "h1": "Pregnancy Blood Test at Home (Quantitative Beta HCG) — ₹499",
+      "title": "Pregnancy Blood Test at Home (Beta HCG): Price ₹499 & Same-Day Report | Healthians",
+      "description": "Book confidential Pregnancy Blood Test (Beta HCG) at home for ₹499. Confirms pregnancy 7-10 days after conception with >99% NABL accuracy & private WhatsApp report.",
       "schemaDesc": "Quantitative Beta Human Chorionic Gonadotropin (Beta HCG) blood test for accurate pregnancy confirmation and gestational age assessment.",
       "fasting": "No fasting required",
       "turnaround": "Reports in 12-24 Hours",
@@ -1653,14 +2201,46 @@
           "q": "What is the difference between qualitative and quantitative Beta HCG?",
           "a": "A qualitative test gives a simple 'positive or negative' result. A quantitative test measures the exact numerical level of HCG, helping assess gestational progress."
         }
+      ],
+      "price": "499",
+      "mrp": "950",
+      "parametersCount": "1 Quantitative Parameter (Serum Beta HCG)",
+      "normalRange": "Non-Pregnant: <5.0 mIU/mL; Pregnancy Confirmed: >=25 mIU/mL",
+      "whenToTest": [
+        "Earliest & most accurate pregnancy confirmation (7-10 days post-conception)",
+        "Faint line or uncertain result on a home urine pregnancy strip",
+        "Tracking healthy 48-hour HCG doubling in early gestation or IVF",
+        "Screening as advised by an obstetrician for missed period"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Non-Pregnant Female",
+          "normalRange": "<5.0 mIU/mL",
+          "meaning": "Negative for pregnancy"
+        },
+        {
+          "parameter": "Equivocal / Borderline",
+          "normalRange": "5.0 - 24 mIU/mL",
+          "meaning": "Very early implantation possible; retest in 48 hours"
+        },
+        {
+          "parameter": "4 - 5 Weeks Gestation",
+          "normalRange": "75 - 7,340 mIU/mL",
+          "meaning": "Confirmed pregnancy (expected to double every 48-72 hrs)"
+        },
+        {
+          "parameter": "6 - 8 Weeks Gestation",
+          "normalRange": "1,080 - 229,000 mIU/mL",
+          "meaning": "Active first-trimester placental HCG surge"
+        }
       ]
     },
     {
       "slug": "allergy-test",
       "name": "Allergy Profile (Total IgE & Common Allergens)",
-      "h1": "Allergy Blood Test at Home",
-      "title": "Allergy Blood Test at Home | Total IgE & Comprehensive Panel | Healthians",
-      "description": "Book Allergy blood test at home with Healthians. Measures Total IgE antibody levels to identify food, respiratory & environmental allergy causes.",
+      "h1": "Allergy Blood Test (Total IgE) at Home — ₹699",
+      "title": "Allergy Blood Test at Home: Price ₹699 (Total IgE) | Healthians",
+      "description": "Book Total IgE Allergy blood test at home for ₹699. Screen for allergic rhinitis, asthma, skin hives & eczema without stopping allergy medicines.",
       "schemaDesc": "Total IgE and comprehensive allergen-specific IgE blood screening panel identifying causes of allergic rhinitis, asthma, eczema, and hives.",
       "fasting": "No fasting required",
       "turnaround": "Reports in 24-48 Hours",
@@ -1682,14 +2262,31 @@
           "q": "What does a high Total IgE level mean?",
           "a": "A high Total IgE indicates an allergic predisposition (atopy), active allergic conditions like eczema or asthma, or occasionally parasitic infections."
         }
+      ],
+      "price": "699",
+      "mrp": "1600",
+      "parametersCount": "1 Quantitative Parameter (Total IgE)",
+      "normalRange": "Adult Total IgE Normal: <100 IU/mL",
+      "whenToTest": [
+        "Frequent morning sneezing, itchy watery eyes, or sinus congestion",
+        "Recurrent skin hives, itching, eczema patches, or food reactions",
+        "Wheezing or allergic asthma flare-ups",
+        "Safe blood alternative when skin prick testing cannot be done"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Serum Total IgE (Adults)",
+          "normalRange": "<100 IU/mL",
+          "meaning": "Normal; >150-300+ indicates strong allergic predisposition"
+        }
       ]
     },
     {
       "slug": "double-marker-test",
       "name": "Double Marker Test (First Trimester Screening)",
-      "h1": "Double Marker Pregnancy Test at Home",
-      "title": "Double Marker Test at Home | Pregnancy Blood Test | Healthians",
-      "description": "Book Double Marker pregnancy test at home with Healthians. Screens for Down Syndrome & chromosomal abnormalities in 1st trimester with NABL reports.",
+      "h1": "Double Marker Pregnancy Test at Home — ₹1,999",
+      "title": "Double Marker Test at Home: Price ₹1,999 (1st Trimester) | Healthians",
+      "description": "Book Double Marker prenatal blood test at home for ₹1,999. Non-invasive Down Syndrome & Trisomy 18 screening (11-13.6 weeks) verified by NABL genetic labs.",
       "schemaDesc": "First trimester prenatal screening test measuring Free Beta HCG and PAPP-A combined with NT scan data to calculate chromosomal anomaly risk.",
       "fasting": "No fasting required (done between weeks 11 and 13.6 of pregnancy)",
       "turnaround": "Reports in 24-48 Hours",
@@ -1711,14 +2308,36 @@
           "q": "Does a positive or high-risk result mean the baby has Down syndrome?",
           "a": "No, it is a screening test, not a diagnostic test. A 'high-risk' result simply indicates a higher statistical probability, and your obstetrician may recommend confirmatory diagnostic testing like NIPT or amniocentesis."
         }
+      ],
+      "price": "1999",
+      "mrp": "4200",
+      "parametersCount": "2 Parameters (Free Beta HCG & PAPP-A + Risk Score)",
+      "normalRange": "Risk Cutoff Thresholds: Screen Negative (<1:250 Trisomy 21 risk)",
+      "whenToTest": [
+        "Mandatory first-trimester screening between Weeks 11 and 13.6",
+        "Immediately alongside or after your ultrasound NT scan report",
+        "Expectant mothers seeking reassuring prenatal chromosomal screening",
+        "Higher maternal age (30+) pregnancies"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Free Beta HCG & PAPP-A",
+          "normalRange": "Reported in MoM (Multiples of Median ~0.5-2.0)",
+          "meaning": "Combined with maternal age & NT scan for risk calculation"
+        },
+        {
+          "parameter": "Trisomy 21 / 18 Risk Output",
+          "normalRange": "Screen Negative (Low Risk)",
+          "meaning": "Statistical ratio indicating low chromosomal probability"
+        }
       ]
     },
     {
       "slug": "psa-test",
       "name": "Prostate Specific Antigen (PSA) Test",
-      "h1": "PSA Blood Test for Men at Home",
-      "title": "PSA Blood Test at Home | Prostate Cancer Screening | Healthians",
-      "description": "Book a Prostate Specific Antigen (PSA) test at home with Healthians. Screen for prostate enlargement & prostate cancer in men over 40 with free collection.",
+      "h1": "Prostate Specific Antigen (PSA) Test at Home — ₹599",
+      "title": "PSA Prostate Blood Test at Home: Price ₹599 | Healthians",
+      "description": "Book PSA blood test for men at home for ₹599. Screens for prostate enlargement (BPH), prostatitis & early prostate health in men 45+ with private NABL reports.",
       "schemaDesc": "Serum Total Prostate Specific Antigen (PSA) blood test for prostate health evaluation, BPH screening, and prostate cancer detection.",
       "fasting": "No fasting required (avoid strenuous cycling 48 hours prior)",
       "turnaround": "Reports in 12-24 Hours",
@@ -1740,6 +2359,33 @@
           "q": "Does a high PSA always mean prostate cancer?",
           "a": "No. Non-cancerous conditions like an enlarged prostate (BPH), urinary tract infection, or prostate inflammation (prostatitis) frequently elevate PSA levels."
         }
+      ],
+      "price": "599",
+      "mrp": "1400",
+      "parametersCount": "1 Parameter (Total PSA Serum)",
+      "normalRange": "Standard Adult Men: <4.0 ng/mL (Age-specific cutoff varies)",
+      "whenToTest": [
+        "Preventive annual prostate screening for men aged 45 years and older",
+        "Frequent nighttime urination, weak urine flow, or urgency",
+        "Pelvic discomfort or family history of prostate disorders",
+        "Follow-up tracking of benign prostatic hyperplasia (BPH)"
+      ],
+      "referenceTable": [
+        {
+          "parameter": "Men Age 40 - 49",
+          "normalRange": "0 - 2.5 ng/mL",
+          "meaning": "Age-adjusted reassuring PSA range"
+        },
+        {
+          "parameter": "Men Age 50 - 59",
+          "normalRange": "0 - 3.5 ng/mL",
+          "meaning": "Standard healthy male reference"
+        },
+        {
+          "parameter": "Men Age 60+",
+          "normalRange": "0 - 4.5 ng/mL",
+          "meaning": "Slight physiologic prostate volume growth with age"
+        }
       ]
     }
   ],
@@ -1748,8 +2394,8 @@
       "slug": "full-body-checkup",
       "name": "Full Body Health Checkup",
       "h1": "Comprehensive Full Body Checkup at Home",
-      "title": "Full Body Checkup at Home | 60+ Parameters Health Package | Healthians",
-      "description": "Book a comprehensive Full Body Health Checkup at home with Healthians. 60+ vital tests covering Heart, Liver, Kidney, Thyroid, Blood Sugar & CBC with free pickup.",
+      "title": "Smart Full Body Checkup at Home: 74 Tests at ₹999 | Healthians",
+      "description": "Book Smart Full Body Checkup at home for ₹999 (MRP ₹2,499). Covers 74 vital parameters: CBC, Thyroid, Liver, Kidney, Lipid, Sugar & Urine with free collection.",
       "schemaDesc": "Comprehensive Full Body Checkup screening 60+ vital health parameters including CBC, Lipid Profile, Liver Function, Kidney Function, Thyroid Profile, and Blood Sugar.",
       "fasting": "10-12 hours overnight fasting required",
       "turnaround": "Reports in 24 Hours",
@@ -1778,14 +2424,41 @@
           "q": "How does the home sample collection work?",
           "a": "A certified phlebotomist visits your home at your selected morning slot with sterile vacuum equipment, collects blood and urine samples in 5 minutes, and delivers your Smart Report within 24 hours."
         }
+      ],
+      "price": "999",
+      "mrp": "2499",
+      "parametersCount": "74 Parameters",
+      "normalRange": "74 multi-organ NABL clinical parameters with doctor-reviewed Smart PDF report",
+      "relatedArticle": "importance-of-annual-full-body-checkup",
+      "referenceTable": [
+        {
+          "parameter": "Complete Blood Count (CBC)",
+          "normalRange": "24 Parameters",
+          "meaning": "Hemoglobin, Platelets, WBC & Infection markers"
+        },
+        {
+          "parameter": "Liver & Kidney Panels (LFT + KFT)",
+          "normalRange": "16+ Parameters",
+          "meaning": "SGPT, SGOT, Bilirubin, Creatinine, Urea & BUN"
+        },
+        {
+          "parameter": "Lipid Profile & Blood Sugar",
+          "normalRange": "10+ Parameters",
+          "meaning": "Cholesterol, LDL, HDL, Triglycerides & Fasting Glucose"
+        },
+        {
+          "parameter": "Thyroid (TSH) & Urine Routine",
+          "normalRange": "20+ Parameters",
+          "meaning": "Metabolism screen, UTI & kidney protein screen"
+        }
       ]
     },
     {
       "slug": "senior-citizen-package",
       "name": "Senior Citizen Health Package",
       "h1": "Senior Citizen Health Checkup at Home",
-      "title": "Senior Citizen Health Package at Home | Elderly Health Screening | Healthians",
-      "description": "Book Senior Citizen Health Checkup at home with Healthians. Comprehensive health screening for elderly parents covering Heart, Bone, Kidney, Liver & Diabetes.",
+      "title": "Senior Citizen Health Checkup at Home: 85 Tests at ₹1,499 | Healthians",
+      "description": "Book Senior Citizen Health Package at home for ₹1,499 (MRP ₹3,400). Gentle doorstep pickup covering Heart, Diabetes, Bone Calcium, Vitamin D/B12, Liver & Kidney.",
       "schemaDesc": "Specialized geriatric health checkup package tailored for senior citizens covering bone health, cardiac risk, organ functions, and diabetes.",
       "fasting": "10-12 hours overnight fasting required",
       "turnaround": "Reports in 24 Hours",
@@ -1807,14 +2480,35 @@
           "q": "Can children living in another city or abroad book for parents?",
           "a": "Absolutely! You can book online from anywhere in the world, make payment online, and receive the digital reports directly on your email and WhatsApp."
         }
+      ],
+      "price": "1499",
+      "mrp": "3400",
+      "parametersCount": "85 Parameters",
+      "normalRange": "85 geriatric-calibrated NABL parameters with doctor phone consultation",
+      "referenceTable": [
+        {
+          "parameter": "Heart & Diabetes Screening",
+          "normalRange": "Lipid + HbA1c + FBS",
+          "meaning": "3-month average sugar & cardiac plaque risk"
+        },
+        {
+          "parameter": "Bone, Joint & Nerve Care",
+          "normalRange": "Calcium + Uric Acid + Vit D + B12",
+          "meaning": "Prevents osteoporosis, gout & nerve weakness"
+        },
+        {
+          "parameter": "Kidney, Liver & Hematology",
+          "normalRange": "LFT + KFT + CBC + Thyroid",
+          "meaning": "Comprehensive organ safety monitoring"
+        }
       ]
     },
     {
       "slug": "diabetes-package",
       "name": "Comprehensive Diabetes Health Package",
       "h1": "Complete Diabetes Health Package at Home",
-      "title": "Diabetes Health Package at Home | HbA1c, Sugar & Organ Health | Healthians",
-      "description": "Book complete Diabetes Health Package at home with Healthians. Includes HbA1c, Fasting Sugar, Lipid Profile, Kidney Function & Urine Microalbumin with free pickup.",
+      "title": "Diabetes Screening Package at Home: HbA1c & Sugar at ₹499 | Healthians",
+      "description": "Book Comprehensive Diabetes Package at home for ₹499. Includes HbA1c, Fasting Sugar, Urine Glucose, Kidney & Lipid health check with 12-hr NABL report.",
       "schemaDesc": "Comprehensive Diabetes monitoring package evaluating 3-month sugar control, kidney health, cardiac lipids, and microvascular risk.",
       "fasting": "10-12 hours overnight fasting required",
       "turnaround": "Reports in 24 Hours",
@@ -1837,14 +2531,36 @@
           "q": "How often should a diabetic person get this checkup done?",
           "a": "Doctors generally recommend checking HbA1c every 3 months and completing this full multi-organ checkup once every 6 to 12 months."
         }
+      ],
+      "price": "499",
+      "mrp": "1200",
+      "parametersCount": "52 Parameters",
+      "normalRange": "HbA1c <5.7% Normal; FBS 70-99 mg/dL; 52 total parameters",
+      "relatedArticle": "hba1c-normal-range-chart",
+      "referenceTable": [
+        {
+          "parameter": "HbA1c + Fasting Glucose",
+          "normalRange": "HbA1c <5.7% | FBS <100",
+          "meaning": "90-day & overnight glycemic control"
+        },
+        {
+          "parameter": "Renal & Lipid Safety",
+          "normalRange": "Creatinine + Cholesterol",
+          "meaning": "Early protection of kidneys & heart vessels"
+        },
+        {
+          "parameter": "Urine Routine & CBC",
+          "normalRange": "Microscopy + Hematology",
+          "meaning": "Detects urine sugar spill & chronic infections"
+        }
       ]
     },
     {
       "slug": "women-health-package",
       "name": "Women Care & Wellness Health Package",
       "h1": "Women Health Checkup Package at Home",
-      "title": "Women Health Checkup at Home | Hormones, Thyroid, Bone & Anemia | Healthians",
-      "description": "Book Women Care Health Package at home with Healthians. Comprehensive checkup for Thyroid, Iron deficiency, Vitamin D, Bone Calcium, CBC & Hormones.",
+      "title": "Women Health Checkup at Home: Thyroid, Iron & Hormones at ₹1,299 | Healthians",
+      "description": "Book Women Care Wellness Package at home for ₹1,299. Screens Thyroid (T3,T4,TSH), Anemia/Iron, Vitamin D3, Calcium, Liver, Kidney & CBC at home.",
       "schemaDesc": "Specialized health screening package for women addressing hormonal balance, thyroid health, anemia, bone density, and metabolic wellness.",
       "fasting": "10-12 hours overnight fasting recommended",
       "turnaround": "Reports in 24 Hours",
@@ -1867,14 +2583,36 @@
           "q": "Can I take this test during my menstrual period?",
           "a": "Yes, routine blood tests can be taken during your period. However, mention your cycle when submitting your urine sample to avoid microscopic trace blood confusion."
         }
+      ],
+      "price": "1299",
+      "mrp": "2999",
+      "parametersCount": "72 Parameters",
+      "normalRange": "72 women-focused clinical reference parameters in NABL PDF report",
+      "relatedArticle": "iron-deficiency-anemia-guide",
+      "referenceTable": [
+        {
+          "parameter": "Hormone & Anemia Panel",
+          "normalRange": "TSH, T3, T4 + Iron + CBC",
+          "meaning": "Root check for fatigue, PCOS clues & hair fall"
+        },
+        {
+          "parameter": "Bone & Mineral Shield",
+          "normalRange": "Vitamin D3 + Serum Calcium",
+          "meaning": "Protects bone density & prevents early osteopenia"
+        },
+        {
+          "parameter": "Metabolic Organ Panel",
+          "normalRange": "LFT + KFT + Lipid + Sugar",
+          "meaning": "Monitors cholesterol, fatty liver & insulin sensitivity"
+        }
       ]
     },
     {
       "slug": "men-health-package",
       "name": "Men Executive Health Checkup Package",
       "h1": "Men Health Checkup Package at Home",
-      "title": "Men Executive Health Package at Home | Heart, Liver, PSA & Fitness | Healthians",
-      "description": "Book Men Executive Health Package at home with Healthians. Comprehensive screening for Heart health, Liver enzymes, Kidney function, PSA & Diabetes.",
+      "title": "Men Executive Checkup at Home: Heart, Liver & PSA at ₹1,299 | Healthians",
+      "description": "Book Men Executive Health Package at home for ₹1,299. Screens Cardiac Lipid risk, Fatty Liver enzymes, Kidney, Diabetes, Uric Acid & PSA with free collection.",
       "schemaDesc": "Comprehensive men's health screening package evaluating cardiovascular risk, liver health, prostate function, and metabolic wellness.",
       "fasting": "10-12 hours overnight fasting required",
       "turnaround": "Reports in 24 Hours",
@@ -1897,14 +2635,35 @@
           "q": "What should I avoid before the test?",
           "a": "Avoid heavy alcohol consumption for 48 hours prior and fast for 10 to 12 hours before morning collection."
         }
+      ],
+      "price": "1299",
+      "mrp": "2999",
+      "parametersCount": "70 Parameters",
+      "normalRange": "70 male preventive health parameters in NABL PDF report",
+      "referenceTable": [
+        {
+          "parameter": "Cardiac & Metabolic Panel",
+          "normalRange": "Lipid + HbA1c + FBS",
+          "meaning": "Measures coronary heart risk & hidden prediabetes"
+        },
+        {
+          "parameter": "Liver & Uric Acid",
+          "normalRange": "LFT + GGT + Uric Acid",
+          "meaning": "Checks fatty liver & gout risk factors"
+        },
+        {
+          "parameter": "Kidney, CBC & Male Care",
+          "normalRange": "KFT + CBC + Thyroid",
+          "meaning": "Evaluates overall stamina & vital organ health"
+        }
       ]
     },
     {
       "slug": "thyroid-package",
       "name": "Advanced Thyroid & Metabolism Care Package",
       "h1": "Advanced Thyroid Care Package at Home",
-      "title": "Advanced Thyroid Health Package at Home | T3, T4, TSH & Antibodies | Healthians",
-      "description": "Book Advanced Thyroid Care Package at home with Healthians. Comprehensive screening for T3, T4, TSH, Anti-TPO antibodies & related metabolic health.",
+      "title": "Advanced Thyroid Care Package at Home: TSH & Anti-TPO at ₹699 | Healthians",
+      "description": "Book Advanced Thyroid Package at home for ₹699. Covers T3, T4, Ultra-sensitive TSH, Anti-TPO antibodies & CBC with free morning doorstep pickup.",
       "schemaDesc": "Advanced Thyroid and metabolic screening package evaluating thyroid hormones, autoimmune thyroid antibodies, and metabolic wellness.",
       "fasting": "Fasting optional (early morning collection recommended)",
       "turnaround": "Reports in 24 Hours",
@@ -1926,14 +2685,36 @@
           "q": "Do I need to fast before this thyroid checkup?",
           "a": "Morning collection before breakfast is recommended for the most consistent hormone baseline."
         }
+      ],
+      "price": "699",
+      "mrp": "1599",
+      "parametersCount": "28 Parameters",
+      "normalRange": "TSH: 0.4-4.5 mIU/L; Anti-TPO <34 IU/mL",
+      "relatedArticle": "thyroid-tsh-normal-range-guide",
+      "referenceTable": [
+        {
+          "parameter": "Thyroid Profile Total",
+          "normalRange": "T3, T4, TSH Ultra-Sensitive",
+          "meaning": "Evaluates active hormone levels & pituitary feedback"
+        },
+        {
+          "parameter": "Anti-TPO Antibodies",
+          "normalRange": "<34 IU/mL",
+          "meaning": "Identifies Hashimoto's autoimmune thyroiditis"
+        },
+        {
+          "parameter": "CBC & Lipid Check",
+          "normalRange": "24 Hematology + Chol",
+          "meaning": "Checks thyroid-associated anemia & high cholesterol"
+        }
       ]
     },
     {
       "slug": "cardiac-care-package",
       "name": "Healthy Heart Cardiac Screening Package",
       "h1": "Healthy Heart Cardiac Care Package at Home",
-      "title": "Healthy Heart Cardiac Package at Home | Cholesterol, Hs-CRP & Sugar | Healthians",
-      "description": "Book Healthy Heart Cardiac screening at home with Healthians. Evaluates Lipid Profile, High-Sensitivity CRP (Hs-CRP), Sugar & Electrolytes with NABL reports.",
+      "title": "Healthy Heart Cardiac Package at Home: Lipid & Hs-CRP at ₹899 | Healthians",
+      "description": "Book Healthy Heart Cardiac Checkup at home for ₹899. Includes Lipid Profile, High-Sensitivity CRP (Hs-CRP), HbA1c, Electrolytes & Kidney check at home.",
       "schemaDesc": "Comprehensive cardiovascular risk assessment package measuring lipid fractions, systemic vascular inflammation (Hs-CRP), and cardiac metabolic markers.",
       "fasting": "10-12 hours overnight fasting strictly required",
       "turnaround": "Reports in 24 Hours",
@@ -1956,14 +2737,36 @@
           "q": "Who should book a cardiac health checkup?",
           "a": "Anyone over age 30, individuals with a family history of heart disease, smokers, diabetics, or people experiencing high stress and sedentary routines."
         }
+      ],
+      "price": "899",
+      "mrp": "2199",
+      "parametersCount": "46 Parameters",
+      "normalRange": "Hs-CRP <1.0 mg/L Low Risk; LDL <100 mg/dL; 46 parameters",
+      "relatedArticle": "lipid-profile-cholesterol-guide",
+      "referenceTable": [
+        {
+          "parameter": "Advanced Lipid Panel",
+          "normalRange": "LDL <100 | HDL >40 | TG <150",
+          "meaning": "Quantifies atherogenic artery blockage fractions"
+        },
+        {
+          "parameter": "Hs-CRP Cardiac Marker",
+          "normalRange": "<1.0 mg/L Low Risk",
+          "meaning": "Detects silent arterial wall inflammation early"
+        },
+        {
+          "parameter": "HbA1c, KFT & Electrolytes",
+          "normalRange": "Glucose + Na/K + Creatinine",
+          "meaning": "Monitors blood pressure & diabetic heart strain"
+        }
       ]
     },
     {
       "slug": "vitamin-deficiency-package",
       "name": "Complete Vitamin & Mineral Deficiency Package",
       "h1": "Vitamin Deficiency Checkup at Home",
-      "title": "Complete Vitamin Profile at Home | Vitamin D3, B12, Iron & Calcium | Healthians",
-      "description": "Book Vitamin & Mineral Checkup at home with Healthians. Screen for Vitamin D3, Vitamin B12, Serum Iron, Ferritin & Calcium with free doorstep pickup.",
+      "title": "Complete Vitamin Package at Home: Vit D, B12, Iron & Calcium ₹999 | Healthians",
+      "description": "Book Complete Vitamin & Mineral Deficiency checkup at home for ₹999. Tests Vitamin D3, Vitamin B12, Iron Profile, Ferritin & Calcium with free doorstep collection.",
       "schemaDesc": "Comprehensive Vitamin and Mineral deficiency profile testing 25-OH Vitamin D, Vitamin B12, Serum Calcium, and Iron Ferritin reserves.",
       "fasting": "Overnight fasting recommended (8-10 hours)",
       "turnaround": "Reports in 24 Hours",
@@ -1985,14 +2788,36 @@
           "q": "Can I take my vitamin supplements before the test?",
           "a": "It is generally advised to skip your vitamin pills on the morning of the test until your blood sample has been drawn."
         }
+      ],
+      "price": "999",
+      "mrp": "2499",
+      "parametersCount": "12 Parameters",
+      "normalRange": "Vit D 30-100 ng/mL; Vit B12 >350 pg/mL; Ferritin >30 ng/mL",
+      "relatedArticle": "vitamin-d-deficiency-symptoms",
+      "referenceTable": [
+        {
+          "parameter": "25-OH Vitamin D3 & Calcium",
+          "normalRange": "Vit D 30-100 | Ca 8.6-10.2",
+          "meaning": "Bone mineral density, back pain & immunity"
+        },
+        {
+          "parameter": "Vitamin B12",
+          "normalRange": "200 - 900 pg/mL",
+          "meaning": "Prevents nerve tingling, brain fog & fatigue"
+        },
+        {
+          "parameter": "Iron & Ferritin Profile",
+          "normalRange": "Ferritin 15-300 ng/mL",
+          "meaning": "Deep iron reserve check for hair fall & weakness"
+        }
       ]
     },
     {
       "slug": "fitness-health-package",
       "name": "Active Fitness & Sports Health Package",
       "h1": "Fitness & Active Lifestyle Health Package at Home",
-      "title": "Fitness Health Package at Home | Gym, Muscle & Metabolism Checkup | Healthians",
-      "description": "Book Fitness & Gym Health Package at home with Healthians. Evaluates Liver, Kidney, Protein levels, Electrolytes, CBC & Vitamins for fitness enthusiasts.",
+      "title": "Fitness & Gym Checkup Package at Home: Liver, Kidney & Vit at ₹1,099 | Healthians",
+      "description": "Book Fitness Health Package at home for ₹1,099. Ideal for gym-goers & athletes: tests Liver, Kidney, Protein, Electrolytes, Uric Acid, CBC & Vitamins.",
       "schemaDesc": "Sports and active fitness health package screening protein status, kidney clearance, liver enzymes, electrolytes, and hematology.",
       "fasting": "10-12 hours overnight fasting recommended",
       "turnaround": "Reports in 24 Hours",
@@ -2014,14 +2839,35 @@
           "q": "Should I work out heavily right before my blood test?",
           "a": "Avoid strenuous, exhaustive workouts 24 hours before the test, as intense muscle breakdown can temporarily elevate creatinine and liver enzymes."
         }
+      ],
+      "price": "1099",
+      "mrp": "2499",
+      "parametersCount": "68 Parameters",
+      "normalRange": "68 sports & metabolic organ reference parameters in NABL PDF",
+      "referenceTable": [
+        {
+          "parameter": "Renal & Hydration Safety",
+          "normalRange": "KFT + Uric Acid + Na/K",
+          "meaning": "Ensures high-protein diet is processed safely"
+        },
+        {
+          "parameter": "Liver & Protein Markers",
+          "normalRange": "LFT + Total Protein + Albumin",
+          "meaning": "Checks muscle recovery & supplement tolerance"
+        },
+        {
+          "parameter": "Stamina & Bone Profile",
+          "normalRange": "CBC + Vitamin D + Calcium",
+          "meaning": "Optimizes endurance & injury prevention"
+        }
       ]
     },
     {
       "slug": "fever-screening-package",
       "name": "Fever & Acute Infection Screening Package",
       "h1": "Fever & Infection Screening Package at Home",
-      "title": "Fever Blood Test Package at Home | Malaria, Typhoid, Dengue & CBC | Healthians",
-      "description": "Book Fever Screening blood test at home with Healthians. Screen for Dengue NS1, Typhoid (Widal), Malaria, CBC & Urine with urgent sample collection.",
+      "title": "Fever Blood Test Package at Home: Dengue, Typhoid & Malaria ₹799 | Healthians",
+      "description": "Book urgent Fever Screening Package at home for ₹799. Checks CBC Platelets, Dengue NS1, Typhoid Widal, Malaria & Urine UTI with 60-min urgent home pickup.",
       "schemaDesc": "Acute fever profile testing for Dengue NS1, Typhoid Widal, Malaria parasites, Complete Blood Count, and Urine infection markers.",
       "fasting": "No fasting required",
       "turnaround": "Urgent reports in 6-12 Hours",
@@ -2043,6 +2889,28 @@
         {
           "q": "Can this test tell if fever is bacterial or viral?",
           "a": "Yes, the differential leukocyte count in the CBC combined with specific antigen and antibody tests helps doctors determine whether the fever is viral, bacterial (typhoid), or parasitic (malaria)."
+        }
+      ],
+      "price": "799",
+      "mrp": "1800",
+      "parametersCount": "35 Parameters",
+      "normalRange": "Comprehensive acute infection panel with urgent 6-12 hr NABL report",
+      "relatedArticle": "dengue-symptoms-platelet-test-guide",
+      "referenceTable": [
+        {
+          "parameter": "CBC with Platelet Count",
+          "normalRange": "Platelets 1.5 - 4.5 Lakh/mcL",
+          "meaning": "Tracks infection severity & viral platelet drops"
+        },
+        {
+          "parameter": "Dengue NS1 & Malaria",
+          "normalRange": "Negative / Non-Reactive",
+          "meaning": "Rapid early detection of vector-borne fevers"
+        },
+        {
+          "parameter": "Typhoid & Urine Microscopy",
+          "normalRange": "Negative | Pus Cells <5/HPF",
+          "meaning": "Screens enteric fever & urinary tract infection"
         }
       ]
     }
@@ -2077,6 +2945,27 @@
           "q": "What happens if I accidentally eat something during my fast?",
           "a": "Be honest and inform your phlebotomist. Some tests (like CBC or Vitamin D) can still proceed, while fasting sugar and lipid tests should be rescheduled for your safety and report accuracy."
         }
+      ],
+      "quickAnswer": "Most lipid profile, fasting blood sugar, and full body checkups require an 8-12 hour overnight fast with zero food, tea, coffee, or juice. Plain drinking water is strictly allowed and encouraged.",
+      "relatedTestSlug": "full-body-checkup",
+      "relatedTestName": "Smart Full Body Checkup (74 Params)",
+      "relatedTestPrice": "999",
+      "referenceTable": [
+        {
+          "parameter": "Lipid Profile / Full Body Checkup",
+          "normalRange": "10 - 12 Hours Fasting",
+          "meaning": "Only plain water permitted; avoid tea, coffee & milk"
+        },
+        {
+          "parameter": "Fasting Blood Sugar (FBS)",
+          "normalRange": "8 - 10 Hours Fasting",
+          "meaning": "Book early morning 6:30 AM - 8:30 AM slot"
+        },
+        {
+          "parameter": "CBC, HbA1c, CRP, Urine, Beta HCG",
+          "normalRange": "No Fasting Needed",
+          "meaning": "Can be collected anytime during the day"
+        }
       ]
     },
     {
@@ -2103,6 +2992,27 @@
         {
           "q": "What is the danger level for low platelets?",
           "a": "While normal platelets are 150,000+, medical concern increases below 50,000, and levels under 20,000 pose significant spontaneous bleeding risks requiring urgent hospital care."
+        }
+      ],
+      "quickAnswer": "In adults, normal Hemoglobin is 13.5-17.5 g/dL (men) and 12.0-15.5 g/dL (women), normal WBC (TLC) is 4,000-11,000 cells/mcL, and normal Platelets are 150,000-450,000/mcL.",
+      "relatedTestSlug": "cbc-test",
+      "relatedTestName": "Complete Blood Count (CBC)",
+      "relatedTestPrice": "299",
+      "referenceTable": [
+        {
+          "parameter": "Hemoglobin (Hb)",
+          "normalRange": "13.5-17.5 g/dL (M) | 12.0-15.5 g/dL (F)",
+          "meaning": "Low indicates anemia; fatigue & pale skin"
+        },
+        {
+          "parameter": "Total Leukocyte Count (WBC)",
+          "normalRange": "4,000 - 11,000 /mcL",
+          "meaning": "High points to bacterial/viral infection"
+        },
+        {
+          "parameter": "Platelet Count",
+          "normalRange": "150,000 - 450,000 /mcL",
+          "meaning": "Drops below 100,000 seen in dengue fever"
         }
       ]
     },
@@ -2131,6 +3041,27 @@
           "q": "Why is my daily fasting sugar normal but my HbA1c high?",
           "a": "Fasting blood sugar measures a single morning moment. If your blood sugar spikes significantly after lunch, dinner, or snacks, your 3-month average HbA1c will be high even if morning fasting readings look fine."
         }
+      ],
+      "quickAnswer": "An HbA1c below 5.7% is normal, 5.7% to 6.4% indicates prediabetes, and 6.5% or higher indicates diabetes. Most treated adults aim to keep HbA1c under 7.0%.",
+      "relatedTestSlug": "hba1c-test",
+      "relatedTestName": "HbA1c (Glycated Hemoglobin) Test",
+      "relatedTestPrice": "399",
+      "referenceTable": [
+        {
+          "parameter": "Normal",
+          "normalRange": "<5.7%",
+          "meaning": "Equivalent ~90-day avg blood sugar <117 mg/dL"
+        },
+        {
+          "parameter": "Prediabetes",
+          "normalRange": "5.7% - 6.4%",
+          "meaning": "117 - 137 mg/dL avg; reversible with lifestyle"
+        },
+        {
+          "parameter": "Diabetes",
+          "normalRange": ">=6.5%",
+          "meaning": ">=140 mg/dL avg; clinical management required"
+        }
       ]
     },
     {
@@ -2157,6 +3088,27 @@
         {
           "q": "How long does it take to correct severe Vitamin D deficiency?",
           "a": "With high-dose doctor-prescribed supplements (usually 60,000 IU weekly for 8 to 12 weeks), blood levels generally normalize within 2 to 3 months."
+        }
+      ],
+      "quickAnswer": "Optimal 25-OH Vitamin D blood levels are 30-100 ng/mL, while anything below 20 ng/mL is deficient. Key warning signs include chronic fatigue, lower back/bone pain, hair fall, and frequent infections.",
+      "relatedTestSlug": "vitamin-d-test",
+      "relatedTestName": "Vitamin D (25-OH) Test",
+      "relatedTestPrice": "699",
+      "referenceTable": [
+        {
+          "parameter": "Deficient",
+          "normalRange": "<20 ng/mL",
+          "meaning": "Severe shortage; bone ache, fatigue & muscle weakness"
+        },
+        {
+          "parameter": "Insufficient",
+          "normalRange": "20 - 29 ng/mL",
+          "meaning": "Suboptimal calcium absorption"
+        },
+        {
+          "parameter": "Optimal",
+          "normalRange": "30 - 100 ng/mL",
+          "meaning": "Healthy bone strength & immunity"
         }
       ]
     },
@@ -2185,6 +3137,27 @@
           "q": "Is Vitamin B12 deficiency reversible?",
           "a": "Yes, fatigue, anemia, and early neurological symptoms resolve quickly with supplementation. However, long-standing nerve damage (peripheral neuropathy) can become permanent if neglected for years."
         }
+      ],
+      "quickAnswer": "Normal serum Vitamin B12 ranges from 200 to 900 pg/mL (optimal >350 pg/mL). Deficiency is extremely common in vegetarians and causes hand/foot tingling, brain fog, and mouth ulcers.",
+      "relatedTestSlug": "vitamin-b12-test",
+      "relatedTestName": "Vitamin B12 (Cyanocobalamin) Test",
+      "relatedTestPrice": "599",
+      "referenceTable": [
+        {
+          "parameter": "Deficient",
+          "normalRange": "<200 pg/mL",
+          "meaning": "Risk of peripheral neuropathy & megaloblastic anemia"
+        },
+        {
+          "parameter": "Borderline Low",
+          "normalRange": "200 - 300 pg/mL",
+          "meaning": "Early store depletion; supplement guidance advised"
+        },
+        {
+          "parameter": "Optimal Target",
+          "normalRange": "350 - 900 pg/mL",
+          "meaning": "Supports brain focus & healthy nerves"
+        }
       ]
     },
     {
@@ -2211,6 +3184,27 @@
         {
           "q": "Can drinking coffee help reduce liver enzymes?",
           "a": "Yes! Clinical research shows that drinking 1 to 2 cups of unsweetened black coffee daily provides powerful liver-protective antioxidants that help lower elevated SGPT and SGOT."
+        }
+      ],
+      "quickAnswer": "Normal SGPT (ALT) is under 45 U/L and normal SGOT (AST) is under 40 U/L. Elevated values most commonly point to reversible Grade-1/2 fatty liver (NAFLD), alcohol stress, or medications.",
+      "relatedTestSlug": "lft-test",
+      "relatedTestName": "Liver Function Test (LFT)",
+      "relatedTestPrice": "499",
+      "referenceTable": [
+        {
+          "parameter": "SGPT (ALT)",
+          "normalRange": "7 - 45 U/L",
+          "meaning": "Most specific indicator of fatty liver & hepatitis"
+        },
+        {
+          "parameter": "SGOT (AST)",
+          "normalRange": "8 - 40 U/L",
+          "meaning": "Elevated in liver inflammation or intense muscle strain"
+        },
+        {
+          "parameter": "Total Bilirubin",
+          "normalRange": "0.2 - 1.2 mg/dL",
+          "meaning": "Marked rise (>2.5) causes visible jaundice"
         }
       ]
     },
@@ -2239,6 +3233,27 @@
           "q": "What TSH level requires medication?",
           "a": "Doctors typically initiate thyroxine medication when TSH exceeds 10 mIU/L, or between 4.5 and 10 if symptoms, high cholesterol, thyroid antibodies, or pregnancy are present."
         }
+      ],
+      "quickAnswer": "Normal adult TSH is 0.4 to 4.5 mIU/L (and ideally under 2.5 mIU/L during early pregnancy). High TSH means Hypothyroidism (underactive thyroid), whereas low TSH means Hyperthyroidism.",
+      "relatedTestSlug": "thyroid-test",
+      "relatedTestName": "Thyroid Profile (T3, T4, TSH)",
+      "relatedTestPrice": "449",
+      "referenceTable": [
+        {
+          "parameter": "Normal Adult TSH",
+          "normalRange": "0.4 - 4.5 mIU/L",
+          "meaning": "Healthy thyroid metabolic balance"
+        },
+        {
+          "parameter": "Hypothyroidism",
+          "normalRange": "TSH >4.5 mIU/L",
+          "meaning": "Sluggish metabolism, weight gain, fatigue, hair loss"
+        },
+        {
+          "parameter": "Hyperthyroidism",
+          "normalRange": "TSH <0.4 mIU/L",
+          "meaning": "Overactive gland: racing heartbeat, anxiety, weight loss"
+        }
       ]
     },
     {
@@ -2265,6 +3280,32 @@
         {
           "q": "Why are high triglycerides so common in India?",
           "a": "High triglycerides in Indian diets are largely driven by high consumption of refined carbohydrates (white rice, maida, sweets) and fried snacks, combined with a sedentary lifestyle."
+        }
+      ],
+      "quickAnswer": "A healthy Lipid Profile keeps Total Cholesterol under 200 mg/dL, LDL ('bad') cholesterol under 100 mg/dL, Triglycerides under 150 mg/dL, and HDL ('good') above 40-50 mg/dL.",
+      "relatedTestSlug": "lipid-profile-test",
+      "relatedTestName": "Lipid Profile (Cholesterol Panel)",
+      "relatedTestPrice": "499",
+      "referenceTable": [
+        {
+          "parameter": "Total Cholesterol",
+          "normalRange": "<200 mg/dL",
+          "meaning": "200-239 borderline high; >=240 high risk"
+        },
+        {
+          "parameter": "LDL ('Bad') Cholesterol",
+          "normalRange": "<100 mg/dL",
+          "meaning": "Primary plaque builder; keep <70 in heart disease"
+        },
+        {
+          "parameter": "HDL ('Good') Cholesterol",
+          "normalRange": ">40 (Men) | >50 mg/dL (Women)",
+          "meaning": "Protects arteries by removing excess fats"
+        },
+        {
+          "parameter": "Triglycerides",
+          "normalRange": "<150 mg/dL",
+          "meaning": "Elevated by refined sugar, rice/maida & fried foods"
         }
       ]
     },
@@ -2293,6 +3334,27 @@
           "q": "How can I naturally lower my creatinine levels?",
           "a": "Stay adequately hydrated, avoid over-the-counter NSAID painkillers (like ibuprofen), manage blood pressure and blood sugar strictly, and reduce excessive red meat consumption."
         }
+      ],
+      "quickAnswer": "Normal Serum Creatinine is 0.7-1.3 mg/dL for men and 0.5-1.1 mg/dL for women, with optimal eGFR above 90 mL/min. Diabetic and hypertensive patients should check KFT every 6-12 months.",
+      "relatedTestSlug": "kft-test",
+      "relatedTestName": "Kidney Function Test (KFT / RFT)",
+      "relatedTestPrice": "499",
+      "referenceTable": [
+        {
+          "parameter": "Serum Creatinine",
+          "normalRange": "0.7-1.3 mg/dL (M) | 0.5-1.1 mg/dL (F)",
+          "meaning": "Rises when kidney filtration efficiency drops"
+        },
+        {
+          "parameter": "BUN (Blood Urea Nitrogen)",
+          "normalRange": "7 - 20 mg/dL",
+          "meaning": "Evaluates nitrogen waste clearance & hydration"
+        },
+        {
+          "parameter": "eGFR",
+          "normalRange": ">=90 mL/min",
+          "meaning": "Below 60 persistent indicates Chronic Kidney Disease"
+        }
       ]
     },
     {
@@ -2319,6 +3381,22 @@
         {
           "q": "Does drinking lemon water really reduce uric acid?",
           "a": "Yes! Fresh lemon juice stimulates the production of calcium carbonate in the body, which helps neutralize uric acid and encourages urinary excretion."
+        }
+      ],
+      "quickAnswer": "Normal Uric Acid is 3.5-7.2 mg/dL in men and 2.6-6.0 mg/dL in women. High levels form needle-like joint crystals (gout) causing sudden big-toe swelling, preventable by hydration and cutting high-purine foods.",
+      "relatedTestSlug": "uric-acid-test",
+      "relatedTestName": "Serum Uric Acid Test",
+      "relatedTestPrice": "249",
+      "referenceTable": [
+        {
+          "parameter": "Men Normal Range",
+          "normalRange": "3.5 - 7.2 mg/dL",
+          "meaning": ">7.2 increases gout flare & kidney stone risk"
+        },
+        {
+          "parameter": "Women Normal Range",
+          "normalRange": "2.6 - 6.0 mg/dL",
+          "meaning": "Monitor closely post-menopause if joint pain appears"
         }
       ]
     },
@@ -2347,14 +3425,35 @@
           "q": "What core tests must be included in a 30+ checkup?",
           "a": "A thorough checkup must include CBC, Fasting Sugar, HbA1c, Lipid Profile, Liver Function, Kidney Function, Thyroid Profile, and Vitamin D/B12."
         }
+      ],
+      "quickAnswer": "Silent lifestyle conditions like prediabetes, fatty liver, hypertension, and high cholesterol cause zero early warning symptoms. An annual ₹999 full body checkup detects them years before complications arise.",
+      "relatedTestSlug": "full-body-checkup",
+      "relatedTestName": "Smart Full Body Checkup (74 Params)",
+      "relatedTestPrice": "999",
+      "referenceTable": [
+        {
+          "parameter": "Adults Age 25 - 35",
+          "normalRange": "Once Every 12 Months",
+          "meaning": "Establishes personal baseline for sugar, lipids & vitamins"
+        },
+        {
+          "parameter": "Adults Age 35 - 50",
+          "normalRange": "Annual (6-Monthly if Risk Factors)",
+          "meaning": "Intercepts fatty liver, thyroid & insulin resistance early"
+        },
+        {
+          "parameter": "Seniors Age 50+",
+          "normalRange": "Every 6 Months",
+          "meaning": "Monitors kidney clearance, heart risk, bone calcium & PSA"
+        }
       ]
     },
     {
       "slug": "crp-test-high-levels-guide",
-      "name": "CRP Blood Test: Why High C-Reactive Protein Means Inflammation",
-      "h1": "High C-Reactive Protein (CRP): Causes & When to Worry",
-      "title": "CRP Blood Test: Normal Range, High Levels & Causes | Healthians",
-      "description": "What does a high CRP blood test mean? Learn the difference between viral infections, autoimmune disease & cardiac risk markers. Doctor reviewed.",
+      "name": "CRP Test Normal Range Chart & Causes of High C-Reactive Protein",
+      "h1": "CRP Test Normal Range Chart (mg/L) & What High Levels Mean",
+      "title": "CRP Test Normal Range Chart (mg/L): Normal vs High Levels | Healthians",
+      "description": "Complete CRP test normal range chart in mg/L & mg/dL. Understand normal (<5 mg/L), viral vs bacterial infections, Hs-CRP heart risk & book CRP test at home for ₹399.",
       "schemaDesc": "Clinical guide explaining C-Reactive Protein (CRP) pathophysiology, diagnostic significance, and clinical management.",
       "publishDate": "2026-04-05",
       "overview": "C-Reactive Protein (CRP) is an acute-phase reactant synthesized by the liver. When tissues in your body experience acute bacterial invasion, viral trauma, or autoimmune flare-ups, liver cells flood the bloodstream with CRP. Discover how doctors interpret this critical diagnostic signal.",
@@ -2373,6 +3472,42 @@
         {
           "q": "Can stress or exercise elevate CRP?",
           "a": "Intense, exhausting physical exertion can temporarily cause a mild increase in CRP due to transient muscle fiber micro-trauma, but mental stress alone does not cause significant spikes."
+        }
+      ],
+      "quickAnswer": "A normal Standard CRP blood test level is less than 5.0 mg/L (or <0.5 mg/dL). Mild rises (10-40 mg/L) occur in viral infections or mild inflammation, whereas values of 40-200 mg/L strongly suggest an acute bacterial infection.",
+      "relatedTestSlug": "crp-test",
+      "relatedTestName": "C-Reactive Protein (CRP) Test",
+      "relatedTestPrice": "399",
+      "referenceTable": [
+        {
+          "parameter": "Normal Standard CRP",
+          "normalRange": "Below 5.0 mg/L (<0.5 mg/dL)",
+          "meaning": "Healthy baseline; no acute active inflammation"
+        },
+        {
+          "parameter": "Borderline / Minor Elevation",
+          "normalRange": "5.0 - 10.0 mg/L",
+          "meaning": "May occur with mild cold, obesity, pregnancy, or vigorous exercise"
+        },
+        {
+          "parameter": "Mild to Moderate Elevation",
+          "normalRange": "10.0 - 40.0 mg/L",
+          "meaning": "Viral infection, localized mild infection, or autoimmune flare"
+        },
+        {
+          "parameter": "Marked / High CRP",
+          "normalRange": "40.0 - 200.0 mg/L",
+          "meaning": "Strongly suggests acute bacterial infection, pneumonia, or active inflammation"
+        },
+        {
+          "parameter": "Severe Critical CRP",
+          "normalRange": "Above 200 mg/L",
+          "meaning": "Severe systemic bacterial infection (sepsis) or major tissue trauma"
+        },
+        {
+          "parameter": "Hs-CRP (Heart Risk Screen)",
+          "normalRange": "<1.0 Low | 1.0-3.0 Moderate | >3.0 High Risk",
+          "meaning": "High-Sensitivity CRP used to evaluate silent cardiovascular inflammation"
         }
       ]
     },
@@ -2401,6 +3536,22 @@
           "q": "Can severe anemia distort HbA1c results?",
           "a": "Yes. Conditions that alter red blood cell lifespan—such as severe iron deficiency anemia or hemolytic anemia—can cause artificially elevated or lowered HbA1c readings."
         }
+      ],
+      "quickAnswer": "Fasting Blood Sugar captures a single overnight morning snapshot (requires 8-10 hrs fast), while HbA1c measures your continuous 90-day average blood glucose (requires zero fasting). Doctors use both together so post-meal sugar spikes are never missed.",
+      "relatedTestSlug": "hba1c-test",
+      "relatedTestName": "HbA1c (Glycated Hemoglobin) Test",
+      "relatedTestPrice": "399",
+      "referenceTable": [
+        {
+          "parameter": "Fasting Blood Sugar (FBS)",
+          "normalRange": "Normal: 70-99 mg/dL",
+          "meaning": "Single morning reading; 8-10 hrs overnight fast strictly required"
+        },
+        {
+          "parameter": "HbA1c (3-Month Average)",
+          "normalRange": "Normal: <5.7%",
+          "meaning": "Captures past 90 days; no fasting needed"
+        }
       ]
     },
     {
@@ -2427,6 +3578,22 @@
         {
           "q": "Why are women significantly more prone to UTIs than men?",
           "a": "Women have a much shorter urethra located closer to the rectal area, allowing bacteria like E. coli to reach the bladder more easily."
+        }
+      ],
+      "quickAnswer": "Burning urination, constant urgency, cloudy urine, and pelvic pain are classic UTI symptoms. A ₹199 Urine Routine & Microscopy home test confirms infection by checking Pus Cells (>5/HPF) and bacterial Nitrites.",
+      "relatedTestSlug": "urine-routine-test",
+      "relatedTestName": "Urine Routine & Microscopy Test",
+      "relatedTestPrice": "199",
+      "referenceTable": [
+        {
+          "parameter": "Pus Cells (Leukocytes)",
+          "normalRange": "0 - 5 /HPF",
+          "meaning": ">5 cells/HPF indicates active urinary tract infection"
+        },
+        {
+          "parameter": "Nitrites & Bacteria",
+          "normalRange": "Negative",
+          "meaning": "Positive confirms bacterial bladder colonization"
         }
       ]
     },
@@ -2455,6 +3622,22 @@
           "q": "How long does it take for iron supplements to raise hemoglobin?",
           "a": "Oral iron supplements usually increase hemoglobin within 2 to 4 weeks. However, doctors advise continuing therapy for 3 to 6 months to completely refill depleted ferritin stores."
         }
+      ],
+      "quickAnswer": "Serum Ferritin is the earliest, most sensitive marker of iron deficiency (optimal >30 ng/mL), dropping weeks before Hemoglobin falls. Pairing iron-rich foods with Vitamin C (amla, lemon) doubles absorption, while tea/coffee block it.",
+      "relatedTestSlug": "iron-ferritin-test",
+      "relatedTestName": "Iron Deficiency & Ferritin Profile",
+      "relatedTestPrice": "699",
+      "referenceTable": [
+        {
+          "parameter": "Serum Ferritin",
+          "normalRange": "30-300 (M) | 15-150 ng/mL (F)",
+          "meaning": "Best test for hidden low iron stores before anemia worsens"
+        },
+        {
+          "parameter": "Hemoglobin (CBC)",
+          "normalRange": "13.5-17.5 (M) | 12.0-15.5 g/dL (F)",
+          "meaning": "Falls in overt iron deficiency anemia (with low MCV)"
+        }
       ]
     },
     {
@@ -2482,6 +3665,22 @@
           "q": "Can papaya leaf juice increase platelets in dengue?",
           "a": "Papaya leaf extract has shown modest benefits in some clinical trials, but it must NEVER replace medical hydration, doctor supervision, and regular laboratory platelet monitoring."
         }
+      ],
+      "quickAnswer": "Get the Dengue NS1 Antigen test during Days 1-5 of high fever, and IgM/IgG after Day 5. Monitor Platelet Counts daily if platelets dip below 100,000/mcL or warning signs appear.",
+      "relatedTestSlug": "dengue-test",
+      "relatedTestName": "Dengue NS1 Antigen & Antibody Test",
+      "relatedTestPrice": "599",
+      "referenceTable": [
+        {
+          "parameter": "Days 1 - 5 of Fever",
+          "normalRange": "Dengue NS1 Antigen Test",
+          "meaning": "Gold-standard early viral detection"
+        },
+        {
+          "parameter": "Day 5 Onwards & Recovery",
+          "normalRange": "Dengue IgM + IgG + Daily CBC Platelets",
+          "meaning": "Monitors antibody rise and critical-phase platelet drops"
+        }
       ]
     },
     {
@@ -2508,6 +3707,28 @@
         {
           "q": "Should I keep pressing the puncture site after the phlebotomist leaves?",
           "a": "Apply firm, steady pressure with the cotton ball for 3 to 5 minutes without rubbing. Avoid lifting heavy weights with that arm for an hour to prevent minor bruising."
+        }
+      ],
+      "quickAnswer": "Drink 1-2 glasses of plain water 30 minutes before pickup, wear loose sleeves, complete an 8-12 hr overnight fast only if booking sugar/lipid panels, and keep pressure on the cotton swab for 3 minutes afterwards.",
+      "relatedTestSlug": "blood-test-at-home",
+      "relatedTestName": "Book Blood Test at Home",
+      "relatedTestPrice": "199",
+      "isServiceLink": true,
+      "referenceTable": [
+        {
+          "parameter": "Water Intake",
+          "normalRange": "1 - 2 Glasses Plain Water",
+          "meaning": "Plumps surface veins for a smooth, painless 10-second draw"
+        },
+        {
+          "parameter": "Morning Clothing",
+          "normalRange": "Short or Loose Sleeves",
+          "meaning": "Allows effortless elbow access without discomfort"
+        },
+        {
+          "parameter": "Post-Draw Care",
+          "normalRange": "Press Gently 3 - 5 Minutes",
+          "meaning": "Prevents minor arm bruising; avoid rubbing the spot"
         }
       ]
     },
@@ -2537,6 +3758,28 @@
           "q": "How does the cold chain preserve sample integrity during travel?",
           "a": "Our phlebotomists carry specialized temperature-controlled carrier boxes equipped with calibrated gel packs that maintain an optimal 2°C to 8°C environment, preventing cell degradation before reaching the testing analyzer."
         }
+      ],
+      "quickAnswer": "Home sample collection is just as accurate as visiting a hospital because every tube is uniquely barcoded at your doorstep, chilled inside 2°C-8°C cold-chain boxes, and tested on NABL robotic analyzers.",
+      "relatedTestSlug": "blood-test-at-home",
+      "relatedTestName": "Book Blood Test at Home",
+      "relatedTestPrice": "199",
+      "isServiceLink": true,
+      "referenceTable": [
+        {
+          "parameter": "Step 1: Sterile Kit",
+          "normalRange": "Single-Use Sealed Vacutainer",
+          "meaning": "Unpacked fresh in front of the patient"
+        },
+        {
+          "parameter": "Step 2: Barcoded Cold Chain",
+          "normalRange": "2°C - 8°C Monitored Carrier",
+          "meaning": "Preserves delicate cells and enzymes during transit"
+        },
+        {
+          "parameter": "Step 3: NABL Lab Report",
+          "normalRange": "12 - 24 Hours on WhatsApp",
+          "meaning": "MD Pathologist verified + free doctor phone review"
+        }
       ]
     }
   ],
@@ -2544,9 +3787,9 @@
     {
       "slug": "blood-test-at-home",
       "name": "Blood Test at Home",
-      "h1": "Blood Test at Home with Free Sample Collection",
-      "title": "Blood Test at Home | Free Doorstep Sample Collection | Healthians",
-      "description": "Book a blood test at home with Healthians. Certified phlebotomists, 60-minute doorstep sample pickup, NABL certified labs & reports in 24 hours.",
+      "h1": "Blood Test at Home — Free Sample Collection Starting ₹199",
+      "title": "Blood Test at Home | Free Sample Collection Starting ₹199 - Healthians",
+      "description": "Book blood test at home starting ₹199 with FREE 60-minute doorstep sample collection across 250+ Indian cities. NABL certified labs, digital WhatsApp reports in 24 hrs.",
       "schemaDesc": "Doorstep blood testing and clinical diagnostic services with certified phlebotomists across India.",
       "fasting": "Depends on selected tests (10-12h for sugar/lipids)",
       "turnaround": "Reports in 12-24 Hours",
@@ -2567,13 +3810,43 @@
           "q": "Are home collection blood test results accurate?",
           "a": "Yes! All samples are transported in 2°C to 8°C cold-chain containers and processed on the same automated robotic analyzers used in top tertiary hospitals."
         }
+      ],
+      "price": "199",
+      "mrp": "450",
+      "normalRange": "Covers 200+ NABL-verified blood & urine tests with age-specific clinical reference ranges",
+      "referenceTable": [
+        {
+          "parameter": "Healthians Super Saver (5 Essential Tests)",
+          "normalRange": "Creatinine, Cholesterol, Sugar, Urine, TSH",
+          "meaning": "Offer Price: ₹299 (MRP ₹1,299)"
+        },
+        {
+          "parameter": "Urine Routine & Microscopy (18+ Params)",
+          "normalRange": "pH, Pus Cells, Protein, Sugar",
+          "meaning": "Offer Price: ₹199 (MRP ₹450)"
+        },
+        {
+          "parameter": "Complete Blood Count (CBC - 24 Params)",
+          "normalRange": "Hemoglobin, Platelets, WBC, RBC",
+          "meaning": "Offer Price: ₹299 (MRP ₹600)"
+        },
+        {
+          "parameter": "CRP Quantitative / HbA1c Diabetes",
+          "normalRange": "CRP <5 mg/L | HbA1c <5.7%",
+          "meaning": "Offer Price: ₹399 each"
+        },
+        {
+          "parameter": "Smart Full Body Checkup (74 Params)",
+          "normalRange": "Heart, Liver, Kidney, Thyroid, CBC",
+          "meaning": "Offer Price: ₹999 (MRP ₹2,499)"
+        }
       ]
     },
     {
       "slug": "diagnostic-tests-at-home",
       "name": "Diagnostic Tests at Home",
       "h1": "Diagnostic Tests at Home - Pathology Lab Services",
-      "title": "Diagnostic Tests at Home | Pathology Lab Services | Healthians",
+      "title": "Diagnostic Tests at Home | 200+ NABL Lab Tests Starting ₹199 - Healthians",
       "description": "Get accurate diagnostic & pathology lab tests from the comfort of your home. Healthians offers 200+ routine & specialized blood and urine tests.",
       "schemaDesc": "Comprehensive pathology and diagnostic laboratory testing services at home.",
       "fasting": "Fasting guidelines provided based on test selection",
@@ -2594,13 +3867,16 @@
           "q": "Can I consult a doctor about my diagnostic report?",
           "a": "Yes! Healthians provides a complimentary tele-consultation with a qualified medical doctor to discuss your diagnostic results and answer your health questions."
         }
-      ]
+      ],
+      "price": "199",
+      "mrp": "450",
+      "normalRange": "Over 200 validated pathology tests with NABL-verified reference intervals"
     },
     {
       "slug": "pathology-lab-near-me",
       "name": "Pathology Lab Near Me",
       "h1": "Best Pathology Lab Near You with Home Collection",
-      "title": "Pathology Lab Near Me | Home Blood Sample Collection | Healthians",
+      "title": "Pathology Lab Near Me | Free 60-Min Doorstep Blood Collection - Healthians",
       "description": "Looking for a pathology lab near you? Healthians delivers NABL accredited laboratory testing directly to your doorstep. Free sample collection in 60 mins.",
       "schemaDesc": "Local pathology laboratory network providing rapid doorstep sample collection and digital report delivery.",
       "fasting": "Check specific test requirements",
@@ -2621,13 +3897,16 @@
           "q": "How can I book immediately?",
           "a": "Fill out our quick 30-second form on this page or tap the WhatsApp button to book an appointment with our local team immediately."
         }
-      ]
+      ],
+      "price": "199",
+      "mrp": "450",
+      "normalRange": "Serving 250+ cities across India via barcoded NABL processing hubs"
     },
     {
       "slug": "full-body-checkup-at-home",
       "name": "Full Body Checkup at Home",
       "h1": "Full Body Health Checkup at Home",
-      "title": "Full Body Checkup at Home | Complete Health Screening | Healthians",
+      "title": "Full Body Checkup at Home | 74 Parameters at ₹999 - Healthians",
       "description": "Book a full body health checkup at home with Healthians. Comprehensive multi-organ screening for Heart, Liver, Kidney, Sugar & CBC with free pickup.",
       "schemaDesc": "Master health checkup and comprehensive full body diagnostic screening at home.",
       "fasting": "10-12 hours overnight fasting required",
@@ -2650,7 +3929,11 @@
           "q": "Are full body checkup reports valid for medical consultations?",
           "a": "Yes! All Healthians partner laboratories are NABL certified and accepted by physicians and specialists across India."
         }
-      ]
+      ],
+      "price": "999",
+      "mrp": "2499",
+      "normalRange": "Complete multi-organ panel (CBC, LFT, KFT, Lipid, Thyroid, Sugar & Urine)",
+      "relatedArticle": "importance-of-annual-full-body-checkup"
     }
   ]
 }

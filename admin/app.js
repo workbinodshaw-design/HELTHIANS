@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isDue = b.callBackDate && b.callBackDate <= now;
         const ptName = escapeHTML((b.name || 'Patient').trim());
         const cleanMobile = escapeHTML((b.mobile || '9999999999').replace(/\D/g, ''));
-        const cleanCity = escapeHTML(b.city || 'Bangalore');
+        const cleanCity = escapeHTML(b.city || 'Not Specified');
         const cleanPkg = escapeHTML(b.selectedPackage || 'General Home Blood Collection');
 
         let statusBadgeClass = 'badge-pending';

@@ -1,9 +1,11 @@
 /**
  * ========================================================================
  * HEALTHIANS® MODERN PRODUCT INTERACTION & ANALYTICS ENGINE
- * Built for High-Converting Ads Traffic (Apple/Stripe UX Pattern)
+ * High-Converting CRO + Zero-Loss Lead Capture + Real-Time Firestore Sync
  * ========================================================================
  */
+
+window.currentSelectedPackage = window.currentSelectedPackage || '';
 
 document.addEventListener('DOMContentLoaded', () => {
   window._pageLoadTimestamp = Date.now();
@@ -25,33 +27,139 @@ document.addEventListener('DOMContentLoaded', () => {
     }).trim();
   }
 
+  function cleanFieldText(str) {
+    if (typeof str !== 'string') return '';
+    return str
+      .replace(/[<>{}\\]/g, '')
+      .replace(/[\u0000-\u001F\u007F]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function normalizeIndianMobile(val) {
+    let digits = String(val || '').replace(/\D/g, '');
+    if (digits.length === 12 && digits.startsWith('91') && /^[6-9]/.test(digits.slice(2))) {
+      digits = digits.slice(2);
+    } else if (digits.length === 11 && digits.startsWith('0') && /^[6-9]/.test(digits.slice(1))) {
+      digits = digits.slice(1);
+    }
+    return digits;
+  }
+
+  const CITY_SLUG_MAP = {
+    'delhi': 'Delhi NCR',
+    'new-delhi': 'New Delhi',
+    'mumbai': 'Mumbai',
+    'bengaluru': 'Bangalore (Bengaluru)',
+    'bangalore': 'Bangalore (Bengaluru)',
+    'pune': 'Pune',
+    'hyderabad': 'Hyderabad',
+    'gurugram': 'Gurgaon (Gurugram)',
+    'gurgaon': 'Gurgaon (Gurugram)',
+    'noida': 'Noida',
+    'ghaziabad': 'Ghaziabad',
+    'faridabad': 'Faridabad',
+    'jaipur': 'Jaipur',
+    'lucknow': 'Lucknow',
+    'chandigarh': 'Chandigarh',
+    'ahmedabad': 'Ahmedabad',
+    'kolkata': 'Kolkata',
+    'chennai': 'Chennai',
+    'indore': 'Indore',
+    'bhopal': 'Bhopal',
+    'kanpur': 'Kanpur',
+    'nagpur': 'Nagpur',
+    'patna': 'Patna',
+    'surat': 'Surat',
+    'vadodara': 'Vadodara',
+    'ludhiana': 'Ludhiana',
+    'agra': 'Agra',
+    'varanasi': 'Varanasi',
+    'amritsar': 'Amritsar',
+    'meerut': 'Meerut',
+    'dehradun': 'Dehradun',
+    'allahabad': 'Allahabad (Prayagraj)',
+    'prayagraj': 'Allahabad (Prayagraj)'
+  };
+
+  const TEST_SLUG_MAP = {
+    'cbc-test': 'Complete Blood Count (CBC)',
+    'thyroid-test': 'Thyroid Profile (T3, T4, TSH)',
+    'hba1c-test': 'HbA1c (Glycated Hemoglobin) Test',
+    'vitamin-d-test': 'Vitamin D (25-OH) Test',
+    'vitamin-b12-test': 'Vitamin B12 (Cyanocobalamin) Test',
+    'lft-test': 'Liver Function Test (LFT)',
+    'kft-test': 'Kidney Function Test (KFT / RFT)',
+    'lipid-profile-test': 'Lipid Profile (Cholesterol Panel)',
+    'fasting-blood-sugar-test': 'Fasting Blood Sugar (FBS)',
+    'post-prandial-blood-sugar-test': 'Post Prandial Blood Sugar (PPBS)',
+    'urine-routine-test': 'Urine Routine & Microscopy',
+    'esr-test': 'Erythrocyte Sedimentation Rate (ESR)',
+    'crp-test': 'C-Reactive Protein (CRP)',
+    'iron-ferritin-test': 'Iron Deficiency & Ferritin Profile',
+    'serum-electrolytes-test': 'Serum Electrolytes (Na, K, Cl)',
+    'uric-acid-test': 'Serum Uric Acid Test',
+    'calcium-test': 'Serum Calcium Total Test',
+    'dengue-test': 'Dengue NS1 Antigen & Antibody Test',
+    'beta-hcg-test': 'Beta HCG Pregnancy Blood Test',
+    'allergy-test': 'Allergy Profile (Total IgE & Common Allergens)',
+    'double-marker-test': 'Double Marker Test (First Trimester Screening)',
+    'psa-test': 'Prostate Specific Antigen (PSA) Test',
+    'full-body-checkup': 'Full Body Health Checkup',
+    'senior-citizen-package': 'Senior Citizen Health Package',
+    'diabetes-package': 'Comprehensive Diabetes Health Package',
+    'women-health-package': 'Women Care & Wellness Health Package',
+    'men-health-package': 'Men Executive Health Checkup Package',
+    'thyroid-package': 'Advanced Thyroid & Metabolism Care Package',
+    'cardiac-care-package': 'Healthy Heart Cardiac Screening Package',
+    'vitamin-deficiency-package': 'Complete Vitamin & Mineral Deficiency Package',
+    'fitness-health-package': 'Active Fitness & Sports Health Package',
+    'fever-screening-package': 'Fever & Acute Infection Screening Package'
+  };
+
+  function resolveTestOrPkgName(rawSlugOrName) {
+    const clean = cleanFieldText(rawSlugOrName);
+    if (!clean) return '';
+    const key = clean.toLowerCase();
+    if (TEST_SLUG_MAP[key]) return TEST_SLUG_MAP[key];
+    if (clean.includes(' ') || clean.length > 40) return clean;
+    return clean
+      .replace(/[-_]+/g, ' ')
+      .replace(/\b\w/g, ch => ch.toUpperCase());
+  }
+
   // 1. MINIMALIST NOTION/APPLE FAQ ACCORDION HANDLER
   const faqRows = document.querySelectorAll('.faq-row');
-  
+
   faqRows.forEach(row => {
     const btn = row.querySelector('.faq-question-btn');
     const answerBox = row.querySelector('.faq-answer-box');
     const answerInner = row.querySelector('.faq-answer-inner');
-    
+    if (!btn) return;
+
     btn.addEventListener('click', () => {
       const isOpen = row.classList.contains('open');
-      
+
       // Close other open rows for clean mobile reading
       faqRows.forEach(other => {
         if (other !== row && other.classList.contains('open')) {
           other.classList.remove('open');
+          const otherBtn = other.querySelector('.faq-question-btn');
+          if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
           const otherBox = other.querySelector('.faq-answer-box');
           if (otherBox) otherBox.style.maxHeight = '0px';
         }
       });
-      
+
       if (!isOpen) {
         row.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
         if (answerBox && answerInner) {
           answerBox.style.maxHeight = (answerInner.scrollHeight + 30) + 'px';
         }
       } else {
         row.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
         if (answerBox) {
           answerBox.style.maxHeight = '0px';
         }
@@ -59,34 +167,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 2. PACKAGE SELECTION & PROGRESSIVE DISCLOSURE (Using Event Delegation for Dynamic Admin Packages)
+  // 2. PACKAGE SELECTION & PROGRESSIVE DISCLOSURE (Shared global state for SEO pages & URL params)
   const selectedPackageBox = document.getElementById('selected-package-box');
   const packageTitleText = document.getElementById('package-title-text');
   const removePackageBtn = document.getElementById('remove-package-btn');
   const bookCardDestination = document.getElementById('booking-card-destination');
   const leadNameInput = document.getElementById('lead-name');
-  let currentSelectedPackage = '';
+  const leadPhoneInput = document.getElementById('lead-phone');
+  let currentSelectedPackage = window.currentSelectedPackage || '';
+
+  function setSelectedPackage(pkgName) {
+    const cleaned = cleanFieldText(pkgName);
+    currentSelectedPackage = cleaned;
+    window.currentSelectedPackage = cleaned;
+    if (cleaned) {
+      if (packageTitleText) packageTitleText.textContent = cleaned;
+      if (selectedPackageBox) selectedPackageBox.style.display = 'flex';
+    } else {
+      if (selectedPackageBox) selectedPackageBox.style.display = 'none';
+    }
+  }
+
+  window.setSelectedHealthiansPackage = setSelectedPackage;
+
+  // Read pre-populated package on /tests/* and /packages/* subpages
+  if (!currentSelectedPackage && selectedPackageBox && packageTitleText) {
+    const isBoxVisible = window.getComputedStyle(selectedPackageBox).display !== 'none' || selectedPackageBox.style.display === 'flex';
+    const existingLabel = cleanFieldText(packageTitleText.textContent);
+    if (isBoxVisible && existingLabel) {
+      setSelectedPackage(existingLabel);
+    }
+  }
 
   document.addEventListener('click', (e) => {
-    // Check if clicked element is a Book Package button
+    // Check if clicked element is a Book Package / Select Test button
     const selectBtn = e.target.closest('.select-pkg-btn');
     if (selectBtn) {
+      const explicitPkg = selectBtn.getAttribute('data-pkg');
       const pkgItem = selectBtn.closest('.package-item, .super-saver-card, .product-card');
-      if (pkgItem) {
-        const pkgName = pkgItem.getAttribute('data-pkg') || 'Selected Package';
-        currentSelectedPackage = pkgName;
-        if (packageTitleText) packageTitleText.innerText = pkgName;
-        if (selectedPackageBox) selectedPackageBox.style.display = 'flex';
-        
-        // Track test package conversion click event
+      const pkgName = explicitPkg || (pkgItem ? pkgItem.getAttribute('data-pkg') : '') || '';
+      if (pkgName) {
+        setSelectedPackage(pkgName);
         logConversionEvent('Select_Diagnostic_Package', { package: pkgName });
 
-        // Smooth scroll to luxury lead form
         if (bookCardDestination) {
           bookCardDestination.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        
-        // Auto focus name field after smooth scroll animation
         setTimeout(() => {
           if (leadNameInput) leadNameInput.focus();
         }, 550);
@@ -117,8 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (removePackageBtn) {
     removePackageBtn.addEventListener('click', () => {
-      currentSelectedPackage = '';
-      if (selectedPackageBox) selectedPackageBox.style.display = 'none';
+      setSelectedPackage('');
     });
   }
 
@@ -156,15 +281,53 @@ document.addEventListener('DOMContentLoaded', () => {
     "Zirakpur"
   ];
 
+  function resolveCityDisplay(rawCity) {
+    const cleaned = cleanFieldText(rawCity);
+    if (!cleaned) return '';
+    const slugKey = cleaned.toLowerCase();
+    if (CITY_SLUG_MAP[slugKey]) return CITY_SLUG_MAP[slugKey];
+    const match = masterCitiesList.find(c => c.toLowerCase() === slugKey)
+      || masterCitiesList.find(c => c.toLowerCase().startsWith(slugKey));
+    return match || cleaned.replace(/[-_]+/g, ' ').replace(/\b\w/g, ch => ch.toUpperCase());
+  }
+
+  // Apply URL query parameters or hash pre-fills (?test=..., ?pkg=..., ?city=..., #city-..., #book-...)
+  (function applyUrlPrefills() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const qTest = params.get('test') || params.get('pkg') || params.get('package') || params.get('q') || '';
+      const qCity = params.get('city') || '';
+      const hash = (window.location.hash || '').replace(/^#/, '');
+
+      let resolvedTest = qTest;
+      let resolvedCity = qCity;
+
+      if (!resolvedCity && hash.startsWith('city-')) {
+        resolvedCity = hash.slice(5);
+      }
+      if (!resolvedTest && hash.startsWith('book-')) {
+        resolvedTest = hash.slice(5);
+      }
+
+      if (resolvedTest) {
+        const pkgLabel = resolveTestOrPkgName(resolvedTest);
+        if (pkgLabel) setSelectedPackage(pkgLabel);
+      }
+      if (resolvedCity && leadCityInput) {
+        leadCityInput.value = resolveCityDisplay(resolvedCity);
+      }
+    } catch (err) {
+      // Non-fatal
+    }
+  })();
+
   function renderCityDropdown(filterText = "") {
     if (!cityMenu) return;
     cityMenu.innerHTML = "";
     const cleanFilter = filterText.trim().toLowerCase();
-    
-    // Filter list or show all if filter is empty
+
     const matched = masterCitiesList.filter(c => c.toLowerCase().includes(cleanFilter));
-    
-    // If typing something custom or not found in quick suggestions, display manual typing confirmation option
+
     if (matched.length === 0 && cleanFilter.length > 0) {
       const customDiv = document.createElement('div');
       customDiv.className = 'dropdown-item';
@@ -179,7 +342,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Render up to top 60 matches for lightning fast performance and smooth UI
     const listToRender = matched.slice(0, 60);
     listToRender.forEach(cityName => {
       const itemDiv = document.createElement('div');
@@ -240,18 +402,91 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 4B. LEAD FORM SUBMISSION & SUCCESS MODAL (Google Ads & Meta Pixel Lead Event)
+  // 4B. LEAD FORM SUBMISSION & INLINE CRO VALIDATION
   const bookingForm = document.getElementById('healthians-booking-form');
-  const successModal = document.getElementById('booking-success-modal');
-  const modalCloseBtn = document.getElementById('modal-close-btn');
+
+  function ensureValidationBox(formEl) {
+    let box = document.getElementById('form-validation-msg');
+    if (!box && formEl) {
+      box = document.createElement('div');
+      box.id = 'form-validation-msg';
+      box.setAttribute('role', 'alert');
+      box.style.cssText = 'display:none;background:#FEF2F2;border:1px solid #FECACA;color:#B91C1C;padding:10px 14px;border-radius:12px;font-size:0.84rem;font-weight:600;margin-bottom:4px;line-height:1.4;';
+      formEl.insertBefore(box, formEl.firstChild);
+    }
+    return box;
+  }
+
+  function ensureWaFallbackBox(formEl) {
+    let box = document.getElementById('form-wa-fallback');
+    if (!box && formEl) {
+      box = document.createElement('div');
+      box.id = 'form-wa-fallback';
+      box.style.cssText = 'display:none;margin-top:8px;';
+      formEl.appendChild(box);
+    }
+    return box;
+  }
+
+  function highlightInvalidCell(inputEl) {
+    if (!inputEl) return;
+    const cell = inputEl.closest('.input-cell');
+    if (cell) {
+      cell.style.borderColor = '#E11D48';
+      setTimeout(() => { cell.style.borderColor = ''; }, 2600);
+    }
+    inputEl.focus();
+  }
+
+  function clearFormFeedback(formEl) {
+    const errBox = document.getElementById('form-validation-msg');
+    if (errBox) {
+      errBox.style.display = 'none';
+      errBox.textContent = '';
+    }
+    const waBox = document.getElementById('form-wa-fallback');
+    if (waBox) {
+      waBox.style.display = 'none';
+      waBox.innerHTML = '';
+    }
+    if (formEl) {
+      formEl.querySelectorAll('.input-cell').forEach(c => { c.style.borderColor = ''; });
+    }
+  }
+
+  function showFormError(formEl, message, inputEl) {
+    const errBox = ensureValidationBox(formEl);
+    if (errBox) {
+      errBox.textContent = message;
+      errBox.style.display = 'block';
+    } else {
+      alert(message);
+    }
+    highlightInvalidCell(inputEl);
+  }
+
+  // Auto-normalize +91 / 0xx mobile autofills smoothly on input/blur
+  if (leadPhoneInput) {
+    const normalizePhoneField = () => {
+      const normalized = normalizeIndianMobile(leadPhoneInput.value);
+      if (/^[6-9]\d{9}$/.test(normalized) && leadPhoneInput.value !== normalized) {
+        leadPhoneInput.value = normalized;
+      }
+    };
+    leadPhoneInput.addEventListener('blur', normalizePhoneField);
+    leadPhoneInput.addEventListener('change', normalizePhoneField);
+    leadPhoneInput.addEventListener('input', () => clearFormFeedback(bookingForm));
+  }
+  if (leadNameInput) leadNameInput.addEventListener('input', () => clearFormFeedback(bookingForm));
+  if (leadCityInput) leadCityInput.addEventListener('input', () => clearFormFeedback(bookingForm));
 
   if (bookingForm) {
     let isSubmittingLead = false;
 
     bookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      clearFormFeedback(bookingForm);
 
-      // 1. Strict Concurrency Lock: Prevent multiple requests on rapid double-clicking
       if (isSubmittingLead) {
         console.warn('Booking submission already in progress. Ignoring duplicate click.');
         return false;
@@ -259,75 +494,96 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const nowTs = Date.now();
       const lastSubmitTs = parseInt(sessionStorage.getItem('healthians_last_submit_ts') || '0', 10);
-      if (nowTs - lastSubmitTs < 10000) {
-        alert(currentLang === 'hi' ? 'कृपया कुछ सेकंड प्रतीक्षा करें। आपकी बुकिंग प्रक्रियाधीन है।' : 'Please wait a few seconds. Your previous booking request is being processed.');
+      if (nowTs - lastSubmitTs < 8000) {
+        showFormError(
+          bookingForm,
+          currentLang === 'hi'
+            ? 'कृपया कुछ सेकंड प्रतीक्षा करें। आपकी पिछली बुकिंग प्रक्रियाधीन है।'
+            : 'Please wait a few seconds. Your previous booking request is being processed.',
+          null
+        );
         return false;
       }
 
       const formData = new FormData(bookingForm);
-      
+
       // Security Check 1: Invisible Honeypot Anti-Bot Shield
       const honeypot = formData.get('_system_verification_code');
-      if (honeypot && honeypot.trim() !== '') {
+      if (honeypot && String(honeypot).trim() !== '') {
         console.warn('[Security Shield] Automated spam bot intercepted and blocked.');
         return false;
       }
 
-      const chosenCity = sanitizeInput(formData.get('city') || '');
-      const patientName = sanitizeInput(formData.get('patient_name') || '');
-      const rawMobile = (formData.get('mobile_number') || '').replace(/\D/g, '');
+      const patientName = cleanFieldText(formData.get('patient_name') || '');
+      const chosenCity = cleanFieldText(formData.get('city') || '');
+      const rawMobile = normalizeIndianMobile(formData.get('mobile_number') || '');
 
-      // Security Check 2: Patient Name Validation & Injection Shield
-      if (!patientName || patientName.length < 2 || patientName.length > 70) {
-        alert(currentLang === 'hi' ? 'कृपया मरीज का सही नाम दर्ज करें (2 से 70 अक्षर)।' : 'Please enter a valid Patient Name (2 to 70 characters).');
-        const nameInput = document.getElementById('lead-name');
-        if (nameInput) nameInput.focus();
-        return;
+      if (leadPhoneInput && /^[6-9]\d{9}$/.test(rawMobile)) {
+        leadPhoneInput.value = rawMobile;
       }
 
-      if (/[<>{}\[\]\\;]/.test(patientName)) {
-        alert(currentLang === 'hi' ? 'नाम में अमान्य वर्ण शामिल हैं।' : 'Name contains invalid characters.');
-        return;
+      // Security Check 2: Patient Name Validation
+      if (!patientName || patientName.length < 2 || patientName.length > 75) {
+        showFormError(
+          bookingForm,
+          currentLang === 'hi'
+            ? 'कृपया मरीज का सही नाम दर्ज करें (कम से कम 2 अक्षर)।'
+            : 'Please enter a valid Patient Name (2 to 75 characters).',
+          leadNameInput
+        );
+        return false;
       }
 
       // Security Check 3: Indian Mobile 10-Digit Standard (Starting with 6, 7, 8, or 9)
       const indianMobileRegex = /^[6-9]\d{9}$/;
       if (!indianMobileRegex.test(rawMobile)) {
-        alert(currentLang === 'hi' ? 'कृपया एक वैध 10-अंकीय भारतीय मोबाइल नंबर दर्ज करें (6, 7, 8 या 9 से शुरू होने वाला)।' : 'Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.');
-        const phoneInput = document.getElementById('lead-phone');
-        if (phoneInput) phoneInput.focus();
-        return;
+        showFormError(
+          bookingForm,
+          currentLang === 'hi'
+            ? 'कृपया सही 10-अंकीय मोबाइल नंबर दर्ज करें (जैसे 9876543210)।'
+            : 'Please enter a valid 10-digit Indian mobile number (e.g. 9876543210).',
+          leadPhoneInput
+        );
+        return false;
       }
 
-      // Security Check 4: Block Fake Repeated Numbers (e.g. 9999999999, 8888888888)
+      // Security Check 4: Block Fake Repeated Numbers
       if (/^(\d)\1{9}$/.test(rawMobile)) {
-        alert(currentLang === 'hi' ? 'कृपया एक असली मोबाइल नंबर दर्ज करें।' : 'Please enter an active mobile number.');
-        const phoneInput = document.getElementById('lead-phone');
-        if (phoneInput) phoneInput.focus();
-        return;
+        showFormError(
+          bookingForm,
+          currentLang === 'hi' ? 'कृपया अपना सक्रिय मोबाइल नंबर दर्ज करें।' : 'Please enter an active mobile number.',
+          leadPhoneInput
+        );
+        return false;
       }
 
-      if (!chosenCity || chosenCity.trim() === '') {
-        alert(currentLang === 'hi' ? 'कृपया अपना शहर चुनें।' : 'Please select your city.');
-        if (cityContainer) {
-          cityContainer.style.borderColor = '#E11D48';
-          setTimeout(() => cityContainer.style.borderColor = '', 2000);
-        }
-        return;
+      // Security Check 5: City Validation (min 2 chars matches Firestore security rules)
+      if (!chosenCity || chosenCity.length < 2 || chosenCity.length > 80) {
+        showFormError(
+          bookingForm,
+          currentLang === 'hi'
+            ? 'कृपया अपना पूरा शहर या लोकेशन चुनें (कम से कम 2 अक्षर)।'
+            : 'Please enter or select your city name (at least 2 characters).',
+          leadCityInput
+        );
+        return false;
       }
 
-      const selectedPkgName = sanitizeInput(currentSelectedPackage || 'General Home Blood Collection Inquiry');
+      // Sync package name from box if global state wasn't updated cleanly
+      const domPkg = (packageTitleText && selectedPackageBox && window.getComputedStyle(selectedPackageBox).display !== 'none')
+        ? cleanFieldText(packageTitleText.textContent)
+        : '';
+      const activePkg = cleanFieldText(window.currentSelectedPackage || currentSelectedPackage || domPkg);
+      const selectedPkgName = activePkg || 'General Home Blood Collection Inquiry';
 
-      // 2. Duplicate Detection: Check if identical phone + name was submitted in the last 60 seconds
-      const submissionFingerprint = `${rawMobile}_${patientName.toLowerCase().trim()}_${chosenCity.toLowerCase().trim()}`;
+      // Duplicate Detection within 60s
+      const submissionFingerprint = `${rawMobile}_${patientName.toLowerCase()}_${chosenCity.toLowerCase()}`;
       const lastFingerprint = sessionStorage.getItem('healthians_last_lead_fingerprint');
       if (lastFingerprint === submissionFingerprint && (nowTs - lastSubmitTs < 60000)) {
-        console.warn('Identical booking detected within 60s. Redirecting without duplicate database entry.');
         window.location.href = `/thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(selectedPkgName)}&city=${encodeURIComponent(chosenCity)}`;
         return false;
       }
 
-      // 3. Lock submission immediately & show loading state
       isSubmittingLead = true;
       const submitBtn = bookingForm.querySelector('button[type="submit"]') || bookingForm.querySelector('.btn-primary');
       const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
@@ -335,20 +591,19 @@ document.addEventListener('DOMContentLoaded', () => {
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.innerHTML = (currentLang === 'hi') ? '⏳ आपकी बुकिंग दर्ज हो रही है...' : '⏳ Securing Visit Slot...';
-        submitBtn.style.opacity = '0.7';
+        submitBtn.style.opacity = '0.75';
         submitBtn.style.cursor = 'not-allowed';
       }
 
-      // Record rate limit timestamp & fingerprint immediately
-      sessionStorage.setItem('healthians_last_lead_fingerprint', submissionFingerprint);
-      sessionStorage.setItem('healthians_last_submit_ts', nowTs.toString());
+      const uniqueOrderId = 'ORD-' + Date.now().toString(36).toUpperCase() + '-' + Math.floor(100 + Math.random() * 900);
 
       const bookingData = {
-        id: 'ORD-' + Math.floor(10000 + Math.random() * 90000),
+        id: uniqueOrderId,
         name: patientName,
         mobile: rawMobile,
         city: chosenCity,
         selectedPackage: selectedPkgName,
+        sourcePage: window.location.pathname || '/',
         timestamp: new Date().toISOString(),
         status: 'New Booking',
         technician: '',
@@ -357,38 +612,53 @@ document.addEventListener('DOMContentLoaded', () => {
         callBackNote: ''
       };
 
-      let isSavedSuccessfully = false;
-      if (window.HealthiansBackend) {
-        try {
-          const result = await window.HealthiansBackend.saveOrder(bookingData);
-          if (result && result.status === 'success') {
-            isSavedSuccessfully = true;
+      // Build clean payload for Apps Script Email & Calendar webhook
+      const webhookPayload = new FormData();
+      webhookPayload.append('order_id', bookingData.id);
+      webhookPayload.append('patient_name', patientName);
+      webhookPayload.append('name', patientName);
+      webhookPayload.append('mobile_number', rawMobile);
+      webhookPayload.append('phone', rawMobile);
+      webhookPayload.append('city', chosenCity);
+      webhookPayload.append('package', selectedPkgName);
+      webhookPayload.append('page_url', window.location.href);
+
+      const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwW8eTLsWx-PxpD4jekGGWqAEwf2OhVcPyRi5tL9gSsbEIZfvtr0iMNSDBbjjTlmP-W/exec";
+
+      // Dispatch Cloud DB save AND Apps Script webhook in parallel cleanly
+      const cloudSavePromise = (async () => {
+        if (window.HealthiansBackend && typeof window.HealthiansBackend.saveOrder === 'function') {
+          try {
+            const res = await window.HealthiansBackend.saveOrder(bookingData);
+            return Boolean(res && (res.cloud === true || res.duplicate === true));
+          } catch (err) {
+            return false;
           }
+        }
+        return false;
+      })();
+
+      const webhookPromise = (async () => {
+        try {
+          const fetchReq = fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            body: webhookPayload,
+            mode: "no-cors",
+            keepalive: true
+          }).then(() => true).catch(() => false);
+          // Give up to 1800ms before redirect continues while keepalive finishes in background
+          const timer = new Promise(resolve => setTimeout(() => resolve('timeout'), 1800));
+          const outcome = await Promise.race([fetchReq, timer]);
+          return outcome === true;
         } catch (err) {
-          // Silent fallback
+          return false;
         }
-      }
+      })();
 
-      if (!isSavedSuccessfully) {
-        try {
-          let currentBookings = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
-          const isDup = currentBookings.some(b =>
-            b.mobile === rawMobile &&
-            b.name.toLowerCase() === patientName.toLowerCase() &&
-            (Date.now() - new Date(b.timestamp).getTime() < 60000)
-          );
-          if (!isDup) {
-            currentBookings.unshift(bookingData);
-            localStorage.setItem('healthians_admin_bookings', JSON.stringify(currentBookings));
-          }
-          isSavedSuccessfully = true;
-        } catch (e) {
-          // Silent fallback
-        }
-      }
+      const [cloudSaved, webhookCompleted] = await Promise.all([cloudSavePromise, webhookPromise]);
 
-      if (!isSavedSuccessfully) {
-        // Release lock on actual failure so user can retry
+      // If NEITHER Firestore NOR Webhook succeeded, give user instant retry + 1-tap WhatsApp fallback instead of losing lead silently
+      if (!cloudSaved && !webhookCompleted) {
         isSubmittingLead = false;
         if (submitBtn) {
           submitBtn.disabled = false;
@@ -396,52 +666,58 @@ document.addEventListener('DOMContentLoaded', () => {
           submitBtn.style.opacity = '1';
           submitBtn.style.cursor = 'pointer';
         }
-        alert(currentLang === 'hi' ? 'बुकिंग दर्ज करने में समस्या हुई। कृपया अपने नेटवर्क की जांच करें।' : 'Unable to confirm booking at this time. Please verify your internet connection and try again.');
-        return;
+        const waMsg = `Hello, I want to book a home blood test:\nName: ${patientName}\nMobile: ${rawMobile}\nCity: ${chosenCity}\nTest/Package: ${selectedPkgName}`;
+        const waHref = `https://wa.me/919044401435?text=${encodeURIComponent(waMsg)}`;
+        showFormError(
+          bookingForm,
+          currentLang === 'hi'
+            ? 'नेटवर्क धीमा होने के कारण सर्वर से संपर्क नहीं हो पाया। कृपया नीचे दिए WhatsApp बटन से तुरंत बुकिंग पूरा करें या पुनः प्रयास करें।'
+            : 'Network connection interrupted while saving. Please retry or complete your booking in 1 click on WhatsApp below:',
+          null
+        );
+        const waBox = ensureWaFallbackBox(bookingForm);
+        if (waBox) {
+          waBox.style.display = 'block';
+          waBox.innerHTML = `<a href="${waHref}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 18px;background:#25D366;color:#FFF;border-radius:50px;font-weight:700;font-size:0.95rem;text-decoration:none;box-shadow:0 6px 18px rgba(37,211,102,0.3);">💬 Complete Booking on WhatsApp Now</a>`;
+        }
+        return false;
       }
 
-      // 4. Booking confirmed: KEEP button disabled so user CANNOT double submit!
+      // Save locally in browser history after cloud or webhook delivery succeeded
+      try {
+        let currentBookings = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
+        if (!currentBookings.some(b => b.id === bookingData.id)) {
+          currentBookings.unshift({ ...bookingData, cloudSaved: Boolean(cloudSaved) });
+          localStorage.setItem('healthians_admin_bookings', JSON.stringify(currentBookings.slice(0, 50)));
+        }
+      } catch (e) {}
+
+      // Record successful submission fingerprint & rate-limit timestamp
+      sessionStorage.setItem('healthians_last_lead_fingerprint', submissionFingerprint);
+      sessionStorage.setItem('healthians_last_submit_ts', nowTs.toString());
+
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.innerHTML = (currentLang === 'hi') ? '✅ बुकिंग सफल! रीडायरेक्ट हो रहा है...' : '✅ Booking Confirmed! Redirecting...';
-        submitBtn.style.opacity = '0.9';
+        submitBtn.style.opacity = '0.92';
       }
 
-      // Log Lead conversion event for Google & Meta Ads tracking
       logConversionEvent('Lead_Submitted_Success', bookingData);
 
-      // Ensure form data keys match Apps Script
-      formData.append('package', bookingData.selectedPackage);
-      formData.append('name', patientName);
-      formData.append('phone', rawMobile);
-
-      // Send to Google Apps Script for Email & Calendar
-      fetch("https://script.google.com/macros/s/AKfycbwW8eTLsWx-PxpD4jekGGWqAEwf2OhVcPyRi5tL9gSsbEIZfvtr0iMNSDBbjjTlmP-W/exec", {
-        method: "POST",
-        body: formData,
-        mode: "no-cors",
-        keepalive: true
-      }).catch(err => console.error(err));
-
-      // Redirect quickly
+      const redirectUrl = `/thankyou.html?id=${encodeURIComponent(bookingData.id)}&name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(selectedPkgName)}&city=${encodeURIComponent(chosenCity)}`;
       setTimeout(() => {
-        window.location.href = `/thankyou.html?name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(chosenCity)}`;
-      }, 500);
+        window.location.href = redirectUrl;
+      }, 250);
 
-      // Reset form fields
       bookingForm.reset();
-      currentSelectedPackage = '';
-      if (selectedPackageBox) selectedPackageBox.style.display = 'none';
-      const leadCityElem = document.getElementById('lead-city');
-      if (leadCityElem) leadCityElem.value = '';
+      setSelectedPackage('');
+      if (leadCityInput) leadCityInput.value = '';
       if (cityMenu) cityMenu.classList.remove('show');
       if (cityChevron) cityChevron.style.transform = 'translateY(-50%) rotate(0deg)';
     });
   }
 
-
-
-  // 5. CLICK TRACKING FOR CALL & WHATSAPP CTAS (For ads attribution)
+  // 5. CLICK TRACKING FOR CALL & WHATSAPP CTAS
   const callButtons = document.querySelectorAll('a[href^="tel:"]');
   const waButtons = document.querySelectorAll('a[href*="wa.me"]');
 
@@ -463,11 +739,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function applyLanguage(lang) {
     if (!window.HEALTHIANS_TRANSLATIONS || !window.HEALTHIANS_TRANSLATIONS[lang]) return;
-    
-    const dict = window.HEALTHIANS_TRANSLATIONS[lang];
-    document.documentElement.lang = lang;
 
-    // Update innerHTML for all elements with data-i18n
+    const dict = window.HEALTHIANS_TRANSLATIONS[lang];
+    document.documentElement.lang = lang === 'hi' ? 'hi-IN' : 'en-IN';
+
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (dict[key] !== undefined) {
@@ -475,7 +750,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Update placeholders for inputs with data-i18n-ph
     document.querySelectorAll('[data-i18n-ph]').forEach(el => {
       const key = el.getAttribute('data-i18n-ph');
       if (dict[key] !== undefined) {
@@ -483,14 +757,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Update language button text
     if (currentLangText) {
       currentLangText.textContent = lang === 'en' ? 'हिंदी' : 'English';
     } else if (langSwitcherBtn && dict.lang_toggle) {
       langSwitcherBtn.innerHTML = dict.lang_toggle;
     }
 
-    // Refresh open FAQ heights
     document.querySelectorAll('.faq-row.open').forEach(row => {
       const answerBox = row.querySelector('.faq-answer-box');
       const answerInner = row.querySelector('.faq-answer-inner');
@@ -510,7 +782,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Initial translation if previously saved as Hindi
   if (currentLang === 'hi') {
     applyLanguage('hi');
   }
@@ -525,7 +796,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
           if (!packagesWrapper || !Array.isArray(pkgs) || pkgs.length === 0) return;
           const currentLang = localStorage.getItem('healthians_lang') || 'en';
-          
+
           let html = '';
           pkgs.forEach(pkg => {
             const badgeHtml = pkg.badge ? `<span class="pkg-most-booked-pill">${pkg.badge}</span>` : '';
@@ -534,7 +805,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const unitText = currentLang === 'hi' ? '/ प्रति मरीज' : '/ patient';
             const detailsText = currentLang === 'hi' ? 'टेस्ट का पूरा विवरण ▾' : 'View test details ▾';
             const bookText = currentLang === 'hi' ? 'पैकेज बुक करें' : 'Book Package';
-            
+
             html += `
               <div class="package-item" data-pkg="${pkg.title} (₹${pkg.newPrice})">
                 ${badgeHtml}
@@ -581,11 +852,11 @@ document.addEventListener('DOMContentLoaded', () => {
           } else {
             superSaverCard.style.display = 'block';
           }
-          
+
           superSaverCard.setAttribute('data-pkg', `${offer.title || 'Super Saver Offer'} (₹${offer.offerPrice || '299'})`);
           const ribbonEl = superSaverCard.querySelector('.offer-ribbon');
           if (ribbonEl && offer.ribbon) ribbonEl.textContent = offer.ribbon;
-          
+
           const titleEl = superSaverCard.querySelector('.saver-main-title');
           if (titleEl && offer.title) {
             let t = offer.title;
@@ -598,18 +869,18 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           const tagEl = superSaverCard.querySelector('.saver-tag-pill');
           if (tagEl && offer.tag) tagEl.textContent = offer.tag;
-          
+
           const amountEl = superSaverCard.querySelector('.amount-val');
           if (amountEl && offer.offerPrice) amountEl.textContent = offer.offerPrice;
-          
+
           const mrpEl = superSaverCard.querySelector('.old-mrp-price');
           if (mrpEl && offer.mrpPrice) mrpEl.textContent = `₹${offer.mrpPrice}`;
-          
+
           const bookBtnSpan = superSaverCard.querySelector('.btn-saver-book span:first-child');
           if (bookBtnSpan && (offer.btnText || offer.offerPrice)) {
             bookBtnSpan.textContent = offer.btnText || `Book Now at ₹${offer.offerPrice}`;
           }
-          
+
           const warnEl = superSaverCard.querySelector('.saver-limit-txt');
           if (warnEl && offer.warnText) warnEl.textContent = offer.warnText;
 
@@ -647,26 +918,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Packages Filter Logic
   const filterPills = document.querySelectorAll('.filter-pill');
   const packageItems = document.querySelectorAll('.packages-wrapper .package-item');
 
   if (filterPills.length > 0 && packageItems.length > 0) {
     filterPills.forEach(pill => {
       pill.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent any default button behaviors (like page refresh/jump)
-
-        // Remove active class from all
+        e.preventDefault();
         filterPills.forEach(p => p.classList.remove('active'));
-        // Add active class to clicked
         pill.classList.add('active');
-
         const filterVal = pill.getAttribute('data-filter').toLowerCase();
 
         packageItems.forEach(item => {
-          // If "all" is clicked, show it. Otherwise check if text contains filter keyword.
           if (filterVal === 'all' || item.textContent.toLowerCase().includes(filterVal)) {
-            item.style.display = ''; 
+            item.style.display = '';
           } else {
             item.style.display = 'none';
           }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta name="robots" content="noindex, nofollow">
   <!-- Google Tag Manager -->
@@ -30,8 +30,8 @@
   <link rel="icon" type="image/png" href="/images/logo-v2.png">
   
   <meta name="description" content="Thank you for booking your Healthians blood test.">
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="canonical" href="https://www.bookbloodtest.in/">
+  <meta property="og:site_name" content="Healthians">
+  <meta name="application-name" content="Healthians">
   
   <!-- OpenGraph for Meta Ads -->
   <meta property="og:type" content="website">
@@ -2460,7 +2460,7 @@ img {
       <span data-i18n="bar_wa">WhatsApp</span>
     </a>
 
-    <a href="#booking-card-destination" class="bar-pill-btn bar-pill-book" aria-label="Book Test Now">
+    <a href="/#booking-card-destination" class="bar-pill-btn bar-pill-book" aria-label="Book Test Now">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
       <span data-i18n="bar_book">Book Now</span>
     </a>
@@ -2521,6 +2521,7 @@ img {
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get('id') || '';
     const name = urlParams.get('name') || 'Patient';
     const pkg = urlParams.get('pkg') || 'General Home Blood Collection Inquiry';
     const city = urlParams.get('city') || 'your location';
@@ -2532,6 +2533,13 @@ img {
     if (nameElem) nameElem.textContent = name;
     if (pkgElem) pkgElem.textContent = pkg;
     if (cityElem) cityElem.textContent = city;
+
+    const waBtn = document.getElementById('modal-wa-btn');
+    if (waBtn) {
+      const refText = orderId ? ` (Ref: ${orderId})` : '';
+      const waMessage = `Hello, I just booked ${pkg} for ${name} in ${city}${refText}. Please confirm my doorstep collection slot.`;
+      waBtn.href = `https://wa.me/919044401435?text=${encodeURIComponent(waMessage)}`;
+    }
     
     const closeBtn = document.getElementById('modal-close-btn');
     if (closeBtn) {
@@ -2545,10 +2553,10 @@ img {
   <!-- Google Firebase Cloud Backend SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="firebase-config.js"></script>
+  <script src="/firebase-config.js"></script>
   <!-- Scripts -->
-  <script src="translations.js"></script>
-  <script src="script.js"></script>
+  <script src="/translations.js"></script>
+  <script src="/script.js"></script>
   <script>
     // Global document click listener for Buy Now buttons
     document.addEventListener('click', function(e) {
