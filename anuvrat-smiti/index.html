@@ -100,13 +100,13 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      background: linear-gradient(135deg, #FFFFFF 0%, #F2F7FF 100%);
-      border: 1px solid #C7DFF9;
+      background: #FFFFFF;
+      border: 1px solid #D8E6F6;
       border-left: 4px solid #1E3A8A;
       border-radius: 14px;
       padding: 8px 12px;
       margin-bottom: 12px;
-      box-shadow: 0 6px 18px rgba(15, 76, 129, 0.08);
+      box-shadow: 0 6px 20px rgba(15, 76, 129, 0.07);
     }
     .anuvrat-partner-left {
       display: flex;
@@ -120,12 +120,12 @@
       height: 44px;
       border-radius: 50%;
       background: #FFFFFF;
-      border: 2px solid #1E3A8A;
+      border: 1.5px solid #1E3A8A;
       padding: 2px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 3px 10px rgba(30, 58, 138, 0.16);
+      box-shadow: 0 3px 10px rgba(30, 58, 138, 0.14);
       flex-shrink: 0;
     }
     .society-emblem-img {
@@ -137,22 +137,17 @@
     .society-name-block {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 1px;
       min-width: 0;
+      flex: 1;
     }
     .society-kicker {
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.6px;
       color: #008B94;
       line-height: 1.1;
-    }
-    .society-title-row {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 5px 8px;
     }
     .society-title-txt {
       font-size: 0.94rem;
@@ -164,19 +159,19 @@
     .society-code-pill {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%);
+      background: #1E3A8A;
       color: #FFFFFF;
-      font-size: 0.69rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 2px 9px;
+      padding: 4px 10px;
       border-radius: 999px;
       letter-spacing: 0.3px;
-      box-shadow: 0 2px 8px rgba(30, 58, 138, 0.22);
+      box-shadow: 0 2px 8px rgba(30, 58, 138, 0.2);
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    /* Compact Mobile Hero Grid so Form Peeks Above the Fold */
+    /* Compact Executive Hero Grid */
     .anuvrat-hero-grid {
       display: flex;
       flex-direction: column;
@@ -188,7 +183,7 @@
       text-align: center;
     }
     .anuvrat-hero-title {
-      font-size: 1.42rem;
+      font-size: 1.46rem;
       font-weight: 800;
       line-height: 1.18;
       letter-spacing: -0.025em;
@@ -199,31 +194,14 @@
     .anuvrat-hero-desc {
       font-size: 0.82rem;
       color: #475569;
-      line-height: 1.45;
-      max-width: 520px;
-      margin: 0 auto 8px auto;
-    }
-    .anuvrat-hero-pills {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .anuvrat-mini-pill {
-      background: #FFFFFF;
-      border: 1px solid #CFEBEE;
-      color: #0A2528;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 999px;
-      box-shadow: 0 2px 8px rgba(0, 160, 168, 0.08);
+      line-height: 1.48;
+      max-width: 500px;
+      margin: 0 auto;
     }
 
     .anuvrat-portrait-wrap {
       width: 100%;
-      max-width: 188px;
+      max-width: 176px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -231,10 +209,11 @@
     }
     .anuvrat-portrait-frame {
       width: 100%;
-      border-radius: 20px;
-      padding: 4px;
-      background: linear-gradient(145deg, #1E3A8A 0%, #00A0A8 50%, #D97706 100%);
-      box-shadow: 0 12px 28px rgba(15, 58, 120, 0.2);
+      border-radius: 22px;
+      padding: 5px;
+      background: #FFFFFF;
+      border: 1.5px solid #D5E4F7;
+      box-shadow: 0 18px 40px rgba(11, 59, 120, 0.16), 0 4px 12px rgba(0, 0, 0, 0.05);
     }
     .anuvrat-portrait-inner {
       border-radius: 17px;
@@ -504,13 +483,11 @@
               <img src="/images/anuvrat-logo.png" alt="Anuvrat Smiti Logo" class="society-emblem-img" width="512" height="512" loading="eager">
             </div>
             <div class="society-name-block">
-              <span class="society-kicker">Official Society Wellness Partner</span>
-              <div class="society-title-row">
-                <span class="society-title-txt">Anuvrat Smiti, Mumbai</span>
-                <span class="society-code-pill">Code: Anuvrat-13</span>
-              </div>
+              <span class="society-kicker">Official Society Partner</span>
+              <span class="society-title-txt">Anuvrat Smiti, Mumbai</span>
             </div>
           </div>
+          <span class="society-code-pill">Code: Anuvrat-13</span>
         </div>
 
         <!-- PREMIUM HERO LAYOUT -->
@@ -539,13 +516,8 @@
               <span class="title-teal">Anuvrat Smiti, Mumbai</span>
             </h1>
             <p class="anuvrat-hero-desc">
-              Exclusive doorstep sample collection for <strong>Anuvrat Smiti, Mumbai</strong> society members &amp; families (Code: <strong>Anuvrat-13</strong>) — powered by Healthians NABL &amp; CAP labs.
+              Exclusive doorstep blood sample collection for <strong>Anuvrat Smiti, Mumbai</strong> society members &amp; families (Code: <strong>Anuvrat-13</strong>) — powered by Healthians NABL &amp; CAP certified labs.
             </p>
-            <div class="anuvrat-hero-pills">
-              <span class="anuvrat-mini-pill">✓ Society Member Priority</span>
-              <span class="anuvrat-mini-pill">✓ NABL &amp; CAP Labs</span>
-              <span class="anuvrat-mini-pill">✓ 24-Hr Reports</span>
-            </div>
           </div>
         </div>
 
