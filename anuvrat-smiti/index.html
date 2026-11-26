@@ -1416,7 +1416,12 @@
           waFallback.innerHTML = '';
         }
         if (form) {
-          form.querySelectorAll('.input-cell').forEach(c => { c.style.borderColor = ''; });
+          form.querySelectorAll('.input-cell').forEach(c => {
+            c.style.borderColor = '';
+            c.style.backgroundColor = '';
+            c.style.boxShadow = '';
+          });
+          form.querySelectorAll('.field-inline-err').forEach(n => n.remove());
         }
       }
 
@@ -1425,13 +1430,30 @@
           errBox.textContent = msg;
           errBox.style.display = 'block';
         }
+        let scrollTarget = errBox;
         if (el) {
           const cell = el.closest('.input-cell');
           if (cell) {
             cell.style.borderColor = '#E11D48';
-            setTimeout(() => { cell.style.borderColor = ''; }, 2800);
+            cell.style.backgroundColor = '#FFF1F2';
+            cell.style.boxShadow = '0 0 0 3px rgba(225, 29, 72, 0.14)';
+            const inlineNote = document.createElement('div');
+            inlineNote.className = 'field-inline-err';
+            inlineNote.style.cssText = 'color:#BE123C;font-size:0.75rem;font-weight:700;margin-top:4px;padding-left:4px;';
+            inlineNote.textContent = msg;
+            cell.insertAdjacentElement('afterend', inlineNote);
+            scrollTarget = cell;
+          } else {
+            scrollTarget = el;
           }
-          el.focus();
+        }
+        if (scrollTarget && typeof scrollTarget.scrollIntoView === 'function') {
+          scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        if (el) {
+          setTimeout(() => {
+            try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); }
+          }, 260);
         }
       }
 
@@ -1471,29 +1493,29 @@
           const dateVal = cleanText(dateInput.value);
           const timeVal = cleanText(timeInput.value);
 
-          if (!patientName || patientName.length < 2 || patientName.length > 75) {
-            return showError('Please enter a valid Full Name (2 to 75 characters).', nameInput);
+          if (!patientName || patientName.length < 2 || patientName.length > 80) {
+            return showError('Please enter your Full Name.', nameInput);
           }
           if (!/^[6-9]\d{9}$/.test(rawMobile) || /^(\d)\1{9}$/.test(rawMobile)) {
             return showError('Please enter a valid 10-digit Indian mobile number.', phoneInput);
           }
           if (isNaN(ageNum) || ageNum < 1 || ageNum > 120) {
-            return showError('Please enter a valid Age (1 to 120 years).', ageInput);
+            return showError('Please enter Age (1 to 120).', ageInput);
           }
           if (!genderVal) {
             return showError('Please select Gender.', genderInput);
           }
-          if (!addressVal || addressVal.length < 8) {
-            return showError('Please enter Complete Address with Pin Code.', addressInput);
+          if (!addressVal || addressVal.length < 2) {
+            return showError('Please enter your Address with Pin Code.', addressInput);
           }
-          if (!landmarkVal || landmarkVal.length < 2) {
+          if (!landmarkVal) {
             return showError('Please enter a nearby Landmark.', landmarkInput);
           }
           if (!dateVal) {
-            return showError('Please select a preferred collection date.', dateInput);
+            return showError('Please select a collection date.', dateInput);
           }
           if (!timeVal) {
-            return showError('Please select a preferred collection time slot.', timeInput);
+            return showError('Please select a collection time slot.', timeInput);
           }
 
           isSubmitting = true;
