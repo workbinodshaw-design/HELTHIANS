@@ -43,6 +43,26 @@
         }
       ],
       "destination": "/admin/"
+    },
+    {
+      "source": "/anuvrat-smiti",
+      "destination": "/anuvrat-smiti/index.html"
+    },
+    {
+      "source": "/anuvrat%20smiti",
+      "destination": "/anuvrat-smiti/index.html"
+    },
+    {
+      "source": "/anuvratsmiti",
+      "destination": "/anuvrat-smiti/index.html"
+    },
+    {
+      "source": "/anuvrat-samiti",
+      "destination": "/anuvrat-smiti/index.html"
+    },
+    {
+      "source": "/anuvrat-samiti/",
+      "destination": "/anuvrat-smiti/index.html"
     }
   ],
   "headers": [

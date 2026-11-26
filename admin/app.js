@@ -258,6 +258,14 @@ document.addEventListener('DOMContentLoaded', () => {
     render();
   }
 
+  function isAnuvratLead(b) {
+    if (!b) return false;
+    return b.leadSource === 'anuvrat-smiti'
+      || b.partnerCode === 'Anuvrat-13'
+      || (b.sourcePage || '').toLowerCase().includes('anuvrat')
+      || (b.selectedPackage || '').toLowerCase().includes('anuvrat');
+  }
+
   // ======================================================================
   // 3. TABLE RENDERING & REAL-TIME METRICS
   // ======================================================================
@@ -266,14 +274,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const now = new Date().toISOString().slice(0, 16);
 
     // Get filter selections
+    const sourceFilter = (document.getElementById('filter-source') ? document.getElementById('filter-source').value : 'ALL').toLowerCase();
     const cityFilter = (document.getElementById('filter-city') ? document.getElementById('filter-city').value : 'ALL').toLowerCase();
     const pkgFilter = (document.getElementById('filter-pkg') ? document.getElementById('filter-pkg').value : 'ALL').toLowerCase();
     const statusFilter = (document.getElementById('filter-status') ? document.getElementById('filter-status').value : 'ALL').toLowerCase();
 
     // Filter logic
     const filtered = bookings.filter(b => {
-      const matchSearch = ((b.name || '') + ' ' + (b.mobile || '') + ' ' + (b.city || '') + ' ' + (b.selectedPackage || '') + ' ' + (b.id || '')).toLowerCase().includes(searchTerm.toLowerCase());
+      const searchBlob = [
+        b.name, b.mobile, b.city, b.selectedPackage, b.id,
+        b.partnerCode, b.partnerName, b.address, b.landmark
+      ].filter(Boolean).join(' ').toLowerCase();
+      const matchSearch = searchBlob.includes(searchTerm.toLowerCase());
       if (!matchSearch) return false;
+
+      // Source / Partner filter
+      if (sourceFilter === 'anuvrat-smiti' && !isAnuvratLead(b)) return false;
+      if (sourceFilter === 'main' && isAnuvratLead(b)) return false;
 
       // Dropdown filters
       if (cityFilter !== 'all' && !(b.city || '').toLowerCase().includes(cityFilter)) return false;
@@ -424,6 +441,19 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
 
+        const isPartnerLead = isAnuvratLead(b);
+        const partnerBadgeHtml = isPartnerLead
+          ? `<div style="margin-bottom:8px;"><span style="display:inline-flex;align-items:center;gap:5px;background:#EFF6FF;color:#1E3A8A;border:1px solid #BFDBFE;padding:3px 10px;border-radius:999px;font-size:0.72rem;font-weight:700;">🤝 Anuvrat Smiti, Mumbai • Code: ${escapeHTML(b.partnerCode || 'Anuvrat-13')}</span></div>`
+          : '';
+        const partnerDetailsHtml = (b.age || b.gender || b.address || b.landmark || (b.scheduleSlot && b.scheduleSlot !== 'Pending Scheduling'))
+          ? `<div style="margin-top:8px;padding:8px 10px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;font-size:0.76rem;color:#334155;line-height:1.45;">
+              ${(b.age || b.gender) ? `<div><strong>Patient:</strong> ${escapeHTML(b.age || '-')} yrs${b.gender ? ' • ' + escapeHTML(b.gender) : ''}</div>` : ''}
+              ${b.address ? `<div><strong>Address:</strong> ${escapeHTML(b.address)}</div>` : ''}
+              ${b.landmark ? `<div><strong>Landmark:</strong> ${escapeHTML(b.landmark)}</div>` : ''}
+              ${(b.scheduleSlot && b.scheduleSlot !== 'Pending Scheduling') ? `<div><strong>Preferred Slot:</strong> ${escapeHTML(b.scheduleSlot)}</div>` : ''}
+            </div>`
+          : '';
+
         const card = document.createElement('div');
         card.className = `saas-card ${isDue ? 'card-due-alert' : ''}`;
 
@@ -436,6 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div class="sc-body">
+            ${partnerBadgeHtml}
             <div class="sc-row full-w">
               <span class="sc-icon">📞</span>
               <a href="tel:${cleanMobile}" class="phone-link">+91 ${cleanMobile}</a>
@@ -446,6 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="sc-row"><span class="sc-icon">🧪</span> <span class="sc-text pkg-ellip" title="${cleanPkg}">${cleanPkg}</span></div>
               <div class="sc-row right-align"><span class="sc-icon">⏰</span> <span class="sc-text">${timeOnlyStr}</span></div>
             </div>
+            ${partnerDetailsHtml}
           </div>
 
           <div class="sc-section">
@@ -680,7 +712,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Bind dropdown filters
-  ['filter-city', 'filter-pkg', 'filter-status'].forEach(id => {
+  ['filter-source', 'filter-city', 'filter-pkg', 'filter-status'].forEach(id => {
     const el = document.getElementById(id);
     if (el) {
       el.addEventListener('change', () => render());
@@ -691,7 +723,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnClear = document.getElementById('btn-clear-filters');
   if (btnClear) {
     btnClear.addEventListener('click', () => {
-      ['filter-city', 'filter-pkg', 'filter-status'].forEach(id => {
+      ['filter-source', 'filter-city', 'filter-pkg', 'filter-status'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = 'ALL';
       });
