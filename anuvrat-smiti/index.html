@@ -406,6 +406,73 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
+    .anuvrat-pkg-selector {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: #F0FCFD;
+      border: 1.5px solid #00A0A8;
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .anuvrat-pkg-selector.unselected {
+      background: #F8FAFC;
+      border: 1.5px dashed #94A3B8;
+    }
+    .anuvrat-pkg-sel-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .anuvrat-pkg-checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: #00A0A8;
+      color: #FFFFFF;
+      font-size: 0.78rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .anuvrat-pkg-selector.unselected .anuvrat-pkg-checkbox {
+      background: #FFFFFF;
+      border: 2px solid #94A3B8;
+      color: transparent;
+    }
+    .anuvrat-pkg-sel-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #0A2528;
+      line-height: 1.25;
+    }
+    .anuvrat-pkg-sel-sub {
+      font-size: 0.72rem;
+      color: #0F766E;
+      font-weight: 700;
+    }
+    .anuvrat-pkg-sel-pill {
+      background: #DCFCE7;
+      color: #166534;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .anuvrat-pkg-selector.unselected .anuvrat-pkg-sel-pill {
+      background: #E2E8F0;
+      color: #475569;
+    }
     .field-group-label {
       font-size: 0.75rem;
       font-weight: 700;
@@ -921,6 +988,17 @@
             <span class="anuvrat-form-code">Code: Anuvrat-13</span>
           </div>
 
+          <div class="anuvrat-pkg-selector" id="anuvrat-pkg-selector" role="checkbox" aria-checked="true" tabindex="0">
+            <div class="anuvrat-pkg-sel-left">
+              <span class="anuvrat-pkg-checkbox" id="anuvrat-pkg-checkbox">✓</span>
+              <div>
+                <div class="anuvrat-pkg-sel-title">Full Body Checkup (92 Parameters)</div>
+                <div class="anuvrat-pkg-sel-sub">Special Price: Rs. 849 <s style="color:#64748B;font-weight:500;">Rs. 2,199</s></div>
+              </div>
+            </div>
+            <span class="anuvrat-pkg-sel-pill" id="anuvrat-pkg-sel-pill">✓ Selected</span>
+          </div>
+
           <form id="anuvrat-booking-form" class="exact-form" novalidate>
             <input type="text" name="_system_verification_code" id="_system_verification_code" style="opacity:0;position:absolute;left:-9999px;height:1px;width:1px;" tabindex="-1" autocomplete="new-password">
             <div id="form-validation-msg" role="alert" style="display:none;background:#FEF2F2;border:1px solid #FECACA;color:#B91C1C;padding:10px 14px;border-radius:12px;font-size:0.84rem;font-weight:600;margin-bottom:4px;line-height:1.4;"></div>
@@ -1092,9 +1170,9 @@
               <div class="anuvrat-perk-item"><span>🩺</span><span>Doctor Consultation</span></div>
             </div>
 
-            <a href="#booking-card-destination" class="anuvrat-pkg-cta" onclick="setTimeout(() => { var el = document.getElementById('lead-name'); if (el) el.focus(); }, 350);">
-              <span>📅 Book 92-Parameter Package at Rs. 849</span>
-            </a>
+            <button type="button" id="anuvrat-pkg-select-btn" class="anuvrat-pkg-cta">
+              <span id="anuvrat-pkg-cta-txt">✓ Package Selected • Fill Form Above ➔</span>
+            </button>
             <p class="anuvrat-pkg-tagline">Stay Healthy... Stay Happy... • Because Your Health Matters – For a Healthier Tomorrow</p>
           </div>
         </div>
@@ -1241,6 +1319,51 @@
       const dateInput = document.getElementById('lead-date');
       const timeInput = document.getElementById('lead-time');
       const submitBtn = document.getElementById('anuvrat-submit-btn');
+
+      // Interactive Package Selection State
+      let isPackageSelected = true;
+      const pkgSelectorBox = document.getElementById('anuvrat-pkg-selector');
+      const pkgSelPill = document.getElementById('anuvrat-pkg-sel-pill');
+      const pkgCardCtaBtn = document.getElementById('anuvrat-pkg-select-btn');
+      const pkgCardCtaTxt = document.getElementById('anuvrat-pkg-cta-txt');
+
+      function updatePackageSelectionUI(selected) {
+        isPackageSelected = Boolean(selected);
+        if (pkgSelectorBox) {
+          pkgSelectorBox.classList.toggle('unselected', !isPackageSelected);
+          pkgSelectorBox.setAttribute('aria-checked', isPackageSelected ? 'true' : 'false');
+        }
+        if (pkgSelPill) {
+          pkgSelPill.textContent = isPackageSelected ? '✓ Selected' : 'Tap to Select';
+        }
+        if (pkgCardCtaTxt) {
+          pkgCardCtaTxt.textContent = isPackageSelected
+            ? '✓ Package Selected • Book Now at Rs. 849 ➔'
+            : '📅 Select 92-Parameter Package (Rs. 849) ➔';
+        }
+      }
+
+      if (pkgSelectorBox) {
+        const togglePkg = () => updatePackageSelectionUI(!isPackageSelected);
+        pkgSelectorBox.addEventListener('click', togglePkg);
+        pkgSelectorBox.addEventListener('keydown', (ev) => {
+          if (ev.key === ' ' || ev.key === 'Enter') {
+            ev.preventDefault();
+            togglePkg();
+          }
+        });
+      }
+
+      if (pkgCardCtaBtn) {
+        pkgCardCtaBtn.addEventListener('click', () => {
+          updatePackageSelectionUI(true);
+          const formCard = document.getElementById('booking-card-destination');
+          if (formCard) formCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => {
+            if (nameInput) nameInput.focus();
+          }, 420);
+        });
+      }
 
       // View More Package Details Toggle
       const viewMoreBtn = document.getElementById('anuvrat-view-more-btn');
@@ -1394,7 +1517,9 @@
             preferredTime: timeVal,
             scheduleSlot: scheduleSlotStr,
             city: 'Mumbai (Anuvrat Smiti)',
-            selectedPackage: 'Anuvrat Smiti Full Body Checkup - 92 Parameters (Rs. 849) [Code: Anuvrat-13]',
+            selectedPackage: isPackageSelected
+              ? 'Anuvrat Smiti Full Body Checkup - 92 Parameters (Rs. 849) [Code: Anuvrat-13]'
+              : 'Anuvrat Smiti General Blood Test Inquiry [Code: Anuvrat-13]',
             partnerName: 'Anuvrat Smiti, Mumbai',
             partnerCode: 'Anuvrat-13',
             leadSource: 'anuvrat-smiti',
