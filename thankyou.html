@@ -2525,6 +2525,10 @@ img {
     const name = urlParams.get('name') || 'Patient';
     const pkg = urlParams.get('pkg') || 'General Home Blood Collection Inquiry';
     const city = urlParams.get('city') || 'your location';
+    const returnUrlRaw = urlParams.get('returnUrl') || '';
+    const safeReturnUrl = (returnUrlRaw.startsWith('/') && !returnUrlRaw.startsWith('//'))
+      ? returnUrlRaw
+      : (pkg.toLowerCase().includes('anuvrat') ? '/anuvrat-smiti/' : '/');
     
     const nameElem = document.getElementById('modal-patient-name');
     const pkgElem = document.getElementById('modal-pkg-name');
@@ -2533,6 +2537,12 @@ img {
     if (nameElem) nameElem.textContent = name;
     if (pkgElem) pkgElem.textContent = pkg;
     if (cityElem) cityElem.textContent = city;
+
+    if (safeReturnUrl !== '/') {
+      document.querySelectorAll('.brand-logo-link').forEach(a => { a.href = safeReturnUrl; });
+      const bookBarBtn = document.querySelector('.bar-pill-book');
+      if (bookBarBtn) bookBarBtn.href = `${safeReturnUrl}#booking-card-destination`;
+    }
 
     const waBtn = document.getElementById('modal-wa-btn');
     if (waBtn) {
@@ -2543,9 +2553,9 @@ img {
     
     const closeBtn = document.getElementById('modal-close-btn');
     if (closeBtn) {
-      closeBtn.innerHTML = 'Go Back to Home';
+      closeBtn.innerHTML = safeReturnUrl !== '/' ? 'Go Back to Society Page' : 'Go Back to Home';
       closeBtn.addEventListener('click', () => {
-        window.location.href = '/';
+        window.location.href = safeReturnUrl;
       });
     }
   });

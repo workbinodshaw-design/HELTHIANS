@@ -438,7 +438,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <div class="logo-wrap">
-        <a href="/" aria-label="United Healthcare" class="brand-logo-link">
+        <a href="/anuvrat-smiti/" aria-label="Anuvrat Smiti, Mumbai - Healthians Partner" class="brand-logo-link">
           <img src="/images/logo-v2.png" alt="United Healthcare" class="healthians-logo" width="32" height="32" loading="eager">
           <img src="/images/united-healthcare-wordmark.png" alt="United Healthcare" class="logo-wordmark" width="729" height="256" loading="eager">
         </a>
@@ -1064,7 +1064,7 @@
             submitBtn.style.opacity = '0.92';
           }
 
-          const redirectUrl = `/thankyou.html?id=${encodeURIComponent(bookingData.id)}&name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(bookingData.city)}`;
+          const redirectUrl = `/thankyou.html?id=${encodeURIComponent(bookingData.id)}&name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(bookingData.selectedPackage)}&city=${encodeURIComponent(bookingData.city)}&returnUrl=${encodeURIComponent('/anuvrat-smiti/')}`;
           setTimeout(() => {
             window.location.href = redirectUrl;
           }, 250);
