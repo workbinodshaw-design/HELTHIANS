@@ -979,7 +979,7 @@
             <span class="anuvrat-form-code">Code: Anuvrat-13</span>
           </div>
 
-          <div class="anuvrat-pkg-selector" id="anuvrat-pkg-selector" role="checkbox" aria-checked="true" tabindex="0">
+          <div class="anuvrat-pkg-selector unselected" id="anuvrat-pkg-selector" role="checkbox" aria-checked="false" tabindex="0">
             <div class="anuvrat-pkg-sel-left">
               <span class="anuvrat-pkg-checkbox" id="anuvrat-pkg-checkbox">✓</span>
               <div>
@@ -987,7 +987,7 @@
                 <div class="anuvrat-pkg-sel-sub">Special Price: Rs. 849 <s style="color:#64748B;font-weight:500;">Rs. 2,199</s></div>
               </div>
             </div>
-            <span class="anuvrat-pkg-sel-pill" id="anuvrat-pkg-sel-pill">Selected</span>
+            <span class="anuvrat-pkg-sel-pill" id="anuvrat-pkg-sel-pill">Tap to Select</span>
           </div>
 
           <form id="anuvrat-booking-form" class="exact-form" novalidate>
@@ -1173,7 +1173,7 @@
             </div>
 
             <button type="button" id="anuvrat-pkg-select-btn" class="anuvrat-pkg-cta">
-              <span id="anuvrat-pkg-cta-txt">Selected • Book Package at Rs. 849</span>
+              <span id="anuvrat-pkg-cta-txt">Book This Package at Rs. 849</span>
             </button>
             <p class="anuvrat-pkg-tagline">Stay Healthy... Stay Happy... • Because Your Health Matters – For a Healthier Tomorrow</p>
           </div>
@@ -1322,8 +1322,8 @@
       const timeInput = document.getElementById('lead-time');
       const submitBtn = document.getElementById('anuvrat-submit-btn');
 
-      // Interactive Package Selection State
-      let isPackageSelected = true;
+      // Interactive Package Selection State (unselected by default until user picks package)
+      let isPackageSelected = false;
       const pkgSelectorBox = document.getElementById('anuvrat-pkg-selector');
       const pkgSelPill = document.getElementById('anuvrat-pkg-sel-pill');
       const pkgCardCtaBtn = document.getElementById('anuvrat-pkg-select-btn');
@@ -1341,7 +1341,7 @@
         if (pkgCardCtaTxt) {
           pkgCardCtaTxt.textContent = isPackageSelected
             ? 'Selected • Book Package at Rs. 849'
-            : 'Select 92-Parameter Package (Rs. 849)';
+            : 'Book This Package at Rs. 849';
         }
       }
 
