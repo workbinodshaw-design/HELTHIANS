@@ -1472,15 +1472,33 @@
       });
 
       let isSubmitting = false;
+      const origSubmitHtml = submitBtn ? submitBtn.innerHTML : '';
+
+      // Restore button cleanly if user returns via browser back button (bfcache)
+      window.addEventListener('pageshow', () => {
+        isSubmitting = false;
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.style.pointerEvents = '';
+          submitBtn.style.opacity = '1';
+          if (origSubmitHtml) submitBtn.innerHTML = origSubmitHtml;
+        }
+      });
 
       if (form) {
         form.addEventListener('submit', async (e) => {
           e.preventDefault();
+          if (isSubmitting) return false;
           clearFeedback();
-          if (isSubmitting) return;
 
           const honeypot = document.getElementById('_system_verification_code');
           if (honeypot && honeypot.value.trim() !== '') return;
+
+          const nowTs = Date.now();
+          const lastSubmitTs = parseInt(sessionStorage.getItem('anuvrat_last_submit_ts') || '0', 10);
+          if (nowTs - lastSubmitTs < 8000) {
+            return showError('Your previous booking is already being processed. Please wait a few seconds.', null);
+          }
 
           const patientName = cleanText(nameInput.value);
           const rawMobile = normalizeIndianMobile(phoneInput.value);
@@ -1518,10 +1536,23 @@
             return showError('Please select a collection time slot.', timeInput);
           }
 
+          const selectedPkgLabel = isPackageSelected
+            ? 'Anuvrat Smiti Full Body Checkup - 92 Parameters (Rs. 849) [Code: Anuvrat-13]'
+            : 'Anuvrat Smiti General Blood Test Inquiry [Code: Anuvrat-13]';
+
+          // 60-second duplicate booking guard across clicks / browser Back
+          const fingerprint = `${rawMobile}_${patientName.toLowerCase()}_${dateVal}_${timeVal}`;
+          const lastFingerprint = sessionStorage.getItem('anuvrat_last_fingerprint');
+          const lastOrderId = sessionStorage.getItem('anuvrat_last_order_id') || '';
+          if (lastFingerprint === fingerprint && (nowTs - lastSubmitTs < 60000)) {
+            window.location.href = `/thankyou.html?id=${encodeURIComponent(lastOrderId)}&name=${encodeURIComponent(patientName)}&pkg=${encodeURIComponent(selectedPkgLabel)}&city=${encodeURIComponent('Mumbai (Anuvrat Smiti)')}&returnUrl=${encodeURIComponent('/anuvrat-smiti/')}`;
+            return false;
+          }
+
           isSubmitting = true;
-          const origBtnHtml = submitBtn ? submitBtn.innerHTML : '';
           if (submitBtn) {
             submitBtn.disabled = true;
+            submitBtn.style.pointerEvents = 'none';
             submitBtn.innerHTML = '⏳ Securing Slot...';
             submitBtn.style.opacity = '0.78';
           }
@@ -1608,7 +1639,8 @@
             isSubmitting = false;
             if (submitBtn) {
               submitBtn.disabled = false;
-              submitBtn.innerHTML = origBtnHtml;
+              submitBtn.style.pointerEvents = '';
+              submitBtn.innerHTML = origSubmitHtml;
               submitBtn.style.opacity = '1';
             }
             const waMsg = `Hello, booking from Anuvrat Smiti, Mumbai (Code: Anuvrat-13):\nName: ${patientName}\nMobile: ${rawMobile}\nAge/Gender: ${ageNum} / ${genderVal}\nAddress: ${addressVal}\nLandmark: ${landmarkVal}\nPreferred Slot: ${scheduleSlotStr}`;
@@ -1620,6 +1652,10 @@
             }
             return;
           }
+
+          sessionStorage.setItem('anuvrat_last_submit_ts', String(nowTs));
+          sessionStorage.setItem('anuvrat_last_fingerprint', fingerprint);
+          sessionStorage.setItem('anuvrat_last_order_id', bookingData.id);
 
           try {
             let currentBookings = JSON.parse(localStorage.getItem('healthians_admin_bookings') || '[]');
