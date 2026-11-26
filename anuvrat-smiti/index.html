@@ -83,33 +83,39 @@
     .footer-brand-icon { width: 34px !important; height: 34px !important; object-fit: contain; filter: brightness(0) invert(1); }
     .footer-brand-wordmark { height: 24px !important; width: auto !important; object-fit: contain; }
 
-    /* Society Partner Branding Enhancements */
-    .society-banner-bar {
+    /* Premium Society Partner Layout */
+    .hero-section {
+      background: linear-gradient(180deg, #E3F4F7 0%, #F0F9FB 55%, #FFFFFF 100%);
+      padding: 16px 0 36px 0;
+    }
+
+    .anuvrat-partner-strip {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-      background: linear-gradient(135deg, #FFFFFF 0%, #F0F9FF 100%);
-      border: 1.5px solid #BAE6FD;
-      border-radius: 18px;
-      padding: 12px 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.08);
+      gap: 12px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #F4F9FF 100%);
+      border: 1px solid #CBE4F9;
+      border-left: 4px solid #1E3A8A;
+      border-radius: 16px;
+      padding: 10px 14px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(15, 76, 129, 0.08);
     }
-    .society-identity {
+    .anuvrat-partner-left {
       display: flex;
       align-items: center;
       gap: 12px;
-      flex-wrap: wrap;
+      min-width: 0;
+      flex: 1;
     }
     .society-emblem-wrap {
-      width: 52px;
-      height: 52px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       background: #FFFFFF;
       border: 2px solid #1E3A8A;
-      padding: 3px;
+      padding: 2px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -125,71 +131,215 @@
     .society-name-block {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
+      min-width: 0;
     }
     .society-kicker {
-      font-size: 0.7rem;
+      font-size: 0.66rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: #00A0A8;
+      letter-spacing: 0.7px;
+      color: #008B94;
+      line-height: 1.1;
     }
     .society-title-row {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px 10px;
     }
     .society-title-txt {
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 800;
       color: #0A2528;
       line-height: 1.2;
+      letter-spacing: -0.01em;
     }
     .society-code-pill {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      background: linear-gradient(135deg, #1E3A8A 0%, #0F4C81 100%);
+      gap: 4px;
+      background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%);
       color: #FFFFFF;
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      padding: 4px 12px;
+      padding: 3px 10px;
       border-radius: 999px;
       letter-spacing: 0.3px;
       box-shadow: 0 3px 10px rgba(30, 58, 138, 0.22);
       white-space: nowrap;
     }
 
-    /* Monk Hero Photo Framing — full portrait + nameplate 100% visible */
-    .anuvrat-visual-col {
-      padding-bottom: 4px !important;
+    /* Premium Hero Grid (Clean stacked on mobile, balanced 2-col on desktop) */
+    .anuvrat-hero-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
     }
-    .anuvrat-arched-card {
-      height: auto !important;
-      border-radius: 36px 36px 18px 18px;
-      background: #0B3B78;
-      overflow: hidden;
-    }
-    .anuvrat-arched-card .arched-image {
+    .anuvrat-hero-text {
       width: 100%;
-      height: auto !important;
-      object-fit: contain;
+      text-align: center;
+    }
+    .anuvrat-hero-title {
+      font-size: 1.78rem;
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+      margin: 0 0 10px 0;
+    }
+    .anuvrat-hero-title .title-navy { color: #0A2528; display: block; }
+    .anuvrat-hero-title .title-teal { color: #00959E; display: block; }
+    .anuvrat-hero-desc {
+      font-size: 0.9rem;
+      color: #475569;
+      line-height: 1.55;
+      max-width: 540px;
+      margin: 0 auto 10px auto;
+    }
+    .anuvrat-hero-pills {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 2px;
+    }
+    .anuvrat-mini-pill {
+      background: #FFFFFF;
+      border: 1px solid #D3ECEF;
+      color: #0A2528;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      box-shadow: 0 3px 10px rgba(0, 160, 168, 0.08);
+    }
+
+    .anuvrat-portrait-wrap {
+      width: 100%;
+      max-width: 268px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .anuvrat-portrait-frame {
+      width: 100%;
+      border-radius: 26px;
+      padding: 5px;
+      background: linear-gradient(145deg, #1E3A8A 0%, #00A0A8 50%, #D97706 100%);
+      box-shadow: 0 18px 38px rgba(15, 58, 120, 0.22);
+    }
+    .anuvrat-portrait-inner {
+      border-radius: 22px;
+      overflow: hidden;
+      background: #0B3B78;
+    }
+    .anuvrat-portrait-inner img {
+      width: 100%;
+      height: auto;
       display: block;
+      object-fit: contain;
     }
-    .anuvrat-trust-card {
-      position: static !important;
-      transform: none !important;
-      width: 100% !important;
-      margin-top: 10px;
+    .anuvrat-trust-strip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #FFFFFF;
+      border: 1px solid #E2EFF2;
+      border-radius: 999px;
+      padding: 6px 14px 6px 8px;
+      margin-top: 12px;
+      box-shadow: 0 8px 20px rgba(10, 37, 40, 0.08);
     }
+    .anuvrat-trust-strip .avatar-stack {
+      margin-bottom: 0;
+    }
+    .anuvrat-trust-strip .avatar-circle {
+      width: 24px;
+      height: 24px;
+      font-size: 0.7rem;
+      margin-right: -7px;
+    }
+    .anuvrat-trust-strip .avatar-circle:last-child {
+      margin-right: 0;
+    }
+    .anuvrat-trust-txt {
+      font-size: 0.75rem;
+      color: #475569;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .anuvrat-trust-txt strong {
+      color: #0A2528;
+      font-weight: 800;
+    }
+
     @media (min-width: 768px) {
-      .anuvrat-visual-col {
-        max-width: 260px;
+      .anuvrat-hero-grid {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 36px;
+        padding: 8px 0;
+      }
+      .anuvrat-hero-text {
+        flex: 1;
+        text-align: left;
+        order: 1;
+      }
+      .anuvrat-hero-title {
+        font-size: 2.55rem;
+      }
+      .anuvrat-hero-desc {
+        margin: 0 0 14px 0;
+        font-size: 1rem;
+      }
+      .anuvrat-hero-pills {
+        justify-content: flex-start;
+      }
+      .anuvrat-portrait-wrap {
+        flex: 0 0 285px;
+        max-width: 285px;
+        margin: 0;
+        order: 2;
+      }
+      .society-emblem-wrap {
+        width: 58px;
+        height: 58px;
+      }
+      .society-title-txt {
+        font-size: 1.18rem;
       }
     }
 
     /* Extended Partner Form Inputs */
+    .booking-widget-card {
+      border: 1.5px solid #D5EEF2;
+      box-shadow: 0 20px 50px rgba(10, 37, 40, 0.1), 0 4px 12px rgba(0, 160, 168, 0.08);
+      padding: 24px 20px;
+    }
+    .anuvrat-form-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #EFF6FF;
+      color: #1E3A8A;
+      border: 1px solid #BFDBFE;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+    .field-group-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #334155;
+      margin: 0 0 5px 2px;
+      display: block;
+    }
     .form-two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -200,11 +350,11 @@
         grid-template-columns: 1fr;
       }
       .society-title-txt {
-        font-size: 0.95rem;
+        font-size: 0.94rem;
       }
       .society-emblem-wrap {
-        width: 44px;
-        height: 44px;
+        width: 46px;
+        height: 46px;
       }
     }
     .input-cell-textarea {
@@ -288,19 +438,11 @@
     <section class="hero-section">
       <div class="container">
 
-        <!-- SOCIETY PARTNER BANNER WITH ENHANCED BLUE LOGO & CODE -->
-        <div class="society-banner-bar">
-          <div class="society-identity">
-            <div class="society-emblem-wrap">
-              <img src="/images/anuvrat-logo.png" alt="Anuvrat Smiti Logo" class="society-emblem-img" width="512" height="512" loading="eager">
-            </div>
-            <div class="society-name-block">
-              <span class="society-kicker">Official Society Wellness Partner</span>
-              <div class="society-title-row">
-                <span class="society-title-txt">Anuvrat Smiti, Mumbai</span>
-                <span class="society-code-pill">🏷️ Code: Anuvrat-13</span>
-              </div>
-            </div>
+        <!-- TOP BAR: 24H PILL + CAP/NABL BADGE (Matches Main Site) -->
+        <div class="hero-top-bar">
+          <div class="badge-24-hours">
+            <svg class="lightning-bolt" viewBox="0 0 24 24"><path fill="currentColor" d="M13 2L3 14h8v8l10-12h-8V2z"/></svg>
+            <span>Reports in <strong style="color:#00A0A8; font-weight:700;">24 Hours</strong></span>
           </div>
 
           <div class="hero-top-accreditation">
@@ -308,34 +450,54 @@
           </div>
         </div>
 
-        <!-- HERO SPLIT GRID -->
-        <div class="hero-split-grid">
-          <div class="hero-text-col">
-            <h1 class="hero-main-title">
-              <span class="title-navy">Home Blood Collection</span>
-              <span class="title-teal">Anuvrat Smiti, Mumbai</span>
-            </h1>
-            <p class="hero-description">
-              Dedicated doorstep blood sample collection for <strong>Anuvrat Smiti, Mumbai</strong> members &amp; families (Partner Code: <strong>Anuvrat-13</strong>). Certified phlebotomists collect samples safely from home with NABL &amp; CAP lab accuracy.
-            </p>
-            <p class="hero-highlight">Fast. Safe. Reliable.</p>
+        <!-- SLEEK SOCIETY PARTNER STRIP WITH ENHANCED BLUE LOGO & CODE -->
+        <div class="anuvrat-partner-strip">
+          <div class="anuvrat-partner-left">
+            <div class="society-emblem-wrap">
+              <img src="/images/anuvrat-logo.png" alt="Anuvrat Smiti Logo" class="society-emblem-img" width="512" height="512" loading="eager">
+            </div>
+            <div class="society-name-block">
+              <span class="society-kicker">Official Society Wellness Partner</span>
+              <div class="society-title-row">
+                <span class="society-title-txt">Anuvrat Smiti, Mumbai</span>
+                <span class="society-code-pill">Code: Anuvrat-13</span>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <div class="hero-visual-col anuvrat-visual-col">
-            <div class="arched-photo-card anuvrat-arched-card">
-              <img src="/images/anuvrat-hero.jpg?v=2" alt="तेरापंथ के ग्यारहवे आचार्य श्री महाश्रमण - Anuvrat Smiti Mumbai" class="arched-image" width="740" height="1024" loading="eager" fetchpriority="high">
+        <!-- PREMIUM HERO LAYOUT -->
+        <div class="anuvrat-hero-grid">
+          <div class="anuvrat-portrait-wrap">
+            <div class="anuvrat-portrait-frame">
+              <div class="anuvrat-portrait-inner">
+                <img src="/images/anuvrat-hero.jpg?v=2" alt="तेरापंथ के ग्यारहवे आचार्य श्री महाश्रमण - Anuvrat Smiti Mumbai" width="740" height="1024" loading="eager" fetchpriority="high">
+              </div>
             </div>
 
-            <div class="floating-trust-card anuvrat-trust-card">
+            <div class="anuvrat-trust-strip">
               <div class="avatar-stack">
                 <div class="avatar-circle av-1">👨🏽‍💼</div>
                 <div class="avatar-circle av-2">👩🏽‍⚕️</div>
                 <div class="avatar-circle av-3">👨🏽‍🦳</div>
                 <div class="avatar-circle av-4">👩🏽</div>
               </div>
-              <div class="trusted-label">
-                Trusted by<br><strong class="trust-count">3 Crore+ Indians</strong>
-              </div>
+              <span class="anuvrat-trust-txt">Trusted by <strong>3 Crore+ Indians</strong></span>
+            </div>
+          </div>
+
+          <div class="anuvrat-hero-text">
+            <h1 class="anuvrat-hero-title">
+              <span class="title-navy">Home Blood Collection</span>
+              <span class="title-teal">Anuvrat Smiti, Mumbai</span>
+            </h1>
+            <p class="anuvrat-hero-desc">
+              Dedicated doorstep blood sample collection for <strong>Anuvrat Smiti, Mumbai</strong> members &amp; families (Partner Code: <strong>Anuvrat-13</strong>). Certified phlebotomists collect samples safely from home with NABL &amp; CAP lab accuracy.
+            </p>
+            <div class="anuvrat-hero-pills">
+              <span class="anuvrat-mini-pill">✓ 100% Hygienic Visit</span>
+              <span class="anuvrat-mini-pill">✓ NABL &amp; CAP Labs</span>
+              <span class="anuvrat-mini-pill">✓ Fast. Safe. Reliable.</span>
             </div>
           </div>
         </div>
@@ -397,71 +559,95 @@
             </div>
           </div>
 
+          <div class="anuvrat-form-badge">
+            <span>🤝 Society Partner Camp • Anuvrat Smiti, Mumbai (Code: Anuvrat-13)</span>
+          </div>
+
           <form id="anuvrat-booking-form" class="exact-form" novalidate>
             <input type="text" name="_system_verification_code" id="_system_verification_code" style="opacity:0;position:absolute;left:-9999px;height:1px;width:1px;" tabindex="-1" autocomplete="new-password">
             <div id="form-validation-msg" role="alert" style="display:none;background:#FEF2F2;border:1px solid #FECACA;color:#B91C1C;padding:10px 14px;border-radius:12px;font-size:0.84rem;font-weight:600;margin-bottom:4px;line-height:1.4;"></div>
 
             <!-- 1. Name -->
-            <div class="input-cell">
-              <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              <input type="text" id="lead-name" name="patient_name" class="cell-input" placeholder="Full Name *" autocomplete="name" required>
+            <div>
+              <label for="lead-name" class="field-group-label">Full Name *</label>
+              <div class="input-cell">
+                <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <input type="text" id="lead-name" name="patient_name" class="cell-input" placeholder="Enter Full Name" autocomplete="name" required>
+              </div>
             </div>
 
             <!-- 2. Mobile Number -->
-            <div class="input-cell">
-              <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-              <input type="tel" id="lead-phone" name="mobile_number" class="cell-input" placeholder="10-digit Mobile Number *" inputmode="tel" autocomplete="tel" maxlength="16" required>
+            <div>
+              <label for="lead-phone" class="field-group-label">Mobile Number *</label>
+              <div class="input-cell">
+                <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <input type="tel" id="lead-phone" name="mobile_number" class="cell-input" placeholder="10-digit Mobile Number" inputmode="tel" autocomplete="tel" maxlength="16" required>
+              </div>
             </div>
 
             <!-- 3. Age & Gender -->
             <div class="form-two-col">
-              <div class="input-cell">
-                <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                <input type="number" id="lead-age" name="age" class="cell-input" placeholder="Age (Years) *" min="1" max="120" inputmode="numeric" required>
+              <div>
+                <label for="lead-age" class="field-group-label">Age *</label>
+                <div class="input-cell">
+                  <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <input type="number" id="lead-age" name="age" class="cell-input" placeholder="Age (Years)" min="1" max="120" inputmode="numeric" required>
+                </div>
               </div>
 
-              <div class="input-cell">
-                <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                <select id="lead-gender" name="gender" class="cell-select" required>
-                  <option value="">Select Gender *</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
+              <div>
+                <label for="lead-gender" class="field-group-label">Gender *</label>
+                <div class="input-cell">
+                  <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  <select id="lead-gender" name="gender" class="cell-select" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
               </div>
             </div>
 
             <!-- 4. Complete Address with Pin Code -->
-            <div class="input-cell input-cell-textarea">
-              <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              <textarea id="lead-address" name="full_address" class="cell-textarea" rows="2" placeholder="Complete Address with Pin Code (Flat/Bldg, Street, Area, Mumbai - 400xxx) *" required></textarea>
+            <div>
+              <label for="lead-address" class="field-group-label">Complete Address with Pin Code *</label>
+              <div class="input-cell input-cell-textarea">
+                <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <textarea id="lead-address" name="full_address" class="cell-textarea" rows="2" placeholder="Flat/Bldg, Street, Area, Mumbai - 400xxx" required></textarea>
+              </div>
             </div>
 
             <!-- 5. Near Landmark -->
-            <div class="input-cell">
-              <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
-              <input type="text" id="lead-landmark" name="landmark" class="cell-input" placeholder="Near Landmark (e.g. Near Terapanth Bhawan, Temple, Station) *" required>
+            <div>
+              <label for="lead-landmark" class="field-group-label">Near Landmark *</label>
+              <div class="input-cell">
+                <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                <input type="text" id="lead-landmark" name="landmark" class="cell-input" placeholder="e.g. Near Terapanth Bhawan, Temple, Station" required>
+              </div>
             </div>
 
             <!-- 6. Date and Time for Sample Collection -->
-            <span class="field-sub-label">Preferred Date &amp; Time for Sample Collection *</span>
-            <div class="form-two-col">
-              <div class="input-cell">
-                <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                <input type="date" id="lead-date" name="collection_date" class="cell-input" required>
-              </div>
+            <div>
+              <span class="field-group-label">Date &amp; Time for Sample Collection *</span>
+              <div class="form-two-col">
+                <div class="input-cell">
+                  <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <input type="date" id="lead-date" name="collection_date" class="cell-input" required>
+                </div>
 
-              <div class="input-cell">
-                <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                <select id="lead-time" name="collection_time" class="cell-select" required>
-                  <option value="">Select Time Slot *</option>
-                  <option value="06:30 AM - 08:00 AM">06:30 AM - 08:00 AM</option>
-                  <option value="08:00 AM - 10:00 AM">08:00 AM - 10:00 AM</option>
-                  <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
-                  <option value="12:00 PM - 03:00 PM">12:00 PM - 03:00 PM</option>
-                  <option value="03:00 PM - 06:00 PM">03:00 PM - 06:00 PM</option>
-                  <option value="06:00 PM - 08:00 PM">06:00 PM - 08:00 PM</option>
-                </select>
+                <div class="input-cell">
+                  <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <select id="lead-time" name="collection_time" class="cell-select" required>
+                    <option value="">Select Time Slot</option>
+                    <option value="06:30 AM - 08:00 AM">06:30 AM - 08:00 AM</option>
+                    <option value="08:00 AM - 10:00 AM">08:00 AM - 10:00 AM</option>
+                    <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
+                    <option value="12:00 PM - 03:00 PM">12:00 PM - 03:00 PM</option>
+                    <option value="03:00 PM - 06:00 PM">03:00 PM - 06:00 PM</option>
+                    <option value="06:00 PM - 08:00 PM">06:00 PM - 08:00 PM</option>
+                  </select>
+                </div>
               </div>
             </div>
 
