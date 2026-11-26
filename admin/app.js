@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function isAnuvratLead(b) {
     if (!b) return false;
     return b.leadSource === 'anuvrat-smiti'
-      || b.partnerCode === 'Anuvrat-13'
+      || b.partnerCode === 'गौरवशाली 13' || b.partnerCode === 'Anuvrat-13'
       || (b.sourcePage || '').toLowerCase().includes('anuvrat')
       || (b.selectedPackage || '').toLowerCase().includes('anuvrat');
   }
@@ -443,7 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const isPartnerLead = isAnuvratLead(b);
         const partnerBadgeHtml = isPartnerLead
-          ? `<div style="margin-bottom:8px;"><span style="display:inline-flex;align-items:center;gap:5px;background:#EFF6FF;color:#1E3A8A;border:1px solid #BFDBFE;padding:3px 10px;border-radius:999px;font-size:0.72rem;font-weight:700;">🤝 Anuvrat Smiti, Mumbai • Code: ${escapeHTML(b.partnerCode || 'Anuvrat-13')}</span></div>`
+          ? `<div style="margin-bottom:8px;"><span style="display:inline-flex;align-items:center;gap:5px;background:#EFF6FF;color:#1E3A8A;border:1px solid #BFDBFE;padding:3px 10px;border-radius:999px;font-size:0.72rem;font-weight:700;">🤝 Anuvrat Smiti, Mumbai • Code: ${escapeHTML(b.partnerCode || 'गौरवशाली 13')}</span></div>`
           : '';
         const partnerDetailsHtml = (b.age || b.gender || b.address || b.landmark || (b.scheduleSlot && b.scheduleSlot !== 'Pending Scheduling'))
           ? `<div style="margin-top:8px;padding:8px 10px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;font-size:0.76rem;color:#334155;line-height:1.45;">
