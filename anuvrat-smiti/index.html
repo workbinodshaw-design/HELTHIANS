@@ -83,35 +83,41 @@
     .footer-brand-icon { width: 34px !important; height: 34px !important; object-fit: contain; filter: brightness(0) invert(1); }
     .footer-brand-wordmark { height: 24px !important; width: auto !important; object-fit: contain; }
 
-    /* Premium Society Partner Layout */
+    /* Premium Society Partner Layout — Compact Mobile Hero + Floating Form */
     .hero-section {
-      background: linear-gradient(180deg, #E3F4F7 0%, #F0F9FB 55%, #FFFFFF 100%);
-      padding: 16px 0 36px 0;
+      background: linear-gradient(180deg, #DFF3F7 0%, #EDF8FB 58%, #F8FCFD 100%);
+      padding: 10px 0 28px 0;
+    }
+    .hero-top-bar {
+      margin-bottom: 10px;
+    }
+    .hero-features-row {
+      margin-top: 14px;
     }
 
     .anuvrat-partner-strip {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      background: linear-gradient(135deg, #FFFFFF 0%, #F4F9FF 100%);
-      border: 1px solid #CBE4F9;
+      gap: 10px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #F2F7FF 100%);
+      border: 1px solid #C7DFF9;
       border-left: 4px solid #1E3A8A;
-      border-radius: 16px;
-      padding: 10px 14px;
-      margin-bottom: 18px;
-      box-shadow: 0 8px 24px rgba(15, 76, 129, 0.08);
+      border-radius: 14px;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 6px 18px rgba(15, 76, 129, 0.08);
     }
     .anuvrat-partner-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       min-width: 0;
       flex: 1;
     }
     .society-emblem-wrap {
-      width: 50px;
-      height: 50px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: #FFFFFF;
       border: 2px solid #1E3A8A;
@@ -119,7 +125,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(30, 58, 138, 0.16);
+      box-shadow: 0 3px 10px rgba(30, 58, 138, 0.16);
       flex-shrink: 0;
     }
     .society-emblem-img {
@@ -131,14 +137,14 @@
     .society-name-block {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 2px;
       min-width: 0;
     }
     .society-kicker {
-      font-size: 0.66rem;
+      font-size: 0.62rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.7px;
+      letter-spacing: 0.6px;
       color: #008B94;
       line-height: 1.1;
     }
@@ -146,10 +152,10 @@
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 6px 10px;
+      gap: 5px 8px;
     }
     .society-title-txt {
-      font-size: 1rem;
+      font-size: 0.94rem;
       font-weight: 800;
       color: #0A2528;
       line-height: 1.2;
@@ -161,64 +167,63 @@
       gap: 4px;
       background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%);
       color: #FFFFFF;
-      font-size: 0.72rem;
+      font-size: 0.69rem;
       font-weight: 700;
-      padding: 3px 10px;
+      padding: 2px 9px;
       border-radius: 999px;
       letter-spacing: 0.3px;
-      box-shadow: 0 3px 10px rgba(30, 58, 138, 0.22);
+      box-shadow: 0 2px 8px rgba(30, 58, 138, 0.22);
       white-space: nowrap;
     }
 
-    /* Premium Hero Grid (Clean stacked on mobile, balanced 2-col on desktop) */
+    /* Compact Mobile Hero Grid so Form Peeks Above the Fold */
     .anuvrat-hero-grid {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18px;
+      gap: 10px;
     }
     .anuvrat-hero-text {
       width: 100%;
       text-align: center;
     }
     .anuvrat-hero-title {
-      font-size: 1.78rem;
+      font-size: 1.42rem;
       font-weight: 800;
       line-height: 1.18;
       letter-spacing: -0.025em;
-      margin: 0 0 10px 0;
+      margin: 0 0 6px 0;
     }
     .anuvrat-hero-title .title-navy { color: #0A2528; display: block; }
     .anuvrat-hero-title .title-teal { color: #00959E; display: block; }
     .anuvrat-hero-desc {
-      font-size: 0.9rem;
+      font-size: 0.82rem;
       color: #475569;
-      line-height: 1.55;
-      max-width: 540px;
-      margin: 0 auto 10px auto;
+      line-height: 1.45;
+      max-width: 520px;
+      margin: 0 auto 8px auto;
     }
     .anuvrat-hero-pills {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 2px;
+      gap: 6px;
     }
     .anuvrat-mini-pill {
       background: #FFFFFF;
-      border: 1px solid #D3ECEF;
+      border: 1px solid #CFEBEE;
       color: #0A2528;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 5px 12px;
+      padding: 4px 10px;
       border-radius: 999px;
-      box-shadow: 0 3px 10px rgba(0, 160, 168, 0.08);
+      box-shadow: 0 2px 8px rgba(0, 160, 168, 0.08);
     }
 
     .anuvrat-portrait-wrap {
       width: 100%;
-      max-width: 268px;
+      max-width: 188px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -226,13 +231,13 @@
     }
     .anuvrat-portrait-frame {
       width: 100%;
-      border-radius: 26px;
-      padding: 5px;
+      border-radius: 20px;
+      padding: 4px;
       background: linear-gradient(145deg, #1E3A8A 0%, #00A0A8 50%, #D97706 100%);
-      box-shadow: 0 18px 38px rgba(15, 58, 120, 0.22);
+      box-shadow: 0 12px 28px rgba(15, 58, 120, 0.2);
     }
     .anuvrat-portrait-inner {
-      border-radius: 22px;
+      border-radius: 17px;
       overflow: hidden;
       background: #0B3B78;
     }
@@ -245,28 +250,28 @@
     .anuvrat-trust-strip {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       background: #FFFFFF;
-      border: 1px solid #E2EFF2;
+      border: 1px solid #DFEEF1;
       border-radius: 999px;
-      padding: 6px 14px 6px 8px;
-      margin-top: 12px;
-      box-shadow: 0 8px 20px rgba(10, 37, 40, 0.08);
+      padding: 4px 12px 4px 6px;
+      margin-top: 8px;
+      box-shadow: 0 5px 14px rgba(10, 37, 40, 0.08);
     }
     .anuvrat-trust-strip .avatar-stack {
       margin-bottom: 0;
     }
     .anuvrat-trust-strip .avatar-circle {
-      width: 24px;
-      height: 24px;
-      font-size: 0.7rem;
-      margin-right: -7px;
+      width: 20px;
+      height: 20px;
+      font-size: 0.62rem;
+      margin-right: -6px;
     }
     .anuvrat-trust-strip .avatar-circle:last-child {
       margin-right: 0;
     }
     .anuvrat-trust-txt {
-      font-size: 0.75rem;
+      font-size: 0.69rem;
       color: #475569;
       font-weight: 600;
       white-space: nowrap;
@@ -277,12 +282,15 @@
     }
 
     @media (min-width: 768px) {
+      .hero-section {
+        padding: 18px 0 42px 0;
+      }
       .anuvrat-hero-grid {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
         gap: 36px;
-        padding: 8px 0;
+        padding: 6px 0;
       }
       .anuvrat-hero-text {
         flex: 1;
@@ -290,35 +298,49 @@
         order: 1;
       }
       .anuvrat-hero-title {
-        font-size: 2.55rem;
+        font-size: 2.45rem;
+        margin-bottom: 10px;
       }
       .anuvrat-hero-desc {
         margin: 0 0 14px 0;
-        font-size: 1rem;
+        font-size: 0.98rem;
+        line-height: 1.55;
       }
       .anuvrat-hero-pills {
         justify-content: flex-start;
+        gap: 8px;
+      }
+      .anuvrat-mini-pill {
+        font-size: 0.76rem;
+        padding: 5px 12px;
       }
       .anuvrat-portrait-wrap {
-        flex: 0 0 285px;
-        max-width: 285px;
+        flex: 0 0 265px;
+        max-width: 265px;
         margin: 0;
         order: 2;
       }
       .society-emblem-wrap {
-        width: 58px;
-        height: 58px;
+        width: 56px;
+        height: 56px;
       }
       .society-title-txt {
-        font-size: 1.18rem;
+        font-size: 1.15rem;
       }
     }
 
-    /* Extended Partner Form Inputs */
+    /* Elevated Floating Form Card with Deep Shadow */
     .booking-widget-card {
-      border: 1.5px solid #D5EEF2;
-      box-shadow: 0 20px 50px rgba(10, 37, 40, 0.1), 0 4px 12px rgba(0, 160, 168, 0.08);
-      padding: 24px 20px;
+      background: #FFFFFF;
+      border: 1.5px solid rgba(0, 160, 168, 0.22);
+      box-shadow:
+        0 28px 65px rgba(10, 37, 40, 0.2),
+        0 12px 28px rgba(0, 160, 168, 0.14),
+        0 2px 6px rgba(15, 23, 42, 0.06);
+      padding: 22px 18px;
+      margin: 16px 0 24px 0;
+      position: relative;
+      z-index: 12;
     }
     .anuvrat-form-badge {
       display: inline-flex;
@@ -327,7 +349,7 @@
       background: #EFF6FF;
       color: #1E3A8A;
       border: 1px solid #BFDBFE;
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 700;
       padding: 5px 12px;
       border-radius: 999px;
@@ -350,11 +372,7 @@
         grid-template-columns: 1fr;
       }
       .society-title-txt {
-        font-size: 0.94rem;
-      }
-      .society-emblem-wrap {
-        width: 46px;
-        height: 46px;
+        font-size: 0.92rem;
       }
     }
     .input-cell-textarea {
@@ -488,16 +506,16 @@
 
           <div class="anuvrat-hero-text">
             <h1 class="anuvrat-hero-title">
-              <span class="title-navy">Home Blood Collection</span>
+              <span class="title-navy">Society Home Blood Test</span>
               <span class="title-teal">Anuvrat Smiti, Mumbai</span>
             </h1>
             <p class="anuvrat-hero-desc">
-              Dedicated doorstep blood sample collection for <strong>Anuvrat Smiti, Mumbai</strong> members &amp; families (Partner Code: <strong>Anuvrat-13</strong>). Certified phlebotomists collect samples safely from home with NABL &amp; CAP lab accuracy.
+              Exclusive doorstep sample collection for <strong>Anuvrat Smiti, Mumbai</strong> society members &amp; families (Code: <strong>Anuvrat-13</strong>) — powered by Healthians NABL &amp; CAP labs.
             </p>
             <div class="anuvrat-hero-pills">
-              <span class="anuvrat-mini-pill">✓ 100% Hygienic Visit</span>
+              <span class="anuvrat-mini-pill">✓ Society Member Priority</span>
               <span class="anuvrat-mini-pill">✓ NABL &amp; CAP Labs</span>
-              <span class="anuvrat-mini-pill">✓ Fast. Safe. Reliable.</span>
+              <span class="anuvrat-mini-pill">✓ 24-Hr Reports</span>
             </div>
           </div>
         </div>
