@@ -161,22 +161,31 @@
       white-space: nowrap;
     }
 
-    /* Monk Hero Photo Framing */
+    /* Monk Hero Photo Framing — full portrait + nameplate 100% visible */
+    .anuvrat-visual-col {
+      padding-bottom: 4px !important;
+    }
     .anuvrat-arched-card {
-      height: 255px;
-      border-radius: 64px 64px 20px 20px;
+      height: auto !important;
+      border-radius: 36px 36px 18px 18px;
       background: #0B3B78;
+      overflow: hidden;
     }
     .anuvrat-arched-card .arched-image {
-      object-fit: cover;
-      object-position: center top;
+      width: 100%;
+      height: auto !important;
+      object-fit: contain;
+      display: block;
+    }
+    .anuvrat-trust-card {
+      position: static !important;
+      transform: none !important;
+      width: 100% !important;
+      margin-top: 10px;
     }
     @media (min-width: 768px) {
-      .anuvrat-arched-card {
-        height: 310px;
-      }
-      .hero-visual-col {
-        max-width: 270px;
+      .anuvrat-visual-col {
+        max-width: 260px;
       }
     }
 
@@ -312,12 +321,12 @@
             <p class="hero-highlight">Fast. Safe. Reliable.</p>
           </div>
 
-          <div class="hero-visual-col">
+          <div class="hero-visual-col anuvrat-visual-col">
             <div class="arched-photo-card anuvrat-arched-card">
-              <img src="/images/anuvrat-hero.jpg" alt="Acharya Shri Mahashraman Ji - Anuvrat Smiti Mumbai Partner Wellness Initiative" class="arched-image" width="592" height="822" loading="eager" fetchpriority="high">
+              <img src="/images/anuvrat-hero.jpg?v=2" alt="तेरापंथ के ग्यारहवे आचार्य श्री महाश्रमण - Anuvrat Smiti Mumbai" class="arched-image" width="740" height="1024" loading="eager" fetchpriority="high">
             </div>
 
-            <div class="floating-trust-card">
+            <div class="floating-trust-card anuvrat-trust-card">
               <div class="avatar-stack">
                 <div class="avatar-circle av-1">👨🏽‍💼</div>
                 <div class="avatar-circle av-2">👩🏽‍⚕️</div>
