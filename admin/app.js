@@ -309,7 +309,49 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     });
 
-    // Compute metrics and counts
+    // Compute Source Totals (Normal vs Anuvrat Smiti)
+    let countAnuvrat = 0;
+    let countMain = 0;
+    bookings.forEach(b => {
+      if (isAnuvratLead(b)) countAnuvrat++;
+      else countMain++;
+    });
+
+    const sourceScopedBookings = sourceFilter === 'anuvrat-smiti'
+      ? bookings.filter(isAnuvratLead)
+      : (sourceFilter === 'main' ? bookings.filter(b => !isAnuvratLead(b)) : bookings);
+
+    const srcAllEl = document.getElementById('src-count-all');
+    const srcMainEl = document.getElementById('src-count-main');
+    const srcAnuvratEl = document.getElementById('src-count-anuvrat');
+    const showingCountEl = document.getElementById('filtered-showing-count');
+    if (srcAllEl) srcAllEl.textContent = bookings.length;
+    if (srcMainEl) srcMainEl.textContent = countMain;
+    if (srcAnuvratEl) srcAnuvratEl.textContent = countAnuvrat;
+    if (showingCountEl) showingCountEl.textContent = `${filtered.length} of ${sourceScopedBookings.length}`;
+
+    const sourceSel = document.getElementById('filter-source');
+    if (sourceSel) {
+      const optAll = sourceSel.querySelector('option[value="ALL"]');
+      const optAnuvrat = sourceSel.querySelector('option[value="anuvrat-smiti"]');
+      const optMain = sourceSel.querySelector('option[value="main"]');
+      if (optAll) optAll.textContent = `All Sources (${bookings.length})`;
+      if (optAnuvrat) optAnuvrat.textContent = `🤝 Anuvrat Smiti (गौरवशाली 13) (${countAnuvrat})`;
+      if (optMain) optMain.textContent = `🌐 Direct / Main Website (${countMain})`;
+    }
+
+    document.querySelectorAll('.src-count-pill').forEach(pill => {
+      const isSelected = (pill.getAttribute('data-source') || 'ALL').toLowerCase() === sourceFilter;
+      pill.style.boxShadow = isSelected ? '0 0 0 2px #0284C7' : 'none';
+      pill.style.opacity = (sourceFilter === 'all' || isSelected) ? '1' : '0.7';
+    });
+
+    const pagInfo = document.querySelector('.pagination-info');
+    if (pagInfo) {
+      pagInfo.textContent = `Showing ${filtered.length} of ${sourceScopedBookings.length} booking${sourceScopedBookings.length === 1 ? '' : 's'}`;
+    }
+
+    // Compute metrics and counts scoped to selected source
     let countCb = 0;
     let dueCallbacks = 0;
     let countLb = 0;
@@ -320,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let countColl = 0;
     let countCanc = 0;
 
-    bookings.forEach(b => {
+    sourceScopedBookings.forEach(b => {
       if (b.callBackDate || b.status === 'Call Reminder Scheduled') {
         countCb++;
         if (b.callBackDate && b.callBackDate <= now) dueCallbacks++;
@@ -344,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sideLab = document.getElementById('side-count-lab');
     const sideComplete = document.getElementById('side-count-completed');
     const sideCanc = document.getElementById('side-count-cancelled');
-    if (sideAll) sideAll.textContent = bookings.length;
+    if (sideAll) sideAll.textContent = sourceScopedBookings.length;
     if (sideNew) sideNew.textContent = countNw;
     if (sideCont) sideCont.textContent = countCont;
     if (sideProc) sideProc.textContent = countProc;
@@ -364,7 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const topCompleted = document.getElementById('top-count-completed');
     const topCb = document.getElementById('top-count-cb');
     const topCanc = document.getElementById('top-count-cancelled');
-    if (topAll) topAll.textContent = bookings.length;
+    if (topAll) topAll.textContent = sourceScopedBookings.length;
     if (topNew) topNew.textContent = countNw;
     if (topCont) topCont.textContent = countCont;
     if (topProc) topProc.textContent = countProc;
@@ -378,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobAll = document.getElementById('mob-count-all');
     const mobNew = document.getElementById('mob-count-new');
     const mobCb = document.getElementById('mob-count-cb');
-    if (mobAll) mobAll.textContent = bookings.length;
+    if (mobAll) mobAll.textContent = sourceScopedBookings.length;
     if (mobNew) mobNew.textContent = countNw;
     if (mobCb) mobCb.textContent = countCb;
 
@@ -717,6 +759,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (el) {
       el.addEventListener('change', () => render());
     }
+  });
+
+  // Bind clickable source count pills
+  document.querySelectorAll('.src-count-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const srcVal = pill.getAttribute('data-source') || 'ALL';
+      const sourceSel = document.getElementById('filter-source');
+      if (sourceSel) sourceSel.value = srcVal;
+      render();
+    });
   });
 
   // Clear filters button

@@ -330,6 +330,24 @@
           <button id="btn-clear-filters" class="btn-clear-filters">✕ Clear Filters</button>
         </section>
 
+        <!-- EXACT SOURCE BREAKDOWN BAR (Normal vs Anuvrat Smiti) -->
+        <section id="source-counts-bar" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:-4px 0 16px 0;padding:10px 14px;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:12px;">
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+            <button type="button" class="src-count-pill active" data-source="ALL" style="background:#0F172A;color:#FFFFFF;border:1px solid #0F172A;border-radius:999px;padding:5px 12px;font-size:0.78rem;font-weight:700;cursor:pointer;">
+              📁 All Sources: <span id="src-count-all">0</span>
+            </button>
+            <button type="button" class="src-count-pill" data-source="main" style="background:#F8FAFC;color:#334155;border:1px solid #CBD5E1;border-radius:999px;padding:5px 12px;font-size:0.78rem;font-weight:700;cursor:pointer;">
+              🌐 Normal / Main Website: <span id="src-count-main">0</span>
+            </button>
+            <button type="button" class="src-count-pill" data-source="anuvrat-smiti" style="background:#EFF6FF;color:#1E3A8A;border:1px solid #BFDBFE;border-radius:999px;padding:5px 12px;font-size:0.78rem;font-weight:700;cursor:pointer;">
+              🤝 Anuvrat Smiti (गौरवशाली 13): <span id="src-count-anuvrat">0</span>
+            </button>
+          </div>
+          <div style="font-size:0.78rem;font-weight:700;color:#475569;">
+            Showing: <span id="filtered-showing-count" style="color:#0284C7;font-weight:800;">0</span>
+          </div>
+        </section>
+
         <!-- 3-COLUMN MODERN CARD GRID AREA (Replaces the Table!) -->
         <section class="cards-grid-container">
           <div id="saas-cards-grid" class="saas-cards-grid">
