@@ -1079,21 +1079,31 @@
               </div>
             </div>
 
-            <!-- 4. Complete Address with Pin Code -->
+            <!-- 4. Complete Address -->
             <div>
-              <label for="lead-address" class="field-group-label">Complete Address with Pin Code *</label>
+              <label for="lead-address" class="field-group-label">Complete Address *</label>
               <div class="input-cell input-cell-textarea">
                 <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                <textarea id="lead-address" name="full_address" class="cell-textarea" rows="2" placeholder="Flat/Bldg, Street, Area, Mumbai - 400xxx" required></textarea>
+                <textarea id="lead-address" name="full_address" class="cell-textarea" rows="2" placeholder="Flat / Building No., Street, Area, Mumbai" required></textarea>
               </div>
             </div>
 
-            <!-- 5. Near Landmark -->
-            <div>
-              <label for="lead-landmark" class="field-group-label">Near Landmark *</label>
-              <div class="input-cell">
-                <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
-                <input type="text" id="lead-landmark" name="landmark" class="cell-input" placeholder="e.g. Near Terapanth Bhawan, Temple, Station" required>
+            <!-- 5. Pin Code & Near Landmark -->
+            <div class="form-two-col">
+              <div>
+                <label for="lead-pincode" class="field-group-label">Pin Code *</label>
+                <div class="input-cell">
+                  <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 10h18"></path></svg>
+                  <input type="tel" id="lead-pincode" name="pincode" class="cell-input" placeholder="6-digit Pin Code (e.g. 400001)" inputmode="numeric" maxlength="6" required>
+                </div>
+              </div>
+
+              <div>
+                <label for="lead-landmark" class="field-group-label">Near Landmark *</label>
+                <div class="input-cell">
+                  <svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                  <input type="text" id="lead-landmark" name="landmark" class="cell-input" placeholder="e.g. Near Terapanth Bhawan, Station" required>
+                </div>
               </div>
             </div>
 
@@ -1365,6 +1375,7 @@
       const ageInput = document.getElementById('lead-age');
       const genderInput = document.getElementById('lead-gender');
       const addressInput = document.getElementById('lead-address');
+      const pincodeInput = document.getElementById('lead-pincode');
       const landmarkInput = document.getElementById('lead-landmark');
       const dateInput = document.getElementById('lead-date');
       const timeInput = document.getElementById('lead-time');
@@ -1514,7 +1525,14 @@
         phoneInput.addEventListener('change', norm);
       }
 
-      [nameInput, phoneInput, ageInput, genderInput, addressInput, landmarkInput, dateInput, timeInput].forEach(el => {
+      if (pincodeInput) {
+        pincodeInput.addEventListener('input', () => {
+          const digits = pincodeInput.value.replace(/\D/g, '').slice(0, 6);
+          if (pincodeInput.value !== digits) pincodeInput.value = digits;
+        });
+      }
+
+      [nameInput, phoneInput, ageInput, genderInput, addressInput, pincodeInput, landmarkInput, dateInput, timeInput].forEach(el => {
         if (el) el.addEventListener('input', clearFeedback);
         if (el && el.tagName === 'SELECT') el.addEventListener('change', clearFeedback);
       });
@@ -1555,6 +1573,8 @@
           const ageNum = parseInt(String(ageInput.value || '').trim(), 10);
           const genderVal = cleanText(genderInput.value);
           const addressVal = cleanText(addressInput.value);
+          const pincodeVal = pincodeInput ? pincodeInput.value.replace(/\D/g, '').slice(0, 6) : '';
+          if (pincodeInput && pincodeInput.value !== pincodeVal) pincodeInput.value = pincodeVal;
           const landmarkVal = cleanText(landmarkInput.value);
           const dateVal = cleanText(dateInput.value);
           const timeVal = cleanText(timeInput.value);
@@ -1572,14 +1592,12 @@
           if (!genderVal) {
             return showError('Please select Gender.', genderInput);
           }
-          const hasPinCode = /\b[1-9][0-9]{5}\b/.test(addressVal);
-          const addrWithoutPin = addressVal.replace(/\b[1-9][0-9]{5}\b/g, '').trim();
-          const hasAddrWords = /[A-Za-z\u0900-\u097F]{3,}/.test(addrWithoutPin);
-          if (!addressVal || addressVal.length < 12 || !hasAddrWords) {
-            return showError('Please enter complete address (Flat/Building, Street, Area) along with 6-digit Pin Code.', addressInput);
+          const hasAddrWords = /[A-Za-z\u0900-\u097F]{3,}/.test(addressVal);
+          if (!addressVal || addressVal.length < 8 || !hasAddrWords) {
+            return showError('Please enter complete address (Flat/Building, Street, Area).', addressInput);
           }
-          if (!hasPinCode) {
-            return showError('6-digit Pin Code is compulsory in Address (e.g. 400001).', addressInput);
+          if (!/^[1-9]\d{5}$/.test(pincodeVal)) {
+            return showError('Please enter a valid 6-digit Pin Code (e.g. 400001).', pincodeInput);
           }
           if (!landmarkVal || landmarkVal.length < 3 || !/[A-Za-z\u0900-\u097F]{2,}/.test(landmarkVal)) {
             return showError('Please enter a valid nearby Landmark (e.g. Near Station / Temple).', landmarkInput);
@@ -1625,7 +1643,8 @@
             mobile: rawMobile,
             age: String(ageNum),
             gender: genderVal,
-            address: addressVal,
+            address: `${addressVal} - ${pincodeVal}`,
+            pincode: pincodeVal,
             landmark: landmarkVal,
             preferredDate: dateVal,
             preferredTime: timeVal,
@@ -1657,7 +1676,8 @@
           webhookPayload.append('partner_code', 'गौरवशाली 13');
           webhookPayload.append('age', String(ageNum));
           webhookPayload.append('gender', genderVal);
-          webhookPayload.append('address', addressVal);
+          webhookPayload.append('address', `${addressVal} - ${pincodeVal}`);
+          webhookPayload.append('pincode', pincodeVal);
           webhookPayload.append('landmark', landmarkVal);
           webhookPayload.append('preferred_datetime', scheduleSlotStr);
           webhookPayload.append('page_url', window.location.href);
@@ -1702,7 +1722,7 @@
               submitBtn.innerHTML = origSubmitHtml;
               submitBtn.style.opacity = '1';
             }
-            const waMsg = `Hello, booking from Anuvrat Smiti, Mumbai (Code: गौरवशाली 13):\nName: ${patientName}\nMobile: ${rawMobile}\nAge/Gender: ${ageNum} / ${genderVal}\nAddress: ${addressVal}\nLandmark: ${landmarkVal}\nPreferred Slot: ${scheduleSlotStr}`;
+            const waMsg = `Hello, booking from Anuvrat Smiti, Mumbai (Code: गौरवशाली 13):\nName: ${patientName}\nMobile: ${rawMobile}\nAge/Gender: ${ageNum} / ${genderVal}\nAddress: ${addressVal} - ${pincodeVal}\nPin Code: ${pincodeVal}\nLandmark: ${landmarkVal}\nPreferred Slot: ${scheduleSlotStr}`;
             const waHref = `https://wa.me/919044401435?text=${encodeURIComponent(waMsg)}`;
             showError('Network connection interrupted while saving. Please retry or complete booking in 1 click on WhatsApp below:', null);
             if (waFallback) {
