@@ -348,6 +348,25 @@
           </div>
         </section>
 
+        <!-- LEAD SELECTION & SHEET DOWNLOAD BAR -->
+        <section id="lead-export-bar" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:-8px 0 16px 0;padding:10px 14px;background:#F8FAFC;border:1px solid #CBD5E1;border-radius:12px;">
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:12px;">
+            <label style="display:inline-flex;align-items:center;gap:8px;font-size:0.82rem;font-weight:700;color:#0F172A;cursor:pointer;user-select:none;">
+              <input type="checkbox" id="select-all-leads-cb" style="width:17px;height:17px;accent-color:#059669;cursor:pointer;">
+              <span>Select All Visible</span>
+            </label>
+            <span id="selected-leads-badge" style="background:#E2E8F0;color:#334155;padding:3px 10px;border-radius:999px;font-size:0.76rem;font-weight:700;">
+              <span id="selected-leads-count">0</span> Selected
+            </span>
+            <button type="button" id="btn-clear-selection" style="display:none;background:transparent;border:1px solid #CBD5E1;color:#475569;border-radius:8px;padding:4px 10px;font-size:0.75rem;font-weight:700;cursor:pointer;">
+              ✕ Clear Selection
+            </button>
+          </div>
+          <button type="button" id="btn-download-selected-csv" disabled style="display:inline-flex;align-items:center;gap:6px;background:#94A3B8;color:#FFFFFF;border:none;border-radius:10px;padding:8px 16px;font-size:0.82rem;font-weight:700;cursor:not-allowed;transition:all 0.15s ease;">
+            <span>📥 Download Selected Sheet (CSV)</span>
+          </button>
+        </section>
+
         <!-- 3-COLUMN MODERN CARD GRID AREA (Replaces the Table!) -->
         <section class="cards-grid-container">
           <div id="saas-cards-grid" class="saas-cards-grid">

@@ -42,6 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const alertCountTitle = document.getElementById('alert-count-title');
   const filterCallbacksBtn = document.getElementById('filter-callbacks-btn');
 
+  // Selection state for Sheet/CSV Download
+  const selectedLeadIds = new Set();
+  let lastFilteredBookings = [];
+
   // Modal References
   const modal = document.getElementById('callback-modal');
   const modalCloseBtn = document.getElementById('modal-close-btn');
@@ -438,6 +442,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileCardsContainer) mobileCardsContainer.innerHTML = '';
     if (saasGrid) saasGrid.innerHTML = '';
 
+    // Prune deleted leads from selection & track visible leads
+    const validIds = new Set(bookings.map(b => b.id));
+    Array.from(selectedLeadIds).forEach(id => {
+      if (!validIds.has(id)) selectedLeadIds.delete(id);
+    });
+    lastFilteredBookings = filtered;
+
     if (filtered.length === 0) {
       emptyState.classList.remove('hidden');
     } else {
@@ -496,12 +507,18 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>`
           : '';
 
+        const isSelected = selectedLeadIds.has(b.id);
         const card = document.createElement('div');
         card.className = `saas-card ${isDue ? 'card-due-alert' : ''}`;
+        if (isSelected) {
+          card.style.outline = '2px solid #10B981';
+          card.style.background = '#F0FDF4';
+        }
 
         card.innerHTML = `
           <div class="sc-header">
-            <div class="sc-name-box">
+            <div class="sc-name-box" style="display:flex;align-items:center;gap:9px;">
+              <input type="checkbox" class="lead-select-cb" data-id="${escapeHTML(b.id)}" ${isSelected ? 'checked' : ''} title="Select lead for sheet download" style="width:18px;height:18px;accent-color:#059669;cursor:pointer;flex-shrink:0;">
               <h3 class="sc-name">${ptName}</h3>
             </div>
             <span class="sc-status-badge ${statusBadgeClass}">${displayStatus}</span>
@@ -568,7 +585,124 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    updateSelectionUI();
     bindRowEvents();
+  }
+
+  function updateSelectionUI() {
+    const countEl = document.getElementById('selected-leads-count');
+    const badgeEl = document.getElementById('selected-leads-badge');
+    const clearBtn = document.getElementById('btn-clear-selection');
+    const downloadBtn = document.getElementById('btn-download-selected-csv');
+    const selectAllCb = document.getElementById('select-all-leads-cb');
+
+    const totalSelected = selectedLeadIds.size;
+    if (countEl) countEl.textContent = totalSelected;
+
+    if (badgeEl) {
+      badgeEl.style.background = totalSelected > 0 ? '#D1FAE5' : '#E2E8F0';
+      badgeEl.style.color = totalSelected > 0 ? '#065F46' : '#334155';
+    }
+
+    if (clearBtn) {
+      clearBtn.style.display = totalSelected > 0 ? 'inline-block' : 'none';
+    }
+
+    if (downloadBtn) {
+      downloadBtn.disabled = totalSelected === 0;
+      downloadBtn.style.background = totalSelected > 0 ? '#059669' : '#94A3B8';
+      downloadBtn.style.cursor = totalSelected > 0 ? 'pointer' : 'not-allowed';
+      downloadBtn.innerHTML = totalSelected > 0
+        ? `<span>📥 Download ${totalSelected} Selected Lead${totalSelected > 1 ? 's' : ''} (CSV)</span>`
+        : '<span>📥 Download Selected Sheet (CSV)</span>';
+    }
+
+    if (selectAllCb) {
+      const visibleCount = lastFilteredBookings.length;
+      const visibleSelectedCount = lastFilteredBookings.filter(b => selectedLeadIds.has(b.id)).length;
+      selectAllCb.checked = visibleCount > 0 && visibleSelectedCount === visibleCount;
+      selectAllCb.indeterminate = visibleSelectedCount > 0 && visibleSelectedCount < visibleCount;
+    }
+  }
+
+  function csvEscape(val) {
+    const str = String(val == null ? '' : val).replace(/\r?\n/g, ' ').trim();
+    return `"${str.replace(/"/g, '""')}"`;
+  }
+
+  function downloadSelectedLeadsCsv() {
+    const selectedLeads = currentLiveBookings.filter(b => selectedLeadIds.has(b.id));
+    if (selectedLeads.length === 0) {
+      alert('Please select at least 1 lead to download the sheet.');
+      return;
+    }
+
+    const headers = [
+      'Sr. No.',
+      'Booking ID',
+      'Customer Name',
+      'Mobile Number',
+      'Age',
+      'Gender',
+      'Location / Address',
+      'Pin Code',
+      'Landmark',
+      'City',
+      'Booking Date',
+      'Booking Time',
+      'Preferred Slot',
+      'Package / Test',
+      'Source',
+      'Partner Code',
+      'Status'
+    ];
+
+    const rows = selectedLeads.map((b, idx) => {
+      const dateObj = new Date(b.timestamp || Date.now());
+      const bookingDate = !isNaN(dateObj.getTime())
+        ? dateObj.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+        : '';
+      const bookingTime = !isNaN(dateObj.getTime())
+        ? dateObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true })
+        : '';
+      const cleanMobile = (b.mobile || '').replace(/\D/g, '').slice(-10) || (b.mobile || '');
+      const pin = b.pincode || (b.address && (b.address.match(/\b[1-9]\d{5}\b/) || [])[0]) || '';
+      const locationStr = b.address || b.city || '';
+      const sourceLabel = isAnuvratLead(b) ? 'Anuvrat Smiti, Mumbai' : 'Main Website';
+      const partnerCode = isAnuvratLead(b) ? (b.partnerCode || 'गौरवशाली 13') : '-';
+
+      return [
+        idx + 1,
+        b.id || '',
+        (b.name || '').trim(),
+        cleanMobile,
+        b.age || '',
+        b.gender || '',
+        locationStr,
+        pin,
+        b.landmark || '',
+        b.city || '',
+        bookingDate,
+        bookingTime,
+        b.scheduleSlot || '',
+        b.selectedPackage || '',
+        sourceLabel,
+        partnerCode,
+        b.status || 'Pending'
+      ].map(csvEscape).join(',');
+    });
+
+    const csvContent = '\uFEFF' + [headers.map(csvEscape).join(','), ...rows].join('\r\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `healthians-selected-leads-${todayStr}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   // ======================================================================
@@ -576,6 +710,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // ======================================================================
   function bindRowEvents() {
     const bookings = currentLiveBookings;
+
+    document.querySelectorAll('.lead-select-cb').forEach(cb => {
+      cb.addEventListener('change', (e) => {
+        const id = e.target.getAttribute('data-id');
+        if (!id) return;
+        const card = e.target.closest('.saas-card');
+        if (e.target.checked) {
+          selectedLeadIds.add(id);
+          if (card) {
+            card.style.outline = '2px solid #10B981';
+            card.style.background = '#F0FDF4';
+          }
+        } else {
+          selectedLeadIds.delete(id);
+          if (card) {
+            card.style.outline = '';
+            card.style.background = '';
+          }
+        }
+        updateSelectionUI();
+      });
+    });
 
     document.querySelectorAll('.slot-select').forEach(sel => {
       sel.addEventListener('change', (e) => {
@@ -770,6 +926,32 @@ document.addEventListener('DOMContentLoaded', () => {
       render();
     });
   });
+
+  // Bind Lead Selection & CSV Download toolbar
+  const selectAllLeadsCb = document.getElementById('select-all-leads-cb');
+  if (selectAllLeadsCb) {
+    selectAllLeadsCb.addEventListener('change', (e) => {
+      const shouldSelect = e.target.checked;
+      lastFilteredBookings.forEach(b => {
+        if (shouldSelect) selectedLeadIds.add(b.id);
+        else selectedLeadIds.delete(b.id);
+      });
+      render();
+    });
+  }
+
+  const btnClearSelection = document.getElementById('btn-clear-selection');
+  if (btnClearSelection) {
+    btnClearSelection.addEventListener('click', () => {
+      selectedLeadIds.clear();
+      render();
+    });
+  }
+
+  const btnDownloadCsv = document.getElementById('btn-download-selected-csv');
+  if (btnDownloadCsv) {
+    btnDownloadCsv.addEventListener('click', downloadSelectedLeadsCsv);
+  }
 
   // Clear filters button
   const btnClear = document.getElementById('btn-clear-filters');
